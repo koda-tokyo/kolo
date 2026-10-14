@@ -31,7 +31,11 @@ function setIMessageDmPolicy(cfg: KoLoConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setIMessageAllowFrom(cfg: KoLoConfig, accountId: string, allowFrom: string[]): KoLoConfig {
+function setIMessageAllowFrom(
+  cfg: KoLoConfig,
+  accountId: string,
+  allowFrom: string[],
+): KoLoConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,

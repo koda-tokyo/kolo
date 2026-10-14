@@ -13,7 +13,6 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import type { BundleInfo } from "./bundle.js";
 import { auditSafe, type AuditInput } from "../audit/index.js";
-import { REPO_URL } from "../config/product-urls.js";
 import {
   BUNDLE_MANIFEST_FILE,
   BUNDLE_SUMS_FILE,
@@ -25,14 +24,12 @@ import {
   type BundleTarget,
 } from "../packaging/bundle-manifest.js";
 import { compareSemverStrings } from "./update-check.js";
+import { REPO_URL } from "../config/product-urls.js";
 
 export type BundleUpdateChannel = "stable" | "nightly";
 
 /** `owner/name` of the GitHub repository that publishes releases; derived from product-urls. */
-export const DEFAULT_RELEASE_REPO = REPO_URL.replace(/^https?:\/\/github\.com\//, "").replace(
-  /\.git$/,
-  "",
-);
+export const DEFAULT_RELEASE_REPO = REPO_URL.replace(/^https?:\/\/github\.com\//, "").replace(/\.git$/, "");
 export const DEFAULT_RELEASE_API_BASE = "https://api.github.com";
 export const RELEASE_SUMS_ASSET = "SHA256SUMS.txt";
 /** Entries of a bundle that an update replaces (everything but the user's `.update`/`.previous`). */

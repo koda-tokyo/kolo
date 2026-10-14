@@ -42,6 +42,10 @@ kolo tui --message "一行で挨拶してください"
 
 プロンプトなし: `SAKURA_API_KEY=<トークン> kolo init --non-interactive --name alice --provider sakura`
 
+### スマートフォンをつなぐ (5 分)
+
+`kolo init` の最後の質問でスマートフォンをつなぐと、QR コードが表示されます。読み取ってメッセージを 1 通送ると、常駐エージェントが WhatsApp、Telegram、LINE、またはスマートフォンのブラウザーで応答します。あとからでも `kolo connect telegram` (または `whatsapp`、`line`、`web`) で実行できます。手順: [スマートフォンをつなぐ](/ja/start/phone)。
+
 ## 3. 別の端末やターミナルをペアリングする
 
 ゲートウェイが動いているマシンで:

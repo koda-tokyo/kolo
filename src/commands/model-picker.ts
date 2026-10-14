@@ -511,7 +511,10 @@ export function applyModelAllowlist(cfg: KoLoConfig, models: string[]): KoLoConf
   };
 }
 
-export function applyModelFallbacksFromSelection(cfg: KoLoConfig, selection: string[]): KoLoConfig {
+export function applyModelFallbacksFromSelection(
+  cfg: KoLoConfig,
+  selection: string[],
+): KoLoConfig {
   const normalized = normalizeModelKeys(selection);
   if (normalized.length <= 1) {
     return cfg;

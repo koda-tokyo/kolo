@@ -841,6 +841,7 @@
             "pages": [
               "index",
               "QUICKSTART",
+              "start/phone",
               "start/getting-started",
               "start/wizard",
               "start/setup",
@@ -922,6 +923,7 @@
               "cli/hooks",
               "cli/pairing",
               "cli/pair",
+              "cli/connect",
               "cli/devices",
               "cli/config",
               "cli/webhooks",
@@ -1194,7 +1196,7 @@
         "groups": [
           {
             "group": "はじめに",
-            "pages": ["ja/QUICKSTART"]
+            "pages": ["ja/QUICKSTART", "ja/start/phone"]
           },
           {
             "group": "プロバイダー",

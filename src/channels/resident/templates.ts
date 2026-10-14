@@ -118,6 +118,21 @@ const MESSAGES: Record<string, Entry> = {
     ja: "一時停止中ではありません。",
     pt: "Não está pausado.",
   },
+  "owner.bound": {
+    en: "You are now the owner of this resident. Write here and it answers you.",
+    ja: "この常駐エージェントのオーナーとして登録しました。ここに書くと応答します。",
+    pt: "Agora você é o dono deste residente. Escreva aqui e ele responde.",
+  },
+  "owner.welcome": {
+    en: "Connected. This chat now reaches your resident.",
+    ja: "接続しました。このチャットから常駐エージェントに届きます。",
+    pt: "Conectado. Esta conversa agora chega ao seu residente.",
+  },
+  "owner.codeExpired": {
+    en: "This code has expired or was already used. Run kolo connect again for a new one.",
+    ja: "このコードは期限切れか使用済みです。kolo connect をもう一度実行して新しいコードを取得してください。",
+    pt: "Este código expirou ou já foi usado. Execute kolo connect de novo para obter outro.",
+  },
   "paused.notice": {
     en: "This conversation is paused. Send /resume to continue.",
     ja: "この会話は一時停止中です。続けるには /resume を送ってください。",

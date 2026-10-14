@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { initCommand, type InitBindPolicy } from "../../commands/init.js";
+import { initCommand, type InitBindPolicy, type InitOptions } from "../../commands/init.js";
 import { onboardCommand } from "../../commands/onboard.js";
 import { setupCommand } from "../../commands/setup.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -25,6 +25,10 @@ export function registerSetupCommand(program: Command) {
     )
     .option("--provider-base-url <url>", "openai-compatible: base URL ending in /v1")
     .option("--provider-model <id>", "openai-compatible or local: model id")
+    .option(
+      "--phone <channel>",
+      "Last step, connect your phone: whatsapp | telegram | line | web | skip (default: ask when interactive)",
+    )
     .option("--force", "Rewrite an existing config instead of merging into it", false)
     .option("--json", "Print the result as JSON", false)
     .option("--lang <code>", "Message language: en | ja", undefined)
@@ -35,6 +39,7 @@ export function registerSetupCommand(program: Command) {
         "  kolo init",
         "  kolo init --non-interactive --name alice --bind loopback",
         "  kolo init --non-interactive --state-dir /srv/kolo/ops-bot --name ops-bot",
+        "  TELEGRAM_BOT_TOKEN=<token> kolo init --non-interactive --phone telegram",
         "",
         `${theme.muted("Docs:")} ${formatDocsLink("/start/getting-started")}`,
         "",
@@ -53,6 +58,7 @@ export function registerSetupCommand(program: Command) {
             providerModel: opts.providerModel as string | undefined,
             force: Boolean(opts.force),
             json: Boolean(opts.json),
+            phone: opts.phone as InitOptions["phone"],
           },
           defaultRuntime,
         );

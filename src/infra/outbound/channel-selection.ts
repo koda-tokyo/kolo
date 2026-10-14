@@ -49,7 +49,9 @@ async function isPluginConfigured(plugin: ChannelPlugin, cfg: KoLoConfig): Promi
   return false;
 }
 
-export async function listConfiguredMessageChannels(cfg: KoLoConfig): Promise<MessageChannelId[]> {
+export async function listConfiguredMessageChannels(
+  cfg: KoLoConfig,
+): Promise<MessageChannelId[]> {
   const channels: MessageChannelId[] = [];
   for (const plugin of listChannelPlugins()) {
     if (!isKnownChannel(plugin.id)) {

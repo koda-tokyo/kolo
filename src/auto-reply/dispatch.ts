@@ -8,7 +8,9 @@ import {
   residentGate,
 } from "../channels/resident/ingress.js";
 import { residentChannelOf } from "../channels/resident/ingress.js";
+import { ownerBindingActive, takeOwnerWelcome } from "../channels/resident/owner-binding.js";
 import { queuedReplyDeliverer } from "../channels/resident/queued-deliver.js";
+import { channelText } from "../channels/resident/templates.js";
 import { logVerbose } from "../globals.js";
 import { dispatchReplyFromConfig } from "./reply/dispatch-from-config.js";
 import { finalizeInboundContext } from "./reply/inbound-context.js";
@@ -46,6 +48,23 @@ export async function dispatchInboundMessage(params: {
         };
       }
       applyResidentNotes(finalized, inbound);
+      // M16: an owner bound outside a conversation (WhatsApp linked device) gets one welcome
+      // line on their first message, before the agent's answer.
+      if (
+        ownerBindingActive() &&
+        takeOwnerWelcome({
+          channel: inbound.channel,
+          accountId: inbound.accountId,
+          candidates: [
+            finalized.SenderId,
+            finalized.SenderE164,
+            finalized.SenderUsername,
+            finalized.From,
+          ],
+        })
+      ) {
+        params.dispatcher.sendBlockReply({ text: channelText(inbound.locale, "owner.welcome") });
+      }
     }
   } catch (err) {
     logVerbose(`dispatch: resident ingress failed: ${String(err)}`);
@@ -79,6 +98,13 @@ function withOutboundQueue<T extends ReplyDispatcherOptions>(
       to,
       messageId: ctx.MessageSid,
       origin: "inbound",
+      // The message reached dispatch, so the channel's access control admitted the sender:
+      // what the resident sends back is a reply (M16 reply policy), not a proactive send.
+      replyTo: {
+        senderId: ctx.SenderId?.toString().trim() || undefined,
+        inboundAt: Date.now(),
+        admitted: true,
+      },
       deliver: options.deliver,
     }),
   };

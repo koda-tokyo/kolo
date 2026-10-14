@@ -3,7 +3,10 @@ import { resolveAgentConfig } from "./agent-scope.js";
 
 const DEFAULT_ACK_REACTION = "👀";
 
-export function resolveAgentIdentity(cfg: KoLoConfig, agentId: string): IdentityConfig | undefined {
+export function resolveAgentIdentity(
+  cfg: KoLoConfig,
+  agentId: string,
+): IdentityConfig | undefined {
   return resolveAgentConfig(cfg, agentId)?.identity;
 }
 
@@ -16,7 +19,10 @@ export function resolveAckReaction(cfg: KoLoConfig, agentId: string): string {
   return emoji || DEFAULT_ACK_REACTION;
 }
 
-export function resolveIdentityNamePrefix(cfg: KoLoConfig, agentId: string): string | undefined {
+export function resolveIdentityNamePrefix(
+  cfg: KoLoConfig,
+  agentId: string,
+): string | undefined {
   const name = resolveAgentIdentity(cfg, agentId)?.name?.trim();
   if (!name) {
     return undefined;

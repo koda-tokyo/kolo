@@ -2,9 +2,9 @@
 // Admin API for covenant data - exposes user covenants to Control Room
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { CovenantSummary } from "../covenant/types.js";
 import { loadCovenant, ensureCovenant } from "../covenant/service.js";
 import { buildCovenantSummary } from "../covenant/summary.js";
+import type { CovenantSummary } from "../covenant/types.js";
 
 const ADMIN_COVENANT_PREFIX = "/api/admin/covenants";
 
@@ -30,10 +30,7 @@ export interface AdminCovenantErrorResponse {
 function sendJson(
   res: ServerResponse,
   status: number,
-  body:
-    | AdminCovenantResponse
-    | AdminCovenantErrorResponse
-    | { ok: true; covenants: Array<{ userId: string; userName?: string }> },
+  body: AdminCovenantResponse | AdminCovenantErrorResponse | { ok: true; covenants: Array<{ userId: string; userName?: string }> }
 ) {
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -67,7 +64,7 @@ function extractUserId(pathname: string): string | null {
  */
 export async function handleAdminCovenantRequest(
   req: IncomingMessage,
-  res: ServerResponse,
+  res: ServerResponse
 ): Promise<boolean> {
   const url = new URL(req.url ?? "/", "http://localhost");
   const pathname = url.pathname;

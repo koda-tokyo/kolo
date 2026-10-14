@@ -10,6 +10,7 @@ import {
 } from "./app-polling";
 import { observeTopbar, scheduleChatScroll, scheduleLogsScroll } from "./app-scroll";
 import {
+  applySettings,
   applySettingsFromUrl,
   attachThemeListener,
   detachThemeListener,
@@ -17,6 +18,7 @@ import {
   syncTabWithLocation,
   syncThemeWithSettings,
 } from "./app-settings";
+import { handlePairLink } from "./pair-link";
 
 type LifecycleHost = {
   basePath: string;
@@ -40,7 +42,28 @@ export function handleConnected(host: LifecycleHost) {
   syncThemeWithSettings(host as unknown as Parameters<typeof syncThemeWithSettings>[0]);
   attachThemeListener(host as unknown as Parameters<typeof attachThemeListener>[0]);
   window.addEventListener("popstate", host.popStateHandler);
-  connectGateway(host as unknown as Parameters<typeof connectGateway>[0]);
+  // M16: a `#pair=` link from `kolo connect web` (or a stored phone credential) supplies the
+  // token before the first connection; otherwise connect as before.
+  const gatewayHost = host as unknown as Parameters<typeof connectGateway>[0];
+  let pairNotice: string | null = null;
+  void handlePairLink({
+    useToken: (token) => {
+      const settingsHost = host as unknown as Parameters<typeof applySettings>[0];
+      applySettings(settingsHost, { ...settingsHost.settings, token });
+      connectGateway(gatewayHost);
+    },
+    notify: (message) => {
+      pairNotice = message;
+      (host as unknown as { lastError: string | null }).lastError = message;
+    },
+  }).then((tookOver) => {
+    if (!tookOver) {
+      connectGateway(gatewayHost);
+      if (pairNotice) {
+        (host as unknown as { lastError: string | null }).lastError = pairNotice;
+      }
+    }
+  });
   startNodesPolling(host as unknown as Parameters<typeof startNodesPolling>[0]);
   if (host.tab === "logs") {
     startLogsPolling(host as unknown as Parameters<typeof startLogsPolling>[0]);

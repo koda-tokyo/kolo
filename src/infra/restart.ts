@@ -110,7 +110,10 @@ export function triggerKoLoRestart(): RestartAttempt {
   const tried: string[] = [];
   if (process.platform !== "darwin") {
     if (process.platform === "linux") {
-      const unit = normalizeSystemdUnit(process.env.KOLO_SYSTEMD_UNIT, process.env.KOLO_PROFILE);
+      const unit = normalizeSystemdUnit(
+        process.env.KOLO_SYSTEMD_UNIT,
+        process.env.KOLO_PROFILE,
+      );
       const userArgs = ["--user", "restart", unit];
       tried.push(`systemctl ${userArgs.join(" ")}`);
       const userRestart = spawnSync("systemctl", userArgs, {
@@ -143,7 +146,8 @@ export function triggerKoLoRestart(): RestartAttempt {
   }
 
   const label =
-    process.env.KOLO_LAUNCHD_LABEL || resolveGatewayLaunchAgentLabel(process.env.KOLO_PROFILE);
+    process.env.KOLO_LAUNCHD_LABEL ||
+    resolveGatewayLaunchAgentLabel(process.env.KOLO_PROFILE);
   const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
   const target = uid !== undefined ? `gui/${uid}/${label}` : label;
   const args = ["kickstart", "-k", target];

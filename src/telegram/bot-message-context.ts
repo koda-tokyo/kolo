@@ -24,6 +24,7 @@ import { resolveControlCommandGate } from "../channels/command-gating.js";
 import { formatLocationText, toLocationContext } from "../channels/location.js";
 import { logInboundDrop } from "../channels/logging.js";
 import { resolveMentionGatingWithBypass } from "../channels/mention-gating.js";
+import { ownerClaimHook } from "../channels/resident/owner-claim-hook.js";
 import { recordInboundSession } from "../channels/session.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { readSessionUpdatedAt, resolveStorePath } from "../config/sessions.js";
@@ -226,6 +227,26 @@ export const buildTelegramMessageContext = async ({
   // DM access control (secure defaults): "pairing" (default) / "allowlist" / "open" / "disabled"
   if (!isGroup) {
     if (dmPolicy === "disabled") {
+      return null;
+    }
+    // M16: `/start KOLO-…` from the deep link printed by `kolo connect telegram` binds the owner.
+    // Checked before the allowlist because the person claiming is not on it yet.
+    if (
+      await ownerClaimHook({
+        cfg,
+        channel: "telegram",
+        accountId: account.accountId,
+        senderId: msg.from?.id ? String(msg.from.id) : String(chatId),
+        text: msg.text,
+        to: String(chatId),
+        send: async (text) => {
+          await withTelegramApiErrorLogging({
+            operation: "sendMessage",
+            fn: () => bot.api.sendMessage(chatId, text),
+          });
+        },
+      })
+    ) {
       return null;
     }
 

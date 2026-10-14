@@ -2,8 +2,16 @@
 // per-channel FIFO with retry and exponential backoff, a dedupe key window, a dead-letter file
 // and a health snapshot (`kolo channels status`, `GET /api/channels/status`). The queue never
 // originates a message: it only carries what an inbound message, a terminal/CLI send or a
-// human-initiated approval flow produced. `channels.delivery.policy` (default `human-triggered`)
-// refuses anything marked `automated`; M13 `agents[].channels` will refine that per agent.
+// human-initiated approval flow produced.
+//
+// Reply policy (M16): every job is classified as `reply-to-inbound` or `proactive`. A reply to an
+// inbound message from a sender the channel admitted (allowlist, pairing store, identities or an
+// open DM policy), sent within `channels.delivery.replyWindowMs` of that message, is a
+// conversation and is always delivered, whatever produced it. Anything else is proactive and
+// follows `channels.delivery.policy`: `human-triggered` (default) delivers terminal/CLI sends and
+// human-initiated approval asks and refuses `automated` ones, `allow-automated` delivers all,
+// `replies-only` refuses every proactive send. M13 `agents[].channels` and the kill switch apply
+// on top of this in the delivery path.
 import fs from "node:fs";
 import path from "node:path";
 import type { KoLoConfig } from "../../config/config.js";
@@ -15,6 +23,21 @@ export type OutboundOrigin = "inbound" | "command" | "approval" | "cli" | "autom
 
 export type OutboundStatus = "sent" | "duplicate" | "dead_letter" | "policy";
 
+/** What the job is to the person on the other side: an answer, or something they did not ask for. */
+export type OutboundIntent = "reply-to-inbound" | "proactive";
+
+export type DeliveryPolicy = "human-triggered" | "allow-automated" | "replies-only";
+
+/** The inbound message a job answers. */
+export type OutboundReplyTo = {
+  /** Sender id as the channel reports it (audit only). */
+  senderId?: string;
+  /** When the inbound message arrived (ms since epoch). */
+  inboundAt: number;
+  /** The channel's access control admitted the sender (allowlist, pairing, identities, open DMs). */
+  admitted: boolean;
+};
+
 export type OutboundJob = {
   channel: string;
   accountId?: string;
@@ -22,6 +45,8 @@ export type OutboundJob = {
   /** Unique per logical message (provider message id + chunk index); repeats are dropped. */
   dedupeKey: string;
   origin: OutboundOrigin;
+  /** Set when the job answers an inbound message; absent means proactive. */
+  replyTo?: OutboundReplyTo;
   /** Short description for the dead-letter record (never a secret). */
   text?: string;
   send: () => Promise<void>;
@@ -32,7 +57,8 @@ export type DeliveryLimits = {
   backoffMs: number;
   maxBackoffMs: number;
   dedupeTtlMs: number;
-  policy: "human-triggered" | "allow-automated";
+  policy: DeliveryPolicy;
+  replyWindowMs: number;
 };
 
 export const DELIVERY_DEFAULTS: DeliveryLimits = {
@@ -41,7 +67,40 @@ export const DELIVERY_DEFAULTS: DeliveryLimits = {
   maxBackoffMs: 60_000,
   dedupeTtlMs: 10 * 60_000,
   policy: "human-triggered",
+  replyWindowMs: 24 * 60 * 60_000,
 };
+
+/** Classify a job: a reply to an admitted sender inside the reply window, or proactive. */
+export function classifyOutbound(
+  job: Pick<OutboundJob, "replyTo">,
+  nowMs: number,
+  replyWindowMs: number = DELIVERY_DEFAULTS.replyWindowMs,
+): OutboundIntent {
+  const r = job.replyTo;
+  if (!r || !r.admitted || !Number.isFinite(r.inboundAt)) {
+    return "proactive";
+  }
+  const age = nowMs - r.inboundAt;
+  return age >= -60_000 && age <= replyWindowMs ? "reply-to-inbound" : "proactive";
+}
+
+/** Null when the policy delivers the job; otherwise the reason it is refused. */
+export function outboundPolicyRefusal(
+  job: Pick<OutboundJob, "origin" | "replyTo">,
+  limits: Pick<DeliveryLimits, "policy" | "replyWindowMs">,
+  nowMs: number,
+): string | null {
+  if (classifyOutbound(job, nowMs, limits.replyWindowMs) === "reply-to-inbound") {
+    return null;
+  }
+  if (limits.policy === "replies-only") {
+    return "channels.delivery.policy is replies-only and this send is proactive";
+  }
+  if (job.origin === "automated" && limits.policy !== "allow-automated") {
+    return "channels.delivery.policy is human-triggered and this automated send is proactive";
+  }
+  return null;
+}
 
 export type ChannelDeliveryHealth = {
   channel: string;
@@ -66,6 +125,7 @@ export type DeadLetterRecord = {
   to: string;
   dedupeKey: string;
   origin: OutboundOrigin;
+  intent?: OutboundIntent;
   attempts: number;
   reason: "retries_exhausted" | "policy";
   error: string;
@@ -80,6 +140,7 @@ export function resolveDeliveryLimits(cfg?: KoLoConfig): DeliveryLimits {
     maxBackoffMs: c?.maxBackoffMs ?? DELIVERY_DEFAULTS.maxBackoffMs,
     dedupeTtlMs: c?.dedupeTtlMs ?? DELIVERY_DEFAULTS.dedupeTtlMs,
     policy: c?.policy ?? DELIVERY_DEFAULTS.policy,
+    replyWindowMs: c?.replyWindowMs ?? DELIVERY_DEFAULTS.replyWindowMs,
   };
 }
 
@@ -174,15 +235,22 @@ export class ChannelOutboundQueue {
       state.health.duplicates += 1;
       return Promise.resolve("duplicate");
     }
-    if (job.origin === "automated" && this.limits.policy !== "allow-automated") {
+    const refusal = outboundPolicyRefusal(job, this.limits, this.now());
+    if (refusal) {
       state.health.policyDenied += 1;
-      this.deadLetter(state, job, 0, "policy", "channels.delivery.policy is human-triggered");
+      this.deadLetter(state, job, 0, "policy", refusal);
       void auditSafe({
         scope: job.to,
         action: "channel.outbound.policy_denied",
         outcome: "denied",
         source: "channels.delivery",
-        detail: { channel: job.channel, accountId: job.accountId ?? null, origin: job.origin },
+        detail: {
+          channel: job.channel,
+          accountId: job.accountId ?? null,
+          origin: job.origin,
+          intent: "proactive",
+          policy: this.limits.policy,
+        },
       });
       return Promise.resolve("policy");
     }
@@ -259,6 +327,7 @@ export class ChannelOutboundQueue {
       to: job.to,
       dedupeKey: job.dedupeKey,
       origin: job.origin,
+      intent: classifyOutbound(job, this.now(), this.limits.replyWindowMs),
       attempts,
       reason,
       error,

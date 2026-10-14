@@ -3,7 +3,10 @@ import type { PluginInstallRecord } from "../config/types.plugins.js";
 
 export type PluginInstallUpdate = PluginInstallRecord & { pluginId: string };
 
-export function recordPluginInstall(cfg: KoLoConfig, update: PluginInstallUpdate): KoLoConfig {
+export function recordPluginInstall(
+  cfg: KoLoConfig,
+  update: PluginInstallUpdate,
+): KoLoConfig {
   const { pluginId, ...record } = update;
   const installs = {
     ...cfg.plugins?.installs,

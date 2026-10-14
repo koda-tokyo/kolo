@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import type { RuntimeEnv } from "../runtime.js";
+import type { ConnectDeps } from "./connect/types.js";
 import { upsertAuthProfile } from "../agents/auth-profiles.js";
 import { ensureAgentWorkspace } from "../agents/workspace.js";
 import { createConfigIO, type KoLoConfig, writeConfigFile } from "../config/config.js";
@@ -18,6 +19,12 @@ import { defaultGatewayTokenFilePath, ensureGatewayTokenFile } from "../gateway/
 import { t } from "../i18n/index.js";
 import { defaultRuntime } from "../runtime.js";
 import { buildDoctorJsonReport } from "./doctor-json.js";
+import {
+  INIT_PHONE_CHOICES,
+  type InitPhoneChoice,
+  isInitPhoneChoice,
+  runInitPhoneStep,
+} from "./init-phone.js";
 import { applyAuthProfileConfig, applySakuraConfig } from "./onboard-auth.config-core.js";
 import { setSakuraApiKey } from "./onboard-auth.credentials.js";
 import { SAKURA_DEFAULT_MODEL_REF } from "./onboard-auth.models.js";
@@ -84,6 +91,8 @@ export type InitOptions = {
   providerModel?: string;
   json?: boolean;
   force?: boolean;
+  /** Last step: connect a phone (whatsapp | telegram | line | web | skip); omitted = ask when interactive. */
+  phone?: InitPhoneChoice;
 };
 
 const IDENTITY_RE = /^[a-z0-9][a-z0-9_-]{0,31}$/;
@@ -282,7 +291,12 @@ async function applyInitProvider(
   };
 }
 
-export async function initCommand(opts: InitOptions = {}, runtime: RuntimeEnv = defaultRuntime) {
+export async function initCommand(
+  opts: InitOptions = {},
+  runtime: RuntimeEnv = defaultRuntime,
+  /** Test seam for the phone step. */
+  phoneDeps?: ConnectDeps,
+) {
   if (opts.stateDir) {
     const abs = path.resolve(opts.stateDir);
     process.env.KOLO_HOME = abs;
@@ -300,6 +314,12 @@ export async function initCommand(opts: InitOptions = {}, runtime: RuntimeEnv = 
   }
   if (opts.bind && !INIT_BIND_POLICIES.includes(opts.bind)) {
     runtime.error(`--bind ${String(opts.bind)}: expected ${INIT_BIND_POLICIES.join(", ")}`);
+    runtime.exit(2);
+    return;
+  }
+
+  if (opts.phone !== undefined && !isInitPhoneChoice(opts.phone)) {
+    runtime.error(`--phone ${String(opts.phone)}: expected ${INIT_PHONE_CHOICES.join(", ")}`);
     runtime.exit(2);
     return;
   }
@@ -390,7 +410,17 @@ export async function initCommand(opts: InitOptions = {}, runtime: RuntimeEnv = 
   const port = resolveGatewayPort(next);
   const report = await buildDoctorJsonReport();
 
+  const phoneStep = (json: boolean) =>
+    runInitPhoneStep({
+      choice: opts.phone,
+      interactive: !json && Boolean(interactive),
+      json,
+      gatewayBind: bindPlan.bind,
+      runtime,
+      deps: phoneDeps,
+    });
   if (opts.json) {
+    const phone = await phoneStep(true);
     runtime.log(
       JSON.stringify(
         {
@@ -407,6 +437,7 @@ export async function initCommand(opts: InitOptions = {}, runtime: RuntimeEnv = 
           port,
           provider: providerNote.summary,
           doctor: report,
+          ...(phone ? { phone } : {}),
         },
         null,
         2,
@@ -465,4 +496,5 @@ export async function initCommand(opts: InitOptions = {}, runtime: RuntimeEnv = 
   for (const line of lines) {
     runtime.log(line);
   }
+  await phoneStep(false);
 }

@@ -40,12 +40,18 @@ export type ChannelsDeliveryConfig = {
   /** Dedupe window for outbound keys (ms, default 10 minutes). */
   dedupeTtlMs?: number;
   /**
-   * Who may originate an outbound message. `human-triggered` (default): only replies to an
-   * inbound message, a terminal/CLI send or a human-initiated approval flow are delivered;
-   * anything else is dead-lettered with reason `policy`. `allow-automated`: daemons and cron
-   * lanes may send (M13 `agents[].channels` policy will refine this per agent).
+   * Who may originate a proactive (unsolicited) outbound message. A reply to an inbound message
+   * from an admitted sender (allowlist, pairing store, identities or an open DM policy) within
+   * `replyWindowMs` is a conversation and is always delivered, whatever produced it.
+   * - `human-triggered` (default): proactive sends from a terminal/CLI or a human-initiated
+   *   approval flow are delivered; automated ones are dead-lettered with reason `policy`.
+   * - `allow-automated`: daemons and cron lanes may also send proactively (M13
+   *   `agents[].channels` still applies).
+   * - `replies-only`: nothing proactive is delivered; only replies.
    */
-  policy?: "human-triggered" | "allow-automated";
+  policy?: "human-triggered" | "allow-automated" | "replies-only";
+  /** How long after an inbound message an answer still counts as a reply (ms, default 24 h). */
+  replyWindowMs?: number;
 };
 
 export type ChannelsApprovalTarget = {

@@ -86,7 +86,10 @@ export function resolveChannelMessageToolHints(params: {
 
 const loggedListActionErrors = new Set<string>();
 
-function runPluginListActions(plugin: ChannelPlugin, cfg: KoLoConfig): ChannelMessageActionName[] {
+function runPluginListActions(
+  plugin: ChannelPlugin,
+  cfg: KoLoConfig,
+): ChannelMessageActionName[] {
   if (!plugin.actions?.listActions) {
     return [];
   }

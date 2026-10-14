@@ -42,6 +42,13 @@ Japanese messages: `kolo init --lang ja` (or `KOLO_LANG=ja`).
 
 Without prompts: `SAKURA_API_KEY=<token> kolo init --non-interactive --name alice --provider sakura`.
 
+### Connect your phone (five minutes)
+
+The last question of `kolo init` connects your phone and ends with a QR code: scan it, send one
+message, and the resident answers you on WhatsApp, Telegram, LINE or in the phone browser. Any
+time later: `kolo connect telegram` (or `whatsapp`, `line`, `web`). Walkthrough:
+[Connect your phone](/start/phone).
+
 ## 3. Pair a second device or terminal
 
 On the machine running the gateway:

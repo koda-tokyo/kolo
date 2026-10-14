@@ -21,7 +21,11 @@ import type {
 
 export type ChannelSetupAdapter = {
   resolveAccountId?: (params: { cfg: KoLoConfig; accountId?: string }) => string;
-  applyAccountName?: (params: { cfg: KoLoConfig; accountId: string; name?: string }) => KoLoConfig;
+  applyAccountName?: (params: {
+    cfg: KoLoConfig;
+    accountId: string;
+    name?: string;
+  }) => KoLoConfig;
   applyAccountConfig: (params: {
     cfg: KoLoConfig;
     accountId: string;
@@ -180,7 +184,11 @@ export type ChannelLogoutContext<ResolvedAccount = unknown> = {
 export type ChannelPairingAdapter = {
   idLabel: string;
   normalizeAllowEntry?: (entry: string) => string;
-  notifyApproval?: (params: { cfg: KoLoConfig; id: string; runtime?: RuntimeEnv }) => Promise<void>;
+  notifyApproval?: (params: {
+    cfg: KoLoConfig;
+    id: string;
+    runtime?: RuntimeEnv;
+  }) => Promise<void>;
 };
 
 export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {

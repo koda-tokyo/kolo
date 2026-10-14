@@ -55,7 +55,11 @@ async function writeSessionStore(home: string) {
   return storePath;
 }
 
-function makeCfg(home: string, storePath: string, overrides: Partial<KoLoConfig> = {}): KoLoConfig {
+function makeCfg(
+  home: string,
+  storePath: string,
+  overrides: Partial<KoLoConfig> = {},
+): KoLoConfig {
   const base: KoLoConfig = {
     agents: {
       defaults: {

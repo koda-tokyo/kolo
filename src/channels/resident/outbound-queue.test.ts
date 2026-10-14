@@ -6,7 +6,13 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { ChannelOutboundQueue, readDeadLetters, resolveDeliveryLimits } from "./outbound-queue.js";
+import {
+  ChannelOutboundQueue,
+  classifyOutbound,
+  outboundPolicyRefusal,
+  readDeadLetters,
+  resolveDeliveryLimits,
+} from "./outbound-queue.js";
 
 vi.mock(import("../../audit/audit-log.js"), async (importOriginal) => ({
   ...(await importOriginal()),
@@ -223,5 +229,91 @@ describe("outbound queue (M14c)", () => {
       }),
     ).toBe("sent");
     expect(resolveDeliveryLimits().policy).toBe("human-triggered");
+  });
+});
+
+describe("reply policy (M16): reply-to-inbound vs proactive", () => {
+  const NOW = 1_800_000_000_000;
+  const now = () => NOW;
+  const replyTo = (ageMs: number, admitted = true) => ({
+    senderId: "alice",
+    inboundAt: NOW - ageMs,
+    admitted,
+  });
+
+  test("classification: admitted sender inside the window is a reply; everything else is proactive", () => {
+    expect(classifyOutbound({ replyTo: replyTo(5_000) }, NOW)).toBe("reply-to-inbound");
+    expect(classifyOutbound({ replyTo: replyTo(5_000, false) }, NOW)).toBe("proactive");
+    expect(classifyOutbound({}, NOW)).toBe("proactive");
+    expect(classifyOutbound({ replyTo: replyTo(25 * 3_600_000) }, NOW)).toBe("proactive");
+    expect(classifyOutbound({ replyTo: replyTo(10 * 60_000) }, NOW, 5 * 60_000)).toBe("proactive");
+  });
+
+  test("a reply to an admitted sender is delivered even when the producer is automated", async () => {
+    const queue = new ChannelOutboundQueue({ env, sleep, now });
+    const ch = fakeWebhookChannel(0);
+    const status = await queue.enqueue({
+      channel: "webhook",
+      to: "alice",
+      dedupeKey: "webhook:default:reply:1",
+      origin: "automated",
+      replyTo: replyTo(30_000),
+      send: ch.send("job finished: report attached"),
+    });
+    expect(status).toBe("sent");
+    expect(ch.received).toEqual(["job finished: report attached"]);
+  });
+
+  test("proactive automated sends are refused by default and dead-lettered as proactive", async () => {
+    const queue = new ChannelOutboundQueue({ env, sleep, now });
+    const ch = fakeWebhookChannel(0);
+    const status = await queue.enqueue({
+      channel: "webhook",
+      to: "alice",
+      dedupeKey: "webhook:default:proactive:1",
+      origin: "automated",
+      send: ch.send("good morning"),
+    });
+    expect(status).toBe("policy");
+    expect(ch.received).toEqual([]);
+    expect(readDeadLetters("webhook", env)[0]).toMatchObject({
+      reason: "policy",
+      intent: "proactive",
+      origin: "automated",
+    });
+    // A stale conversation (outside the reply window) is proactive again.
+    const stale = await queue.enqueue({
+      channel: "webhook",
+      to: "alice",
+      dedupeKey: "webhook:default:proactive:2",
+      origin: "automated",
+      replyTo: replyTo(2 * 24 * 3_600_000),
+      send: ch.send("still there?"),
+    });
+    expect(stale).toBe("policy");
+  });
+
+  test("replies-only refuses every proactive send, including terminal and approval sends", async () => {
+    const limits = { policy: "replies-only" as const, replyWindowMs: 60_000 };
+    expect(outboundPolicyRefusal({ origin: "cli" }, limits, NOW)).toMatch(/replies-only/);
+    expect(outboundPolicyRefusal({ origin: "approval" }, limits, NOW)).toMatch(/replies-only/);
+    expect(outboundPolicyRefusal({ origin: "inbound", replyTo: replyTo(1_000) }, limits, NOW)).toBe(
+      null,
+    );
+    const human = { policy: "human-triggered" as const, replyWindowMs: 60_000 };
+    expect(outboundPolicyRefusal({ origin: "cli" }, human, NOW)).toBe(null);
+    expect(outboundPolicyRefusal({ origin: "approval" }, human, NOW)).toBe(null);
+    expect(outboundPolicyRefusal({ origin: "automated" }, human, NOW)).toMatch(/proactive/);
+    const open = { policy: "allow-automated" as const, replyWindowMs: 60_000 };
+    expect(outboundPolicyRefusal({ origin: "automated" }, open, NOW)).toBe(null);
+  });
+
+  test("delivery limits read the policy and reply window from config", () => {
+    const limits = resolveDeliveryLimits({
+      channels: { delivery: { policy: "replies-only", replyWindowMs: 3_600_000 } },
+    });
+    expect(limits.policy).toBe("replies-only");
+    expect(limits.replyWindowMs).toBe(3_600_000);
+    expect(resolveDeliveryLimits().replyWindowMs).toBe(24 * 3_600_000);
   });
 });

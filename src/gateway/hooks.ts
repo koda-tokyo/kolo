@@ -58,7 +58,9 @@ export function extractHookToken(req: IncomingMessage, url: URL): HookTokenResul
     }
   }
   const headerToken =
-    typeof req.headers["x-kolo-token"] === "string" ? req.headers["x-kolo-token"].trim() : "";
+    typeof req.headers["x-kolo-token"] === "string"
+      ? req.headers["x-kolo-token"].trim()
+      : "";
   if (headerToken) {
     return { token: headerToken, fromQuery: false };
   }

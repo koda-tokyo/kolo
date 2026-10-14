@@ -12,7 +12,7 @@ export function buildContinuitySnapshot(
   options?: {
     maxMidTermHighlights?: number;
     maxLongTermHighlights?: number;
-  },
+  }
 ): ContinuitySnapshot {
   const maxMTM = options?.maxMidTermHighlights ?? 3;
   const maxLTM = options?.maxLongTermHighlights ?? 3;
@@ -30,9 +30,12 @@ export function buildContinuitySnapshot(
       .sort((a, b) => {
         // High importance first, then by recency
         const importanceOrder = { high: 0, medium: 1, low: 2 } as const;
-        const impDiff = importanceOrder[a.importance] - importanceOrder[b.importance];
+        const impDiff =
+          importanceOrder[a.importance] - importanceOrder[b.importance];
         if (impDiff !== 0) return impDiff;
-        return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+        return (
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
       })
       .slice(0, maxMTM);
 
@@ -45,7 +48,9 @@ export function buildContinuitySnapshot(
       .filter((f) => f.confidence !== "low")
       .slice(0, maxLTM);
 
-    snapshot.longTermHighlights = highConfidence.map((f) => `[${f.category}] ${f.summary}`);
+    snapshot.longTermHighlights = highConfidence.map(
+      (f) => `[${f.category}] ${f.summary}`
+    );
   }
 
   return snapshot;

@@ -168,12 +168,36 @@ Every reply and every approval ask goes through a per-channel outbound queue:
 A retry resends the whole payload. The webhook channel skips chunks that were already posted;
 a channel whose adapter sends several chunks per payload may repeat chunks after a partial failure.
 
-**Policy.** `channels.delivery.policy` is `human-triggered` by default: the queue carries only
-what an inbound message, a terminal or CLI send, or a human-initiated approval flow produced.
-Anything marked automated is refused, written to the dead-letter file with reason `policy` and
-audited (`channel.outbound.policy_denied`). Set `allow-automated` only where an operator has
-decided daemons and cron lanes may message people; the M13 `agents[].channels` policy will
-narrow this per agent.
+**Replies and proactive sends.** Every queued job is classified before it is sent:
+
+- **reply-to-inbound**: it answers an inbound message from a sender the channel admitted (the
+  channel allowlist, the pairing store, `identities`, or an open DM policy) and is sent within
+  `channels.delivery.replyWindowMs` of that message (default 24 hours). A reply is a
+  conversation, not an automated send, so the resident may always reply, whatever produced the
+  text (the agent run, a slash command, a job that finished later).
+- **proactive**: everything else, including a message to someone who has not written, or to a
+  conversation that has been silent longer than the reply window.
+
+**Policy.** `channels.delivery.policy` decides proactive sends only:
+
+| Policy | Proactive sends delivered |
+|---|---|
+| `human-triggered` (default) | terminal or CLI sends and human-initiated approval asks; anything marked automated is refused |
+| `allow-automated` | all, including daemons and cron lanes |
+| `replies-only` | none |
+
+A refused send is written to the dead-letter file with reason `policy` and intent `proactive`,
+and audited (`channel.outbound.policy_denied`). Set `allow-automated` only where an operator has
+decided daemons and cron lanes may message people. The M13 policy (`agents[].channels`, the kill
+switch) applies on top of this in the delivery path: a paused or stopped agent sends nothing.
+
+```json5
+{
+  channels: {
+    delivery: { policy: "human-triggered", replyWindowMs: 86400000 },
+  },
+}
+```
 
 ## Operations
 

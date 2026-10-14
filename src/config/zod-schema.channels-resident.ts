@@ -21,7 +21,13 @@ export const ChannelsDeliverySchema = z
     backoffMs: z.number().int().min(0).max(3_600_000).optional(),
     maxBackoffMs: z.number().int().min(0).max(3_600_000).optional(),
     dedupeTtlMs: z.number().int().min(0).max(86_400_000).optional(),
-    policy: z.enum(["human-triggered", "allow-automated"]).optional(),
+    policy: z.enum(["human-triggered", "allow-automated", "replies-only"]).optional(),
+    replyWindowMs: z
+      .number()
+      .int()
+      .min(0)
+      .max(7 * 86_400_000)
+      .optional(),
   })
   .strict();
 

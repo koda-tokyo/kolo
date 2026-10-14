@@ -40,6 +40,9 @@ The identity name (`--name`) is also the service id used by `kolo service instal
 - `--provider <profile>`: `sakura`, `openai-compatible` or `local`; omitted means decide later.
   Keys are read from `SAKURA_API_KEY` or `KOLO_PROVIDER_API_KEY`, never from a flag.
 - `--provider-base-url <url>`, `--provider-model <id>`: for `openai-compatible` and `local`.
+- `--phone <channel>`: last step, connect your phone: `whatsapp`, `telegram`, `line`, `web` or
+  `skip` (default: ask when interactive, skip otherwise). Runs the same flow as
+  [`kolo connect`](/cli/connect) and never fails init; `--json` adds a `phone` object.
 - `--force`: rewrite an existing config instead of merging into it.
 - `--json`: print the result as JSON (`koloHome`, `configPath`, `tokenFile`, `bind`,
   `gatewayBind`, `remoteEnabled`, `port`, `provider`, `doctor`).

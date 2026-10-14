@@ -36,10 +36,16 @@ describe("argv helpers", () => {
   });
 
   it("extracts flag values with equals and missing values", () => {
-    expect(getFlagValue(["node", "KoLo", "status", "--timeout", "5000"], "--timeout")).toBe("5000");
-    expect(getFlagValue(["node", "KoLo", "status", "--timeout=2500"], "--timeout")).toBe("2500");
+    expect(getFlagValue(["node", "KoLo", "status", "--timeout", "5000"], "--timeout")).toBe(
+      "5000",
+    );
+    expect(getFlagValue(["node", "KoLo", "status", "--timeout=2500"], "--timeout")).toBe(
+      "2500",
+    );
     expect(getFlagValue(["node", "KoLo", "status", "--timeout"], "--timeout")).toBeNull();
-    expect(getFlagValue(["node", "KoLo", "status", "--timeout", "--json"], "--timeout")).toBe(null);
+    expect(getFlagValue(["node", "KoLo", "status", "--timeout", "--json"], "--timeout")).toBe(
+      null,
+    );
     expect(getFlagValue(["node", "KoLo", "--", "--timeout=99"], "--timeout")).toBeUndefined();
   });
 

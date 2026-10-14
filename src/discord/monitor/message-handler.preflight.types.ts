@@ -16,7 +16,9 @@ export type DiscordMessageEvent = import("./listeners.js").DiscordMessageEvent;
 
 export type DiscordMessagePreflightContext = {
   cfg: LoadedConfig;
-  discordConfig: NonNullable<import("../../config/config.js").koloConfig["channels"]>["discord"];
+  discordConfig: NonNullable<
+    import("../../config/config.js").koloConfig["channels"]
+  >["discord"];
   accountId: string;
   token: string;
   runtime: RuntimeEnv;

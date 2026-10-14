@@ -2,7 +2,7 @@
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import type { KoLoConfig } from "../../config/config.js";
 import type { deliverOutboundPayloads } from "../../infra/outbound/deliver.js";
-import { getOutboundQueue, type OutboundOrigin } from "./outbound-queue.js";
+import { getOutboundQueue, type OutboundOrigin, type OutboundReplyTo } from "./outbound-queue.js";
 
 type Deliverer = (
   payload: ReplyPayload,
@@ -20,6 +20,8 @@ export function queuedReplyDeliverer(input: {
   /** Provider message id of the inbound message (dedupe base); a timestamp when absent. */
   messageId?: string;
   origin?: OutboundOrigin;
+  /** The inbound message these payloads answer (reply policy, M16). */
+  replyTo?: OutboundReplyTo;
   deliver: Deliverer;
 }): Deliverer {
   const queue = getOutboundQueue(input.cfg);
@@ -37,6 +39,7 @@ export function queuedReplyDeliverer(input: {
       to: input.to,
       dedupeKey: `${input.channel.toLowerCase()}:${input.accountId ?? "default"}:${base}:${seq}`,
       origin: input.origin ?? "inbound",
+      replyTo: input.replyTo,
       text: payload.text,
       send: () => input.deliver(payload, info),
     });

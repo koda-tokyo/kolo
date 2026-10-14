@@ -11,6 +11,7 @@ import type {
 import type { KoLoConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { LineGroupConfig, ResolvedLineAccount } from "./types.js";
+import { ownerClaimHook } from "../channels/resident/owner-claim-hook.js";
 import { danger, logVerbose } from "../globals.js";
 import { resolvePairingIdLabel } from "../pairing/pairing-labels.js";
 import { buildPairingReply } from "../pairing/pairing-messages.js";
@@ -194,6 +195,35 @@ async function shouldProcessLineEvent(
   if (dmPolicy === "disabled") {
     logVerbose("Blocked line sender (dmPolicy: disabled)");
     return false;
+  }
+
+  // M16: a message carrying the code from `kolo connect line` binds the owner. Checked before
+  // the allowlist because the person claiming is not on it yet.
+  if (senderId && event.type === "message" && event.message.type === "text") {
+    const replyToken = event.replyToken;
+    const claimed = await ownerClaimHook({
+      cfg,
+      channel: "line",
+      accountId: account.accountId,
+      senderId,
+      text: event.message.text,
+      to: `line:${senderId}`,
+      send: async (text) => {
+        const opts = {
+          accountId: account.accountId,
+          channelAccessToken: account.channelAccessToken,
+        };
+        try {
+          await replyMessageLine(replyToken, [{ type: "text", text }], opts);
+        } catch {
+          // Reply tokens are single use and short-lived; fall back to a push.
+          await pushMessageLine(`line:${senderId}`, text, opts);
+        }
+      },
+    });
+    if (claimed) {
+      return false;
+    }
   }
 
   const dmAllowed = dmPolicy === "open" || isSenderAllowed({ allow: effectiveDmAllow, senderId });

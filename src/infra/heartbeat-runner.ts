@@ -218,7 +218,10 @@ export function isHeartbeatEnabledForAgent(cfg: KoLoConfig, agentId?: string): b
   return resolvedAgentId === resolveDefaultAgentId(cfg);
 }
 
-function resolveHeartbeatConfig(cfg: KoLoConfig, agentId?: string): HeartbeatConfig | undefined {
+function resolveHeartbeatConfig(
+  cfg: KoLoConfig,
+  agentId?: string,
+): HeartbeatConfig | undefined {
   const defaults = cfg.agents?.defaults?.heartbeat;
   if (!agentId) {
     return defaults;
@@ -335,7 +338,11 @@ function resolveHeartbeatAckMaxChars(cfg: KoLoConfig, heartbeat?: HeartbeatConfi
   );
 }
 
-function resolveHeartbeatSession(cfg: KoLoConfig, agentId?: string, heartbeat?: HeartbeatConfig) {
+function resolveHeartbeatSession(
+  cfg: KoLoConfig,
+  agentId?: string,
+  heartbeat?: HeartbeatConfig,
+) {
   const sessionCfg = cfg.session;
   const scope = sessionCfg?.scope ?? "per-sender";
   const resolvedAgentId = normalizeAgentId(agentId ?? resolveDefaultAgentId(cfg));

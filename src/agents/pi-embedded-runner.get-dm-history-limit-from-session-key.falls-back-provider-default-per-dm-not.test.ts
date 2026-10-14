@@ -69,7 +69,8 @@ const _makeOpenAiConfig = (modelIds: string[]) =>
     },
   }) satisfies KoLoConfig;
 
-const _ensureModels = (cfg: KoLoConfig, agentDir: string) => ensureKoLoModelsJson(cfg, agentDir);
+const _ensureModels = (cfg: KoLoConfig, agentDir: string) =>
+  ensureKoLoModelsJson(cfg, agentDir);
 
 const _textFromContent = (content: unknown) => {
   if (typeof content === "string") {

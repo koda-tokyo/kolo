@@ -296,6 +296,14 @@ const entries: SubCliEntry[] = [
     },
   },
   {
+    name: "connect",
+    description: "Connect your phone (WhatsApp, Telegram, LINE, phone browser)",
+    register: async (program) => {
+      const mod = await import("../connect-cli.js");
+      mod.registerConnectCli(program);
+    },
+  },
+  {
     name: "channels",
     description: "Channel management",
     register: async (program) => {
