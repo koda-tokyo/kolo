@@ -9,7 +9,7 @@ import path from "node:path";
 import process from "node:process";
 import type { RuntimeEnv } from "../runtime.js";
 import type { ConnectDeps } from "./connect/types.js";
-import { upsertAuthProfile } from "../agents/auth-profiles.js";
+import { ensureAuthProfileStore, upsertAuthProfile } from "../agents/auth-profiles.js";
 import { ensureAgentWorkspace } from "../agents/workspace.js";
 import { createConfigIO, type KoLoConfig, writeConfigFile } from "../config/config.js";
 import { ensureKoloDir, koloSecretsDir, resolveKoloHome } from "../config/kolo-home.js";
@@ -17,8 +17,10 @@ import { resolveGatewayPort } from "../config/paths.js";
 import { DOCS_URL } from "../config/product-urls.js";
 import { defaultGatewayTokenFilePath, ensureGatewayTokenFile } from "../gateway/token-file.js";
 import { t } from "../i18n/index.js";
+import { RESIDENCIES, type Residency } from "../model-bench/catalogue.js";
 import { defaultRuntime } from "../runtime.js";
 import { buildDoctorJsonReport } from "./doctor-json.js";
+import { applyKodaTestedProfile } from "./init-koda-tested.js";
 import {
   INIT_PHONE_CHOICES,
   type InitPhoneChoice,
@@ -53,7 +55,7 @@ export function resolveInitBind(policy: InitBindPolicy): {
   }
   return { bind: policy === "remote" ? "lan" : policy, remote: true };
 }
-export type InitProviderProfile = "sakura" | "openai-compatible" | "local";
+export type InitProviderProfile = "sakura" | "openai-compatible" | "local" | "koda-tested";
 
 export const INIT_PROVIDER_PROFILES: Array<{
   value: InitProviderProfile;
@@ -75,6 +77,11 @@ export const INIT_PROVIDER_PROFILES: Array<{
     label: "Local model server (Ollama)",
     hint: "no key; models you pulled locally",
   },
+  {
+    value: "koda-tested",
+    label: "KODA tested: the best benchmarked model you can run",
+    hint: "uses keys already set on this machine; see kolo models tested",
+  },
 ];
 
 export type InitOptions = {
@@ -84,8 +91,10 @@ export type InitOptions = {
   /** Overrides KOLO_HOME for this run and is printed as an export hint. */
   stateDir?: string;
   bind?: InitBindPolicy;
-  /** Provider profile: sakura | openai-compatible | local; omitted = decide later. */
+  /** Provider profile: sakura | openai-compatible | local | koda-tested; omitted = decide later. */
   provider?: InitProviderProfile;
+  /** koda-tested: residency preference (jp | eu | us | cn | sg | local). */
+  residency?: Residency;
   /** openai-compatible: base URL and model id; local: model id. Keys come from env or prompt. */
   providerBaseUrl?: string;
   providerModel?: string;
@@ -146,6 +155,7 @@ async function askInteractive(defaults: Required<Pick<InitOptions, "name" | "bin
   let providerKey: string | undefined;
   let providerBaseUrl: string | undefined;
   let providerModel: string | undefined;
+  let residency: Residency | undefined;
   if (provider === "sakura") {
     const key = await password({
       message: t("init.q.sakura.token"),
@@ -187,6 +197,22 @@ async function askInteractive(defaults: Required<Pick<InitOptions, "name" | "bin
       cancelled();
     }
     providerModel = String(model).trim();
+  } else if (provider === "koda-tested") {
+    const region = await select({
+      message: "Where may model requests be processed?",
+      options: [
+        { value: "any", label: "Anywhere" },
+        { value: "jp", label: "Japan" },
+        { value: "eu", label: "European Union" },
+        { value: "us", label: "United States" },
+        { value: "local", label: "This machine only" },
+      ],
+      initialValue: "any",
+    });
+    if (isCancel(region)) {
+      cancelled();
+    }
+    residency = region === "any" ? undefined : (region as Residency);
   }
   const ok = await confirm({ message: t("init.q.confirm") });
   if (isCancel(ok) || !ok) {
@@ -199,10 +225,12 @@ async function askInteractive(defaults: Required<Pick<InitOptions, "name" | "bin
     providerKey,
     providerBaseUrl,
     providerModel,
+    residency,
   };
 }
 
 type ProviderAnswers = {
+  residency?: Residency;
   provider?: InitProviderProfile;
   providerKey?: string;
   providerBaseUrl?: string;
@@ -217,6 +245,10 @@ async function applyInitProvider(
 ): Promise<{ config: KoLoConfig; summary: string }> {
   if (!a.provider) {
     return { config: cfg, summary: "not chosen (kolo onboard, or kolo secrets)" };
+  }
+  if (a.provider === "koda-tested") {
+    const store = ensureAuthProfileStore(undefined, { allowKeychainPrompt: false });
+    return applyKodaTestedProfile(cfg, { residency: a.residency }, { store });
   }
   if (a.provider === "sakura") {
     if (a.providerKey) {
@@ -324,10 +356,15 @@ export async function initCommand(
     return;
   }
 
+  if (opts.residency && !RESIDENCIES.includes(opts.residency)) {
+    runtime.error(`--residency ${String(opts.residency)}: expected ${RESIDENCIES.join(", ")}`);
+    runtime.exit(2);
+    return;
+  }
   const interactive = !opts.nonInteractive && process.stdin.isTTY && process.stdout.isTTY;
   if (opts.provider && !INIT_PROVIDER_PROFILES.some((p) => p.value === opts.provider)) {
     runtime.error(
-      `--provider ${String(opts.provider)}: expected sakura, openai-compatible or local`,
+      `--provider ${String(opts.provider)}: expected sakura, openai-compatible, local or koda-tested`,
     );
     runtime.exit(2);
     return;
@@ -344,6 +381,7 @@ export async function initCommand(
             : process.env.KOLO_PROVIDER_API_KEY?.trim() || undefined,
         providerBaseUrl: opts.providerBaseUrl,
         providerModel: opts.providerModel,
+        residency: opts.residency,
       };
 
   const home = ensureKoloDir(resolveKoloHome());

@@ -1,0 +1,266 @@
+{
+  "$comment": "KODA tested catalogue. Tested entries are merged from signed bench reports (kolo models bench --update-catalogue); pending entries carry residency and price only. Ids are configuration data, never product copy.",
+  "version": 1,
+  "suite": "2026.10.1",
+  "updatedAt": "2026-10-14",
+  "methodology": "/providers/koda-tested",
+  "models": [
+    {
+      "provider": "sakura",
+      "model": "gpt-oss-120b",
+      "status": "pending",
+      "residency": {
+        "region": "jp",
+        "source": "provider documentation: inputs and responses are processed in data centres in Japan (https://ai.sakura.ad.jp/sakura-ai/ai-engine/)"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 15,
+        "output": 75,
+        "currency": "JPY",
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet."
+    },
+    {
+      "provider": "sakura",
+      "model": "llm-jp-3.1-8x13b-instruct4",
+      "status": "pending",
+      "residency": {
+        "region": "jp",
+        "source": "provider documentation: inputs and responses are processed in data centres in Japan (https://ai.sakura.ad.jp/sakura-ai/ai-engine/)"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 15,
+        "output": 75,
+        "currency": "JPY",
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet."
+    },
+    {
+      "provider": "sakura",
+      "model": "Qwen3.6-35B-A3B",
+      "status": "pending",
+      "residency": {
+        "region": "jp",
+        "source": "provider documentation: inputs and responses are processed in data centres in Japan (https://ai.sakura.ad.jp/sakura-ai/ai-engine/)"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 30,
+        "output": 150,
+        "currency": "JPY",
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet; preview pricing."
+    },
+    {
+      "provider": "mistral",
+      "model": "mistral-large-latest",
+      "status": "pending",
+      "residency": {
+        "region": "eu",
+        "source": "provider registry: Hosted in the European Union"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": null,
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet."
+    },
+    {
+      "provider": "together",
+      "model": "openai/gpt-oss-120b",
+      "status": "pending",
+      "residency": {
+        "region": "us",
+        "source": "provider registry: Global; US-hosted by default"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": null,
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet; price not recorded."
+    },
+    {
+      "provider": "fireworks",
+      "model": "accounts/fireworks/models/gpt-oss-120b",
+      "status": "pending",
+      "residency": {
+        "region": "us",
+        "source": "provider registry: Global; US-hosted by default"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": null,
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: no key for this provider yet; price not recorded."
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "status": "tested",
+      "residency": {
+        "region": "local",
+        "source": "provider registry: Local machine"
+      },
+      "scores": {
+        "toolUse": 60,
+        "policy": 63.3,
+        "continuity": 50,
+        "coding": 0,
+        "japanese": 66.7,
+        "portuguese": 33.3,
+        "efficiency": 96.4
+      },
+      "overall": 51.8,
+      "coverage": 0.353,
+      "subset": "quick",
+      "costPerResidentHour": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "price": {
+        "input": 0,
+        "output": 0,
+        "currency": "USD",
+        "source": "https://ollama.com",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": "2026-10-14",
+      "reportHash": "0d382b25329e58e9d80984a9df802cd82d2bb5d48fb5ad060e518d71a500aa22",
+      "notes": "Quick subset (18 of 51 tasks) on a shared CPU host; scores are provisional until the full suite runs."
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "status": "pending",
+      "residency": {
+        "region": "cn",
+        "source": "provider registry: Hosted in China"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 0.3,
+        "output": 1.2,
+        "currency": "USD",
+        "source": "https://api-docs.deepseek.com/quick_start/pricing",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: key present but the account balance is exhausted (HTTP 402 on 2026-10-14)."
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "status": "pending",
+      "residency": {
+        "region": "cn",
+        "source": "provider registry: Hosted in China"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 1.32,
+        "output": 3.96,
+        "currency": "USD",
+        "source": "https://api-docs.deepseek.com/quick_start/pricing",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Pending benchmark: key present but the account balance is exhausted (HTTP 402 on 2026-10-14)."
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen3:1.7b",
+      "status": "pending",
+      "residency": {
+        "region": "local",
+        "source": "provider registry: Local machine"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 0,
+        "output": 0,
+        "currency": "USD",
+        "source": "https://ollama.com",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Attempted 2026-10-14 (quick subset): one task passed, then no turn completed within 300 s on a shared, saturated CPU host. Re-run on an idle machine."
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:7b",
+      "status": "pending",
+      "residency": {
+        "region": "local",
+        "source": "provider registry: Local machine"
+      },
+      "scores": null,
+      "overall": null,
+      "coverage": null,
+      "subset": null,
+      "costPerResidentHour": null,
+      "price": {
+        "input": 0,
+        "output": 0,
+        "currency": "USD",
+        "source": "https://ollama.com",
+        "asOf": "2026-10-14"
+      },
+      "lastBenchmarked": null,
+      "reportHash": null,
+      "notes": "Attempted 2026-10-14 (quick subset): no turn completed within 540 s on a shared, saturated CPU host. Re-run on an idle machine."
+    }
+  ]
+}

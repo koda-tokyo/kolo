@@ -54,6 +54,18 @@ Options:
 - `--probe-max-tokens <n>`
 - `--agent <id>` (configured agent id; overrides `KOLO_AGENT_DIR`/`PI_CODING_AGENT_DIR`)
 
+## Bench and the KODA tested catalogue
+
+```bash
+kolo models tested [--residency jp] [--min-score 70] [--tested-only] [--json]
+kolo models bench --model <provider/model> [--quick-model <provider/model>] [--only <ids>] [--max-tokens <n>]
+kolo models bench-merge <bench-report.json...> --out <dir> [--update-catalogue <file>]
+```
+
+`models tested` prints the shipped catalogue: scores per axis, residency, cost per resident-hour and
+the date of the last benchmark. `models bench` runs the resident task suite under a token cap and
+writes a signed report with evidence bundles. See [KODA tested models](/providers/koda-tested).
+
 ## Aliases + fallbacks
 
 ```bash

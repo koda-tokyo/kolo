@@ -1,5 +1,11 @@
 import type { Command } from "commander";
-import { initCommand, type InitBindPolicy, type InitOptions } from "../../commands/init.js";
+import type { Residency } from "../../model-bench/catalogue.js";
+import {
+  initCommand,
+  type InitBindPolicy,
+  type InitOptions,
+  type InitProviderProfile,
+} from "../../commands/init.js";
 import { onboardCommand } from "../../commands/onboard.js";
 import { setupCommand } from "../../commands/setup.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -21,7 +27,11 @@ export function registerSetupCommand(program: Command) {
     )
     .option(
       "--provider <profile>",
-      "Model provider profile: sakura | openai-compatible | local (key from SAKURA_API_KEY / KOLO_PROVIDER_API_KEY)",
+      "Model provider profile: sakura | openai-compatible | local | koda-tested (key from SAKURA_API_KEY / KOLO_PROVIDER_API_KEY; koda-tested uses the keys already set)",
+    )
+    .option(
+      "--residency <region>",
+      "koda-tested: only models processed in jp | eu | us | cn | sg | local",
     )
     .option("--provider-base-url <url>", "openai-compatible: base URL ending in /v1")
     .option("--provider-model <id>", "openai-compatible or local: model id")
@@ -53,7 +63,8 @@ export function registerSetupCommand(program: Command) {
             name: opts.name as string | undefined,
             stateDir: opts.stateDir as string | undefined,
             bind: opts.bind as InitBindPolicy | undefined,
-            provider: opts.provider as "sakura" | "openai-compatible" | "local" | undefined,
+            provider: opts.provider as InitProviderProfile | undefined,
+            residency: opts.residency as Residency | undefined,
             providerBaseUrl: opts.providerBaseUrl as string | undefined,
             providerModel: opts.providerModel as string | undefined,
             force: Boolean(opts.force),

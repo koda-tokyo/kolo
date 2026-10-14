@@ -1005,6 +1005,7 @@
               "continuity",
               "continuity-spec",
               "evidence",
+              "providers/koda-tested",
               "policy",
               "policy/examples",
               "factory",

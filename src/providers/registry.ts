@@ -43,8 +43,19 @@ export type ProviderRegistryEntry = {
   recommended?: boolean;
   /** The provider's own documentation (data for `kolo providers show`). */
   docUrl?: string;
+  /** Published list prices per model (data for cost estimates; curated entries only). */
+  pricing?: ProviderPricing;
   /** `curated` entries are hand-maintained; `catalogue` entries come from the public catalogue. */
   source: "curated" | "catalogue";
+};
+
+/** Prices per million tokens in `currency`, as published by the provider on `asOf`. */
+export type ProviderPricing = {
+  currency: string;
+  asOf: string;
+  source: string;
+  note?: string;
+  models: Record<string, { input: number; output: number }>;
 };
 
 type RawRegistry = {
@@ -70,6 +81,9 @@ function asEntry(raw: Record<string, unknown>): ProviderRegistryEntry {
     ...(raw.requiresBaseUrl === true ? { requiresBaseUrl: true } : {}),
     ...(raw.recommended === true ? { recommended: true } : {}),
     ...(typeof raw.docUrl === "string" ? { docUrl: raw.docUrl } : {}),
+    ...(raw.pricing && typeof raw.pricing === "object"
+      ? { pricing: raw.pricing as ProviderPricing }
+      : {}),
     source: raw.source === "catalogue" ? "catalogue" : "curated",
   };
 }
@@ -134,6 +148,38 @@ export function validateRegistry(doc: unknown = REGISTRY_JSON): string[] {
     if (entry.docUrl !== undefined && !entry.docUrl.startsWith("https://")) {
       issues.push(`${where}: docUrl must start with https://`);
     }
+    if (entry.pricing !== undefined) {
+      issues.push(...validatePricing(entry.pricing).map((issue) => `${where}: ${issue}`));
+    }
+  }
+  return issues;
+}
+
+function validatePricing(pricing: ProviderPricing): string[] {
+  const issues: string[] = [];
+  if (!/^[A-Z]{3}$/.test(pricing.currency ?? "")) {
+    issues.push("pricing.currency must be an ISO 4217 code");
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(pricing.asOf ?? "")) {
+    issues.push("pricing.asOf must be YYYY-MM-DD");
+  }
+  if (typeof pricing.source !== "string" || !pricing.source.startsWith("https://")) {
+    issues.push("pricing.source must start with https://");
+  }
+  if (!pricing.models || typeof pricing.models !== "object") {
+    issues.push("pricing.models must be an object");
+    return issues;
+  }
+  for (const [model, price] of Object.entries(pricing.models)) {
+    if (
+      !price ||
+      typeof price.input !== "number" ||
+      typeof price.output !== "number" ||
+      price.input < 0 ||
+      price.output < 0
+    ) {
+      issues.push(`pricing.models[${model}] needs non-negative input and output prices`);
+    }
   }
   return issues;
 }
@@ -152,6 +198,25 @@ export function listProviders(): ProviderRegistryEntry[] {
 export function getProvider(id: string): ProviderRegistryEntry | undefined {
   const key = id.trim().toLowerCase();
   return listProviders().find((entry) => entry.id === key);
+}
+
+/** Published price of `provider/model` per million tokens, or null when the registry has none. */
+export function getModelPrice(
+  providerId: string,
+  modelId: string,
+): { input: number; output: number; currency: string; source: string; asOf: string } | null {
+  const pricing = getProvider(providerId)?.pricing;
+  const price = pricing?.models[modelId];
+  if (!pricing || !price) {
+    return null;
+  }
+  return {
+    input: price.input,
+    output: price.output,
+    currency: pricing.currency,
+    source: pricing.source,
+    asOf: pricing.asOf,
+  };
 }
 
 /** The KoLo model adapter for a registry API style. */

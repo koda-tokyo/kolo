@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  getModelPrice,
   getProvider,
   listProviders,
   registryApiToModelApi,
@@ -109,5 +110,39 @@ describe("provider registry", () => {
     expect(registryModelsUrl(getProvider("openai-compatible")!, "https://llm.example/v1/")).toBe(
       "https://llm.example/v1/models",
     );
+  });
+
+  it("carries published prices for curated providers and validates them", () => {
+    expect(getModelPrice("deepseek", "deepseek-flash")).toMatchObject({ currency: "USD" });
+    expect(getModelPrice("sakura", "gpt-oss-120b")).toMatchObject({ currency: "JPY", input: 15 });
+    expect(getModelPrice("sakura", "no-such-model")).toBeNull();
+    expect(getModelPrice("groq", "x")).toBeNull();
+    const base = {
+      id: "p",
+      displayName: "P",
+      apiStyle: "openai-compatible",
+      baseUrl: "https://p.example/v1",
+      authHeader: "bearer",
+      modelsEndpoint: "/models",
+      regionNote: "somewhere",
+    };
+    const issues = validateRegistry({
+      version: 1,
+      providers: [
+        {
+          ...base,
+          pricing: {
+            currency: "usd",
+            asOf: "today",
+            source: "http://x",
+            models: { m: { input: -1, output: 1 } },
+          },
+        },
+      ],
+    });
+    expect(issues.join("\n")).toMatch(/currency/);
+    expect(issues.join("\n")).toMatch(/asOf/);
+    expect(issues.join("\n")).toMatch(/source/);
+    expect(issues.join("\n")).toMatch(/non-negative/);
   });
 });

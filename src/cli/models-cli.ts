@@ -1,5 +1,11 @@
 import type { Command } from "commander";
 import {
+  BENCH_EXIT,
+  modelsBenchCommand,
+  modelsBenchMergeCommand,
+  modelsTestedCommand,
+} from "../commands/models-bench.js";
+import {
   githubCopilotLoginCommand,
   modelsAliasesAddCommand,
   modelsAliasesListCommand,
@@ -263,6 +269,104 @@ export function registerModelsCli(program: Command) {
     .action(async (opts) => {
       await runModelsCommand(async () => {
         await modelsScanCommand(opts, defaultRuntime);
+      });
+    });
+
+  const collect = (value: string, previous: string[] = []) => [...previous, value];
+
+  models
+    .command("bench")
+    .description("Benchmark models as residents and write a signed report")
+    .option(
+      "--model <provider/model>",
+      "Model to benchmark on the full suite (repeatable)",
+      collect,
+    )
+    .option(
+      "--quick-model <provider/model>",
+      "Model to benchmark on the quick subset, for slow local models (repeatable)",
+      collect,
+    )
+    .option("--only <ids>", "Comma-separated task ids or id prefixes (policy., coding.sort)")
+    .option("--max-tokens <n>", "Token cap per model (default 300000)")
+    .option(
+      "--global-max-tokens <n>",
+      "Token cap for the whole run (default: per-model cap x models)",
+    )
+    .option("--timeout <ms>", "Per model turn (default 120000; local servers 600000)")
+    .option("--base-url <url>", "Base URL for providers that need one")
+    .option("--out <dir>", "Report directory (default <KOLO_HOME>/bench/<timestamp>)")
+    .option("--update-catalogue <file>", "Merge the results into a catalogue file")
+    .option("--json", "Output JSON", false)
+    .addHelpText("after", () =>
+      [
+        "",
+        "Examples:",
+        "  kolo models bench --model sakura/gpt-oss-120b",
+        "  kolo models bench --quick-model ollama/qwen2.5:7b --max-tokens 100000",
+        "  kolo models bench --model sakura/gpt-oss-120b --only policy.,continuity.",
+        "",
+        `${theme.muted("Docs:")} ${formatDocsLink("/providers/koda-tested")}`,
+        "",
+      ].join("\n"),
+    )
+    .action(async (opts) => {
+      await runModelsCommand(async () => {
+        try {
+          await modelsBenchCommand(opts, defaultRuntime);
+        } catch (err) {
+          const code = (err as { exitCode?: unknown } | null)?.exitCode;
+          defaultRuntime.error(
+            `kolo models bench: ${err instanceof Error ? err.message : String(err)}`,
+          );
+          defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
+        }
+      });
+    });
+
+  models
+    .command("bench-merge")
+    .description("Merge signed reports of chunked bench runs into one signed report")
+    .argument("<reports...>", "bench-report.json files")
+    .requiredOption("--out <dir>", "Directory for the merged report")
+    .option("--update-catalogue <file>", "Merge the results into a catalogue file")
+    .option("--json", "Output JSON", false)
+    .action(async (files: string[], opts) => {
+      await runModelsCommand(async () => {
+        try {
+          modelsBenchMergeCommand(files, opts, defaultRuntime);
+        } catch (err) {
+          const code = (err as { exitCode?: unknown } | null)?.exitCode;
+          defaultRuntime.error(
+            `kolo models bench-merge: ${err instanceof Error ? err.message : String(err)}`,
+          );
+          defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
+        }
+      });
+    });
+
+  models
+    .command("tested")
+    .description("Models scored by the KODA tested suite, with residency and cost")
+    .option("--residency <region>", "jp | eu | us | cn | sg | local | unknown")
+    .option("--min-score <n>", "Only models with an overall score of at least n (0-100)")
+    .option("--tested-only", "Hide models that are pending a benchmark", false)
+    .option("--json", "Output JSON", false)
+    .addHelpText(
+      "after",
+      () => `\n${theme.muted("Docs:")} ${formatDocsLink("/providers/koda-tested")}\n`,
+    )
+    .action(async (opts) => {
+      await runModelsCommand(async () => {
+        try {
+          modelsTestedCommand(opts, defaultRuntime);
+        } catch (err) {
+          const code = (err as { exitCode?: unknown } | null)?.exitCode;
+          defaultRuntime.error(
+            `kolo models tested: ${err instanceof Error ? err.message : String(err)}`,
+          );
+          defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
+        }
       });
     });
 

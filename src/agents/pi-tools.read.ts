@@ -189,10 +189,14 @@ export function patchToolSchemaForClaudeCompatibility(tool: AnyAgentTool): AnyAg
     return tool;
   }
 
+  // Drop the original `required` list too: when every required key gained an alias the list
+  // is empty, and spreading the old schema would otherwise keep `path` required, so a call
+  // that uses only the alias (`file_path`) failed argument validation before normalisation.
+  const { required: _required, ...rest } = schema;
   return {
     ...tool,
     parameters: {
-      ...schema,
+      ...rest,
       properties,
       ...(required.length > 0 ? { required } : {}),
     },
