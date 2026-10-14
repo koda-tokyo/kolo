@@ -1,0 +1,9 @@
+{
+  "id": "open-meteo",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

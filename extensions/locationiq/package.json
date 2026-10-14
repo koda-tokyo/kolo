@@ -1,0 +1,17 @@
+{
+  "name": "@KoLo/locationiq",
+  "version": "2026.2.1-kolo.1",
+  "description": "LocationIQ geocoding and maps plugin — 5K requests/day free",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "peerDependencies": {
+    "kolo": ">=2026.1.26"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

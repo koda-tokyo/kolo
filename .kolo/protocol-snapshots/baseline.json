@@ -1,0 +1,8 @@
+{
+  "schemaHash": "afc2bcf97c607890bacb2e43b8259f92474e630fef6413044742dbd6645e0a81",
+  "swiftHashes": {
+    "apps/macos/Sources/KoLoProtocol/GatewayModels.swift": "a2f44ca954af536e2ea51777f77e049b49b0c7edb25c54b8deff2f26605174af",
+    "apps/shared/KoLoKit/Sources/KoLoProtocol/GatewayModels.swift": "a2f44ca954af536e2ea51777f77e049b49b0c7edb25c54b8deff2f26605174af"
+  },
+  "capturedAt": "2026-04-25T08:04:17.209Z"
+}

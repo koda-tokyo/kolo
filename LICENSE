@@ -1,0 +1,36 @@
+KoLo is licensed under an open-core map. The layer each file belongs to, and
+the terms that apply to it, are set out in LICENSING.md. The full licence texts
+are in the LICENSES/ directory:
+
+  LICENSES/MIT.md                  MIT License
+                                   wire protocol and schemas, SDK and generated
+                                   client, plugin API and plugin SDK, the CLI
+
+  LICENSES/FSL-1.1-Apache-2.0.md   Functional Source License 1.1, Apache-2.0
+                                   future licence: gateway runtime, service
+                                   supervisor, channels, sessions, memory store,
+                                   tool policy, secrets store, integrity gate,
+                                   audit log. Use, modify and self-host freely;
+                                   no competing hosted service; each release
+                                   converts to Apache-2.0 two years after it is
+                                   published.
+
+  LICENSES/PROPRIETARY.md          KODA Proprietary License, under written
+                                   agreement only: identity and continuity
+                                   engine, covenant system, sovereign models and
+                                   adapters, role packs, evaluation dashboard,
+                                   cloud tier, enterprise features, support.
+
+Copyright (c) 2025-2026 Carlos Mundim (KODA).
+
+Third-party components remain under their own licences; see NOTICE and
+ATTRIBUTION.md. Trademarks are not licensed; see TRADEMARKS.md. Contributions
+require the Contributor License Agreement in CLA.md.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

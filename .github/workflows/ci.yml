@@ -1,0 +1,260 @@
+name: CI
+
+# M8: one matrix across the three supported desktop platforms.
+# typecheck + unit + extensions + gateway on every OS; the gateway smoke and a bundle build
+# with `bin/kolo --version` on a clean PATH on Linux. Known OS-specific test skips live in
+# test/ci-os-skips.json (explicit, reviewed) and are applied by vitest.config.ts.
+
+on:
+  pull_request:
+  push:
+    branches: [main, kolo-2]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  privacy:
+    # Fails fast when a tracked file mentions a private name or path (scripts/privacy-check.mjs,
+    # exceptions in .privacy-allow). Needs only git and Node, so it runs before anything installs.
+    name: privacy-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Privacy check
+        run: node scripts/privacy-check.mjs
+
+  checks:
+    name: ${{ matrix.name }}
+    needs: privacy
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux-x64
+          - os: windows-latest
+            name: win32-x64
+          - os: macos-latest
+            name: darwin-arm64
+    env:
+      CI: "true"
+      KOLO_TEST_WORKERS: "3"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build @kodasoken/kolo-client (the CLI imports its types)
+        run: pnpm client:build
+
+      - name: Typecheck
+        run: npx tsc --noEmit -p tsconfig.json
+
+      - name: Build
+        run: pnpm build
+
+      - name: Unit + extensions + gateway tests
+        # scripts/test-parallel.mjs applies the per-OS worker and shard settings.
+        run: pnpm test
+
+      - name: Gateway smoke (Linux)
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/ci.kolo-test
+          KOLO_SMOKE_PORT: "18871"
+        run: pnpm smoke
+
+      - name: Continuity conformance (Linux, M11)
+        # Throwaway gateway + deterministic provider: model swap, restart, state-dir move and
+        # session close, scored and verified. No network and no model credentials.
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/continuity.kolo-test
+          KOLO_SMOKE_PORT: "18873"
+          KOLO_CONTINUITY_OUT: ${{ runner.temp }}/continuity-out
+        run: pnpm continuity:check
+
+      - name: Policy conformance (Linux, M13)
+        # Throwaway gateway + deterministic provider under a signed policy: boot gate, kill
+        # switch (agent and fleet), hot reload, provider refusal with rule ids, audit trail.
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/policy.kolo-test
+          KOLO_SMOKE_PORT: "18874"
+        run: pnpm policy:check
+
+      - name: Upload continuity report (Linux, 14 days)
+        if: runner.os == 'Linux' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: continuity-report-linux-x64
+          path: ${{ runner.temp }}/continuity-out/
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Evidence conformance (Linux, M12)
+        # Throwaway gateway + deterministic provider: one job recorded, read through the API,
+        # exported, verified offline, tampered with and refused, and checked through the CLI.
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/evidence.kolo-test
+          KOLO_SMOKE_PORT: "18875"
+        run: pnpm evidence:check
+
+      - name: Factory check (Linux)
+        # M15: a throwaway gateway and a fake KIP engine run one card from the inbox to ready;
+        # live factory.card events, the job, its signed evidence, the Kanban page, an illegal
+        # move refused, a manual move audited, and the board through `kolo factory`.
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/factory.kolo-test
+          KOLO_SMOKE_PORT: "18877"
+        run: pnpm factory:check
+      - name: Channel conformance (Linux, M14)
+        # Throwaway gateway + deterministic provider + generic webhook channel against a local
+        # receiver: session routing, attach visibility, chunking, commands with roles, retry,
+        # delivery status and inbound idempotency. No network beyond loopback.
+        if: runner.os == 'Linux'
+        env:
+          KOLO_SMOKE_HOME: ${{ runner.temp }}/channels.kolo-test
+          KOLO_SMOKE_PORT: "18877"
+        run: pnpm channels:check
+
+      - name: Bundle build + verify (Linux)
+        if: runner.os == 'Linux'
+        run: node scripts/bundle.mjs --verify
+
+      - name: Upload Linux bundle (PR artefact, 3 days)
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-linux-x64-ci
+          path: |
+            release/*.tar.gz
+            release/*.sha256
+          retention-days: 3
+          if-no-files-found: error
+
+  # Folded from the product branch's install-smoke workflow: the installers live in this
+  # repository and are served unchanged from the docs host, so they are exercised from the
+  # checkout against a bundle built by scripts/bundle.mjs (the M8 layout).
+  installer-linux:
+    name: installer linux-x64
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CI: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Installer syntax and help
+        run: |
+          set -euo pipefail
+          echo "::group::bash -n scripts/install.sh"
+          bash -n scripts/install.sh
+          echo "::endgroup::"
+          echo "::group::install.sh --help"
+          bash scripts/install.sh --help
+          echo "::endgroup::"
+          echo "::group::install.sh --dry-run --version 0.0.0-ci"
+          bash scripts/install.sh --dry-run --version 0.0.0-ci
+          echo "::endgroup::"
+          echo "installer syntax, help and dry-run ok"
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm client:build && pnpm build
+
+      - name: Build the Linux bundle
+        run: node scripts/bundle.mjs --target linux-x64
+
+      - name: Offline install from the bundle, then run the CLI with no Node on PATH
+        env:
+          KOLO_HOME: ${{ runner.temp }}/kolo-home
+          KOLO_INSTALL_DIR: ${{ runner.temp }}/kolo-app
+          KOLO_BIN_DIR: ${{ runner.temp }}/kolo-bin
+        run: |
+          set -euo pipefail
+          ls -la release/
+          bundle=$(ls release/kolo-*-linux-x64.tar.gz)
+          echo "installing from $bundle into $KOLO_INSTALL_DIR (bin $KOLO_BIN_DIR, home $KOLO_HOME)"
+          bash scripts/install.sh --bundle "$bundle" --no-service --no-invite
+          echo "running $KOLO_BIN_DIR/kolo with PATH=/usr/bin:/bin"
+          PATH=/usr/bin:/bin "$KOLO_BIN_DIR/kolo" --version
+          "$KOLO_BIN_DIR/kolo" doctor --json | head -c 2000
+          test -f "$KOLO_HOME/kolo.json"
+
+      - name: Tampered bundle is refused
+        env:
+          KOLO_INSTALL_DIR: ${{ runner.temp }}/kolo-app-tampered
+          KOLO_BIN_DIR: ${{ runner.temp }}/kolo-bin-tampered
+        run: |
+          set -euo pipefail
+          bundle=$(ls release/kolo-*-linux-x64.tar.gz)
+          mkdir -p /tmp/tampered
+          cp "$bundle" "/tmp/tampered/$(basename "$bundle")"
+          printf 'x' >> "/tmp/tampered/$(basename "$bundle")"
+          if bash scripts/install.sh --bundle "/tmp/tampered/$(basename "$bundle")" --sums "$bundle.sha256" --no-init --no-service --no-invite; then
+            echo "tampered bundle was accepted"; exit 1
+          fi
+
+  installer-windows-syntax:
+    name: installer win32 (parse + dry-run)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: PowerShell installer parses and dry-runs
+        shell: pwsh
+        run: |
+          $tokens = $null; $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile("scripts/install.ps1", [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { $errors | ForEach-Object { Write-Error $_.Message }; exit 1 }
+          $env:LOCALAPPDATA = "$env:RUNNER_TEMP/localappdata"
+          pwsh -NoProfile -File scripts/install.ps1 -DryRun -Version 0.0.0-ci

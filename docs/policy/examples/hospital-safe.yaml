@@ -1,0 +1,76 @@
+# Hospital-safe starter policy. Residents answer staff questions, draft notes and summarise
+# records; they execute nothing, reach only the record systems, never read patient files
+# directly, and a person approves every message to a care channel.
+version: 1
+name: hospital-safe
+description: Clinical assistants with no execution, record systems only, human-approved outbound messages.
+
+agents:
+  "*":
+    tools:
+      deny: [exec, process, browser, gateway, nodes, cron, kip_engine_task]
+      allow: [read, memory_*, sessions_*, session_status, web_fetch, message, mcp_*, agents_list]
+    permissions:
+      - "read:/workspace/**"
+      - "write:/workspace/drafts/**"
+    channels: [slack, web]
+    limits:
+      maxConcurrentJobs: 2
+      wallClockPerJobMs: 600000
+      maxSteps: 60
+
+budgets:
+  currency: USD
+  resetHourUtc: 0
+  fleet:
+    tokensPerDay: 10000000
+    costPerDay: 150
+    onBreach: pause
+  agents:
+    "*":
+      tokensPerDay: 1500000
+      costPerDay: 25
+      toolCallsPerHour: 300
+      onBreach: pause
+
+kill:
+  fleet: false
+  agents: []
+  mayFlip: [owner, admin]
+
+approvals:
+  channel: "slack:#care-approvals"
+  timeoutMs: 300000
+  require:
+    - class: messaging          # every message a resident sends is approved by a person
+    - class: write              # drafts too
+
+network:
+  egress:
+    allow: ["ehr.internal.example", "labs.internal.example", "docs.internal.example"]
+    deny: ["169.254.169.254"]
+  mcp:
+    allow: [ehr, labs]
+
+data:
+  neverRead:
+    - "/data/patients/**"
+    - "**/*.dcm"
+    - "**/*.hl7"
+    - "~/.ssh/**"
+    - "**/.env"
+  neverWrite:
+    - "/data/**"
+    - "/etc/**"
+  secretPatterns:
+    - "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+    - "\\b[0-9]{3}-[0-9]{2}-[0-9]{4}\\b"      # SSN-shaped
+    - "\\bMRN[:# ]?[0-9]{6,}\\b"              # medical record numbers
+
+requests:
+  deny:
+    - operations: [runCodeMode, "codeMode.*", invokeTool, "node.invoke"]
+      scopes: [attach, observe]
+
+attestation:
+  required: true

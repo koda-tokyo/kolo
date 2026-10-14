@@ -1,0 +1,203 @@
+{
+  "name": "Finance OS Toolkit",
+  "description": "Schemas and templates for KodaSōken financial operations",
+  "schemas": {
+    "runway_calculator": {
+      "inputs": {
+        "current_cash_balance_jpy": { "type": "number", "required": true, "description": "Current cash + cash equivalents" },
+        "monthly_personnel_cost": { "type": "number", "required": true, "description": "Total monthly salary + benefits" },
+        "monthly_infrastructure_cost": { "type": "number", "required": true, "description": "GPU cloud, SaaS, office" },
+        "monthly_bd_cost": { "type": "number", "required": false, "default": 0 },
+        "monthly_ga_cost": { "type": "number", "required": false, "default": 0 },
+        "monthly_revenue": { "type": "number", "required": false, "default": 0, "description": "Recurring revenue (not grants)" },
+        "quarterly_grants": { "type": "array", "required": false, "items": { "amount": "number", "quarter": "string", "probability": "number" } }
+      },
+      "outputs": {
+        "gross_monthly_burn": "number",
+        "net_monthly_burn": "number",
+        "runway_months": "number",
+        "cash_out_date": "string (ISO date)",
+        "scenarios": {
+          "best": { "runway_months": "number", "assumptions": "string" },
+          "base": { "runway_months": "number", "assumptions": "string" },
+          "worst": { "runway_months": "number", "assumptions": "string" }
+        }
+      }
+    },
+    "cap_table_template": {
+      "fields": [
+        "shareholder_name",
+        "shareholder_type (founder|employee|advisor|investor)",
+        "entity_type (individual|corporation)",
+        "tax_residency (JP|US|other)",
+        "share_class (common|preferred_series_a|preferred_series_b)",
+        "shares_owned",
+        "ownership_pct",
+        "fully_diluted_pct",
+        "vesting_start_date",
+        "vesting_schedule (4yr_1cliff|3yr_1cliff|custom)",
+        "vested_shares",
+        "unvested_shares",
+        "cliff_date",
+        "exercise_price_jpy",
+        "issue_date",
+        "instrument (common|j_kiss|safe|option)",
+        "notes"
+      ]
+    },
+    "investor_crm_template": {
+      "fields": [
+        "investor_name",
+        "firm",
+        "fund_size_jpy",
+        "typical_check_size_min_jpy",
+        "typical_check_size_max_jpy",
+        "stage_focus (pre_seed|seed|series_a|series_b|agnostic)",
+        "sector_focus (ai|healthcare|enterprise|deep_tech|agnostic)",
+        "japan_presence (office|local_partner|remote|none)",
+        "portfolio_conflicts (list of competing portfolio companies)",
+        "warm_intro_source (name, relationship)",
+        "contact_email",
+        "contact_phone",
+        "last_contact_date",
+        "pipeline_stage (research|intro_scheduled|first_meeting|second_meeting|partner_meeting|term_sheet|dd|closed|passed)",
+        "next_step",
+        "next_step_due_date",
+        "decision_timeline",
+        "concerns_raised",
+        "investment_thesis_notes",
+        "internal_champion (name of person most excited internally)"
+      ]
+    },
+    "budget_template": {
+      "sections": {
+        "revenue": [
+          { "item": "grant_revenue_nedo", "category": "grant", "schedule": "quarterly", "notes": "By milestone" },
+          { "item": "grant_revenue_meti", "category": "grant", "schedule": "quarterly", "notes": "By milestone" },
+          { "item": "grant_revenue_mext", "category": "grant", "schedule": "quarterly", "notes": "By milestone" },
+          { "item": "consulting_revenue", "category": "other_income", "schedule": "monthly" },
+          { "item": "product_revenue", "category": "recurring", "schedule": "monthly", "notes": "Post-launch only" }
+        ],
+        "personnel": [
+          { "item": "ceo_salary", "department": "ga_bd", "type": "salary" },
+          { "item": "cto_salary", "department": "rd", "type": "salary" },
+          { "item": "ml_engineer_salary", "department": "rd", "type": "salary" },
+          { "item": "clinical_liaison_salary", "department": "clinical", "type": "salary" },
+          { "item": "employee_benefits", "department": "all", "type": "benefits", "notes": "Social insurance ~15% of salary" },
+          { "item": "payroll_tax", "department": "all", "type": "tax", "notes": "Employer portion" }
+        ],
+        "infrastructure": [
+          { "item": "gpu_cloud", "department": "rd", "type": "variable", "notes": "AWS/GCP GPU instances" },
+          { "item": "saas_tools", "department": "all", "type": "recurring" },
+          { "item": "office_rent", "department": "ga", "type": "fixed" },
+          { "item": "it_equipment", "department": "all", "type": "one_time" }
+        ],
+        "rd": [
+          { "item": "clinical_validation_studies", "department": "clinical", "type": "project" },
+          { "item": "data_acquisition", "department": "rd", "type": "project" },
+          { "item": "model_training_runs", "department": "rd", "type": "project" }
+        ],
+        "bd": [
+          { "item": "travel_hospital_visits", "department": "bd", "type": "variable" },
+          { "item": "conferences_events", "department": "bd", "type": "variable" },
+          { "item": "partnership_development", "department": "bd", "type": "project" }
+        ],
+        "ga": [
+          { "item": "legal_fees", "department": "ga", "type": "variable" },
+          { "item": "zeirishi_accounting", "department": "ga", "type": "recurring" },
+          { "item": "insurance", "department": "ga", "type": "recurring" },
+          { "item": "corporate_taxes_minimum", "department": "ga", "type": "fixed", "notes": "Minimum ¥70k/year" }
+        ]
+      }
+    },
+    "grant_eligibility_checklist": {
+      "nedo": {
+        "name_jp": "NEDO 研究開発助成",
+        "eligibility": [
+          "KK registered in Japan",
+          "AI or deep tech focus",
+          "R&D plan with clear milestones",
+          "Commercialization path documented",
+          "Tax filings current"
+        ],
+        "typical_grant": "¥10M-500M",
+        "application_timeline": "3-6 months to first disbursement",
+        "key_documents": ["Research plan (Japanese)", "Budget breakdown", "Team CVs", "Letters of support"]
+      },
+      "meti_it_donyu": {
+        "name_jp": "IT導入補助金",
+        "eligibility": [
+          "SME defined as: capital < ¥300M OR employees < 300",
+          "IT tool/service development",
+          "Productivity improvement demonstrable"
+        ],
+        "typical_grant": "¥5M-100M",
+        "application_timeline": "2-4 months",
+        "key_documents": ["Business plan", "IT tool specification", "Productivity improvement metrics"]
+      },
+      "mext_kakenhi": {
+        "name_jp": "科研費 (科学研究費助成事業)",
+        "eligibility": [
+          "University partnership required",
+          "Academic research contribution clear",
+          "Researcher CV with publications"
+        ],
+        "typical_grant": "¥5M-50M",
+        "application_timeline": "6-12 months (academic cycle)",
+        "key_documents": ["Research proposal (academic format)", "Publication list", "University collaboration agreement"]
+      },
+      "angel_tax": {
+        "name_jp": "エンジェル税制",
+        "eligibility": [
+          "KK, less than 10 years old",
+          "Not a subsidiary of large company",
+          "Not publicly listed",
+          "Application filed with tax office"
+        ],
+        "benefit": "Angel investors can deduct investment from taxable income (up to ¥8M)",
+        "application_timeline": "1-2 months",
+        "key_documents": ["Angel tax application form", "Business plan", "Financial statements"]
+      },
+      "rd_tax_credit": {
+        "name_jp": "研究開発税制",
+        "eligibility": [
+          "Qualifying R&D expenditure documented",
+          "KK or GK registered in Japan"
+        ],
+        "benefit": "2-14% credit on R&D spend (higher for SMEs); unused credits carryforward 3 years",
+        "application_timeline": "Filed with annual tax return",
+        "key_documents": ["R&D expense tracking", "Project descriptions", "Time allocation records"]
+      }
+    }
+  },
+  "data_room_checklist": {
+    "corporate": [
+      "Tōki (登記) — commercial registry certificate",
+      "Teikan (定款) — articles of incorporation",
+      "Torishimariyaku ketteiroku (取締役決定録) — board minutes",
+      "Kabunushi meibo (株主名簿) — shareholder register",
+      "Shinkabu yoyakuken haritsuke (新株予約権原簿) — option register"
+    ],
+    "financial": [
+      "Monthly financial statements (past 12 months)",
+      "Annual tax returns (past 2 years)",
+      "Consumption tax returns (if applicable)",
+      "Grant agreements and disbursement schedules",
+      "Burn rate analysis and runway projection",
+      "Cap table (fully diluted, with option pool)"
+    ],
+    "commercial": [
+      "Pilot agreements with hospitals",
+      "LOIs or MOUs with partners",
+      "Grant award letters",
+      "Customer pipeline",
+      "Product roadmap"
+    ],
+    "ip": [
+      "IP assignment agreements from all founders",
+      "Patent applications (if any)",
+      "Software license agreements (open source audit)",
+      "Data use agreements (for training data)"
+    ]
+  }
+}

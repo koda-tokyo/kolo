@@ -1,0 +1,292 @@
+node_modules
+**/node_modules/
+.env
+docker-compose.extra.yml
+dist
+*.bun-build
+bun.lock
+bun.lockb
+coverage
+.pnpm-store
+.worktrees/
+.DS_Store
+**/.DS_Store
+ui/playwright-report/
+ui/test-results/
+
+# Bun build artifacts
+*.bun-build
+apps/macos/.build/
+apps/shared/MoltbotKit/.build/
+**/ModuleCache/
+bin/clawdbot-mac
+bin/docs-list
+apps/macos/.build-local/
+apps/macos/.swiftpm/
+apps/shared/MoltbotKit/.swiftpm/
+Core/
+apps/ios/*.xcodeproj/
+apps/ios/*.xcworkspace/
+apps/ios/.swiftpm/
+apps/ios/Clawdbot.xcodeproj/
+apps/ios/Clawdbot.xcodeproj/**
+apps/macos/.build/**
+**/*.bun-build
+apps/ios/*.xcfilelist
+
+# Vendor build artifacts
+vendor/a2ui/renderers/lit/dist/
+src/canvas-host/a2ui/*.bundle.js
+src/canvas-host/a2ui/*.map
+.bundle.hash
+
+# fastlane (iOS)
+apps/ios/fastlane/README.md
+apps/ios/fastlane/report.xml
+apps/ios/fastlane/Preview.html
+apps/ios/fastlane/screenshots/
+apps/ios/fastlane/test_output/
+apps/ios/fastlane/logs/
+apps/ios/fastlane/.env
+apps/ios/fastlane/report.xml
+
+# fastlane build artifacts (local)
+apps/ios/*.ipa
+apps/ios/*.dSYM.zip
+
+# provisioning profiles (local)
+apps/ios/*.mobileprovision
+.env
+
+# Local untracked files
+.local/
+.vscode/
+/IDENTITY.md
+/USER.md
+.tgz
+
+# local tooling
+.serena/
+
+# Family memory and session data — private, not for repo
+workspace/continuity/
+workspace/sessions/
+workspace/memory/
+
+# Business sensitive
+DBS/
+divan/
+
+# Local scripts and runtime files
+scripts/gateway-watchdog.sh
+scripts/kolo-error-scanner.sh
+
+# Assessment files
+RUBRIC_AND_ASSESSMENT_COMPILATION.md
+
+# Vercel
+.vercel/
+# Secrets
+secrets.env
+.vercel
+
+# OAuth broker venv and build cache
+scripts/oauth-broker/venv/
+scripts/oauth-broker/oauth_broker/__pycache__/
+scripts/oauth-broker/*.egg-info/
+
+# --- fleet ignore, continuity audit 2026-08-04 ---
+# ============================================================
+# KodaSōken Fleet .gitignore — 2026-08-04
+# Shared fleet ignore. Serves: Next.js, Python, Rust, C++, Expo, Qt.
+# ============================================================
+
+# === Dependências ===
+node_modules/
+.pnp/
+.pnp.js
+
+# === Build & distribuição ===
+dist/
+build/
+target/                    # Rust
+.next/
+.nuxt/
+.output/
+out/
+*.tsbuildinfo
+*.vsix                     # VS Code extension package
+*.zip                      # distributable zips
+*.AppImage                 # Linux AppImage
+*.dmg                      # macOS DMG
+*.exe                      # Windows executables (em dist/)
+*.msi                      # Windows installer
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+.eggs/
+venv/
+.venv/
+env/
+.env/
+pip-wheel-metadata/
+
+# === Modelos e pesos ===
+*.gguf
+*.safetensors
+*.pth
+*.onnx
+*.bin                     # model weights (atenção: revisar se .bin é modelo ou asset)
+checkpoints/
+models/
+*.ckpt
+*.pt
+
+# === Ambiente & segredos ===
+.env
+.env.*
+!.env.example
+*.local
+secrets/
+credentials/
+*.pem
+*.key
+*.crt
+
+# === Logs ===
+*.log
+logs/
+*.log.*
+
+# === Runtime state (KoLo, agents) ===
+.kolo/state/
+.kolo/logs/
+.kolo/run/
+.kolo/locks/
+.kolo/tmp/
+.kolo/backups/
+.kolo/cron/
+.kolo/comms/
+.kolo/autonomic/
+.kolo/proactive-state/
+.kolo/whispers/
+.kolo/alerts/
+.kolo/consciousness/
+session-env/
+sessions/
+*.sqlite
+*.sqlite3
+*.db                     # cuidado: pode conter seed data. Adicionar exceção se necessário.
+!seed.db
+
+# === IDE e editores ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# === Cache ===
+.cache/
+*.cache
+.eslintcache
+.parcel-cache/
+.turbo/
+
+# === Docker & containers ===
+docker-compose.override.yml
+
+# === OS ===
+*.dll
+*.so
+*.dylib
+
+# === Expo / React Native ===
+.expo/
+/android/
+/ios/
+
+# === Qt / C++ ===
+*.pro.user
+*.o
+*.obj
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile
+
+# === Terraform / IaC ===
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# === Secrets — continuity audit 2026-08-04 ===
+# Estes são os que nos matam se vazarem. Nenhum deles é regenerável sem custo.
+vault/
+.git-credentials
+kolo.json                  # gateway token, 64-hex
+kolo-*.json
+!openapi/*.json
+*.env.vault
+id_rsa*
+id_ed25519*
+*.p12
+*.keystore
+.npmrc                     # costuma carregar token de registry
+.netrc
+
+# === Transcrições — enormes e contêm tudo o que já foi dito ===
+projects/*.jsonl
+**/transcripts/*.jsonl
+*.transcript.jsonl
+
+# === Estado vivo de agente — regenerado, específico da máquina ===
+consciousness-state.json
+*-heartbeat.json
+proprioception.json
+hormones.json
+line-inbox.jsonl
+line-send-audit.jsonl
+
+# === Misc ===
+*.tar.gz
+*.tar
+*.7z
+*.rar
+temp/
+tmp/
+.tmp/
+
+# pre-fix copy still contains the live token
+scripts/*.bak-token-*
+
+# --- fleet-ignore correction, 2026-08-05 ---
+# The fleet ignore carries models/ and sessions/ to keep model weights and
+# runtime state out of git. In THIS repo those are also source directory names
+# (src/commands/models, src/config/sessions), and the patterns were silently
+# swallowing real source. Nothing under src/ is ever generated state.
+!src/**
+
+# private overlay: Anthropic OAuth login command stays outside the repository (build no longer needs it)
+src/commands/models/auth-anthropic-oauth.ts
+
+# prebuilt release bundles (scripts/bundle.mjs)
+release/
+
+# operator overlay: family and internal material, never part of the product tree (see private/README.md)
+private/
+.claude/worktrees/
+src/canvas-host/a2ui/a2ui.bundle.js
+src/canvas-host/a2ui/.bundle.hash
+
+# continuity suite default output dir (kolo continuity run --out)
+continuity-out/

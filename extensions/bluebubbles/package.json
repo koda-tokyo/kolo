@@ -1,0 +1,36 @@
+{
+  "name": "@KoLo/bluebubbles",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo BlueBubbles channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "bluebubbles",
+      "label": "BlueBubbles",
+      "selectionLabel": "BlueBubbles (macOS app)",
+      "detailLabel": "BlueBubbles",
+      "docsPath": "/channels/bluebubbles",
+      "docsLabel": "bluebubbles",
+      "blurb": "iMessage via the BlueBubbles mac app + REST API.",
+      "aliases": [
+        "bb"
+      ],
+      "preferOver": [
+        "imessage"
+      ],
+      "systemImage": "bubble.left.and.text.bubble.right",
+      "order": 75
+    },
+    "install": {
+      "npmSpec": "@KoLo/bluebubbles",
+      "localPath": "extensions/bluebubbles",
+      "defaultChoice": "npm"
+    }
+  }
+}

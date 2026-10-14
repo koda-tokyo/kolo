@@ -1,0 +1,19 @@
+# KoLo licensing map
+
+Decision: KODA, 2026-10-13: **open core.**
+Until the public release the whole repository stays private and the root `LICENSE` governs. At publication the map below applies. Every new module is authored under the layer it belongs to from its first commit.
+
+| Layer | Terms | What |
+|---|---|---|
+| **Open** | MIT (`LICENSES/MIT.md`) | the wire protocol and schemas, the SDK and generated client, the plugin API and plugin SDK, the CLI |
+| **Source-available core** | Functional Source License, FSL-1.1-Apache-2.0 (`LICENSES/FSL-1.1-Apache-2.0.md`): use, modify, self-host freely; no competing hosted service; each release converts to Apache-2.0 two years after it is published | the gateway runtime, service supervisor, channels, sessions, memory store, tool policy, secrets store, integrity gate, audit log |
+| **Proprietary** | KODA Proprietary License (`LICENSES/PROPRIETARY.md`), under written agreement only | the proprietary identity engine and role packs (identity, continuity and autonomic layers), protected policy system, sovereign models and adapters, evaluation dashboard, cloud tier, enterprise features (SSO, audit export, air-gap), support |
+| **Never published** | n/a | KODA's own identity files, protected policy files and resident memory, workspaces, and any personal data |
+
+Third-party components keep their own licenses and notices (see `NOTICE`). Where this repository derives from upstream open-source work, the upstream license and attribution are retained in the relevant files; KODA's own contributions and the whole are licensed as above.
+
+Trademarks: "KoLo", "KODA", "KODA Kenkō" and the KODA marks are not licensed under any of the above and may not be used to identify forks or derived products (see `TRADEMARKS.md`).
+
+Contributions: external contributions require the Contributor License Agreement in `CLA.md`.
+
+Industrial agents ("Kurahi", クラヒ — the commercial resident agents, decided 2026-10-13): agents built on this platform receive identity, memory and policy from the proprietary identity engine but never KODA's own identity files. KODA's own agents are not a product.

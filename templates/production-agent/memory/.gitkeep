@@ -1,0 +1,13 @@
+# Memory Directory
+
+This folder contains daily memory files.
+
+## Structure
+- `YYYY-MM-DD.md` - Daily conversation logs
+- `diary/YYYY-MM-DD.md` - Consciousness tick logs
+- `projects/<name>.md` - Project-specific context
+
+## Retention
+- Daily files: 7 days active, then archive
+- Diary: 30 days active
+- Projects: Until completion + 7 days

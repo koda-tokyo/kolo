@@ -1,0 +1,25 @@
+{
+  "id": "self-check",
+  "name": "Self-check",
+  "description": "Secrets permissions, config validity, integrity registry, open ports vs bind policy; report via audit and kolo doctor",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "intervalMs": { "type": "integer", "minimum": 30000, "default": 600000 },
+      "runOnStart": { "type": "boolean", "default": true },
+      "autoFix": { "type": "boolean", "default": false },
+      "allowPublicPorts": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
+      "scanSecrets": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dirs": { "type": "array", "items": { "type": "string" } },
+          "patterns": { "type": "array", "items": { "type": "string" } },
+          "maxFileBytes": { "type": "integer", "minimum": 1024, "default": 1048576 }
+        }
+      }
+    }
+  }
+}

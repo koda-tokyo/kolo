@@ -1,0 +1,14 @@
+{
+  "id": "locationiq",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "LocationIQ API key (get free at locationiq.com)"
+      }
+    }
+  }
+}

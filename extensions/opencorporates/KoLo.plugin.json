@@ -1,0 +1,14 @@
+{
+  "id": "opencorporates",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiToken": {
+        "type": "string",
+        "description": "OpenCorporates API token (optional — free tier works without key for basic lookups)"
+      }
+    }
+  }
+}

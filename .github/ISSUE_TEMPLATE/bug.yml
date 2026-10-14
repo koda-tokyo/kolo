@@ -1,0 +1,75 @@
+name: Bug report
+description: Something the product does that it should not do, or does not do that it should.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: search existing issues, and run `kolo doctor` and `kolo self-check` on the affected installation. Redact tokens, keys and other people's identifiers from everything you paste.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `kolo --version`.
+      placeholder: "2026.2.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Install method
+      options:
+        - installer script (install.sh / install.ps1)
+        - npm
+        - from source
+        - container image
+        - other (say which below)
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "Ubuntu 24.04 / macOS 15 / Windows 11"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The smallest sequence of commands or actions that shows the problem.
+      placeholder: |
+        1. kolo init --non-interactive --provider sakura
+        2. kolo tui
+        3. type /sessions
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What happened instead, including the exact error line and exit code.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and diagnostics
+      description: Relevant lines from `kolo logs` or `kolo doctor --json`, redacted. Rendered as a code block.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and discussions.
+          required: true
+        - label: I removed secrets and personal data from this report.
+          required: true

@@ -1,0 +1,29 @@
+{
+  "name": "@KoLo/line",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo LINE channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "line",
+      "label": "LINE",
+      "selectionLabel": "LINE (Messaging API)",
+      "docsPath": "/channels/line",
+      "docsLabel": "line",
+      "blurb": "LINE Messaging API bot for Japan/Taiwan/Thailand markets.",
+      "order": 75,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@KoLo/line",
+      "localPath": "extensions/line",
+      "defaultChoice": "npm"
+    }
+  }
+}

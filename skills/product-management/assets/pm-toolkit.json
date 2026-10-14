@@ -1,0 +1,132 @@
+{
+  "name": "PM Toolkit — KodaSōken",
+  "version": "1.0.0",
+  "description": "Reusable templates for product management in Japanese healthcare AI. Lightweight, startup-focused.",
+  "templates": {
+    "product-brief": {
+      "description": "One-pager for a new product or major feature. Use before committing engineering resources.",
+      "sections": [
+        {"field": "title", "prompt": "Working title for this product/feature"},
+        {"field": "outcome", "prompt": "What user/customer behavior change will this drive? (One sentence)"},
+        {"field": "problem", "prompt": "What problem are we solving? Evidence this problem exists (user quotes, data, market signal)."},
+        {"field": "who", "prompt": "Target user segment. Be specific: 'primary care physicians in clinics with 3+ doctors in Tokyo metro' not 'doctors'."},
+        {"field": "solution_summary", "prompt": "What are we building? 3–5 sentences. Include key differentiator vs current alternatives."},
+        {"field": "regulatory_classification", "prompt": "非医療機器 / 医療機器 Class I–IV / SaMD? If unclear, note 'needs PMDA pre-consultation'."},
+        {"field": "success_metrics", "prompt": "How will we know this worked? 2–3 measurable leading indicators."},
+        {"field": "risks", "prompt": "Top 3 risks (technical, clinical, regulatory, market). For each: likelihood (L/M/H) and mitigation."},
+        {"field": "go_no_go", "prompt": "What must be true to proceed? What would make us kill this?"},
+        {"field": "rough_timeline", "prompt": "Now / Next / Later estimate. No dates. '~6 weeks to prototype, ~12 weeks to pilot-ready.'"},
+        {"field": "stakeholders", "prompt": "Who needs to approve? Who needs to be informed? (RACI lite)"}
+      ]
+    },
+    "feature-spec": {
+      "description": "Lightweight spec for a feature that's been prioritized into Now or Next. Not a PRD — a conversation starter.",
+      "sections": [
+        {"field": "feature_name", "prompt": "Short, descriptive name"},
+        {"field": "outcome", "prompt": "What user behavior change does this drive? Link to which OKR/KR."},
+        {"field": "user_story", "prompt": "As a [user], I want to [action] so that [outcome]. One primary story, optional secondary."},
+        {"field": "current_state", "prompt": "What happens today? Screenshot or 2-sentence description of current workflow."},
+        {"field": "proposed_state", "prompt": "What changes? Key interaction. Can be a sketch, wireframe link, or 5 bullet points."},
+        {"field": "edge_cases", "prompt": "What breaks? Error states, empty states, loading states. Clinical edge cases (rare diseases, drug interactions)."},
+        {"field": "acceptance_criteria", "prompt": "3–5 checkable conditions that mean 'done.' Include clinical accuracy threshold if applicable."},
+        {"field": "out_of_scope", "prompt": "What are we explicitly NOT building? Prevents scope creep."},
+        {"field": "dependencies", "prompt": "What needs to be in place? EMR API, model fine-tuning, regulatory clearance, data access."},
+        {"field": "effort_estimate", "prompt": "Person-weeks. From engineering, not PM."}
+      ]
+    },
+    "competitive-matrix": {
+      "description": "Schema for tracking competitors and feature comparison.",
+      "schema": {
+        "last_updated": "ISO date",
+        "players": [
+          {
+            "name": "Competitor name",
+            "category": "e.g., symptom checker, EMR vendor, AI chatbot, consulting",
+            "funding_stage": "Seed / Series A / Public / Division of large corp",
+            "target_customer": "Who they sell to",
+            "key_strengths": ["strength 1", "strength 2", "strength 3"],
+            "key_weaknesses": ["weakness 1", "weakness 2"],
+            "our_advantage": "Why we win against them",
+            "features": {
+              "feature_name": "✓ (shipped) / △ (in dev) / ✗ (none)"
+            }
+          }
+        ],
+        "feature_categories": [
+          "Real-time consultation support",
+          "Japanese NLP",
+          "EMR integration",
+          "Patient-facing output",
+          "Drug interaction check",
+          "Clinical guideline integration",
+          "Insurance claim support",
+          "PMDA regulatory pathway",
+          "Multi-language support",
+          "Analytics / reporting"
+        ]
+      }
+    },
+    "user-interview-guide": {
+      "description": "30-minute semi-structured interview guide for Japanese physician research.",
+      "structure": {
+        "prep": [
+          "Review physician's clinic profile (size, specialty, EMR system)",
+          "Confirm recording consent (required for medical context)",
+          "Have product ready for demo (if applicable)"
+        ],
+        "rapport_5min": [
+          "Thank them for time. Explain purpose: 'we're learning how physicians work, not selling anything'",
+          "Ask about their practice: '何名くらいの患者さんを診られていますか?'",
+          "Ask about their typical day: '今日はどんな一日でしたか?'"
+        ],
+        "context_10min": [
+          "Walk me through your last consultation from start to finish: '最後の診察を最初から最後まで教えてください'",
+          "Probe: What tools did you use? What slowed you down? What did you do after the patient left?",
+          "Probe: Documentation — when, how, how long? 'カルテはいつ書かれますか?'"
+        ],
+        "deep_dive_10min": [
+          "Identify the biggest friction point from context and go deep",
+          "Ask about past attempts to solve it: 'この問題に対して、何か試されたことはありますか?'",
+          "Ask about ideal state: '魔法の杖があったら、どう変わりますか?'"
+        ],
+        "demo_if_applicable_5min": [
+          "Show prototype/concept. Watch, don't explain.",
+          "'これを見て、最初にどう思われますか?' (What's your first impression?)",
+          "'実際の診察で使うとしたら、どこが一番気になりますか?' (What would concern you most in real practice?)"
+        ],
+        "close_5min": [
+          "Any other feedback? '他に何かありますか?'",
+          "Ask for referrals: '同じような課題をお持ちの先生をご存知ですか?'",
+          "Explain next steps and thank"
+        ],
+        "post_interview": [
+          "Write What? So What? Now What? within 1 hour",
+          "Tag insights for affinity mapping",
+          "Note any product ideas that emerged (but don't commit to building them)"
+        ]
+      }
+    },
+    "prioritization-matrix": {
+      "description": "RICE-based prioritization matrix for feature scoring.",
+      "schema": {
+        "cycle": "e.g., Q3 2026",
+        "date_scored": "ISO date",
+        "items": [
+          {
+            "feature": "Feature name",
+            "outcome": "What outcome does this drive?",
+            "reach": {"score": "1–10", "rationale": "Why this score?"},
+            "impact": {"score": "0.25/0.5/1/2/3", "rationale": "Why this score?"},
+            "confidence": {"score": "20%/50%/80%/100%", "rationale": "What data supports this?"},
+            "effort": {"person_weeks": "number", "rationale": "Engineering estimate"},
+            "rice_score": "(R × I × C) / E",
+            "cost_of_delay": "None / Low / Medium / High / Critical — with reason",
+            "kano_type": "Basic / Performance / Excitement / Indifferent",
+            "status": "Now / Next / Later / Killed",
+            "notes": "Any additional context"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# gitleaks configuration for the public KoLo tree.
+# Every path below was read and confirmed to hold no live credential:
+# test fixtures shaped like secrets for the redaction/policy layers, documentation
+# placeholders, a detect-secrets baseline (hashes of known non-secrets) and the
+# public OAuth client id of the Qwen portal PKCE flow (not a secret by design).
+title = "KoLo public tree"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known non-secrets (verified 2026-10-14)"
+paths = [
+  '''(^|/)\.secrets\.baseline$''',
+  '''\.test\.ts$''',
+  '''(^|/)docs/concepts/session\.md$''',
+  '''(^|/)docs/gateway/configuration\.md$''',
+  '''(^|/)docs/gateway/openai-http-api\.md$''',
+  '''(^|/)docs/gateway/openresponses-http-api\.md$''',
+  '''(^|/)docs/gateway/tools-invoke-http-api\.md$''',
+  '''(^|/)skills/system-design-mastery/references/06-production-infra\.md$''',
+  '''(^|/)extensions/qwen-portal-auth/oauth\.ts$''',
+  '''(^|/)src/providers/qwen-portal-oauth\.ts$''',
+  '''(^|/)src/continuity-suite/runner\.ts$''',
+]
+regexes = [
+  '''YOUR_TOKEN''',
+  '''-----BEGIN (OPENSSH )?PRIVATE KEY-----"''',
+]

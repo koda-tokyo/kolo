@@ -1,0 +1,52 @@
+name: Feature request
+description: A capability or change you want, with the problem it solves.
+title: "feature: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [ROADMAP.md](https://github.com/koda-tokyo/kolo/blob/main/ROADMAP.md) first; if the idea is already listed, comment on the tracking issue instead. For anything larger than a small addition, open a discussion before writing code.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you are trying to do and what stands in the way today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Commands, config keys, API routes or behaviour as you would like them to be.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - terminal UI
+        - gateway / API
+        - sessions and jobs
+        - tools, MCP, Code Mode
+        - providers and models
+        - channels
+        - packaging, service, update
+        - security, pairing, audit
+        - documentation
+        - other
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: I am willing to open a pull request for this.
+        - label: This touches the proprietary layer in LICENSING.md (if unsure, leave unchecked).

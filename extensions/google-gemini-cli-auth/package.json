@@ -1,0 +1,14 @@
+{
+  "name": "@KoLo/google-gemini-cli-auth",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo Gemini CLI OAuth provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

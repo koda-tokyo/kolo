@@ -1,0 +1,28 @@
+{
+  "name": "@KoLo/mattermost",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo Mattermost channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "mattermost",
+      "label": "Mattermost",
+      "selectionLabel": "Mattermost (plugin)",
+      "docsPath": "/channels/mattermost",
+      "docsLabel": "mattermost",
+      "blurb": "self-hosted Slack-style chat; install the plugin to enable.",
+      "order": 65
+    },
+    "install": {
+      "npmSpec": "@KoLo/mattermost",
+      "localPath": "extensions/mattermost",
+      "defaultChoice": "npm"
+    }
+  }
+}

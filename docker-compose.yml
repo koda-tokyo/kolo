@@ -1,0 +1,46 @@
+services:
+  kolo-gateway:
+    image: ${KOLO_IMAGE:-KoLo:local}
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      KOLO_GATEWAY_TOKEN: ${KOLO_GATEWAY_TOKEN}
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
+    volumes:
+      - ${KOLO_CONFIG_DIR}:/home/node/.kolo
+      - ${KOLO_WORKSPACE_DIR}:/home/node/.kolo/workspace
+    ports:
+      - "${KOLO_GATEWAY_PORT:-18789}:18789"
+      - "${KOLO_BRIDGE_PORT:-18790}:18790"
+    init: true
+    restart: unless-stopped
+    command:
+      [
+        "node",
+        "dist/index.js",
+        "gateway",
+        "--bind",
+        "${KOLO_GATEWAY_BIND:-lan}",
+        "--port",
+        "18789",
+      ]
+
+  kolo-cli:
+    image: ${KOLO_IMAGE:-KoLo:local}
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      KOLO_GATEWAY_TOKEN: ${KOLO_GATEWAY_TOKEN}
+      BROWSER: echo
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
+    volumes:
+      - ${KOLO_CONFIG_DIR}:/home/node/.kolo
+      - ${KOLO_WORKSPACE_DIR}:/home/node/.kolo/workspace
+    stdin_open: true
+    tty: true
+    init: true
+    entrypoint: ["node", "dist/index.js"]

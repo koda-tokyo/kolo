@@ -1,0 +1,14 @@
+{
+  "name": "@KoLo/imessage",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo iMessage channel plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

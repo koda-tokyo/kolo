@@ -1,0 +1,14 @@
+{
+  "id": "alpha-vantage",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "Alpha Vantage API key (get free at alphavantage.co)"
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "toolkit_version": "1.0",
+  "description": "Japan business operations toolkit for KodaSōken",
+  "sales_process_map": {
+    "stages": [
+      {"step": 1, "name": "Initial Contact (初回接触)", "duration": "2-4 weeks", "activities": ["Introduction via reference or event", "Company brochure exchange", "Initial meeting (先方訪問)"], "key_doc": "会社案内"},
+      {"step": 2, "name": "Relationship Building (関係構築)", "duration": "1-3 months", "activities": ["Multiple follow-up meetings", "Technical capability presentation", "Understanding customer needs (ヒアリング)"], "key_doc": "提案依頼書"},
+      {"step": 3, "name": "Needs Assessment & Proposal (提案)", "duration": "2-4 weeks", "activities": ["Detailed requirements gathering", "Custom solution design", "Estimate preparation"], "key_doc": "見積書・提案書"},
+      {"step": 4, "name": "Internal Review (稟議)", "duration": "2-8 weeks", "activities": ["Customer internal approval process", "Budget approval", "Legal review"], "key_doc": "稟議書"},
+      {"step": 5, "name": "Negotiation & Contract (契約)", "duration": "2-4 weeks", "activities": ["Price/terms negotiation", "Contract review (legal)", "Final approval"], "key_doc": "契約書"},
+      {"step": 6, "name": "Delivery & After-Sales (納品・アフター)", "duration": "Ongoing", "activities": ["Implementation", "Training", "Regular check-ins", "Support"], "key_doc": "納品書・サポート契約"}
+    ]
+  },
+  "government_proposal_checklist": [
+    "RFP reviewed and understood",
+    "Eligibility confirmed (会社概要, 事業実績)",
+    "登記簿謄本 (Company Registry Certificate) — current, <3 months old",
+    "納税証明書 (Tax Payment Certificate) — all taxes paid",
+    "財務諸表 (Financial Statements) — last 3 years",
+    "Proposal formatted per RFP specifications",
+    "Evaluation criteria addressed explicitly",
+    "Submission deadline confirmed (no extensions for 入札)",
+    "Presentation team prepared (if required)",
+    "Pricing: competitive but sustainable (no 赤字 bidding)"
+  ],
+  "partner_evaluation_matrix": {
+    "criteria": [
+      {"factor": "Partner Type", "options": ["代理店 (Agent/Distributor)", "SIer (System Integrator)", "OEM (White Label)"]},
+      {"factor": "Capabilities", "question": "Do they have the technical capability to implement/sell KODA KENKŌ?"},
+      {"factor": "Market Reach", "question": "How many hospitals/clinics in their network?"},
+      {"factor": "Financial Stability", "question": "Public or private? Revenue trend? Profitable?"},
+      {"factor": "Cultural Fit", "question": "Do they share our values? Trust-based or transaction-based?"},
+      {"factor": "Exclusivity", "question": "Do they demand exclusivity? For what scope/period?"},
+      {"factor": "References", "question": "Can they provide references from similar partnerships?"}
+    ]
+  },
+  "business_communication_templates": {
+    "email_structure": {
+      "fields": ["件名 (Subject)", "宛名 (Recipient — 株式会社〇〇 〇〇様)", "挨拶 (Greeting — いつもお世話になっております)", "本文 (Body — さて、このたびは...)", "結び (Closing — 今後ともよろしくお願いいたします)", "署名 (Signature block)"],
+      "敬語_level": "謙譲語 for own actions, 尊敬語 for recipient actions, 丁寧語 for neutral"
+    }
+  },
+  "corporate_filing_calendar": {
+    "filings": [
+      {"filing": "Annual Securities Report (有価証券報告書)", "authority": "Kanto Finance Bureau", "deadline": "Within 3 months of FY end"},
+      {"filing": "Corporate Tax Return (法人税申告)", "authority": "Tax Office", "deadline": "Within 2 months of FY end"},
+      {"filing": "Consumption Tax Return (消費税申告)", "authority": "Tax Office", "deadline": "Within 2 months of FY end"},
+      {"filing": "Withholding Tax Payment (源泉徴収)", "authority": "Tax Office", "deadline": "Monthly or semi-annually"},
+      {"filing": "Social Insurance (社会保険)", "authority": "Pension Office", "deadline": "Monthly"},
+      {"filing": "Shareholder Meeting Minutes (株主総会議事録)", "authority": "Internal/Legal", "deadline": "Within 3 months of FY end"},
+      {"filing": "Board Meeting Minutes (取締役会議事録)", "authority": "Internal", "deadline": "Per meeting"}
+    ]
+  }
+}

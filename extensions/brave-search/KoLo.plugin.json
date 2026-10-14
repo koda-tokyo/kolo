@@ -1,0 +1,14 @@
+{
+  "id": "brave-search",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "Brave Search API key (get free at brave.com/search/api)"
+      }
+    }
+  }
+}

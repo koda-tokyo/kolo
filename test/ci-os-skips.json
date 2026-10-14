@@ -1,0 +1,9 @@
+{
+  "$comment": "Explicit, reviewed OS-specific test exclusions for the CI matrix (vitest.config.ts applies the list for process.platform). Add a glob with the reason; remove it when the test is fixed.",
+  "win32": ["src/daemon/bundle-service.test.ts"],
+  "darwin": [],
+  "linux": [],
+  "win32_reasons": {
+    "src/daemon/bundle-service.test.ts": "macOS LaunchAgent install driven through a fake launchctl on PATH; on Windows execFile cannot run a .cmd shim, so the fake is never invoked. The feature is macOS-only and is covered on the darwin and linux jobs."
+  }
+}

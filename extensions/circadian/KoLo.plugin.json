@@ -1,0 +1,33 @@
+{
+  "id": "circadian",
+  "name": "Circadian",
+  "description": "Phase-of-day signal (dawn … deep-night) for agents, plugins and schedules",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "intervalMs": { "type": "integer", "minimum": 5000, "default": 60000 },
+      "timezone": { "type": "string" },
+      "phases": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "from", "to"],
+          "properties": {
+            "name": { "type": "string" },
+            "from": { "type": "integer", "minimum": 0, "maximum": 23 },
+            "to": { "type": "integer", "minimum": 0, "maximum": 24 },
+            "monitoring": { "type": "string", "enum": ["reduced", "normal", "heightened"] },
+            "alertThreshold": { "type": "string", "enum": ["critical-only", "all"] },
+            "cleanupAllowed": { "type": "boolean" },
+            "expectedActivity": { "type": "string", "enum": ["minimal", "low", "normal", "high"] }
+          }
+        }
+      },
+      "notifySessionKey": { "type": "string" },
+      "writeFile": { "type": "boolean", "default": true }
+    }
+  }
+}

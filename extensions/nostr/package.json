@@ -1,0 +1,34 @@
+{
+  "name": "@KoLo/nostr",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo Nostr channel plugin for NIP-04 encrypted DMs",
+  "type": "module",
+  "dependencies": {
+    "nostr-tools": "^2.22.1",
+    "kolo": "workspace:@kodasoken/kolo@*",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "nostr",
+      "label": "Nostr",
+      "selectionLabel": "Nostr (NIP-04 DMs)",
+      "docsPath": "/channels/nostr",
+      "docsLabel": "nostr",
+      "blurb": "Decentralized protocol; encrypted DMs via NIP-04.",
+      "order": 55,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@KoLo/nostr",
+      "localPath": "extensions/nostr",
+      "defaultChoice": "npm"
+    }
+  }
+}

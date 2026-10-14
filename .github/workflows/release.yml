@@ -1,0 +1,212 @@
+name: Release
+
+# M8 release pipeline.
+#   Tag push `v*`      -> stable (or beta when the tag has a prerelease suffix) release.
+#   workflow_dispatch  -> nightly prerelease `v<pkg>-nightly.<date>.<sha7>` from the chosen ref,
+#                         or a dry run (build + verify every OS, publish nothing).
+# Per OS: build, test, bundle (+ `bin/kolo --version` on a clean PATH), upload. Then one job
+# assembles SHA256SUMS.txt, attests provenance (SLSA, actions/attest-build-provenance), writes a
+# CycloneDX SBOM from the Linux bundle, and publishes the GitHub Release with notes from
+# CHANGELOG.md (scripts/release-notes.mjs). Artefacts are unsigned by decision; the optional
+# signing steps below are gated on secrets being present and are off until those exist.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "nightly = publish a prerelease from this ref; dry-run = build and verify only"
+        type: choice
+        options: [nightly, dry-run]
+        default: dry-run
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  version:
+    name: Resolve version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      tag: ${{ steps.v.outputs.tag }}
+      prerelease: ${{ steps.v.outputs.prerelease }}
+      publish: ${{ steps.v.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          set -euo pipefail
+          pkg=$(node -p "require('./package.json').version")
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            tag="${GITHUB_REF#refs/tags/}"
+            version="${tag#v}"
+            if [[ "$version" != "$pkg" ]]; then
+              echo "::error::tag $tag does not match package.json version $pkg (run scripts/release-prep.mjs)"; exit 1
+            fi
+            prerelease=false; [[ "$version" == *-* ]] && prerelease=true
+            publish=true
+          elif [[ "${{ github.event.inputs.mode }}" == "nightly" ]]; then
+            version="${pkg%%-*}-nightly.$(date -u +%Y%m%d).$(git rev-parse --short HEAD)"
+            tag="v${version}"; prerelease=true; publish=true
+          else
+            version="${pkg%%-*}-dryrun.$(git rev-parse --short HEAD)"
+            tag="v${version}"; prerelease=true; publish=false
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
+          echo "version=$version tag=$tag prerelease=$prerelease publish=$publish"
+
+  build:
+    name: Build ${{ matrix.target }}
+    needs: version
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+          - os: macos-latest
+            target: darwin-arm64
+          - os: windows-latest
+            target: win32-x64
+          # Later: ubuntu-24.04-arm (linux-arm64), macos-13 (darwin-x64). Not in the evaluation kit.
+    env:
+      CI: "true"
+      KOLO_BUNDLE_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Unit + extensions + gateway tests
+        run: pnpm test
+      - name: Bundle + verify (bin/kolo --version with no Node on PATH)
+        run: node scripts/bundle.mjs --target ${{ matrix.target }} --verify
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-${{ matrix.target }}
+          path: |
+            release/kolo-*.tar.gz
+            release/kolo-*.zip
+            release/kolo-*.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish release
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download bundles
+        uses: actions/download-artifact@v4
+        with:
+          pattern: bundle-*
+          path: assets
+          merge-multiple: true
+      - name: Assemble SHA256SUMS.txt
+        run: |
+          set -euo pipefail
+          cd assets
+          cat ./*.sha256 | sort -k2 > SHA256SUMS.txt
+          rm -f ./*.sha256
+          sha256sum -c SHA256SUMS.txt
+          ls -la
+      - name: SBOM (CycloneDX, from the Linux bundle)
+        run: |
+          set -euo pipefail
+          mkdir -p sbom-src
+          tar -xzf assets/kolo-*-linux-x64.tar.gz -C sbom-src
+      - uses: anchore/sbom-action@v0
+        with:
+          path: sbom-src
+          format: cyclonedx-json
+          artifact-name: kolo-${{ needs.version.outputs.version }}.cdx.json
+          output-file: assets/kolo-${{ needs.version.outputs.version }}.cdx.json
+          upload-artifact: false
+      - name: Provenance attestation
+        if: needs.version.outputs.publish == 'true'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            assets/kolo-*.tar.gz
+            assets/kolo-*.zip
+            assets/SHA256SUMS.txt
+      - name: Release notes
+        run: |
+          set -euo pipefail
+          v="${{ needs.version.outputs.version }}"
+          if [[ "$v" == *-nightly.* || "$v" == *-dryrun.* ]]; then
+            {
+              echo "Nightly build of \`$(git rev-parse --short HEAD)\` (package version $(node -p "require('./package.json').version"))."
+              echo
+              echo "Unsigned evaluation bundles. Verify with \`SHA256SUMS.txt\`; provenance is attested. See docs/PACKAGING.md."
+            } > notes.md
+          else
+            node scripts/release-notes.mjs "$v" --out notes.md
+          fi
+          cat notes.md
+
+      # --- Optional signing (disabled until the secrets exist; unsigned by decision for the kit) ---
+      - name: Detect signing secrets
+        id: signing
+        env:
+          MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
+          WINDOWS_CERT_PFX: ${{ secrets.WINDOWS_CERT_PFX }}
+        run: |
+          echo "macos=$([[ -n "$MACOS_CERT_P12" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "windows=$([[ -n "$WINDOWS_CERT_PFX" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - name: macOS codesign + notarize (optional, off)
+        if: steps.signing.outputs.macos == 'true'
+        run: echo "signing secrets present; wire scripts/codesign-mac-app.sh + scripts/notarize-mac-artifact.sh here (needs a macOS runner job)"
+      - name: Windows Authenticode (optional, off)
+        if: steps.signing.outputs.windows == 'true'
+        run: echo "signing secrets present; wire signtool for node.exe and the launcher here (needs a Windows runner job)"
+
+      - name: Publish GitHub Release
+        if: needs.version.outputs.publish == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.version.outputs.tag }}
+          name: KoLo ${{ needs.version.outputs.version }}
+          body_path: notes.md
+          prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
+          target_commitish: ${{ github.sha }}
+          fail_on_unmatched_files: true
+          files: |
+            assets/kolo-*.tar.gz
+            assets/kolo-*.zip
+            assets/SHA256SUMS.txt
+            assets/kolo-*.cdx.json
+      - name: Dry run summary
+        if: needs.version.outputs.publish != 'true'
+        run: |
+          echo "Dry run: nothing published." >> "$GITHUB_STEP_SUMMARY"
+          ls -la assets >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,17 @@
+{
+  "name": "@KoLo/open-meteo",
+  "version": "2026.2.1-kolo.1",
+  "description": "Open-Meteo weather data plugin — unlimited, no API key",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "peerDependencies": {
+    "kolo": ">=2026.1.26"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

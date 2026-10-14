@@ -1,0 +1,53 @@
+{
+  "id": "proactive-triggers",
+  "name": "Proactive Triggers",
+  "description": "Config-declared impulse rules (interval / cron / condition) that send a system event to a session; dry-run by default",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "dryRun": { "type": "boolean", "default": true },
+      "tickMs": { "type": "integer", "minimum": 1000, "default": 30000 },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "message", "sessionKey"],
+          "properties": {
+            "id": { "type": "string" },
+            "enabled": { "type": "boolean", "default": true },
+            "every": { "type": "string", "description": "Interval such as 15m, 2h, 1d" },
+            "cron": { "type": "string", "description": "5-field cron: minute hour day-of-month month day-of-week" },
+            "cooldown": { "type": "string", "description": "Minimum gap between two firings (e.g. 1h)" },
+            "message": { "type": "string" },
+            "sessionKey": { "type": "string" },
+            "condition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "fileExists": { "type": "string" },
+                "fileMissing": { "type": "string" },
+                "fileOlderThan": {
+                  "type": "object", "additionalProperties": false, "required": ["path", "minutes"],
+                  "properties": { "path": { "type": "string" }, "minutes": { "type": "number", "minimum": 0 } }
+                },
+                "fileNewerThan": {
+                  "type": "object", "additionalProperties": false, "required": ["path", "minutes"],
+                  "properties": { "path": { "type": "string" }, "minutes": { "type": "number", "minimum": 0 } }
+                },
+                "hoursBetween": { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 24 }, "minItems": 2, "maxItems": 2 },
+                "weekdays": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 7 } },
+                "signalEquals": {
+                  "type": "object", "additionalProperties": false, "required": ["name", "value"],
+                  "properties": { "name": { "type": "string" }, "path": { "type": "string" }, "value": {} }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

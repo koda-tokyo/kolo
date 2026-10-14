@@ -1,0 +1,35 @@
+name: Security hardening (non-sensitive)
+description: A defence-in-depth improvement that is safe to discuss in public. Vulnerabilities go to the private address in SECURITY.md.
+title: "security: "
+labels: ["security", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Stop if this is exploitable.** A vulnerability, a bypass of authentication, pairing, tool policy or the integrity gate, or anything that exposes secrets must be reported privately as described in [SECURITY.md](https://github.com/koda-tokyo/kolo/blob/main/SECURITY.md). This form is for hardening proposals only.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This report does not describe an exploitable weakness in a released version.
+          required: true
+  - type: textarea
+    id: surface
+    attributes:
+      label: Surface
+      description: Which component (gateway, CLI, pairing, secrets store, audit log, channel extension, install script) and which setting or route.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed hardening
+      description: The control you want added or tightened, and the default you propose.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoff
+    attributes:
+      label: Trade-off
+      description: What it costs in compatibility, usability or performance.

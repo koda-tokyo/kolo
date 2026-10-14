@@ -1,0 +1,14 @@
+{
+  "name": "@KoLo/copilot-proxy",
+  "version": "2026.2.1-kolo.1",
+  "description": "KoLo Copilot Proxy provider plugin",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

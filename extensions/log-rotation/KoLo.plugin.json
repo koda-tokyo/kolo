@@ -1,0 +1,20 @@
+{
+  "id": "log-rotation",
+  "name": "Log Rotation",
+  "description": "Size and age caps for the state-root logs (and any extra directories)",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "intervalMs": { "type": "integer", "minimum": 10000, "default": 600000 },
+      "maxBytes": { "type": "integer", "minimum": 1024, "default": 52428800 },
+      "maxAgeDays": { "type": "integer", "minimum": 1, "default": 14 },
+      "keep": { "type": "integer", "minimum": 0, "default": 3 },
+      "compress": { "type": "boolean", "default": false },
+      "dirs": { "type": "array", "items": { "type": "string" } },
+      "extensions": { "type": "array", "items": { "type": "string" }, "default": [".log"] },
+      "dryRun": { "type": "boolean", "default": false }
+    }
+  }
+}

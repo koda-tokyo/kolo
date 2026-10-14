@@ -1,0 +1,186 @@
+{
+  "$comment": "Hand-maintained provider entries (KoLo 2.0, M9c/M10). These come first in registry.json, in this order, and win over the public catalogue. Entries are configuration identifiers, never product copy. Regenerate registry.json with: pnpm providers:sync",
+  "version": 1,
+  "providers": [
+    {
+      "id": "sakura",
+      "displayName": "Sakura AI Engine",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.ai.sakura.ad.jp/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Hosted in Japan",
+      "defaultModel": "gpt-oss-120b",
+      "envVar": "SAKURA_API_KEY",
+      "recommended": true
+    },
+    {
+      "id": "openai-compatible",
+      "displayName": "OpenAI-compatible endpoint",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Wherever the endpoint you give is hosted",
+      "requiresBaseUrl": true
+    },
+    {
+      "id": "ollama",
+      "displayName": "Ollama",
+      "apiStyle": "ollama",
+      "baseUrl": "http://127.0.0.1:11434",
+      "authHeader": "none",
+      "modelsEndpoint": "/api/tags",
+      "regionNote": "Local machine",
+      "envVar": "OLLAMA_API_KEY"
+    },
+    {
+      "id": "openai",
+      "displayName": "OpenAI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.openai.com/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "envVar": "OPENAI_API_KEY"
+    },
+    {
+      "id": "anthropic",
+      "displayName": "Anthropic",
+      "apiStyle": "anthropic-messages",
+      "baseUrl": "https://api.anthropic.com/v1",
+      "authHeader": "x-api-key",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "defaultModel": "claude-opus-4-6",
+      "envVar": "ANTHROPIC_API_KEY"
+    },
+    {
+      "id": "google",
+      "displayName": "Google Gemini API",
+      "apiStyle": "gemini",
+      "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+      "authHeader": "x-goog-api-key",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; region not selectable on this API",
+      "defaultModel": "gemini-3-pro-preview",
+      "envVar": "GEMINI_API_KEY"
+    },
+    {
+      "id": "mistral",
+      "displayName": "Mistral AI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.mistral.ai/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Hosted in the European Union",
+      "envVar": "MISTRAL_API_KEY"
+    },
+    {
+      "id": "deepseek",
+      "displayName": "DeepSeek",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.deepseek.com/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Hosted in China",
+      "defaultModel": "deepseek-v4-flash",
+      "envVar": "DEEPSEEK_API_KEY"
+    },
+    {
+      "id": "groq",
+      "displayName": "Groq",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.groq.com/openai/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "envVar": "GROQ_API_KEY"
+    },
+    {
+      "id": "openrouter",
+      "displayName": "OpenRouter",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Router; upstream region depends on the model",
+      "defaultModel": "auto",
+      "envVar": "OPENROUTER_API_KEY"
+    },
+    {
+      "id": "together",
+      "displayName": "Together AI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.together.xyz/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "envVar": "TOGETHER_API_KEY"
+    },
+    {
+      "id": "fireworks",
+      "displayName": "Fireworks AI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.fireworks.ai/inference/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "envVar": "FIREWORKS_API_KEY"
+    },
+    {
+      "id": "xai",
+      "displayName": "xAI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.x.ai/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Global; US-hosted by default",
+      "envVar": "XAI_API_KEY"
+    },
+    {
+      "id": "moonshot",
+      "displayName": "Moonshot AI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.moonshot.ai/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": "/models",
+      "regionNote": "Hosted in China; international endpoint",
+      "defaultModel": "kimi-k2.5",
+      "envVar": "MOONSHOT_API_KEY"
+    },
+    {
+      "id": "zai",
+      "displayName": "Z.AI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.z.ai/api/paas/v4",
+      "authHeader": "bearer",
+      "modelsEndpoint": null,
+      "regionNote": "Hosted in China; international endpoint",
+      "defaultModel": "glm-4.7",
+      "envVar": "ZAI_API_KEY"
+    },
+    {
+      "id": "minimax",
+      "displayName": "MiniMax",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://api.minimax.io/v1",
+      "authHeader": "bearer",
+      "modelsEndpoint": null,
+      "regionNote": "Hosted in Singapore; international endpoint",
+      "defaultModel": "MiniMax-M2.1",
+      "envVar": "MINIMAX_API_KEY"
+    },
+    {
+      "id": "azure-openai",
+      "displayName": "Azure OpenAI",
+      "apiStyle": "openai-compatible",
+      "baseUrl": "https://{resource}.openai.azure.com/openai/v1",
+      "authHeader": "api-key",
+      "modelsEndpoint": "/models",
+      "regionNote": "Region chosen per resource",
+      "envVar": "AZURE_OPENAI_API_KEY",
+      "requiresBaseUrl": true
+    }
+  ]
+}

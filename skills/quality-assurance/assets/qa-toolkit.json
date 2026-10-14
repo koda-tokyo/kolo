@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "skill": "quality-assurance",
+    "version": "1.0.0",
+    "stack": "KodaSōken (React/Next.js + KoLo Gateway + Agent Systems)",
+    "description": "QA templates, checklists, thresholds, and sign-off criteria"
+  },
+
+  "test_strategy_template": {
+    "feature_name": "",
+    "risk_level": "critical | high | medium | low",
+    "test_pyramid_allocation": {
+      "unit": "___% (target: 60%)",
+      "integration": "___% (target: 30%)",
+      "e2e": "___% (target: 10%)"
+    },
+    "test_cases": [
+      {
+        "id": "TC-001",
+        "scenario": "",
+        "preconditions": "",
+        "steps": [],
+        "expected_result": "",
+        "automation": "automated | manual | candidate",
+        "tags": ["@smoke", "@regression", "@critical"]
+      }
+    ],
+    "non_functional_requirements": {
+      "performance": "",
+      "security": "",
+      "accessibility": "",
+      "compatibility": ""
+    },
+    "risk_assessment": {
+      "what_could_break": "",
+      "impact": "",
+      "mitigation": ""
+    },
+    "sign_off_criteria": []
+  },
+
+  "bug_report_template": {
+    "title": "[Component] Concise description",
+    "severity": "critical | high | medium | low",
+    "priority": "P0 | P1 | P2 | P3 | P4",
+    "environment": {
+      "browser": "",
+      "os": "",
+      "screen_size": "",
+      "commit_hash": ""
+    },
+    "steps_to_reproduce": [
+      "1.",
+      "2.",
+      "3."
+    ],
+    "actual_result": "",
+    "expected_result": "",
+    "screenshots_or_video": "",
+    "console_logs": "",
+    "network_trace": "",
+    "additional_context": "",
+    "reproducibility": "always | intermittent | once",
+    "regression": "yes | no | unknown"
+  },
+
+  "accessibility_checklist": {
+    "automated": {
+      "axe_core_clean": false,
+      "eslint_jsx_a11y_clean": false,
+      "lighthouse_a11y_score": 0,
+      "target_score": 95
+    },
+    "keyboard": {
+      "tab_order_logical": false,
+      "focus_visible": false,
+      "no_keyboard_traps": false,
+      "skip_navigation_link": false
+    },
+    "screen_reader": {
+      "nvda_windows_ok": false,
+      "voiceover_macos_ok": false,
+      "voiceover_ios_ok": false,
+      "talkback_android_ok": false,
+      "headings_logical": false,
+      "dynamic_content_announced": false
+    },
+    "visual": {
+      "color_contrast_min_4_5_1": false,
+      "not_color_alone": false,
+      "zoom_200_percent_ok": false,
+      "focus_indicator_3_1_contrast": false
+    },
+    "content": {
+      "page_title_descriptive": false,
+      "h1_exactly_one": false,
+      "heading_hierarchy_no_skips": false,
+      "alt_text_on_images": false,
+      "labels_on_inputs": false,
+      "lang_attribute_set": false,
+      "error_messages_descriptive": false
+    },
+    "japanese_specific": {
+      "line_height_min_1_8": false,
+      "font_size_min_16px": false,
+      "ime_composition_handled": false,
+      "ruby_text_where_needed": false,
+      "honorific_language_consistent": false
+    }
+  },
+
+  "performance_benchmark_thresholds": {
+    "frontend": {
+      "first_contentful_paint_ms": { "max": 1500, "critical": 2500 },
+      "largest_contentful_paint_ms": { "max": 2500, "critical": 4000 },
+      "time_to_interactive_ms": { "max": 3500, "critical": 5000 },
+      "cumulative_layout_shift": { "max": 0.1, "critical": 0.25 },
+      "total_blocking_time_ms": { "max": 200, "critical": 600 },
+      "js_bundle_kb_gzipped": { "max": 200, "critical": 350 },
+      "lighthouse_performance_score": { "min": 85, "critical": 50 }
+    },
+    "api": {
+      "p50_latency_ms": { "max": 100 },
+      "p95_latency_ms": { "max": 500 },
+      "p99_latency_ms": { "max": 1000 },
+      "error_rate_percent": { "max": 1.0 },
+      "requests_per_second_target": 500
+    },
+    "agent": {
+      "response_time_ms": { "max": 3000, "critical": 8000 },
+      "first_token_ms": { "max": 500 },
+      "concurrent_sessions": { "min": 50 }
+    },
+    "database": {
+      "query_time_ms": { "max": 100, "critical": 500 },
+      "connection_pool_utilization_percent": { "max": 75 }
+    }
+  },
+
+  "qa_sign_off_criteria": {
+    "required_checks": [
+      "All critical/high automated tests pass on release candidate",
+      "Smoke tests pass on staging",
+      "Accessibility audit: no critical or serious axe-core violations",
+      "Performance benchmarks within thresholds",
+      "Security scan: no high/critical findings",
+      "Dependency audit: no critical vulnerabilities",
+      "Manual exploratory session completed for new features",
+      "Bug count: zero critical, P0/P1 bugs"
+    ],
+    "sign_off_checklist": [
+      { "item": "Regression suite 100% pass", "owner": "CI", "verified": false },
+      { "item": "Smoke tests on staging", "owner": "QA", "verified": false },
+      { "item": "a11y audit clean", "owner": "QA", "verified": false },
+      { "item": "Performance within budget", "owner": "CI + QA", "verified": false },
+      { "item": "Security scan clean", "owner": "CI", "verified": false },
+      { "item": "Exploratory session", "owner": "QA", "verified": false },
+      { "item": "Code review complete", "owner": "Dev", "verified": false },
+      { "item": "Release notes drafted", "owner": "PM", "verified": false },
+      { "item": "Rollback plan documented", "owner": "Dev", "verified": false }
+    ],
+    "conditional_approval": {
+      "allowed_exceptions": [
+        "Known flaky test with documented reason and fix-tracker ticket",
+        "Low-severity a11y issue with remediation plan",
+        "Performance regression <5% from baseline with explanation"
+      ],
+      "requires_escalation": [
+        "Any P0/P1 open bug",
+        "Security finding severity high or above",
+        "Data integrity concerns",
+        "MHLW compliance gap"
+      ]
+    }
+  }
+}

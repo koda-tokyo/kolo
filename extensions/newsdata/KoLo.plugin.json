@@ -1,0 +1,14 @@
+{
+  "id": "newsdata",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "NewsData.io API key (get free at newsdata.io)"
+      }
+    }
+  }
+}

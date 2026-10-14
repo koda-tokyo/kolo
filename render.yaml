@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: KoLo
+    runtime: docker
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: SETUP_PASSWORD
+        sync: false
+      - key: KOLO_STATE_DIR
+        value: /data/.kolo
+      - key: KOLO_WORKSPACE_DIR
+        value: /data/workspace
+      - key: KOLO_GATEWAY_TOKEN
+        generateValue: true
+    disk:
+      name: kolo-data
+      mountPath: /data
+      sizeGB: 1

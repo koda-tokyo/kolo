@@ -1,0 +1,14 @@
+{
+  "id": "ocr-space",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "OCR.space API key (get free at ocr.space/ocrapi)"
+      }
+    }
+  }
+}

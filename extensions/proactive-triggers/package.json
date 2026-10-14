@@ -1,0 +1,17 @@
+{
+  "name": "@KoLo/proactive-triggers",
+  "version": "2026.2.1-kolo.1",
+  "description": "Config-declared impulse rules that send system events to sessions",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "peerDependencies": {
+    "kolo": ">=2026.1.26"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

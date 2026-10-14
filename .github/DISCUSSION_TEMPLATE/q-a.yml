@@ -1,0 +1,21 @@
+title: "[Q] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions about installing, configuring or operating the product. For a defect, open an issue with the bug form.
+  - type: input
+    id: version
+    attributes:
+      label: Version and OS
+      placeholder: "2026.2.1 on Ubuntu 24.04"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What you tried (commands, config, redacted output) and what you expected.
+    validations:
+      required: true

@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "skill": "coo-operations",
+    "version": "1.0.0",
+    "description": "Operational templates and schemas for KodaSōken. Copy relevant sections into actual documents — don't use this JSON as-is for daily work.",
+    "last_updated": "2026-05-20"
+  },
+
+  "project_kickoff_template": {
+    "description": "One-page project charter for KodaSōken. Fill in, share with team and stakeholders, refer back to during portfolio reviews.",
+    "fields": {
+      "project_name": { "type": "string", "example": "Client X Market Entry Analysis" },
+      "project_lead": { "type": "string", "example": "Tanaka Haruka" },
+      "date_initiated": { "type": "date", "example": "2026-05-20" },
+      "target_completion": { "type": "date", "example": "2026-07-31" },
+      "budget_ceiling_jpy": { "type": "number", "example": 1500000 },
+      "client": { "type": "string", "example": "Client X K.K. (internal project if blank)" },
+      "purpose_1_line": { "type": "string", "example": "Assess market entry feasibility for Client X's SaaS product in Kansai region, delivering go/no-go recommendation with supporting data." },
+      "success_criteria": {
+        "type": "array",
+        "items": { "type": "string" },
+        "example": [
+          "Go/no-go recommendation delivered to client by July 31",
+          "Primary research covers minimum 30 target-customer interviews",
+          "Financial model built with 3-year projections",
+          "Client NPS post-delivery > 8"
+        ]
+      },
+      "team": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "role": { "type": "string" },
+            "allocation_pct": { "type": "number" }
+          }
+        },
+        "example": [
+          { "name": "Tanaka", "role": "Project Lead", "allocation_pct": 80 },
+          { "name": "Suzuki", "role": "Research Analyst", "allocation_pct": 60 },
+          { "name": "Yamada", "role": "Financial Modeler", "allocation_pct": 40 }
+        ]
+      },
+      "key_deliverables": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "deliverable": { "type": "string" },
+            "due_date": { "type": "date" },
+            "owner": { "type": "string" }
+          }
+        },
+        "example": [
+          { "deliverable": "Market sizing report", "due_date": "2026-06-15", "owner": "Suzuki" },
+          { "deliverable": "Competitor landscape", "due_date": "2026-06-30", "owner": "Tanaka" },
+          { "deliverable": "Financial model", "due_date": "2026-07-15", "owner": "Yamada" },
+          { "deliverable": "Final recommendation deck", "due_date": "2026-07-31", "owner": "Tanaka" }
+        ]
+      },
+      "key_risks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "risk": { "type": "string" },
+            "likelihood": { "type": "string", "enum": ["H", "M", "L"] },
+            "impact": { "type": "string", "enum": ["H", "M", "L"] },
+            "mitigation": { "type": "string" }
+          }
+        },
+        "example": [
+          { "risk": "Target interview recruitment slower than expected", "likelihood": "M", "impact": "H", "mitigation": "Start recruitment week 1, use recruitment agency as backup" }
+        ]
+      },
+      "stakeholders": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "role": { "type": "string" },
+            "update_frequency": { "type": "string" }
+          }
+        },
+        "example": [
+          { "name": "Client CEO", "role": "Decision-maker", "update_frequency": "Biweekly" },
+          { "name": "Client Strategy Head", "role": "Day-to-day contact", "update_frequency": "Weekly" },
+          { "name": "KodaSōken CEO", "role": "Internal sponsor", "update_frequency": "Monthly" }
+        ]
+      },
+      "dependencies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "provider": { "type": "string" },
+            "needed_by": { "type": "date" }
+          }
+        },
+        "example": [
+          { "description": "Client provides existing customer data", "provider": "Client Strategy Head", "needed_by": "2026-06-01" }
+        ]
+      },
+      "kill_criteria": {
+        "type": "array",
+        "items": { "type": "string" },
+        "example": [
+          "Client fails to provide core data by June 15",
+          "Budget burn exceeds 80% before July 1"
+        ]
+      }
+    }
+  },
+
+  "sop_template_fields": {
+    "description": "Fields for a one-page Standard Operating Procedure at KodaSōken.",
+    "fields": {
+      "process_name": { "type": "string", "example": "New Client Onboarding" },
+      "owner": { "type": "string", "example": "Operations Lead" },
+      "last_updated": { "type": "date", "example": "2026-05-20" },
+      "review_frequency": { "type": "string", "example": "After 3 uses, then quarterly" },
+      "purpose": { "type": "string", "example": "Ensure every new client engagement starts with consistent setup: contract confirmed, folder created, team briefed, tools provisioned." },
+      "triggers": {
+        "type": "array",
+        "items": { "type": "string" },
+        "example": [
+          "Signed SOW received from client",
+          "CEO verbal approval for pro-bono/internal projects"
+        ]
+      },
+      "steps": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "step_number": { "type": "number" },
+            "action": { "type": "string" },
+            "owner": { "type": "string" },
+            "output": { "type": "string" },
+            "time_estimate": { "type": "string" }
+          }
+        },
+        "example": [
+          { "step_number": 1, "action": "Create project folder in shared drive (YYYY-MM client-project-name)", "owner": "Project Lead", "output": "Folder with subfolders: contracts, deliverables, research, client-comms", "time_estimate": "5 min" },
+          { "step_number": 2, "action": "File signed SOW in contracts subfolder", "owner": "Project Lead", "output": "SOW accessible to team", "time_estimate": "2 min" },
+          { "step_number": 3, "action": "Add project to Kanban board with initial tasks from SOW", "owner": "Project Lead", "output": "Board populated", "time_estimate": "15 min" },
+          { "step_number": 4, "action": "Schedule kickoff meeting (internal within 3 days, client within 5 days)", "owner": "Project Lead", "output": "Calendar invites sent", "time_estimate": "5 min" },
+          { "step_number": 5, "action": "Send welcome email to client with intro, timeline, and next steps", "owner": "Project Lead", "output": "Client acknowledged receipt", "time_estimate": "10 min" },
+          { "step_number": 6, "action": "Set up time tracking project code in Harvest", "owner": "Finance/Ops", "output": "Team can log time", "time_estimate": "5 min" },
+          { "step_number": 7, "action": "Brief team on scope, timeline, roles (async or 15-min call)", "owner": "Project Lead", "output": "Everyone knows their role", "time_estimate": "15 min" }
+        ]
+      },
+      "exceptions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "condition": { "type": "string" },
+            "action": { "type": "string" }
+          }
+        },
+        "example": [
+          { "condition": "Client is a returning client with active retainer", "action": "Skip folder creation — verify existing folder and add new SOW" },
+          { "condition": "Project starts within 24 hours", "action": "Steps 1-3 mandatory; steps 4-7 can follow within first week" }
+        ]
+      },
+      "related_docs": {
+        "type": "array",
+        "items": { "type": "string" },
+        "example": [
+          "SOW template: /templates/sow-template.docx",
+          "Contract approval flow: see process-design.md reference",
+          "Compliance calendar: see compliance-operations.md"
+        ]
+      }
+    }
+  },
+
+  "compliance_calendar_schema": {
+    "description": "Schema for the KodaSōken compliance calendar. Use this to populate a shared calendar or spreadsheet.",
+    "fields": {
+      "event_id": { "type": "string", "example": "CORP-TAX-FILING" },
+      "event_name": { "type": "string", "example": "Corporate tax return filing (hōjinzei kakutei shinkoku)" },
+      "deadline": { "type": "date", "example": "2026-07-31" },
+      "deadline_type": { "type": "string", "enum": ["fixed_date", "relative_to_fy_end", "monthly", "quarterly"] },
+      "owner": { "type": "string", "example": "Tax Accountant (Suzuki Zeirishi Jimusho)" },
+      "internal_contact": { "type": "string", "example": "Finance Lead" },
+      "warning_1_week": { "type": "boolean", "example": true },
+      "warning_1_day": { "type": "boolean", "example": true },
+      "status": { "type": "string", "enum": ["pending", "in_progress", "filed", "deferred", "not_applicable"] },
+      "notes": { "type": "string", "example": "Extendable by 1 month if application filed before deadline" },
+      "requires_external": { "type": "boolean", "example": true },
+      "external_provider": { "type": "string", "example": "Suzuki Zeirishi Jimusho" },
+      "filing_method": { "type": "string", "enum": ["eLTAX", "e-Tax", "paper", "in_person", "n/a"], "example": "e-Tax" },
+      "estimated_cost": { "type": "number", "example": 300000 },
+      "last_completed": { "type": "date", "example": "2026-07-15" },
+      "document_links": { "type": "array", "items": { "type": "string" }, "example": ["/compliance/2025/tax-filing/", "/templates/corp-tax-checklist.md"] }
+    }
+  },
+
+  "resource_allocation_matrix": {
+    "description": "Monthly resource allocation view — one row per person, one column per project. Track in Google Sheets.",
+    "schema": {
+      "period": { "type": "string", "example": "2026-06" },
+      "last_updated": { "type": "date", "example": "2026-06-01" },
+      "people": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string", "example": "Tanaka" },
+            "role": { "type": "string", "example": "Project Lead / Senior Consultant" },
+            "total_capacity_pct": { "type": "number", "example": 100 },
+            "overhead_pct": { "type": "number", "example": 15 },
+            "billable_capacity_pct": { "type": "number", "example": 85 },
+            "allocations": {
+              "type": "object",
+              "description": "Project name → allocation percentage",
+              "example": {
+                "Project Alpha (Client X)": 50,
+                "Project Beta (Internal R&D)": 20,
+                "Unallocated / Buffer": 15
+              }
+            },
+            "total_allocated_pct": { "type": "number", "example": 85 },
+            "over_under_pct": { "type": "number", "example": 0 },
+            "notes": { "type": "string", "example": "On leave June 15-19" }
+          }
+        }
+      },
+      "project_summary": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "project_name": { "type": "string" },
+            "total_billable_pct": { "type": "number" },
+            "budget_jpy": { "type": "number" },
+            "burn_to_date_jpy": { "type": "number" },
+            "status": { "type": "string", "enum": ["green", "yellow", "red"] }
+          }
+        }
+      },
+      "bottlenecks_identified": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "person": { "type": "string" },
+            "queue_size": { "type": "string", "description": "Number of people/projects waiting on this person" },
+            "impact": { "type": "string" },
+            "action": { "type": "string" }
+          }
+        }
+      },
+      "unallocated_buffer_pct": { "type": "number", "example": 12, "description": "Company-wide unallocated capacity — should be 15-20%" }
+    }
+  },
+
+  "vendor_scorecard": {
+    "description": "Use for sourcing evaluation AND quarterly review of active vendors.",
+    "schema": {
+      "vendor_name": { "type": "string", "example": "Suzuki Zeirishi Jimusho" },
+      "service": { "type": "string", "example": "Tax accounting and filing" },
+      "evaluation_date": { "type": "date", "example": "2026-05-20" },
+      "evaluation_type": { "type": "string", "enum": ["sourcing", "quarterly_review", "renewal_decision"] },
+      "evaluator": { "type": "string", "example": "Operations Lead" },
+      "scores": {
+        "type": "object",
+        "properties": {
+          "quality_of_work": { "type": "number", "minimum": 1, "maximum": 5, "description": "1=unacceptable errors, 5=flawless, catches things we miss", "example": 4 },
+          "timeliness": { "type": "number", "minimum": 1, "maximum": 5, "description": "1=consistently late, 5=always early or on-time", "example": 5 },
+          "communication": { "type": "number", "minimum": 1, "maximum": 5, "description": "1=unreachable/unclear, 5=proactive, clear, responsive", "example": 4 },
+          "value_for_money": { "type": "number", "minimum": 1, "maximum": 5, "description": "1=overpriced for what we get, 5=would pay more", "example": 4 },
+          "would_recommend": { "type": "number", "minimum": 1, "maximum": 5, "description": "1=actively warn others away, 5=recommended without hesitation", "example": 4 }
+        }
+      },
+      "average_score": { "type": "number", "example": 4.2 },
+      "annual_spend_jpy": { "type": "number", "example": 1200000 },
+      "contract_end_date": { "type": "date", "example": "2027-03-31" },
+      "risk_flags": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "risk_type": { "type": "string", "enum": ["concentration", "financial", "data", "key_person", "compliance"] },
+            "description": { "type": "string" },
+            "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+            "mitigation": { "type": "string" }
+          }
+        },
+        "example": [
+          { "risk_type": "key_person", "description": "Only Suzuki-san handles our account", "severity": "medium", "mitigation": "Ask about backup contact; note in file" }
+        ]
+      },
+      "recommendation": {
+        "type": "string",
+        "enum": ["renew", "renew_with_conditions", "renegotiate", "replace", "terminate"],
+        "example": "renew"
+      },
+      "conditions_if_any": { "type": "string", "example": "None" },
+      "notes": { "type": "string", "example": "Excellent service for 3 years. Suzuki-san flagged a deduction we would have missed. No concerns." }
+    }
+  }
+}

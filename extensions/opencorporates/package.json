@@ -1,0 +1,17 @@
+{
+  "name": "@KoLo/opencorporates",
+  "version": "2026.2.1-kolo.1",
+  "description": "OpenCorporates company lookup plugin — 200M+ companies worldwide",
+  "type": "module",
+  "devDependencies": {
+    "kolo": "workspace:@kodasoken/kolo@*"
+  },
+  "peerDependencies": {
+    "kolo": ">=2026.1.26"
+  },
+  "KoLo": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

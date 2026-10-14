@@ -1,0 +1,267 @@
+{
+  "meta": {
+    "skill": "healthcare-ai-domain",
+    "version": "1.0.0",
+    "domain": "Japanese Healthcare AI — KODA KENKŌ",
+    "last_updated": "2026-05-20",
+    "description": "Toolkit for MHLW compliance, FHIR references, acronym glossary, and patient consent templates"
+  },
+  "mhlw_compliance_checklist": {
+    "title": "MHLW Compliance Checklist for AI Medical Devices (SaMD)",
+    "phases": {
+      "pre_clinical": [
+        { "id": "C01", "check": "Device classification determined (Class I–IV)", "ref": "PMD Act, Art. 2" },
+        { "id": "C02", "check": "SaMD status confirmed per MHLW Notification 2014-0312", "ref": "MHLW 2014-0312" },
+        { "id": "C03", "check": "Intended use statement drafted — specific, verifiable, labeling-ready", "ref": "PMD Act Art. 41" },
+        { "id": "C04", "check": "QMS (ISO 13485 + MHLW Ord. 169) established for software development", "ref": "MHLW Ord. 169" },
+        { "id": "C05", "check": "Risk management (ISO 14971) applied to AI-specific failure modes", "ref": "ISO 14971" },
+        { "id": "C06", "check": "Training data: source, demographics, annotation quality, bias assessment documented", "ref": "MHLW AI Guidelines 2019" },
+        { "id": "C07", "check": "Algorithm change protocol defined (locked vs. adaptive)", "ref": "PMDA Concept Paper" }
+      ],
+      "evaluation": [
+        { "id": "C08", "check": "Performance evaluation protocol designed (retrospective/prospective)", "ref": "IMDRF SaMD N12" },
+        { "id": "C09", "check": "Clinical performance endpoints: sensitivity, specificity, AUC defined", "ref": "PMDA expectations" },
+        { "id": "C10", "check": "Standalone performance testing completed on held-out Japanese population data", "ref": "MHLW AI Guidelines" },
+        { "id": "C11", "check": "Reader study completed (if imaging CADe/CADx)", "ref": "PMDA precedent" },
+        { "id": "C12", "check": "GCP compliance (for Class III/IV) or justification for alternative evaluation", "ref": "MHLW Ord. 36" },
+        { "id": "C13", "check": "Equivalence to existing approved device documented (if applicable)", "ref": "MHLW" }
+      ],
+      "submission": [
+        { "id": "C14", "check": "PMDA pre-submission consultation completed", "ref": "PMDA Sodan" },
+        { "id": "C15", "check": "Technical documentation compiled: design, risk, V&V, performance", "ref": "STED format" },
+        { "id": "C16", "check": "Labeling: intended use, limitations, target population, operating point", "ref": "PMD Act Art. 63" },
+        { "id": "C17", "check": "Application submitted (Todokede/Ninsho/Shonin per class)", "ref": "PMD Act" },
+        { "id": "C18", "check": "Manufacturer registration valid (5-year cycle with QMS inspection)", "ref": "PMD Act Art. 23-2" }
+      ],
+      "post_market": [
+        { "id": "C19", "check": "GVP (Good Vigilance Practice) plan activated", "ref": "MHLW Ord. 135" },
+        { "id": "C20", "check": "Adverse event reporting system operational", "ref": "GVP" },
+        { "id": "C21", "check": "Post-market clinical study plan (if condition of approval)", "ref": "GPSP, MHLW Ord. 171" },
+        { "id": "C22", "check": "Real-world performance monitoring in Japanese clinical settings active", "ref": "PMDA" },
+        { "id": "C23", "check": "Algorithm change management: labeled updates vs. change submission protocol", "ref": "PMDA" },
+        { "id": "C24", "check": "Periodic safety update reports (PSUR) schedule defined", "ref": "GVP" }
+      ]
+    }
+  },
+  "fhir_resource_reference": {
+    "title": "FHIR R4 Resource Reference for Common Clinical Documents (JP Core)",
+    "resources": [
+      {
+        "resource": "Patient",
+        "profile": "JP_Patient",
+        "key_elements": ["identifier (My Number, Patient ID)", "name (kanji + kana)", "telecom", "address", "birthDate", "gender", "insurance"],
+        "use": "Patient demographics for all clinical documents"
+      },
+      {
+        "resource": "Observation",
+        "profile": "JP_Observation_LabResult",
+        "key_elements": ["code (JLAC10)", "valueQuantity", "referenceRange (Japanese normal ranges)", "effectiveDateTime", "status"],
+        "use": "Laboratory results — blood tests, urinalysis, pathology"
+      },
+      {
+        "resource": "Observation",
+        "profile": "JP_Observation_VitalSigns",
+        "key_elements": ["code (LOINC)", "valueQuantity (BP, HR, RR, Temp, SpO2)", "effectiveDateTime", "bodySite"],
+        "use": "Vital signs recording"
+      },
+      {
+        "resource": "Condition",
+        "profile": "JP_Condition",
+        "key_elements": ["code (ICD-10 or MEDIS disease master)", "clinicalStatus", "verificationStatus", "onsetDateTime", "recordedDate", "category (problem-list-item / encounter-diagnosis)"],
+        "use": "Diagnosis / problem list — inpatient and outpatient"
+      },
+      {
+        "resource": "MedicationRequest",
+        "profile": "JP_MedicationRequest",
+        "key_elements": ["medicationCodeableConcept (HOT/YJ code)", "dosageInstruction (dose, route, timing)", "dispenseRequest (quantity, refills)", "requester (prescribing physician)", "insurance"],
+        "use": "Prescription — inpatient order and outpatient prescription"
+      },
+      {
+        "resource": "MedicationDispense",
+        "profile": "JP_MedicationDispense",
+        "key_elements": ["medicationCodeableConcept", "whenHandedOver", "quantity", "dosageInstruction", "dispenser (pharmacy/pharmacist)"],
+        "use": "Dispensing record from pharmacy (院外処方)"
+      },
+      {
+        "resource": "DiagnosticReport",
+        "profile": "JP_DiagnosticReport_Radiology",
+        "key_elements": ["code (radiology procedure)", "conclusion (radiologist's impression)", "effectiveDateTime", "performer", "imagingStudy (DICOM reference)", "presentedForm (PDF report)"],
+        "use": "Radiology report — CT, MRI, X-ray, ultrasound"
+      },
+      {
+        "resource": "ImagingStudy",
+        "profile": "JP_ImagingStudy",
+        "key_elements": ["modality", "series (with DICOM UIDs)", "numberOfSeries", "numberOfInstances", "procedureCode"],
+        "use": "DICOM study reference for image retrieval"
+      },
+      {
+        "resource": "DocumentReference",
+        "profile": "JP_DocumentReference",
+        "key_elements": ["type (document kind)", "category", "date", "author", "content (attachment: PDF, CDA)", "context (encounter, facility)"],
+        "use": "Clinical documents: referral letters, discharge summaries, consent forms"
+      },
+      {
+        "resource": "Encounter",
+        "profile": "JP_Encounter",
+        "key_elements": ["class (inpatient/outpatient/emergency)", "type (visit type)", "period (start/end)", "diagnosis", "hospitalization (admit/discharge disposition)", "serviceProvider"],
+        "use": "Hospitalization episode / outpatient visit"
+      },
+      {
+        "resource": "Procedure",
+        "profile": "JP_Procedure",
+        "key_elements": ["code (surgical/medical procedure code)", "performedDateTime", "performer", "bodySite", "outcome", "complication"],
+        "use": "Surgical procedures, interventions"
+      },
+      {
+        "resource": "AllergyIntolerance",
+        "profile": "JP_AllergyIntolerance",
+        "key_elements": ["code (allergen)", "type (allergy/intolerance)", "category (food/medication/environment)", "reaction (manifestation, severity)"],
+        "use": "Allergy and adverse reaction records"
+      },
+      {
+        "resource": "Coverage",
+        "profile": "JP_Coverage",
+        "key_elements": ["type (insurance type: 健保/国保/後期高齢者)", "subscriberId", "beneficiary", "payor (insurer organization)", "period"],
+        "use": "Health insurance coverage for billing and eligibility"
+      }
+    ]
+  },
+  "japanese_healthcare_acronym_glossary": {
+    "title": "Japanese Healthcare Acronym Glossary",
+    "regulatory": [
+      { "acronym": "MHLW", "japanese": "厚生労働省", "english": "Ministry of Health, Labour and Welfare", "context": "Primary healthcare regulator" },
+      { "acronym": "PMDA", "japanese": "医薬品医療機器総合機構", "english": "Pharmaceuticals and Medical Devices Agency", "context": "Device/drug review and approval body" },
+      { "acronym": "PMD Act", "japanese": "薬機法 (旧: 薬事法)", "english": "Pharmaceutical and Medical Device Act", "context": "Governing law for medical devices including SaMD" },
+      { "acronym": "SaMD", "japanese": "医療機器プログラム", "english": "Software as a Medical Device", "context": "Software that qualifies as medical device" },
+      { "acronym": "GCP", "japanese": "医薬品の臨床試験の実施の基準 (GCP省令)", "english": "Good Clinical Practice", "context": "Clinical trial standards" },
+      { "acronym": "GMP", "japanese": "医薬品及び医薬部外品の製造管理及び品質管理の基準", "english": "Good Manufacturing Practice", "context": "Manufacturing quality standards (QMS for devices)" },
+      { "acronym": "GVP", "japanese": "医薬品、医薬部外品、化粧品及び医療機器の製造販売後安全管理の基準", "english": "Good Vigilance Practice", "context": "Post-market safety surveillance" },
+      { "acronym": "GPSP", "japanese": "医薬品の製造販売後の調査及び試験の実施の基準", "english": "Good Post-marketing Study Practice", "context": "Post-marketing clinical studies" },
+      { "acronym": "QMS", "japanese": "医療機器及び体外診断用医薬品の製造管理及び品質管理の基準 (QMS省令)", "english": "Quality Management System (ISO 13485-based)", "context": "MHLW Ordinance No. 169" },
+      { "acronym": "PPC", "japanese": "個人情報保護委員会", "english": "Personal Information Protection Commission", "context": "Data protection regulator" },
+      { "acronym": "APPI", "japanese": "個人情報保護法", "english": "Act on the Protection of Personal Information", "context": "Japan's data protection law" }
+    ],
+    "clinical_it": [
+      { "acronym": "EMR", "japanese": "電子カルテ", "english": "Electronic Medical Record", "context": "Digital clinical documentation system" },
+      { "acronym": "SS-MIX2", "japanese": "Standardized Structured Medical Information Exchange 2", "english": "SS-MIX2 (same)", "context": "Japanese standard for structured medical data storage/export" },
+      { "acronym": "HL7 FHIR", "japanese": "HL7 Fast Healthcare Interoperability Resources", "english": "FHIR (same)", "context": "Modern healthcare data exchange standard (R4 in Japan)" },
+      { "acronym": "DICOM", "japanese": "Digital Imaging and Communications in Medicine", "english": "DICOM (same)", "context": "Medical imaging standard" },
+      { "acronym": "PACS", "japanese": "医用画像管理システム", "english": "Picture Archiving and Communication System", "context": "Medical image storage/retrieval" },
+      { "acronym": "JLAC10", "japanese": "日本臨床検査医学会臨床検査項目分類コード (10桁)", "english": "Japan Laboratory Code (10-digit)", "context": "Standard lab test code in Japan" },
+      { "acronym": "HOT", "japanese": "保険薬事対象外コード", "english": "HOT code (drug master)", "context": "Standard drug identification code + YJ code" },
+      { "acronym": "MEDIS", "japanese": "医療情報システム開発センター", "english": "Medical Information System Development Center", "context": "Maintains master tables for disease, drug, procedure codes" },
+      { "acronym": "IHE", "japanese": "医療情報統合化推進団体", "english": "Integrating the Healthcare Enterprise", "context": "Interoperability framework; IHE-Japan active" },
+      { "acronym": "RIS", "japanese": "放射線科情報システム", "english": "Radiology Information System", "context": "Radiology scheduling and workflow" },
+      { "acronym": "CPOE", "japanese": "コンピュータによる診療指示", "english": "Computerized Provider Order Entry", "context": "Electronic order entry system" }
+    ],
+    "clinical": [
+      { "acronym": "DPC", "japanese": "診断群分類包括評価", "english": "Diagnosis Procedure Combination", "context": "Per-diem inpatient payment system" },
+      { "acronym": "SOAP", "japanese": "SOAP形式", "english": "Subjective, Objective, Assessment, Plan", "context": "Clinical note format widely used in Japan" },
+      { "acronym": "LOS", "japanese": "入院期間", "english": "Length of Stay", "context": "Hospital inpatient days" },
+      { "acronym": "JMA", "japanese": "日本医師会", "english": "Japan Medical Association", "context": "Influential physician association" },
+      { "acronym": "JAMI", "japanese": "日本医療情報学会", "english": "Japan Association for Medical Informatics", "context": "Health informatics standards body" },
+      { "acronym": "NDB", "japanese": "レセプト情報・特定健診等情報データベース", "english": "National Database of Health Insurance Claims and Specific Health Checkups", "context": "National claims database" },
+      { "acronym": "NCD", "japanese": "National Clinical Database", "english": "National Clinical Database (surgical registry)", "context": "Surgical outcome registry" },
+      { "acronym": "ICD-10", "japanese": "国際疾病分類第10版", "english": "International Classification of Diseases, 10th Revision", "context": "Standard diagnosis classification" },
+      { "acronym": "LOINC", "japanese": "臨床検査項目を識別するための国際標準コード", "english": "Logical Observation Identifiers Names and Codes", "context": "International lab/clinical observation coding" },
+      { "acronym": "SNOMED CT", "japanese": "医学用語の国際標準体系", "english": "Systematized Nomenclature of Medicine — Clinical Terms", "context": "Comprehensive clinical terminology" },
+      { "acronym": "IRB", "japanese": "倫理審査委員会", "english": "Institutional Review Board", "context": "Ethics review for human subjects research" },
+      { "acronym": "SDM", "japanese": "共同意思決定", "english": "Shared Decision Making", "context": "Clinician-patient collaborative treatment decisions" }
+    ]
+  },
+  "patient_consent_template_fields": {
+    "title": "Patient Consent Template Fields — AI Medical Device Development / Clinical Research",
+    "required_fields": [
+      {
+        "field": "study_title",
+        "japanese": "研究課題名",
+        "description": "Title of the research study or AI development project",
+        "example": "Development and Validation of an AI-Assisted Diagnostic Support System for Chest X-Ray Interpretation"
+      },
+      {
+        "field": "principal_investigator",
+        "japanese": "研究責任者",
+        "description": "Name, affiliation, department, position, and contact info of the principal investigator",
+        "example": "Dr. Taro Yamada, Department of Radiology, XYZ University Hospital"
+      },
+      {
+        "field": "institution",
+        "japanese": "研究機関",
+        "description": "Name and address of the institution(s) conducting the research",
+        "example": "KODA KENKŌ / XYZ University Hospital Joint Research"
+      },
+      {
+        "field": "purpose",
+        "japanese": "研究の目的と意義",
+        "description": "Clear explanation of the study purpose, including AI model development goals",
+        "example": "To develop an AI system that assists radiologists in detecting lung nodules on chest X-rays..."
+      },
+      {
+        "field": "data_items",
+        "japanese": "収集する情報項目",
+        "description": "Specific list of all data items collected: images, lab values, clinical notes, demographics, etc.",
+        "example": "Chest X-ray DICOM images, radiology reports, age, sex, smoking history, confirmed diagnosis"
+      },
+      {
+        "field": "data_handling",
+        "japanese": "情報の管理方法",
+        "description": "Anonymization/pseudonymization method, storage location and security, access controls, who can access data",
+        "example": "Patient names and IDs will be replaced with study codes. Data stored on encrypted servers in AWS Tokyo region..."
+      },
+      {
+        "field": "data_sharing",
+        "japanese": "情報の他機関への提供",
+        "description": "Whether data will be shared with third parties (AI vendor, cloud provider, other hospitals)",
+        "example": "Anonymized images may be shared with KODA KENKŌ for AI model training. Contractual safeguards in place..."
+      },
+      {
+        "field": "data_retention",
+        "japanese": "情報の保管期間と廃棄方法",
+        "description": "How long data is kept and how it will be securely destroyed",
+        "example": "Data retained for 5 years after study completion, then securely deleted using NIST 800-88 compliant methods"
+      },
+      {
+        "field": "voluntary_participation",
+        "japanese": "参加の自由と撤回",
+        "description": "Statement that participation is voluntary, no penalty for refusal, and right to withdraw",
+        "example": "Your participation is voluntary. You may withdraw at any time without affecting your care. However, data already incorporated into trained AI models cannot be removed..."
+      },
+      {
+        "field": "benefits_and_risks",
+        "japanese": "予想される利益と不利益",
+        "description": "Direct benefits (if any), societal benefits, and potential risks/discomfort",
+        "example": "No direct benefit to you. This research may improve future diagnostic accuracy for all patients. Risk: incidental findings on research review..."
+      },
+      {
+        "field": "commercialization",
+        "japanese": "研究成果の商業利用",
+        "description": "Disclosure if the developed AI may be commercialized as a product",
+        "example": "The AI system developed in this study may be commercialized by KODA KENKŌ. You will not receive financial compensation..."
+      },
+      {
+        "field": "irb_approval",
+        "japanese": "倫理審査委員会の承認",
+        "description": "Statement that the study has been approved by the Institutional Review Board",
+        "example": "This study has been approved by the XYZ University Hospital Institutional Review Board (Approval No: 2024-XXX)"
+      },
+      {
+        "field": "funding_conflicts",
+        "japanese": "研究資金と利益相反",
+        "description": "Funding source and any conflicts of interest",
+        "example": "Funded by KODA KENKŌ. Dr. Yamada receives research support from KODA KENKŌ..."
+      },
+      {
+        "field": "contact_info",
+        "japanese": "問い合わせ先",
+        "description": "Contact person for questions, complaints, or withdrawal — must be reachable in Japanese",
+        "example": "Research Office, Department of Radiology, XYZ University Hospital. Tel: 03-XXXX-XXXX. Email: XXXX"
+      },
+      {
+        "field": "signature_section",
+        "japanese": "署名欄",
+        "description": "Signature/name seal fields for: patient (or legal representative), person explaining, principal investigator. Date fields for each.",
+        "example": "Patient signature + date | Legal representative signature + date (if applicable) | Explaining physician signature + date | PI signature + date"
+      }
+    ]
+  }
+}

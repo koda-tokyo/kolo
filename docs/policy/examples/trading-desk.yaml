@@ -1,0 +1,84 @@
+# Trading-desk starter policy. Research agents on one provider and model family, the
+# order-execution MCP server behind a human approval, a hard stop on daily cost, the kill switch
+# in the owner's hands only, and no Code Mode from paired devices.
+version: 1
+name: trading-desk
+description: Research and execution assistants with one model family, approved order execution and a hard cost stop.
+
+agents:
+  "*":
+    providers: [acme]
+    models: ["acme/large-*"]
+    tools:
+      deny: [exec, process, browser, gateway, nodes, cron]
+    channels: [slack]
+    limits:
+      maxConcurrentJobs: 3
+      wallClockPerJobMs: 900000
+  "research-*":
+    permissions:
+      - "read:**"
+      - "write:/workspace/research/**"
+    tools:
+      deny: [mcp_orders_*]
+  "exec-*":
+    permissions:
+      - "read:/workspace/**"
+      - "write:/workspace/blotter/**"
+
+budgets:
+  currency: USD
+  resetHourUtc: 21            # desk day rolls over after the close (UTC)
+  fleet:
+    tokensPerDay: 30000000
+    costPerDay: 600
+    onBreach: stop
+  agents:
+    "research-*":
+      tokensPerDay: 4000000
+      costPerDay: 80
+      onBreach: pause
+    "exec-*":
+      tokensPerDay: 500000
+      costPerDay: 20
+      toolCallsPerHour: 120
+      onBreach: stop
+
+kill:
+  fleet: false
+  agents: []
+  mayFlip: [owner]
+
+approvals:
+  channel: "slack:#desk-approvals"
+  timeoutMs: 120000
+  require:
+    - class: "tool:mcp_orders_*"     # every order goes past a person
+      agents: ["exec-*"]
+    - class: network
+      agents: ["exec-*"]
+
+network:
+  egress:
+    allow: ["marketdata.internal.example", "oms.internal.example", "*.acme.example"]
+    deny: ["169.254.169.254"]
+  mcp:
+    allow: [marketdata, orders, docs]
+
+data:
+  neverRead: ["~/.ssh/**", "**/.env", "/vault/**", "**/*.pem"]
+  neverWrite: ["/etc/**", "/vault/**", "/workspace/blotter/settled/**"]
+  secretPatterns:
+    - "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+    - "AKIA[0-9A-Z]{16}"
+    - "\\bapi[_-]?key\\b\\s*[:=]\\s*[A-Za-z0-9_-]{16,}"
+
+requests:
+  deny:
+    - operations: [runCodeMode, "codeMode.*"]
+      scopes: [attach, observe]
+    - operations: ["config.*", "plugins.reload", reloadPlugin]
+      scopes: [admin]
+
+attestation:
+  required: true

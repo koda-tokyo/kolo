@@ -1,0 +1,18 @@
+{
+  "id": "memory-boot-inject",
+  "name": "Memory Boot Inject",
+  "description": "Prepends configured files (diary, inbox, handoff) to the first agent turn after a gateway start",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "files": { "type": "array", "items": { "type": "string" }, "default": [] },
+      "maxBytesPerFile": { "type": "integer", "minimum": 256, "default": 16384 },
+      "maxTotalBytes": { "type": "integer", "minimum": 256, "default": 65536 },
+      "agents": { "type": "array", "items": { "type": "string" } },
+      "once": { "type": "boolean", "default": true },
+      "header": { "type": "string" }
+    }
+  }
+}

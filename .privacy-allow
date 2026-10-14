@@ -1,0 +1,17 @@
+# Privacy check allowlist (scripts/privacy-check.mjs). One entry per line:
+#   <path> | <substring the flagged line must contain, or *> | <reason>
+# Only legal text (copyright, licensor, trademark owner) and third-party text belong here.
+LICENSE | Copyright (c) 2025-2026 Carlos Mundim (KODA). | legal copyright line
+NOTICE | Copyright (c) 2025-2026 Carlos Mundim (KODA). | legal copyright line
+LICENSES/MIT.md | Copyright (c) 2025-2026 Carlos Mundim (KODA) | legal copyright line
+LICENSES/FSL-1.1-Apache-2.0.md | Copyright 2025-2026 Carlos Mundim (KODA) | legal copyright line
+LICENSES/FSL-1.1-Apache-2.0.md | <!-- Licensor: Carlos Mundim (KODA). | legal licensor identification
+LICENSES/PROPRIETARY.md | Copyright (c) 2025-2026 Carlos Mundim (KODA). All rights reserved. | legal copyright line
+LICENSES/PROPRIETARY.md | property of Carlos Mundim and KODA. | legal ownership statement
+packages/client/LICENSE | Copyright (c) 2025-2026 Carlos Mundim (KODA) | legal copyright line
+packages/client/package.json | "author": "Carlos Mundim (KODA)", | package author = copyright holder
+CLA.md | You grant Carlos Mundim (KODA) a perpetual | legal licensee in the contributor agreement
+TRADEMARKS.md | trademarks of Carlos Mundim (KODA) | legal trademark owner
+vendor/a2ui/specification/0.8/eval/src/prompts.ts | "Lion", "Tiger", "Wolf" | third-party vendored eval prompt (animal species)
+vendor/a2ui/specification/0.8/eval/src/prompts.ts | new SurfaceUpdateSchemaMatcher("Text", "text", "Tiger") | third-party vendored eval prompt (animal species)
+vendor/a2ui/specification/0.9/eval/src/prompts.ts | "Lion", "Tiger", "Wolf" | third-party vendored eval prompt (animal species)

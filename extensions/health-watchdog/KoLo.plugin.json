@@ -1,0 +1,42 @@
+{
+  "id": "health-watchdog",
+  "name": "Health Watchdog",
+  "description": "Lease and listener liveness for this gateway; supervisor restart and escalation after repeated failures",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "intervalMs": { "type": "integer", "minimum": 5000, "default": 60000 },
+      "failureThreshold": { "type": "integer", "minimum": 1, "default": 3 },
+      "escalateAfter": { "type": "integer", "minimum": 1, "default": 6 },
+      "restart": { "type": "boolean", "default": true },
+      "restartCooldownMs": { "type": "integer", "minimum": 10000, "default": 300000 },
+      "leaseStaleMs": { "type": "integer", "minimum": 5000, "default": 60000 },
+      "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+      "probeTimeoutMs": { "type": "integer", "minimum": 100, "default": 2000 },
+      "escalation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionKey": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      },
+      "targets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id"],
+          "properties": {
+            "id": { "type": "string" },
+            "host": { "type": "string" },
+            "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+            "leaseFile": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

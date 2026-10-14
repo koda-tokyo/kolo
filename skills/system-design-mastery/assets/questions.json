@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "module": "foundations",
+    "question": "What is the approximate latency of a main memory reference?",
+    "options": ["0.5 ns", "100 ns", "16 µs", "250 µs"],
+    "correct": 1,
+    "explanation": "Main memory reference is ~100 ns. L1 cache is 0.5 ns, SSD random read is 16 µs, datacenter round trip is 250 µs."
+  },
+  {
+    "id": 2,
+    "module": "foundations",
+    "question": "What does the 'C' in the CAP theorem stand for?",
+    "options": ["Caching", "Consistency", "Clustering", "Capacity"],
+    "correct": 1,
+    "explanation": "CAP theorem: Consistency, Availability, Partition tolerance. You can only guarantee two of the three in a distributed system."
+  },
+  {
+    "id": 3,
+    "module": "foundations",
+    "question": "What is the approximate throughput of a 10 Gbps network link?",
+    "options": ["125 MB/s", "1.25 GB/s", "12.5 GB/s", "125 GB/s"],
+    "correct": 1,
+    "explanation": "10 Gbps = 10/8 = 1.25 GB/s. Remember: network throughput in bytes = bits ÷ 8."
+  },
+  {
+    "id": 4,
+    "module": "foundations",
+    "question": "What is a 'thundering herd' in distributed systems?",
+    "options": ["A DDoS attack pattern", "Many processes waking up simultaneously on the same event, causing resource spikes", "Running too many database migrations at once", "A memory leak in containerized apps"],
+    "correct": 1,
+    "explanation": "Thundering herd occurs when many processes/threads wake at once (e.g., because they all waited on the same lock or timer), overwhelming resources."
+  },
+  {
+    "id": 5,
+    "module": "foundations",
+    "question": "In PACELC, what does the ELC stand for?",
+    "options": ["Else, Latency vs Consistency", "Even Load Capacity", "Eventual Latency Correction", "Extended Loss Compensation"],
+    "correct": 0,
+    "explanation": "PACELC: if Partition (P), trade A vs C (Availability vs Consistency); Else (E), trade L vs C (Latency vs Consistency)."
+  },
+  {
+    "id": 6,
+    "module": "foundations",
+    "question": "Which consistency model guarantees that all processes see writes in the order they were issued?",
+    "options": ["Eventual consistency", "Causal consistency", "Sequential consistency", "Read-your-writes consistency"],
+    "correct": 2,
+    "explanation": "Sequential consistency ensures operations appear to execute in some total order consistent with program order for each process."
+  },
+  {
+    "id": 7,
+    "module": "api-design",
+    "question": "Which HTTP status code should be returned for a successful resource creation?",
+    "options": ["200 OK", "201 Created", "202 Accepted", "204 No Content"],
+    "correct": 1,
+    "explanation": "201 Created indicates a resource was successfully created. 200 is for general success, 202 for async processing, 204 when there's no body to return."
+  },
+  {
+    "id": 8,
+    "module": "api-design",
+    "question": "What is the main advantage of gRPC over REST?",
+    "options": ["Easier to debug with curl", "Binary protocol over HTTP/2 with built-in code generation and streaming", "Works in all browsers natively", "Smaller JSON payloads"],
+    "correct": 1,
+    "explanation": "gRPC uses Protocol Buffers (binary) over HTTP/2, providing strong typing, code generation, bidirectional streaming, and better performance than text-based REST."
+  },
+  {
+    "id": 9,
+    "module": "api-design",
+    "question": "What is the N+1 query problem in GraphQL?",
+    "options": ["Making N requests to N different endpoints", "Fetching a list then making one additional query per item for related data", "Using too many query parameters", "Sending N identical queries simultaneously"],
+    "correct": 1,
+    "explanation": "N+1 problem: fetch N items (1 query), then for each item fetch its related data (N more queries). Solved with DataLoader batching."
+  },
+  {
+    "id": 10,
+    "module": "api-design",
+    "question": "Which pagination strategy uses an opaque cursor to avoid offset drift?",
+    "options": ["Offset-based", "Page-based", "Cursor-based", "Keyset pagination"],
+    "correct": 2,
+    "explanation": "Cursor-based pagination uses an opaque token pointing to a specific position, avoiding issues when data is added/removed between pages. Keyset pagination uses actual column values."
+  },
+  {
+    "id": 11,
+    "module": "api-design",
+    "question": "What is the purpose of the HTTP ETag header?",
+    "options": ["To encrypt the response body", "To enable conditional requests and cache validation", "To specify content encoding", "To set cookie expiration"],
+    "correct": 1,
+    "explanation": "ETag is a hash/version of the resource. Client sends If-None-Match to check if content changed (304 Not Modified), enabling efficient caching."
+  },
+  {
+    "id": 12,
+    "module": "api-design",
+    "question": "Which OAuth 2.0 grant type is most secure for single-page applications?",
+    "options": ["Client Credentials", "Resource Owner Password", "Authorization Code with PKCE", "Implicit Grant"],
+    "correct": 2,
+    "explanation": "Authorization Code with PKCE (Proof Key for Code Exchange) prevents authorization code interception and is the current best practice for SPAs. Implicit grant is deprecated."
+  },
+  {
+    "id": 13,
+    "module": "databases",
+    "question": "What type of index does PostgreSQL use by default?",
+    "options": ["Hash index", "B-tree", "GiST", "GIN"],
+    "correct": 1,
+    "explanation": "PostgreSQL defaults to B-tree indexes, which support equality, range queries, and sorting efficiently (O(log n))."
+  },
+  {
+    "id": 14,
+    "module": "databases",
+    "question": "Which isolation level prevents phantom reads?",
+    "options": ["Read Uncommitted", "Read Committed", "Repeatable Read", "Serializable"],
+    "correct": 3,
+    "explanation": "Serializable is the only level that prevents phantom reads (new rows matching a query appear in subsequent reads within the same transaction). Repeatable Read prevents non-repeatable reads but not phantoms in most databases."
+  },
+  {
+    "id": 15,
+    "module": "databases",
+    "question": "What is database sharding?",
+    "options": ["Creating read replicas", "Splitting a large table into smaller tables by time range", "Horizontally partitioning data across multiple database instances", "Creating a materialized view"],
+    "correct": 2,
+    "explanation": "Sharding distributes data across multiple independent database instances based on a shard key, enabling horizontal scaling beyond a single machine."
+  },
+  {
+    "id": 16,
+    "module": "databases",
+    "question": "What is a write-ahead log (WAL) used for?",
+    "options": ["Slow query logging", "Durability and crash recovery", "Connection pooling", "Query caching"],
+    "correct": 1,
+    "explanation": "WAL ensures durability by writing changes to a log before modifying data files. If a crash occurs, the database can replay the WAL to recover committed transactions."
+  },
+  {
+    "id": 17,
+    "module": "databases",
+    "question": "What is the difference between a B-tree and an LSM-tree index?",
+    "options": ["B-tree is for in-memory only, LSM for disk", "B-tree optimizes reads, LSM-tree optimizes writes with sequential I/O", "They are the same thing", "LSM-tree only works with SSDs"],
+    "correct": 1,
+    "explanation": "B-trees update in-place (good for reads), LSM-trees buffer writes in memory and flush sequentially (good for write-heavy workloads, used by LevelDB, RocksDB, Cassandra)."
+  },
+  {
+    "id": 18,
+    "module": "databases",
+    "question": "What does ACID stand for in database transactions?",
+    "options": ["Atomicity, Consistency, Isolation, Durability", "Availability, Consistency, Integrity, Durability", "Atomicity, Caching, Isolation, Distribution", "Asynchronous, Consistent, Isolated, Durable"],
+    "correct": 0,
+    "explanation": "ACID = Atomicity (all or nothing), Consistency (valid state transitions), Isolation (concurrent transactions don't interfere), Durability (committed data survives crashes)."
+  },
+  {
+    "id": 19,
+    "module": "caching",
+    "question": "What is the primary purpose of a CDN?",
+    "options": ["To encrypt network traffic", "To cache static assets at edge locations closer to users", "To store database backups", "To load balance between servers"],
+    "correct": 1,
+    "explanation": "CDNs (Content Delivery Networks) cache content at edge PoPs geographically distributed, reducing latency and origin server load."
+  },
+  {
+    "id": 20,
+    "module": "caching",
+    "question": "Which cache eviction policy removes the least recently used items first?",
+    "options": ["FIFO", "LFU", "LRU", "TTL"],
+    "correct": 2,
+    "explanation": "LRU (Least Recently Used) evicts items that haven't been accessed for the longest time. LFU evicts least frequently used items. FIFO evicts oldest by insertion time."
+  },
+  {
+    "id": 21,
+    "module": "caching",
+    "question": "What is the cache stampede problem?",
+    "options": ["Cache running out of memory", "Multiple concurrent requests trying to regenerate the same expired cache entry", "Cache returning corrupted data", "Cache keys colliding"],
+    "correct": 1,
+    "explanation": "A cache stampede occurs when a hot cache entry expires and many concurrent requests each try to recompute it, overwhelming the backend. Solved with early recomputation (probabilistic) or locking."
+  },
+  {
+    "id": 22,
+    "module": "caching",
+    "question": "Which consistency pattern updates the cache immediately after a database write?",
+    "options": ["Cache-aside", "Read-through", "Write-through", "Write-behind"],
+    "correct": 2,
+    "explanation": "Write-through syncs cache on write: application writes to cache, cache writes to DB. Write-behind defers DB writes. Cache-aside loads on miss."
+  },
+  {
+    "id": 23,
+    "module": "caching",
+    "question": "What is the typical sizing recommendation for a Redis cache relative to hot data?",
+    "options": ["50% of total database size", "2-5% of total data (hot working set)", "110% of total data", "Exactly equal to database size"],
+    "correct": 1,
+    "explanation": "Cache typically holds 2-5% of total data — the actively accessed 'hot' working set. Caching everything is wasteful; focus on what's frequently accessed."
+  },
+  {
+    "id": 24,
+    "module": "caching",
+    "question": "What is a Bloom filter used for in caching?",
+    "options": ["Encrypting cache values", "Probabilistically determining if an item might be in the cache", "Sorting cached items", "Counting cache hits"],
+    "correct": 1,
+    "explanation": "A Bloom filter is a space-efficient probabilistic data structure. It can tell you 'item definitely not in set' or 'item might be in set' — useful before querying cache for keys likely absent."
+  },
+  {
+    "id": 25,
+    "module": "big-data",
+    "question": "What is the fundamental data structure in Apache Kafka?",
+    "options": ["Table", "Document", "Topic (partitioned log)", "Graph"],
+    "correct": 2,
+    "explanation": "Kafka organizes data into topics, which are split into partitions. Each partition is an ordered, immutable sequence of records (a commit log)."
+  },
+  {
+    "id": 26,
+    "module": "big-data",
+    "question": "What is exactly-once semantics (EOS) in Kafka?",
+    "options": ["Messages are never lost", "Messages are processed exactly one time, even with retries and failures", "Messages are sent exactly once per second", "Each consumer reads exactly one partition"],
+    "correct": 1,
+    "explanation": "Kafka's exactly-once semantics guarantee that each record is processed exactly once from input topic to output topic, using idempotent producers and transactional APIs."
+  },
+  {
+    "id": 27,
+    "module": "big-data",
+    "question": "In MapReduce, what does the Shuffle phase do?",
+    "options": ["Randomly redistributes input data", "Sorts and groups intermediate key-value pairs by key across reducers", "Clears the output directory", "Compresses the final output"],
+    "correct": 1,
+    "explanation": "The Shuffle phase partitions and sorts the intermediate key-value pairs so that all values for a given key go to the same reducer. It's often the most network-intensive phase."
+  },
+  {
+    "id": 28,
+    "module": "big-data",
+    "question": "What is a dead letter queue (DLQ)?",
+    "options": ["A queue for expired messages", "A queue where unprocessable messages are sent after retries are exhausted", "A queue in read-only mode", "A queue used only for logging"],
+    "correct": 1,
+    "explanation": "A DLQ stores messages that couldn't be processed after all retry attempts. Operators can inspect, fix, and replay them — a critical pattern for reliable message processing."
+  },
+  {
+    "id": 29,
+    "module": "big-data",
+    "question": "What is a data lakehouse?",
+    "options": ["A data warehouse on a lake", "Architecture combining data lake flexibility with data warehouse ACID and performance", "A Hadoop cluster on cloud storage", "A streaming-only data platform"],
+    "correct": 1,
+    "explanation": "A lakehouse merges the low-cost, schema-flexible storage of a data lake (object storage) with ACID transactions, schema enforcement, and BI performance of a warehouse (e.g., Delta Lake, Iceberg)."
+  },
+  {
+    "id": 30,
+    "module": "big-data",
+    "question": "How can you implement delayed task execution with Redis?",
+    "options": ["Using Redis Pub/Sub", "Using sorted sets with task execution time as the score, polling with ZRANGEBYSCORE", "Using Redis lists with BLPOP", "Using Redis streams"],
+    "correct": 1,
+    "explanation": "Redis sorted sets are ideal for delayed tasks: score = execution timestamp. Workers poll with ZRANGEBYSCORE 0 NOW LIMIT to fetch due tasks and ZREM to claim them atomically."
+  },
+  {
+    "id": 31,
+    "module": "production-infra",
+    "question": "What is the difference between a Kubernetes Pod and a Deployment?",
+    "options": ["They're the same thing", "A Pod is a single instance; a Deployment manages replica sets and rolling updates of Pods", "Pods run on VMs, Deployments on bare metal", "Deployments are for databases only"],
+    "correct": 1,
+    "explanation": "A Pod is the smallest deployable unit (one or more containers). A Deployment manages Pod lifecycle — scaling, rolling updates, rollbacks — keeping a desired number of Pod replicas running."
+  },
+  {
+    "id": 32,
+    "module": "production-infra",
+    "question": "Which deployment strategy routes a small percentage of production traffic to a new version for testing?",
+    "options": ["Rolling deployment", "Blue-green deployment", "Canary deployment", "Shadow deployment"],
+    "correct": 2,
+    "explanation": "Canary deployment sends a small % of traffic to the new version. If metrics are healthy, gradually increase. Blue-green switches all traffic at once. Shadow mirrors traffic without affecting users."
+  },
+  {
+    "id": 33,
+    "module": "production-infra",
+    "question": "What are the 'Four Golden Signals' of monitoring?",
+    "options": ["CPU, Memory, Disk, Network", "Latency, Traffic, Errors, Saturation", "Requests, Responses, Timeouts, Retries", "Logs, Metrics, Traces, Alerts"],
+    "correct": 1,
+    "explanation": "Google SRE defines Four Golden Signals: Latency (time to serve), Traffic (demand), Errors (failure rate), Saturation (how 'full' the service is)."
+  },
+  {
+    "id": 34,
+    "module": "production-infra",
+    "question": "What does RPO (Recovery Point Objective) measure?",
+    "options": ["Time to recover after an outage", "Maximum acceptable data loss measured in time", "Percentage of requests that must succeed", "Number of replicas needed"],
+    "correct": 1,
+    "explanation": "RPO = maximum acceptable data loss (e.g., 'no more than 5 minutes of data loss'). RTO = maximum time to restore service. Together they define DR requirements."
+  },
+  {
+    "id": 35,
+    "module": "production-infra",
+    "question": "What is the primary purpose of a multi-stage Docker build?",
+    "options": ["To run multiple services in one container", "To separate build-time dependencies from the final runtime image, reducing size", "To enable Docker Swarm mode", "To build images for multiple CPU architectures"],
+    "correct": 1,
+    "explanation": "Multi-stage builds use one stage to compile/build with full SDKs/tools, then copy only the artifact into a minimal runtime stage, dramatically reducing the final image size."
+  },
+  {
+    "id": 36,
+    "module": "production-infra",
+    "question": "What load balancing algorithm distributes requests based on the current number of active connections?",
+    "options": ["Round robin", "Least connections", "IP hash", "Weighted round robin"],
+    "correct": 1,
+    "explanation": "Least connections sends traffic to the server with the fewest active connections, useful when requests have varying processing times. Round robin cycles evenly; IP hash ensures session stickiness."
+  }
+]

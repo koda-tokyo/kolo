@@ -1,0 +1,14 @@
+{
+  "id": "wolfram-alpha",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "appId": {
+        "type": "string",
+        "description": "Wolfram Alpha App ID (get free at developer.wolframalpha.com)"
+      }
+    }
+  }
+}

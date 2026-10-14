@@ -1,0 +1,18 @@
+{
+  "id": "libretranslate",
+  "kind": null,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiUrl": {
+        "type": "string",
+        "description": "LibreTranslate instance URL (default: https://libretranslate.com)"
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "API key (optional for self-hosted instances)"
+      }
+    }
+  }
+}

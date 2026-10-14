@@ -1,0 +1,208 @@
+{
+  "checklist": [
+    {
+      "id": 1,
+      "category": "Navigation",
+      "item": "Can users reach any page in 3 clicks or fewer?",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "category": "Navigation",
+      "item": "Is the current location always visible (highlighted nav item, breadcrumb, or page title)?",
+      "priority": "high"
+    },
+    {
+      "id": 3,
+      "category": "Navigation",
+      "item": "Does the browser/system back button work correctly on every screen?",
+      "priority": "high"
+    },
+    {
+      "id": 4,
+      "category": "Navigation",
+      "item": "Are there 7 or fewer top-level navigation items? (If more, use a sidebar instead.)",
+      "priority": "medium"
+    },
+    {
+      "id": 5,
+      "category": "Navigation",
+      "item": "Is navigation consistent across all pages (same position, same items)?",
+      "priority": "high"
+    },
+    {
+      "id": 6,
+      "category": "Interaction",
+      "item": "Does every destructive action provide an undo path?",
+      "priority": "high"
+    },
+    {
+      "id": 7,
+      "category": "Interaction",
+      "item": "Are loading states in place for all async operations (skeleton, spinner, or shimmer as appropriate)?",
+      "priority": "high"
+    },
+    {
+      "id": 8,
+      "category": "Interaction",
+      "item": "Do modals trap focus and restore it to the trigger element on close?",
+      "priority": "high"
+    },
+    {
+      "id": 9,
+      "category": "Interaction",
+      "item": "Can every drag-and-drop interaction also be completed via keyboard?",
+      "priority": "medium"
+    },
+    {
+      "id": 10,
+      "category": "Interaction",
+      "item": "Are all animations purposeful and under 500ms? Do they respect prefers-reduced-motion?",
+      "priority": "medium"
+    },
+    {
+      "id": 11,
+      "category": "Forms",
+      "item": "Are all forms single-column with top-aligned labels?",
+      "priority": "high"
+    },
+    {
+      "id": 12,
+      "category": "Forms",
+      "item": "Is inline validation triggered on blur (not on keystroke, not only on submit)?",
+      "priority": "high"
+    },
+    {
+      "id": 13,
+      "category": "Forms",
+      "item": "Are error messages placed next to the offending field (not in a top-of-page banner)?",
+      "priority": "high"
+    },
+    {
+      "id": 14,
+      "category": "Forms",
+      "item": "Does the submit button show loading/spinner state to prevent double submission?",
+      "priority": "high"
+    },
+    {
+      "id": 15,
+      "category": "Forms",
+      "item": "Are smart defaults pre-filled where the answer can be predicted?",
+      "priority": "medium"
+    },
+    {
+      "id": 16,
+      "category": "Forms",
+      "item": "Does the password field have a show/hide toggle? Are password requirements shown before typing?",
+      "priority": "medium"
+    },
+    {
+      "id": 17,
+      "category": "States",
+      "item": "Is every screen designed for loading, empty (first use), empty (cleared), error, and ideal states?",
+      "priority": "high"
+    },
+    {
+      "id": 18,
+      "category": "States",
+      "item": "Do empty states include a clear CTA (not just 'No data found')?",
+      "priority": "high"
+    },
+    {
+      "id": 19,
+      "category": "States",
+      "item": "Do error states say what happened, why, and what to do next? Is there a retry button?",
+      "priority": "high"
+    },
+    {
+      "id": 20,
+      "category": "States",
+      "item": "Does the screen handle partial state (some sections loaded, some failed) gracefully?",
+      "priority": "medium"
+    },
+    {
+      "id": 21,
+      "category": "States",
+      "item": "Have edge cases been tested: very long strings, zero values, empty arrays, rapid double-clicks?",
+      "priority": "medium"
+    },
+    {
+      "id": 22,
+      "category": "Mobile",
+      "item": "Are all touch targets at least 44×44px (ideally 48×48px)?",
+      "priority": "high"
+    },
+    {
+      "id": 23,
+      "category": "Mobile",
+      "item": "Are primary actions and navigation placed in the thumb-friendly zone (bottom half of screen)?",
+      "priority": "high"
+    },
+    {
+      "id": 24,
+      "category": "Mobile",
+      "item": "Does the layout work correctly on a 320px-wide screen?",
+      "priority": "high"
+    },
+    {
+      "id": 25,
+      "category": "Mobile",
+      "item": "Does the keyboard not obscure the focused input field? Is there proper keyboard avoidance?",
+      "priority": "high"
+    },
+    {
+      "id": 26,
+      "category": "Mobile",
+      "item": "Are safe areas (notch, home indicator) respected? No interactive elements in the home indicator zone?",
+      "priority": "medium"
+    },
+    {
+      "id": 27,
+      "category": "Accessibility",
+      "item": "Can every action be completed using only a keyboard (Tab, Enter, Space, Escape)?",
+      "priority": "high"
+    },
+    {
+      "id": 28,
+      "category": "Accessibility",
+      "item": "Do all interactive elements have a visible focus indicator?",
+      "priority": "high"
+    },
+    {
+      "id": 29,
+      "category": "Accessibility",
+      "item": "Does colour contrast meet WCAG 2.2 AA minimums (4.5:1 normal text, 3:1 large text and UI components)?",
+      "priority": "high"
+    },
+    {
+      "id": 30,
+      "category": "Accessibility",
+      "item": "Do all images have appropriate alt text (descriptive for informative, empty for decorative)?",
+      "priority": "high"
+    },
+    {
+      "id": 31,
+      "category": "Accessibility",
+      "item": "Are form inputs properly associated with labels using for/id? Are required fields marked with text, not just colour?",
+      "priority": "high"
+    },
+    {
+      "id": 32,
+      "category": "Copywriting",
+      "item": "Do error messages use the formula: what happened + why + how to fix? Do they avoid blaming the user?",
+      "priority": "high"
+    },
+    {
+      "id": 33,
+      "category": "Copywriting",
+      "item": "Do button labels predict the action ('Save changes', not 'OK')? Are destructive action labels explicit?",
+      "priority": "high"
+    },
+    {
+      "id": 34,
+      "category": "Copywriting",
+      "item": "Is the tone professional, helpful, and human — not too formal, not too casual?",
+      "priority": "medium"
+    }
+  ]
+}

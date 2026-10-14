@@ -1,0 +1,33 @@
+# KoLo Fly.io deployment configuration
+# See https://fly.io/docs/reference/configuration/
+
+app = "kolo-alpha"
+primary_region = "nrt" # Tokyo for Japan latency
+
+[build]
+dockerfile = "Dockerfile"
+
+[env]
+NODE_ENV = "production"
+KOLO_PREFER_PNPM = "1"
+KOLO_STATE_DIR = "/data"
+NODE_OPTIONS = "--max-old-space-size=1536"
+
+[processes]
+app = "node dist/index.js gateway --allow-unconfigured --port 3000 --bind lan"
+
+[http_service]
+internal_port = 3000
+force_https = true
+auto_stop_machines = false # Keep running for persistent connections
+auto_start_machines = true
+min_machines_running = 1
+processes = ["app"]
+
+[[vm]]
+size = "shared-cpu-2x"
+memory = "2048mb"
+
+[mounts]
+source = "kolo_data"
+destination = "/data"

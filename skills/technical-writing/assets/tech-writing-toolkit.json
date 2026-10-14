@@ -1,0 +1,58 @@
+{
+  "toolkit_version": "1.0",
+  "description": "Technical writing toolkit for KodaSōken",
+  "api_doc_template": {
+    "endpoint": {
+      "method": "GET | POST | PUT | DELETE",
+      "path": "/api/v1/resource",
+      "description": "One sentence summarizing what this endpoint does",
+      "authentication": "Bearer token required",
+      "parameters": [
+        {"name": "param_name", "type": "string", "required": true, "description": "What this parameter is"}
+      ],
+      "request_body": {"type": "application/json", "schema": "Reference to schema", "example": "{}"},
+      "response": {"200": {"description": "Success", "example": "{}"}, "400": {"description": "Bad request"}, "401": {"description": "Unauthorized"}, "500": {"description": "Server error"}},
+      "errors": [{"code": "ERROR_CODE", "message": "Human-readable error message", "resolution": "What to do about it"}]
+    }
+  },
+  "architecture_doc_outline": {
+    "c4_levels": [
+      {"level": "Context", "audience": "Everyone", "content": "System in its environment. What does it do? Who uses it? What external systems does it connect to?"},
+      {"level": "Container", "audience": "Technical stakeholders", "content": "High-level tech choices. Web app, database, message queue, external APIs. How they connect."},
+      {"level": "Component", "audience": "Developers", "content": "Module structure. Key components and their responsibilities. Interfaces between them."},
+      {"level": "Code", "audience": "Developers", "content": "Implementation details. Auto-generated from code where possible (JSDoc, etc.)"}
+    ]
+  },
+  "user_guide_template": {
+    "sections": [
+      "Overview: What this guide covers, who it's for, prerequisites",
+      "Quickstart: Get running in <5 minutes with minimal steps",
+      "Concepts: Key ideas needed to understand the system",
+      "How-to Guides: Task-oriented, step-by-step instructions",
+      "Troubleshooting: Common problems and solutions",
+      "FAQ: Frequently asked questions",
+      "Glossary: Terms and definitions",
+      "Next Steps: Where to go from here"
+    ]
+  },
+  "docs_quality_checklist": [
+    "Every page has a clear title and purpose",
+    "Code examples are tested and runnable",
+    "Links work and point to the right version",
+    "Screenshots are current (not from 3 versions ago)",
+    "Tone is consistent (warm but professional, not robotic)",
+    "No jargon without definition on first use",
+    "Japanese versions exist for Tier 1 content",
+    "Last-reviewed date is visible (and within 6 months)",
+    "Search terms work (test with real user queries)",
+    "Feedback mechanism present on every page"
+  ],
+  "glossary_template": {
+    "fields": ["Term (English)", "Term (Japanese)", "Abbreviation", "Definition", "Context (where this term appears)", "Related Terms", "Last Updated"]
+  },
+  "bilingual_doc_decision_matrix": {
+    "tier_1_professional_translation": ["Regulatory documentation", "Patient-facing UI", "Hospital admin docs"],
+    "tier_2_mt_post_edit": ["Developer API docs", "Architecture docs (JP summary)", "Open-source README"],
+    "tier_3_light_touch": ["Internal engineering docs", "Community wiki", "Code comments (EN only)"]
+  }
+}
