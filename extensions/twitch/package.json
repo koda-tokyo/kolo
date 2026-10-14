@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/twitch",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "KoLo Twitch channel plugin",
   "type": "module",
   "dependencies": {

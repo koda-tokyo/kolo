@@ -10,7 +10,7 @@ title: "Security Overview"
 
 日本語版: [セキュリティ概要](/ja/security/SECURITY_OVERVIEW)
 
-This page answers the questions a security review asks about a self-hosted KoLo installation. Each statement names the mechanism and, where one exists, the command that verifies it. Version: this page describes KoLo 2026.2.1 and later; check `kolo --version`.
+This page answers the questions a security review asks about a self-hosted KoLo installation. Each statement names the mechanism and, where one exists, the command that verifies it. Version: this page describes KoLo 2.0.0 and later; check `kolo --version`.
 
 ## 1. Deployment model
 

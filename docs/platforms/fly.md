@@ -189,7 +189,7 @@ cat > /data/kolo.json << 'EOF'
     "bind": "auto"
   },
   "meta": {
-    "lastTouchedVersion": "2026.1.29"
+    "lastTouchedVersion": "2.0.0"
   }
 }
 EOF

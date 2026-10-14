@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveNpmChannelTag } from "./update-check.js";
+import { compareSemverStrings, resolveNpmChannelTag } from "./update-check.js";
 
 describe("resolveNpmChannelTag", () => {
   let versionByTag: Record<string, string | null>;
@@ -42,5 +42,29 @@ describe("resolveNpmChannelTag", () => {
     const resolved = await resolveNpmChannelTag({ channel: "beta", timeoutMs: 1000 });
 
     expect(resolved).toEqual({ tag: "beta", version: "1.0.2-beta.1" });
+  });
+});
+
+describe("compareSemverStrings", () => {
+  it("orders semantic versions numerically", () => {
+    expect(compareSemverStrings("2.0.0", "2.0.1")).toBe(-1);
+    expect(compareSemverStrings("2.1.0", "2.0.9")).toBe(1);
+    expect(compareSemverStrings("3.0.0", "3.0.0")).toBe(0);
+  });
+
+  it("ranks calendar versions below any product version", () => {
+    expect(compareSemverStrings("2026.2.1-kolo.1", "2.0.0")).toBe(-1);
+    expect(compareSemverStrings("2.0.0", "2026.2.1-kolo.1")).toBe(1);
+    expect(compareSemverStrings("2026.10.17", "3.4.5")).toBe(-1);
+  });
+
+  it("still orders calendar versions among themselves", () => {
+    expect(compareSemverStrings("2026.2.1", "2026.10.16")).toBe(-1);
+    expect(compareSemverStrings("2026.10.17", "2026.10.16")).toBe(1);
+  });
+
+  it("returns null for unparseable input", () => {
+    expect(compareSemverStrings("nope", "2.0.0")).toBeNull();
+    expect(compareSemverStrings(null, "2.0.0")).toBeNull();
   });
 });

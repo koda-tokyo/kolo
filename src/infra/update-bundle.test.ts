@@ -202,6 +202,26 @@ describe("runBundleUpdate", () => {
     expect(out.performed).toBe(false);
   });
 
+  it("treats 2.0.0 as an update for a calendar-versioned install", async () => {
+    const { bundle, manifest } = installedBundle("2026.2.1-kolo.1");
+    const { release, files } = await makeRelease("2.0.0");
+    const out = await runBundleUpdate({
+      bundle,
+      manifest,
+      currentVersion: "2026.2.1-kolo.1",
+      channel: "stable",
+      checkOnly: true,
+      apiBase: "https://api.example",
+      repo: "x/y",
+      fetchImpl: fakeFetch({ release, files }),
+      platform: "linux",
+      env: {},
+      audit: () => {},
+    });
+    expect(out.available).toBe(true);
+    expect(out.latestVersion).toBe("2.0.0");
+  });
+
   it("returns no release when the repo has none", async () => {
     const { bundle, manifest } = installedBundle("2026.10.17");
     const out = await runBundleUpdate({

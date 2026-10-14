@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/diagnostics-otel",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "KoLo diagnostics OpenTelemetry exporter",
   "type": "module",
   "dependencies": {

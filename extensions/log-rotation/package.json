@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/log-rotation",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "Size/age caps for state-root logs",
   "type": "module",
   "devDependencies": {

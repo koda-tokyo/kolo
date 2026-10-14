@@ -2,7 +2,7 @@
 # KoLo installer for Linux and macOS.
 #
 #   curl -fsSL https://kodasoken.com/kolo/install.sh | bash
-#   curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --version 2026.2.1 --no-service
+#   curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --version 2.0.0 --no-service
 #
 # What it does:
 #   1. Picks the release bundle for this OS and CPU from GitHub Releases
@@ -43,7 +43,7 @@ KoLo installer
 Usage: install.sh [options]
 
 Options:
-  --version <v>       Install this release instead of the latest (e.g. 2026.2.1)
+  --version <v>       Install this release instead of the latest (e.g. 2.0.0)
   --prefix <dir>      Install directory (default: $PREFIX)
   --bin-dir <dir>     Where the kolo command is linked (default: $BIN_DIR)
   --bundle <file>     Install from a local bundle instead of downloading

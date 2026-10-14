@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+### Changes
+- Version alignment with core KoLo release numbers.
+
 ## 2026.2.1-kolo.1
 
 ### Changes

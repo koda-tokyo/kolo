@@ -5,6 +5,9 @@ export type KoLoVersion = {
   revision: number;
 };
 
+/** Majors at or above this are calendar versions, older than any product version. */
+export const CALENDAR_VERSION_MIN_MAJOR = 2000;
+
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
 export function parseKoLoVersion(raw: string | null | undefined): KoLoVersion | null {
@@ -32,6 +35,12 @@ export function compareKoLoVersions(
   const parsedB = parseKoLoVersion(b);
   if (!parsedA || !parsedB) {
     return null;
+  }
+  // Calendar versions (2026.2.1-kolo.1) predate the semantic product line (2.0.0).
+  const calA = parsedA.major >= CALENDAR_VERSION_MIN_MAJOR;
+  const calB = parsedB.major >= CALENDAR_VERSION_MIN_MAJOR;
+  if (calA !== calB) {
+    return calA ? -1 : 1;
   }
   if (parsedA.major !== parsedB.major) {
     return parsedA.major < parsedB.major ? -1 : 1;

@@ -2,12 +2,30 @@
 
 Docs: https://kodasoken.com/kolo
 
-## Unreleased
+## 2.0.0
 
-### Changes
+KoLo 2.0: a resident agent runtime you install once, own end to end and can prove. This is the first release on semantic versions; earlier releases used calendar versions (2026.2.1-kolo.1), and an installed calendar-versioned KoLo sees 2.0.0 as an update.
 
-- Reasoning view: reasoning streams live to clients as the `reasoning` field of chat events (redacted, gated by `agents.defaults.reasoning.expose`, `agents.list[].reasoning.expose`, the policy key `agents[].reasoning.expose` and the session's `reasoningView`); `kolo tui` shows it as its own block above the answer ("Thinking" with a spinner, then "Thought for 12s", collapsed to three lines; Ctrl+O expands the latest block, tool cards move to Alt+O; `/reasoning on|off|collapsed|expanded`; `tui.reasoning.maxLines`; `reasoning` theme token); `kolo attach` and the dashboard chat show it under the same headers; `evidence.includeReasoning` records it in evidence bundles.
-- M16 Five minutes to your phone: `kolo init` ends with an optional "Connect your phone" step (`--phone whatsapp|telegram|line|web|skip`), also `kolo connect <channel>`: WhatsApp linked-device QR in the terminal with the linked number bound as owner and a one-line welcome on the first message; Telegram bot token to the secrets store and a `t.me/<bot>?start=<code>` QR; LINE channel secret and token to the secrets store, public HTTPS webhook guidance and an add-friend QR; phone-browser pairing invitation (attach, 10 minutes) as `<dashboard>#pair=<code>`, offered only on `lan`/`tailnet`/`custom` binds over HTTPS, redeemed by the dashboard with a browser device key. Owner binding by one-time codes (10 minutes, single use, hashed), audited (`channel.owner_bound`, `channel.owner_unbound`) and revocable (`kolo connect --unbind <channel>`). Reply policy: outbound jobs are `reply-to-inbound` (always delivered to admitted senders within `channels.delivery.replyWindowMs`) or `proactive` (follows `channels.delivery.policy`, new value `replies-only`). Docs: `docs/start/phone.md`, `docs/ja/start/phone.md`, `docs/cli/connect.md`.
+### Highlights
+
+- Install and run (M1, M2): self-contained bundles for Linux, macOS and Windows with their own Node.js runtime and checksums; `install.sh` / `install.ps1`; `kolo service` over systemd, launchd and Task Scheduler; `kolo update` for verified, atomic updates. `kolo init` is the single first-run command, all state lives under `KOLO_HOME`, policy files are integrity-checked at boot and the audit log is hash-chained.
+- Five minutes to your phone (M16): `kolo init` ends with an optional "Connect your phone" step, also `kolo connect <channel>`: WhatsApp QR, Telegram and LINE with secrets in the store and an add-friend QR, or a phone-browser pairing link. The first message with a one-time code binds you as owner (audited, revocable with `kolo connect --unbind`). Replies to you are always delivered; proactive messages follow `channels.delivery.policy` (new `replies-only`).
+- Pairing, sessions and channels (M3, M14): scoped device pairing with short-lived tokens, `kolo attach` from another terminal or machine, chat conversations mapped to the resident's session, conversation commands (`/status /jobs /cancel /evidence /pause /resume`) and approvals from any channel, a per-channel outbound queue with retry and dead letters.
+- A described API (M4): OpenAPI 3.1 at `/doc`, the generated `@kodasoken/kolo-client` and `kolo api <operation>`; CI fails on drift.
+- Tools (M5, M6): MCP servers with `kolo mcp add|list|remove|test`, under the same policy and audit as core tools; Code Mode runs one agent-written script that calls many tools in a sandbox with time, memory and call limits.
+- Operations (M7, M8): in-process health watchdog, log rotation, self-check and proactive triggers; every agent run is a job you can list and cancel; a step cap and loop detector stop runaway runs.
+- Terminal and editor parity (M9, M10): `kolo tui` with a session switcher, diff view, themes, configurable keys and leader chords, slash commands, `/undo` / `/redo` file snapshots, `/export`, `@path` file references; language-server diagnostics after edits; formatters on edit; `kolo providers` and `kolo models list --live`.
+- Reasoning view: reasoning streams live (redacted, opt-in per agent and policy) and shows in `kolo tui` as its own "Thinking" block above the answer, collapsed by default (Ctrl+O expands, `/reasoning on|off|collapsed|expanded`), and under the same headers in `kolo attach` and the dashboard; evidence bundles can record it.
+- Proven continuity (M11): `kolo continuity run|verify|badge` proves the resident (identity, memory, permissions, jobs, sessions, audit chain) is the same after a model swap, a restart, a state move and a session close.
+- Evidence and replay (M12): every job leaves a signed, hash-chained evidence bundle that verifies offline; `kolo evidence list|show|export|verify|replay`.
+- Policy as code (M13): one signed `policy/policy.yaml` per gateway enforced at tool dispatch, model requests, channels, HTTP/WS and job start, with budgets per agent and fleet and a kill switch that stops running jobs within one tick (`kolo policy ...`).
+- The factory (M15): boards of cards with an audited state machine from inbox to merged, run by a headless build engine as jobs with evidence, opening pull requests and merging only with the card's policy; `kolo factory`, a Kanban view at `/factory`.
+- KODA tested models: `kolo models bench` runs a resident benchmark (tool use, coding, continuity, policy, language) and writes a signed report; the published catalogue (`docs/providers/koda-tested.md`) and a `koda-tested` profile in `kolo init` start you on models that passed it.
+
+### Fixes
+
+- Version ordering: calendar versions (2026.x) rank below every product version, so `kolo update`, update notices and the config "written by a newer KoLo" warning treat 2.0.0 as newer than 2026.2.1-kolo.1.
+- `read` and `edit` accept the `file_path` alias without failing validation.
 
 ## 2026.2.1-kolo.1
 

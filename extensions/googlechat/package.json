@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/googlechat",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "KoLo Google Chat channel plugin",
   "type": "module",
   "dependencies": {

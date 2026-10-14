@@ -1,6 +1,6 @@
 {
   "name": "@kodasoken/kolo",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "KoLo: a resident agent runtime. One service per identity; terminal, web, messaging and paired devices are its clients.",
   "keywords": [
     "agent",

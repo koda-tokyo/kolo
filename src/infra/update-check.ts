@@ -356,11 +356,31 @@ export async function resolveNpmChannelTag(params: {
   return { tag: channelTag, version: channelStatus.version };
 }
 
+/**
+ * KoLo shipped calendar versions (2026.2.1-kolo.1) before the product line moved to
+ * semantic versions (2.0.0). A calendar version (major >= 2000) is older than any
+ * product version, whatever the numbers say.
+ */
+export const CALENDAR_VERSION_MIN_MAJOR = 2000;
+
+export function compareVersionEras(majorA: number, majorB: number): number {
+  const calA = majorA >= CALENDAR_VERSION_MIN_MAJOR;
+  const calB = majorB >= CALENDAR_VERSION_MIN_MAJOR;
+  if (calA === calB) {
+    return 0;
+  }
+  return calA ? -1 : 1;
+}
+
 export function compareSemverStrings(a: string | null, b: string | null): number | null {
   const pa = parseSemver(a);
   const pb = parseSemver(b);
   if (!pa || !pb) {
     return null;
+  }
+  const era = compareVersionEras(pa.major, pb.major);
+  if (era !== 0) {
+    return era;
   }
   if (pa.major !== pb.major) {
     return pa.major < pb.major ? -1 : 1;

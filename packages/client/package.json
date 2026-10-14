@@ -1,6 +1,6 @@
 {
   "name": "@kodasoken/kolo-client",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "Typed client for the KoLo gateway HTTP and WebSocket API, generated from its OpenAPI 3.1 document.",
   "license": "MIT",
   "author": "Carlos Mundim (KODA)",

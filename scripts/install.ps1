@@ -4,7 +4,7 @@
 
 .DESCRIPTION
   iwr -useb https://kodasoken.com/kolo/install.ps1 | iex
-  & ([scriptblock]::Create((iwr -useb https://kodasoken.com/kolo/install.ps1))) -Version 2026.2.1 -NoService
+  & ([scriptblock]::Create((iwr -useb https://kodasoken.com/kolo/install.ps1))) -Version 2.0.0 -NoService
 
   1. Picks the release bundle for this CPU from GitHub Releases
      (kolo-<version>-win32-<arch>.zip built by scripts/bundle.mjs, with SHA256SUMS.txt next

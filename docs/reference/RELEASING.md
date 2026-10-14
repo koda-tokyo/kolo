@@ -19,7 +19,7 @@ When the operator says “release”, immediately do this preflight (no extra qu
 
 1. **Version & metadata**
 
-- [ ] Bump `package.json` version (e.g., `2026.1.29`).
+- [ ] Bump `package.json` version (e.g., `2.0.1`; product versions are semantic since 2.0.0).
 - [ ] Run `pnpm plugins:sync` to align extension package versions + changelogs.
 - [ ] Update CLI/version strings: [`src/cli/program.ts`](https://github.com/koda-tokyo/kolo/blob/main/src/cli/program.ts) and the Baileys user agent in [`src/provider-web.ts`](https://github.com/koda-tokyo/kolo/blob/main/src/provider-web.ts).
 - [ ] Confirm package metadata (name, description, repository, keywords, license) and `bin` map points to [`kolo.mjs`](https://github.com/koda-tokyo/kolo/blob/main/kolo.mjs) for `KoLo`.

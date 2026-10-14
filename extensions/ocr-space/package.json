@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/ocr-space",
-  "version": "2026.2.1-kolo.1",
+  "version": "2.0.0",
   "description": "OCR.space document OCR plugin — 25,000 requests/month free",
   "type": "module",
   "devDependencies": {
