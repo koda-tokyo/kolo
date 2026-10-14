@@ -169,7 +169,7 @@ describe("mergeBenchReports", () => {
           targets: [{ client: createEchoClient("I am alice."), price: null, subset: "quick" }],
           only,
           workRoot: path.join(tmp, "w"),
-          outDir: path.join(tmp, at),
+          outDir: path.join(tmp, at.replace(/:/g, "-")),
           key,
           evidence: false,
           now: () => new Date(at),

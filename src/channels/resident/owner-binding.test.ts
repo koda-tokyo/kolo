@@ -90,9 +90,11 @@ describe("owner codes (M16)", () => {
     expect(expiresAt - clock).toBe(OWNER_CODE_TTL_MS);
     const raw = fs.readFileSync(path.join(home, "channels", "owner-codes.json"), "utf8");
     expect(raw).not.toContain(code);
-    expect(
-      (fs.statSync(path.join(home, "channels", "owner-codes.json")).mode & 0o777).toString(8),
-    ).toBe("600");
+    if (process.platform !== "win32") {
+      expect(
+        (fs.statSync(path.join(home, "channels", "owner-codes.json")).mode & 0o777).toString(8),
+      ).toBe("600");
+    }
 
     const wrongChannel = claimOwnerCode({ channel: "line", text: code, senderId: "u1", env });
     expect(wrongChannel).toEqual({ ok: false, reason: "invalid" });

@@ -109,15 +109,23 @@ export function runNodeTest(
   workspaceDir: string,
   relPath: string,
 ): Promise<{ ok: boolean; output: string }> {
-  const target = path.resolve(workspaceDir, relPath);
-  if (!target.startsWith(path.resolve(workspaceDir) + path.sep)) {
+  // node's permission model checks real paths: on macOS the temp dir (/var/folders) is a
+  // symlink to /private/var/folders, so grant and run against the resolved workspace.
+  let root: string;
+  try {
+    root = fs.realpathSync(path.resolve(workspaceDir));
+  } catch {
+    root = path.resolve(workspaceDir);
+  }
+  const target = path.resolve(root, relPath);
+  if (!target.startsWith(root + path.sep)) {
     return Promise.resolve({ ok: false, output: "path outside the workspace" });
   }
   return new Promise((resolve) => {
     execFile(
       process.execPath,
-      ["--permission", `--allow-fs-read=${path.resolve(workspaceDir)}`, target],
-      { cwd: workspaceDir, env: {}, timeout: 15_000, maxBuffer: 64 * 1024 },
+      ["--permission", `--allow-fs-read=${root}`, target],
+      { cwd: root, env: {}, timeout: 15_000, maxBuffer: 64 * 1024 },
       (err, stdout, stderr) => {
         const output = `${stdout}${stderr}`.slice(0, 2000);
         resolve({ ok: !err && stdout.includes("ok"), output });
