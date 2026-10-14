@@ -21,6 +21,7 @@ import { resolveSharedKoloHome } from "../config/kolo-home.js";
 import { startConsciousness, stopConsciousness, getConsciousnessState } from "./engine.js";
 import { createConsciousnessLLMAdapter } from "./llm-adapter.js";
 import { loadBootContext } from "./memory-injection.js";
+import { resolveTeamName } from "./team-name.js";
 import { loadTemplate, templateToConfig } from "./templates.js";
 import { initV2 } from "./v2-integration.js";
 
@@ -221,7 +222,7 @@ export async function bootConsciousness(params: {
       // ── v2: Initialize transport, tasks, and messaging subsystems ──
       try {
         const v2 = await initV2(agent.userId, {
-          teamName: "kolo-team",
+          teamName: resolveTeamName(),
           configOverrides: { workspaceDir: workspace.dir },
         });
         v2Instances.set(agent.userId, v2);

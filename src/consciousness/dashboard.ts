@@ -19,6 +19,7 @@ import { MailboxManager } from "./messaging/mailbox.js";
 import { getRegisteredPlugins } from "./perception-plugins.js";
 import { getModificationHistory } from "./self-modify.js";
 import { TaskStore } from "./tasks/task-store.js";
+import { resolveTeamName } from "./team-name.js";
 import { FileTransport } from "./transport/file-transport.js";
 
 // ─── API Handler ─────────────────────────────────────────────────────────
@@ -118,7 +119,7 @@ function serveStatus(res: ServerResponse): void {
 
 function serveTasks(res: ServerResponse): void {
   try {
-    const store = new TaskStore("kolo-team");
+    const store = new TaskStore(resolveTeamName());
     const tasks = store.list();
     const stats = store.stats();
     jsonResponse(res, { tasks, stats });
@@ -129,8 +130,8 @@ function serveTasks(res: ServerResponse): void {
 
 function serveMessages(res: ServerResponse): void {
   try {
-    const transport = new FileTransport("kolo-team");
-    const mailbox = new MailboxManager("kolo-team", transport);
+    const transport = new FileTransport(resolveTeamName());
+    const mailbox = new MailboxManager(resolveTeamName(), transport);
     const events = mailbox.getEventLog(50);
     jsonResponse(res, { messages: events });
   } catch {

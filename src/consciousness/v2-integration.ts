@@ -25,6 +25,7 @@ import type { ConsciousnessConfig } from "./types.js";
 import { CONSCIOUS_AGENT_ALLOWLIST_V1 } from "../agents/soul.js";
 import { MailboxManager } from "./messaging/mailbox.js";
 import { TaskStore } from "./tasks/task-store.js";
+import { resolveTeamName } from "./team-name.js";
 import { loadTemplate, templateToConfig } from "./templates.js";
 import { FileTransport } from "./transport/file-transport.js";
 import { createTransport } from "./transport/index.js";
@@ -84,7 +85,7 @@ export interface InitV2Options {
  *   startConsciousness(v2.config, llmCallFn);
  */
 export async function initV2(agentId: string, opts?: InitV2Options): Promise<ConsciousnessV2> {
-  const teamName = opts?.teamName ?? "kolo-team";
+  const teamName = opts?.teamName ?? resolveTeamName();
 
   // 1. Load template
   const template = loadTemplate(agentId);
