@@ -75,6 +75,10 @@ data:
 requests:
   deny: []
 
+# Ransomware shield: decoy files and mass-encryption detection stop every agent (default: stop).
+shield:
+  mode: stop
+
 # Attestation: with required true (the default) an unsigned policy is refused in enforce mode.
 attestation:
   required: true

@@ -2,6 +2,8 @@ import { afterAll, afterEach, beforeEach, vi } from "vitest";
 
 // Ensure Vitest environment is properly set
 process.env.VITEST = "true";
+// The ransomware shield plants decoy files and watches folders; gateway tests opt in explicitly.
+process.env.KOLO_SHIELD ??= "off";
 
 import type {
   ChannelId,

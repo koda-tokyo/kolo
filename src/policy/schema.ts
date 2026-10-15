@@ -254,6 +254,40 @@ export const AttestationSchema = Type.Object(
   { additionalProperties: false },
 );
 
+export const ShieldSchema = Type.Object(
+  {
+    mode: Type.Optional(
+      Type.Union([Type.Literal("stop"), Type.Literal("alert"), Type.Literal("off")], {
+        description:
+          "stop (default): a detection stops every agent; alert: audit and log only; off.",
+      }),
+    ),
+    paths: Type.Optional(
+      Type.Array(Type.String({ minLength: 1 }), {
+        description: "Extra folders to watch, besides the state directory and agent workspaces.",
+      }),
+    ),
+    canaries: Type.Optional(
+      Type.Boolean({ description: "Plant a decoy file in each watched folder (default true)." }),
+    ),
+    rewrites: Type.Optional(
+      Type.Integer({
+        minimum: 3,
+        maximum: 1000,
+        description: "Suspicious rewrites that trigger (default 12).",
+      }),
+    ),
+    windowSeconds: Type.Optional(
+      Type.Integer({ minimum: 10, maximum: 3600, description: "Sliding window (default 60)." }),
+    ),
+  },
+  {
+    additionalProperties: false,
+    description:
+      "Ransomware shield: decoy files and mass-encryption detection that stop every agent.",
+  },
+);
+
 export const PolicyDocumentSchema = Type.Object(
   {
     version: Type.Literal(POLICY_VERSION),
@@ -267,6 +301,7 @@ export const PolicyDocumentSchema = Type.Object(
     data: Type.Optional(DataSchema),
     requests: Type.Optional(RequestsSchema),
     attestation: Type.Optional(AttestationSchema),
+    shield: Type.Optional(ShieldSchema),
   },
   {
     additionalProperties: false,
@@ -371,6 +406,7 @@ export const __schemas: Record<string, TSchema> = {
   NetworkSchema,
   DataSchema,
   RedactSchema,
+  ShieldSchema,
   RequestsSchema,
   AttestationSchema,
 };

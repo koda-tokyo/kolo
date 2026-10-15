@@ -6,6 +6,7 @@ Docs: https://kurahi.kodasoken.com/docs
 
 - The command is `kurahi`; `kolo` is installed as a short alias. Repository: github.com/koda-tokyo/kurahi. Docs: kurahi.kodasoken.com/docs. Installers: kodasoken.com/kurahi/install.sh and install.ps1.
 - New: context guard (`data.redact` in the policy) masks personal data in tool results before the model sees it, with detectors for e-mail, phone numbers, My Number, CPF, CNPJ, card numbers and postal codes, field masking for JSON records, and restore only into tools the policy names. Masking is recorded in evidence bundles as counts, never values.
+- New: ransomware shield. Decoy files in every watched folder and detection of mass encryption (text files rewritten into high-entropy content, extra-extension swaps, ransom notes) stop every agent through the policy kill switch and write the incident to the audit log. On by default; `shield` in the policy sets the mode, extra folders and thresholds.
 - New: `kurahi inventory`, a signed AI inventory of every agent, model, tool, policy rule, MCP server and channel, with `export` (signed JSON or CSV) and offline `verify`.
 - New: `KOLO_OAUTH_REFRESH=off` disables the OAuth refresher for deployments that share credential stores.
 - Fixed: the ACP client's default server command now spawns `kurahi`; `--profile` is added to printed commands for both command names.

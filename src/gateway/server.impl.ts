@@ -837,9 +837,27 @@ export async function startGatewayServer(
     },
     watchPath: CONFIG_PATH,
   });
+  // M17a: ransomware shield over the state directory, agent workspaces and policy-named folders.
+  const { startShield } = await import("../shield/index.js");
+  const logShield = log.child("shield");
+  let shieldWatcher: { stop: () => Promise<void> } | null = null;
+  try {
+    shieldWatcher = startShield({
+      cfg: cfgAtStart,
+      engine: getPolicyEngine(),
+      log: {
+        info: (msg) => logShield.info(msg),
+        warn: (msg) => logShield.warn(msg),
+        error: (msg) => logShield.error(msg),
+      },
+    });
+  } catch (err) {
+    logShield.warn(`shield: not started (${String(err)})`);
+  }
   const configReloader = {
     stop: async () => {
       await policyWatcher.stop();
+      await shieldWatcher?.stop();
       await configReloaderInner.stop();
     },
   };
