@@ -111,10 +111,10 @@ export function renderApp(state: AppViewState) {
           </button>
           <div class="brand">
             <div class="brand-logo">
-              <img src="/favicon.svg" alt="KoLo" />
+              <img src="/favicon.svg" alt="Kurahi" />
             </div>
             <div class="brand-text">
-              <div class="brand-title">KoLo</div>
+              <div class="brand-title">Kurahi</div>
               <div class="brand-sub">Gateway Dashboard</div>
             </div>
           </div>

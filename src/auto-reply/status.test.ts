@@ -71,7 +71,7 @@ describe("buildStatusMessage", () => {
     });
     const normalized = normalizeTestText(text);
 
-    expect(normalized).toContain("KoLo");
+    expect(normalized).toContain("Kurahi");
     expect(normalized).toContain("Model: anthropic/pi:opus");
     expect(normalized).toContain("api-key");
     expect(normalized).toContain("Tokens: 1.2k in / 800 out");
@@ -352,14 +352,7 @@ describe("buildStatusMessage", () => {
         const { buildStatusMessage: buildStatusMessageDynamic } = await import("./status.js");
 
         const sessionId = "sess-1";
-        const logPath = path.join(
-          dir,
-          ".kolo",
-          "agents",
-          "main",
-          "sessions",
-          `${sessionId}.jsonl`,
-        );
+        const logPath = path.join(dir, ".kolo", "agents", "main", "sessions", `${sessionId}.jsonl`);
         fs.mkdirSync(path.dirname(logPath), { recursive: true });
 
         fs.writeFileSync(

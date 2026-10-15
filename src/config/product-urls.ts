@@ -4,7 +4,7 @@
 
 import { createRequire } from "node:module";
 
-export const PRODUCT_NAME = "KoLo";
+export const PRODUCT_NAME = "Kurahi";
 
 /** Documentation root (no trailing slash). */
 export const DOCS_URL = "https://kurahi.kodasoken.com/docs";

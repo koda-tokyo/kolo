@@ -2,6 +2,12 @@
 
 Docs: https://kurahi.kodasoken.com/docs
 
+## 2.0.2
+
+- Fixed: the product name in the CLI banner, chat `/status`, onboarding and the web control panel now reads Kurahi everywhere.
+- Fixed: the hardline guard blocks `pkill`/`killall`/`pgrep` kills of the gateway under the `kurahi` name too; the port inspector recognises a `kurahi` gateway.
+- Fixed: bundles ship the client library as `@kodasoken/kurahi-client`; release titles read Kurahi.
+
 ## 2.0.1
 
 - The command is `kurahi`; `kolo` is installed as a short alias. Repository: github.com/koda-tokyo/kurahi. Docs: kurahi.kodasoken.com/docs. Installers: kodasoken.com/kurahi/install.sh and install.ps1.

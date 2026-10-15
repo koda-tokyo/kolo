@@ -60,8 +60,8 @@ export function renderOverview(props: OverviewProps) {
         <div class="muted" style="margin-top: 8px">
           This gateway requires auth. Add a token or password, then click Connect.
           <div style="margin-top: 6px">
-            <span class="mono">KoLo dashboard --no-open</span> → tokenized URL<br />
-            <span class="mono">KoLo doctor --generate-gateway-token</span> → set token
+            <span class="mono">kurahi dashboard --no-open</span> → tokenized URL<br />
+            <span class="mono">kurahi doctor --generate-gateway-token</span> → set token
           </div>
           <div style="margin-top: 6px">
             <a
@@ -79,7 +79,7 @@ export function renderOverview(props: OverviewProps) {
     return html`
       <div class="muted" style="margin-top: 8px">
         Auth failed. Re-copy a tokenized URL with
-        <span class="mono">KoLo dashboard --no-open</span>, or update the token, then click Connect.
+        <span class="mono">kurahi dashboard --no-open</span>, or update the token, then click Connect.
         <div style="margin-top: 6px">
           <a
             class="session-link"
@@ -140,7 +140,7 @@ export function renderOverview(props: OverviewProps) {
     <section class="mc-hero">
       <div class="mc-hero-head">
         <div>
-          <div class="mc-eyebrow">KoLo Gateway · Family Runtime</div>
+          <div class="mc-eyebrow">Kurahi Gateway</div>
           <div class="mc-title">Mission Control</div>
         </div>
         <div class="mc-health ${props.connected ? "ok" : "warn"}">

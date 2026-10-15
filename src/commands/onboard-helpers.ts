@@ -77,7 +77,7 @@ export function normalizeGatewayTokenInput(value: unknown): string {
 }
 
 export function printWizardHeader(runtime: RuntimeEnv) {
-  runtime.log(`KoLo ${VERSION}`);
+  runtime.log(`Kurahi ${VERSION}`);
 }
 
 export function applyWizardMetadata(

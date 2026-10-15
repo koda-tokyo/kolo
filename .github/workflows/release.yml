@@ -195,7 +195,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version.outputs.tag }}
-          name: KoLo ${{ needs.version.outputs.version }}
+          name: Kurahi ${{ needs.version.outputs.version }}
           body_path: notes.md
           prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
           target_commitish: ${{ github.sha }}

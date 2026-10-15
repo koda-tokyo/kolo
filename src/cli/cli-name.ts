@@ -4,7 +4,7 @@ import path from "node:path";
 export const CLI_BIN = "kurahi";
 
 /** Brand name for prose, banners and docs. Never use for printed commands. */
-export const PRODUCT_NAME = "KoLo";
+export const PRODUCT_NAME = "Kurahi";
 
 export const DEFAULT_CLI_NAME = CLI_BIN;
 

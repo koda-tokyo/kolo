@@ -1,6 +1,6 @@
 {
   "name": "@KoLo/newsdata",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "NewsData.io news feed plugin — 200 requests/day free",
   "type": "module",
   "devDependencies": {

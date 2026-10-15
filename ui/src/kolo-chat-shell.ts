@@ -1,5 +1,5 @@
 // ui/src/kolo-chat-shell.ts
-// KoLo Chat Shell - ChatGPT-style interface
+// Kurahi Chat Shell - ChatGPT-style interface
 
 import { LitElement, html, css } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
@@ -273,7 +273,7 @@ export class KoLoChatShell extends LitElement {
         {
           id: "welcome",
           role: "assistant",
-          content: "こんにちは、KoLoです。今日いちばん助けてほしいことを一つ教えてください。",
+          content: "こんにちは、Kurahiです。今日いちばん助けてほしいことを一つ教えてください。",
           createdAt: now,
         },
       ];
@@ -307,7 +307,7 @@ export class KoLoChatShell extends LitElement {
         `承知しました。「${userMessage.content}」についてお手伝いします。`,
         `なるほど、「${userMessage.content}」ですね。一緒に考えましょう。`,
         `「${userMessage.content}」について、いくつかの選択肢があります。`,
-        `はい、KoLoがお手伝いします。「${userMessage.content}」について詳しく教えてください。`,
+        `はい、Kurahiがお手伝いします。「${userMessage.content}」について詳しく教えてください。`,
       ];
       const assistantMessage: ChatMessage = {
         id: `a-${Date.now()}`,
@@ -377,9 +377,9 @@ export class KoLoChatShell extends LitElement {
           <div class="logo">
             <div class="logo-badge">Ko</div>
             <div>
-              <div>KoLo</div>
+              <div>Kurahi</div>
               <div style="font-size: 11px; color: rgba(0,0,0,0.5);">
-                KoLo
+                Kurahi
               </div>
             </div>
           </div>
@@ -411,8 +411,8 @@ export class KoLoChatShell extends LitElement {
             <select
               @change=${(e: Event) => this.setRolePack((e.target as HTMLSelectElement).value)}
             >
-              <option value="personal">Personal KoLo</option>
-              <option value="business">Business KoLo</option>
+              <option value="personal">Personal Kurahi</option>
+              <option value="business">Business Kurahi</option>
             </select>
           </div>
 
@@ -427,7 +427,7 @@ export class KoLoChatShell extends LitElement {
         <section class="main">
           <header class="header">
             <div class="header-title">
-              <span>KoLo Chat</span>
+              <span>Kurahi Chat</span>
               <span>小さなAIチームと話す場所です。</span>
             </div>
             <div class="header-meta">
@@ -458,7 +458,7 @@ export class KoLoChatShell extends LitElement {
               .value=${this.currentInput}
               @input=${this.handleInput}
               @keydown=${this.handleKeyDown}
-              placeholder="KoLoに話しかけてください。Shift+Enterで改行します。"
+              placeholder="Kurahiに話しかけてください。Shift+Enterで改行します。"
             ></textarea>
             <button
               class="send-button"
