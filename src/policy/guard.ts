@@ -10,8 +10,20 @@ import { randomUUID } from "node:crypto";
 import type { AnyAgentTool } from "../agents/pi-tools.types.js";
 import { ToolPermissionDeniedError, type ToolPermissionSet } from "../agents/permissions.js";
 import { callGatewayTool } from "../agents/tools/gateway.js";
+import { emitEvidenceSignal } from "../evidence/bus.js";
 import { getMcpToolMeta } from "../mcp/client/meta.js";
 import { getPolicyEngine, type PolicyEngine } from "./engine.js";
+import {
+  compileRedactor,
+  type CompiledRedactor,
+  redactionApplies,
+  redactToolResult,
+  type RedactRules,
+  restoreAllowed,
+  restoreValue,
+  toolRef,
+  vaultFor,
+} from "./redact.js";
 
 const DEFAULT_ASK_TIMEOUT_MS = 120_000;
 
@@ -79,6 +91,46 @@ export function wrapToolWithPolicyGuard(tool: AnyAgentTool, ctx: PolicyGuardCont
   }
   const engine = ctx.engine ?? getPolicyEngine();
   const mcpServer = getMcpToolMeta(tool)?.server;
+  const ref = toolRef(tool.name, mcpServer);
+  // Compiled redactor cache keyed by the rules object (a policy reload swaps the object).
+  let compiledFor: RedactRules | undefined;
+  let compiled: CompiledRedactor | undefined;
+
+  // Context guard (M13f): real values back into permitted arguments, personal data out of the
+  // result before the model reads it. Inert when the policy has no `data.redact`.
+  const guarded = async (args: Parameters<typeof execute>) => {
+    const rules = engine.document?.data?.redact as RedactRules | undefined;
+    if (!rules || !redactionApplies(rules, ctx.agentId, ref, tool.name)) {
+      return execute(...args);
+    }
+    const vault = vaultFor(ctx.sessionKey);
+    let restored = 0;
+    if (restoreAllowed(rules, ref, tool.name) && args[1] && typeof args[1] === "object") {
+      const counter = { n: 0 };
+      const next = [...args] as unknown[];
+      next[1] = restoreValue(args[1], vault, counter);
+      restored = counter.n;
+      args = next as Parameters<typeof execute>;
+    }
+    const raw = await execute(...args);
+    if (compiledFor !== rules) {
+      compiled = compileRedactor(rules);
+      compiledFor = rules;
+    }
+    const { result, counts } = redactToolResult(raw, compiled!, vault);
+    const masked = Object.values(counts).reduce((a, b) => a + b, 0);
+    if (ctx.sessionKey && (masked > 0 || restored > 0)) {
+      emitEvidenceSignal({
+        kind: "redaction",
+        sessionKey: ctx.sessionKey,
+        tool: ref,
+        counts,
+        restored,
+      });
+    }
+    return result as Awaited<ReturnType<typeof execute>>;
+  };
+
   return {
     ...tool,
     execute: async (...args: Parameters<typeof execute>) => {
@@ -93,7 +145,7 @@ export function wrapToolWithPolicyGuard(tool: AnyAgentTool, ctx: PolicyGuardCont
         legacyPermissions: ctx.legacyPermissions,
       });
       if (decision.effect === "allow") {
-        return execute(...args);
+        return guarded(args);
       }
       if (decision.effect === "ask") {
         const approvals = engine.document?.approvals;
@@ -107,7 +159,7 @@ export function wrapToolWithPolicyGuard(tool: AnyAgentTool, ctx: PolicyGuardCont
           channel: approvals?.channel,
         });
         if (verdict === "allow") {
-          return execute(...args);
+          return guarded(args);
         }
         throw new PolicyDeniedError(
           `Policy: ${tool.name} needs a human approval (rule ${decision.ruleId}) and none was given.`,

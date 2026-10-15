@@ -15,6 +15,15 @@ export type EvidenceSignal =
       auditSeq?: number;
     }
   | {
+      kind: "redaction";
+      sessionKey: string;
+      tool: string;
+      /** Masked values per kind (EMAIL, PHONE, NAME …); never the values themselves. */
+      counts: Record<string, number>;
+      /** Placeholders replaced by real values in this call's arguments. */
+      restored: number;
+    }
+  | {
       kind: "snapshot";
       sessionKey: string;
       snapshotId: string;

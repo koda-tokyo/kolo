@@ -46,6 +46,8 @@ function eventDetail(e: EvidenceEvent): string {
       return d.prompt ? `<pre>${esc(d.prompt)}${d.promptClipped ? "\n…(clipped)" : ""}</pre>` : "";
     case "permission":
       return d.reason ? `<pre>${esc(d.reason)}</pre>` : "";
+    case "redaction":
+      return `<pre>${esc(JSON.stringify(d.counts ?? {}))}${Number(d.restored) > 0 ? ` · restored ${esc(String(d.restored as number))}` : ""}</pre>`;
     case "loop_guard":
       return `<pre>${esc(d.summary)}</pre>`;
     default:

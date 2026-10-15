@@ -1,3 +1,5 @@
+import { Type, type Static, type TSchema } from "@sinclair/typebox";
+import { validateJsonSchemaValue } from "../plugins/schema-validator.js";
 // Policy document schema (KoLo 2.0, M13a). One declarative file a security team can read,
 // version and attest; the runtime enforces it for every resident on the gateway.
 //
@@ -5,8 +7,7 @@
 // providers, models, channels, hosts and operations are globs too. A rule id is the path of the
 // clause that decided (`agents[trading-*].tools.deny`), so an audit line points back into the
 // file that was signed.
-import { Type, type Static, type TSchema } from "@sinclair/typebox";
-import { validateJsonSchemaValue } from "../plugins/schema-validator.js";
+import { validateRedactRules } from "./redact.js";
 
 export const POLICY_VERSION = 1;
 
@@ -165,6 +166,49 @@ export const NetworkSchema = Type.Object(
   { additionalProperties: false },
 );
 
+export const RedactSchema = Type.Object(
+  {
+    detectors: Type.Optional(
+      Type.Array(Type.String({ minLength: 1 }), {
+        description:
+          "Built-in detectors: email, phone, jp-my-number, br-cpf, br-cnpj, credit-card, jp-postal, ip (default: all but ip).",
+      }),
+    ),
+    fields: Type.Optional(
+      GlobList(
+        'JSON keys whose values are masked; "@personal" adds common name/address/birth-date keys (EN, JA, PT).',
+      ),
+    ),
+    patterns: Type.Optional(
+      Type.Array(
+        Type.Object(
+          {
+            name: Type.String({ minLength: 1, maxLength: 40 }),
+            regex: Type.String({ minLength: 1 }),
+          },
+          { additionalProperties: false },
+        ),
+        { description: "Extra detectors: a name and a regular expression." },
+      ),
+    ),
+    agents: Type.Optional(GlobList("Agents the guard applies to (default all).")),
+    tools: Type.Optional(
+      GlobList("Tools whose results are guarded (default all); mcp:<server>/<tool> for MCP."),
+    ),
+    exceptTools: Type.Optional(GlobList("Tools whose results are never guarded.")),
+    restoreTo: Type.Optional(
+      GlobList(
+        "Tools whose arguments get the real values back in place of placeholders (default none).",
+      ),
+    ),
+  },
+  {
+    additionalProperties: false,
+    description:
+      "Context guard: personal data in tool results is replaced with placeholders before the model sees it.",
+  },
+);
+
 export const DataSchema = Type.Object(
   {
     neverRead: Type.Optional(GlobList("Path globs no tool may read.")),
@@ -174,6 +218,7 @@ export const DataSchema = Type.Object(
         description: "Regular expressions; a tool call whose arguments match is refused.",
       }),
     ),
+    redact: Type.Optional(RedactSchema),
   },
   { additionalProperties: false },
 );
@@ -270,6 +315,9 @@ export function validatePolicyDocument(raw: unknown): PolicyValidation {
       errors.push(`data.secretPatterns[${i}]: invalid regular expression (${String(err)})`);
     }
   }
+  if (policy.data?.redact) {
+    errors.push(...validateRedactRules(policy.data.redact));
+  }
   for (const [agent, entry] of Object.entries(policy.agents ?? {})) {
     for (const [i, rule] of (entry.permissions ?? []).entries()) {
       const colon = rule.indexOf(":");
@@ -322,6 +370,7 @@ export const __schemas: Record<string, TSchema> = {
   ApprovalsSchema,
   NetworkSchema,
   DataSchema,
+  RedactSchema,
   RequestsSchema,
   AttestationSchema,
 };

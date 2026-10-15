@@ -320,6 +320,14 @@ export class EvidenceRecorder {
       });
       return;
     }
+    if (signal.kind === "redaction") {
+      this.append("redaction", {
+        tool: signal.tool,
+        counts: signal.counts,
+        restored: signal.restored,
+      });
+      return;
+    }
     this.append("snapshot", {
       snapshotId: signal.snapshotId,
       tool: signal.tool,

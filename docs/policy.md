@@ -38,7 +38,7 @@ kolo policy release --all
 
 | Decision point             | Where                                                                   | What is checked                                                                                                                                                                                                       |
 | -------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tool dispatch              | every agent tool call, including MCP tools and scripts run in Code Mode | kill switch, budget pause, `agents[].tools.allow/deny`, `network.mcp`, `data.neverRead/neverWrite`, `data.secretPatterns`, `network.egress`, `approvals.require`, `agents[].permissions`, then the config permissions |
+| Tool dispatch              | every agent tool call, including MCP tools and scripts run in Code Mode | kill switch, budget pause, `agents[].tools.allow/deny`, `network.mcp`, `data.neverRead/neverWrite`, `data.secretPatterns`, `data.redact` (the [context guard](/context-guard), on results), `network.egress`, `approvals.require`, `agents[].permissions`, then the config permissions |
 | Model request              | before a model is resolved for a turn                                   | kill switch, budgets (tokens/day, cost/day), `agents[].providers`, `agents[].models`                                                                                                                                  |
 | Channel                    | a message arriving for an agent, and a delivery leaving one             | kill switch, `agents[].channels`                                                                                                                                                                                      |
 | HTTP and WebSocket request | after authentication, before the handler                                | kill switch on agent-driving operations, `requests.deny` by operation and credential scope                                                                                                                            |
@@ -94,6 +94,7 @@ data:
   neverRead: ["~/.ssh/**", "**/.env"]
   neverWrite: ["/etc/**"]
   secretPatterns: ["AKIA[0-9A-Z]{16}"]
+  redact: { fields: ["@personal"], restoreTo: [message] }
 requests:
   deny:
     - { operations: [runCodeMode, "codeMode.*"], scopes: [attach] }

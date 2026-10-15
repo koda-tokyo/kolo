@@ -65,6 +65,11 @@ data:
   secretPatterns:
     - "-----BEGIN [A-Z ]*PRIVATE KEY-----"
     - "AKIA[0-9A-Z]{16}"
+  # Context guard: personal data in tool results becomes [[PII:KIND:n]] placeholders before the
+  # model sees it; restoreTo lists tools that get the real values back. Uncomment to enable.
+  # redact:
+  #   fields: ["@personal"]
+  #   restoreTo: ["message"]
 
 # HTTP operationIds / WS methods refused for a credential scope.
 requests:

@@ -186,6 +186,13 @@ export function describeEvent(e: EvidenceEvent): string {
       return `snapshot ${one(d.snapshotId)} before ${one(d.tool)}: ${((d.files as Array<{ path: string }>) ?? []).map((f) => f.path).join(", ")}`;
     case "permission":
       return `permission ${one(d.decision)}: ${one(d.tool)}${d.target ? ` on ${one(d.target, 80)}` : ""}${d.rule ? ` (${one(d.rule)})` : ""}`;
+    case "redaction": {
+      const counts = (d.counts ?? {}) as Record<string, number>;
+      const masked = Object.entries(counts)
+        .map(([k, n]) => `${n} ${k.toLowerCase()}`)
+        .join(", ");
+      return `context guard on ${one(d.tool)}: ${masked || "nothing"} masked${Number(d.restored) > 0 ? `, ${one(d.restored)} value(s) restored into arguments` : ""}`;
+    }
     case "loop_guard":
       return `loop guard stop (${one(d.reason)}) after ${one(d.steps)} steps: ${one(d.summary, 100)}`;
     case "audit":
