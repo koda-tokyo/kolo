@@ -82,58 +82,58 @@ describe("applyCliProfileEnv", () => {
 
 describe("formatCliCommand", () => {
   it("returns command unchanged when no profile is set", () => {
-    expect(formatCliCommand("kolo doctor --fix", {})).toBe("kolo doctor --fix");
+    expect(formatCliCommand("kurahi doctor --fix", {})).toBe("kurahi doctor --fix");
   });
 
   it("returns command unchanged when profile is default", () => {
-    expect(formatCliCommand("kolo doctor --fix", { KOLO_PROFILE: "default" })).toBe(
-      "kolo doctor --fix",
+    expect(formatCliCommand("kurahi doctor --fix", { KOLO_PROFILE: "default" })).toBe(
+      "kurahi doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is Default (case-insensitive)", () => {
-    expect(formatCliCommand("kolo doctor --fix", { KOLO_PROFILE: "Default" })).toBe(
-      "kolo doctor --fix",
+    expect(formatCliCommand("kurahi doctor --fix", { KOLO_PROFILE: "Default" })).toBe(
+      "kurahi doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is invalid", () => {
-    expect(formatCliCommand("kolo doctor --fix", { KOLO_PROFILE: "bad profile" })).toBe(
-      "kolo doctor --fix",
+    expect(formatCliCommand("kurahi doctor --fix", { KOLO_PROFILE: "bad profile" })).toBe(
+      "kurahi doctor --fix",
     );
   });
 
   it("returns command unchanged when --profile is already present", () => {
-    expect(formatCliCommand("kolo --profile work doctor --fix", { KOLO_PROFILE: "work" })).toBe(
-      "kolo --profile work doctor --fix",
+    expect(formatCliCommand("kurahi --profile work doctor --fix", { KOLO_PROFILE: "work" })).toBe(
+      "kurahi --profile work doctor --fix",
     );
   });
 
   it("returns command unchanged when --dev is already present", () => {
-    expect(formatCliCommand("kolo --dev doctor", { KOLO_PROFILE: "dev" })).toBe(
-      "kolo --dev doctor",
+    expect(formatCliCommand("kurahi --dev doctor", { KOLO_PROFILE: "dev" })).toBe(
+      "kurahi --dev doctor",
     );
   });
 
   it("inserts --profile flag when profile is set", () => {
-    expect(formatCliCommand("kolo doctor --fix", { KOLO_PROFILE: "work" })).toBe(
-      "kolo --profile work doctor --fix",
+    expect(formatCliCommand("kurahi doctor --fix", { KOLO_PROFILE: "work" })).toBe(
+      "kurahi --profile work doctor --fix",
     );
   });
 
   it("trims whitespace from profile", () => {
-    expect(formatCliCommand("kolo doctor --fix", { KOLO_PROFILE: "  jbKoLo  " })).toBe(
-      "kolo --profile jbKoLo doctor --fix",
+    expect(formatCliCommand("kurahi doctor --fix", { KOLO_PROFILE: "  jbKoLo  " })).toBe(
+      "kurahi --profile jbKoLo doctor --fix",
     );
   });
 
   it("handles command with no args after KoLo", () => {
-    expect(formatCliCommand("KoLo", { KOLO_PROFILE: "test" })).toBe("kolo --profile test");
+    expect(formatCliCommand("KoLo", { KOLO_PROFILE: "test" })).toBe("kurahi --profile test");
   });
 
   it("handles pnpm wrapper", () => {
-    expect(formatCliCommand("pnpm kolo doctor", { KOLO_PROFILE: "work" })).toBe(
-      "pnpm kolo --profile work doctor",
+    expect(formatCliCommand("pnpm kurahi doctor", { KOLO_PROFILE: "work" })).toBe(
+      "pnpm kurahi --profile work doctor",
     );
   });
 });

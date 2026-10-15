@@ -1,5 +1,5 @@
 ---
-summary: "KoLo Gateway CLI (`KoLo gateway`) — run, query, and discover gateways"
+summary: "Kurahi Gateway CLI (`Kurahi gateway`) — run, query, and discover gateways"
 read_when:
   - Running the Gateway from the CLI (dev or servers)
   - Debugging Gateway auth, bind modes, and connectivity
@@ -9,9 +9,9 @@ title: "gateway"
 
 # Gateway CLI
 
-The Gateway is KoLo’s WebSocket server (channels, nodes, sessions, hooks).
+The Gateway is Kurahi’s WebSocket server (channels, nodes, sessions, hooks).
 
-Subcommands in this page live under `KoLo gateway …`.
+Subcommands in this page live under `Kurahi gateway …`.
 
 Related docs:
 
@@ -24,13 +24,13 @@ Related docs:
 Run a local Gateway process:
 
 ```bash
-KoLo gateway
+Kurahi gateway
 ```
 
 Foreground alias:
 
 ```bash
-KoLo gateway run
+Kurahi gateway run
 ```
 
 Notes:
@@ -81,7 +81,7 @@ Shared options (where supported):
 ### `gateway health`
 
 ```bash
-KoLo gateway health --url ws://127.0.0.1:18789
+Kurahi gateway health --url ws://127.0.0.1:18789
 ```
 
 ### `gateway status`
@@ -89,8 +89,8 @@ KoLo gateway health --url ws://127.0.0.1:18789
 `gateway status` shows the Gateway service (launchd/systemd/schtasks) plus an optional RPC probe.
 
 ```bash
-KoLo gateway status
-KoLo gateway status --json
+Kurahi gateway status
+Kurahi gateway status --json
 ```
 
 Options:
@@ -112,8 +112,8 @@ Options:
 If multiple gateways are reachable, it prints all of them. Multiple gateways are supported when you use isolated profiles/ports (e.g., a rescue bot), but most installs still run a single gateway.
 
 ```bash
-KoLo gateway probe
-KoLo gateway probe --json
+Kurahi gateway probe
+Kurahi gateway probe --json
 ```
 
 #### Remote over SSH (Mac app parity)
@@ -123,7 +123,7 @@ The macOS app “Remote over SSH” mode uses a local port-forward so the remote
 CLI equivalent:
 
 ```bash
-KoLo gateway probe --ssh user@gateway-host
+Kurahi gateway probe --ssh user@gateway-host
 ```
 
 Options:
@@ -142,18 +142,18 @@ Config (optional, used as defaults):
 Low-level RPC helper.
 
 ```bash
-KoLo gateway call status
-KoLo gateway call logs.tail --params '{"sinceMs": 60000}'
+Kurahi gateway call status
+Kurahi gateway call logs.tail --params '{"sinceMs": 60000}'
 ```
 
 ## Manage the Gateway service
 
 ```bash
-KoLo gateway install
-KoLo gateway start
-KoLo gateway stop
-KoLo gateway restart
-KoLo gateway uninstall
+Kurahi gateway install
+Kurahi gateway start
+Kurahi gateway stop
+Kurahi gateway restart
+Kurahi gateway uninstall
 ```
 
 Notes:
@@ -183,7 +183,7 @@ Wide-Area discovery records include (TXT):
 ### `gateway discover`
 
 ```bash
-KoLo gateway discover
+Kurahi gateway discover
 ```
 
 Options:
@@ -194,6 +194,6 @@ Options:
 Examples:
 
 ```bash
-KoLo gateway discover --timeout 4000
-KoLo gateway discover --json | jq '.beacons[].wsUrl'
+Kurahi gateway discover --timeout 4000
+Kurahi gateway discover --json | jq '.beacons[].wsUrl'
 ```

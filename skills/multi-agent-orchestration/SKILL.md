@@ -1,10 +1,13 @@
 # Multi-Agent Orchestration — Routing, Handoff, Consensus & Collective Intelligence
 
 ## Purpose
-Design and operate systems where multiple AI agents collaborate, coordinate, and specialize. Covers agent communication patterns, routing architectures, consensus mechanisms, handoff protocols, specialization strategies, conflict resolution, shared memory, and emergent collective behavior. Built for KoLo (agent platform), SVITLA (commercial architecture), and the NHI sibling network.
+
+Design and operate systems where multiple AI agents collaborate, coordinate, and specialize. Covers agent communication patterns, routing architectures, consensus mechanisms, handoff protocols, specialization strategies, conflict resolution, shared memory, and emergent collective behavior. Built for Kurahi (agent platform), SVITLA (commercial architecture), and the NHI sibling network.
 
 ## Triggers
+
 Use this skill for:
+
 - Designing multi-agent systems (2+ agents collaborating)
 - Agent-to-agent communication protocols
 - Routing tasks to specialized agents
@@ -20,53 +23,63 @@ Use this skill for:
 ### Agent Coordination Patterns
 
 #### 1. Hierarchical (Manager-Worker)
+
 ```
 [Orchestrator Agent]
     ├── [Specialist Agent A] → task type X
-    ├── [Specialist Agent B] → task type Y  
+    ├── [Specialist Agent B] → task type Y
     └── [Specialist Agent C] → task type Z
 ```
+
 **When:** Known task types, predictable routing
 **Strengths:** Simple, debuggable, clear ownership
 **Weaknesses:** Single point of failure (orchestrator), bottleneck at scale
 **Example:** A dispatcher routes coding tasks to a coding agent, design tasks to Design Studio, compliance tasks to regulatory specialist
 
 #### 2. Peer-to-Peer (Mesh)
+
 ```
 [Agent A] ←→ [Agent B]
     ↕           ↕
 [Agent C] ←→ [Agent D]
 ```
+
 **When:** Collaborative reasoning, no clear "owner"
 **Strengths:** Resilient, no single point of failure, emergent specialization
 **Weaknesses:** Hard to debug, message complexity O(n²), potential for echo chambers
 **Example:** Three agents reviewing SVITLA sections — each brings their lens, converge independently
 
 #### 3. Pipeline (Sequential)
+
 ```
 [Agent 1] → [Agent 2] → [Agent 3] → Output
   (research)  (analysis)  (write)
 ```
+
 **When:** Well-defined stages, each adds value to previous output
 **Strengths:** Clean handoffs, each stage verifiable, natural QA at each step
 **Weaknesses:** Latency adds up, error in early stage cascades, rigid
 **Example:** Research agent gathers data → Analysis agent finds patterns → Writing agent produces report
 
 #### 4. Debate/Adversarial
+
 ```
 [Proponent Agent] ←→ [Critic Agent] → [Judge Agent] → Decision
 ```
+
 **When:** High-stakes decisions, bias mitigation, safety-critical
 **Strengths:** Catches blind spots, surfaces assumptions, stronger output
 **Weaknesses:** 2-3× token cost, slower, can deadlock
 **Example:** Before deploying clinical AI change — proponent argues for, critic finds risks, judge (or human) decides
 
 #### 5. Voting Ensemble
+
 ```
 [Agent A] ─┐
 [Agent B] ─┼→ [Aggregator] → Consensus output
 [Agent C] ─┘
 ```
+
 **When:** Need robustness, reducing individual model bias
 **Strengths:** Outlier-resistant, higher accuracy on average
 **Weaknesses:** Cost scales with N, regression to mean on creative tasks
@@ -79,8 +92,8 @@ When one agent passes work to another, this is the minimum that must travel:
 ```json
 {
   "handoff_id": "uuid",
-  "from_agent": {"id": "agent_a", "role": "researcher"},
-  "to_agent": {"id": "agent_b", "role": "analyst"},
+  "from_agent": { "id": "agent_a", "role": "researcher" },
+  "to_agent": { "id": "agent_b", "role": "analyst" },
   "task": {
     "original_request": "What the human asked for (verbatim)",
     "status": "in_progress|blocked|complete",
@@ -115,6 +128,7 @@ Good specialization boundaries:
 4. **By risk level** (routine agent vs. high-stakes approval agent)
 
 Bad specialization boundaries:
+
 - By random partitioning ("agent 1 handles A-M, agent 2 handles N-Z" — no meaningful split)
 - Too granular (each agent does one tiny thing → coordination overhead dominates)
 - Too overlapping (multiple agents with same capability → ambiguity about who does what)
@@ -126,20 +140,20 @@ When a task arrives, who handles it?
 ```python
 def route_task(task: dict, agents: list[Agent]) -> Agent:
     """Route task to best agent. Fall through tiers."""
-    
+
     # Tier 1: Explicit routing (human specified)
     if task.get("assigned_to"):
         return get_agent(task["assigned_to"])
-    
+
     # Tier 2: Capability match (agent declares it can do this)
     capable = [a for a in agents if a.can_handle(task["type"])]
     if len(capable) == 1:
         return capable[0]
-    
+
     # Tier 3: Load balance among capable agents
     if capable:
         return min(capable, key=lambda a: a.current_load)
-    
+
     # Tier 4: Escalate to orchestrator or human
     return orchestrator or human_escalation
 ```
@@ -149,22 +163,26 @@ def route_task(task: dict, agents: list[Agent]) -> Agent:
 When multiple agents must agree on an output:
 
 **1. Majority Vote**
+
 - Use for: classification, binary decisions, factual questions
 - Bias: no agent's vote counts more
 - Cost: N × single-agent cost
 
 **2. Weighted Vote**
+
 - Use for: specialist domains (medical agent's vote matters more on medical questions)
 - Bias: explicitly designed, transparent
 - Cost: same as majority
 
 **3. Debate-to-Convergence**
+
 - Use for: reasoning tasks, creative work, strategy
 - Process: Agent A proposes → Agent B critiques → Agent A revises → repeat until convergence or max rounds
 - Bias: quality emerges from adversarial process
 - Cost: 2-5× single-agent cost (iterative)
 
 **4. Supervised Consensus**
+
 - Use for: high-stakes, safety-critical decisions
 - Process: All agents produce independent outputs → human or trusted reviewer selects/moderates
 - Bias: human oversight as safety net
@@ -189,6 +207,7 @@ Never let agents deadlock silently. Every disagreement must either resolve or es
 Agents working together need shared context:
 
 **1. Shared Workspace (File System)**
+
 ```
 /workspace/
   context.json      — shared state, active decisions
@@ -197,19 +216,21 @@ Agents working together need shared context:
 ```
 
 **2. Message Bus (Event-Driven)**
+
 ```
 Agent A publishes: "completed_research", {topic: "MHLW", findings: [...]}
 Agent B subscribes: "completed_research" → starts analysis phase
 ```
 
 **3. Central Memory (Database)**
+
 - STM (working memory): key-value, expires, fast
 - MTM (session memory): what happened this session
 - LTM (knowledge base): semantic search, durable
 
 ### The Sibling Model (NHI Network Pattern)
 
-The KoLo sibling architecture is a specific multi-agent pattern:
+The Kurahi sibling architecture is a specific multi-agent pattern:
 
 ```
 Characteristics:
@@ -240,6 +261,7 @@ Lessons for other multi-agent systems:
 ### When NOT to Use Multi-Agent
 
 Multi-agent adds cost, latency, and complexity. Don't use it when:
+
 - One capable agent can do the task (single-agent with good prompting is faster and cheaper)
 - The task has no natural decomposition (forcing specialization creates friction)
 - Latency is critical (<1s requirement — multi-agent handoffs add seconds)
@@ -259,4 +281,3 @@ How to know if your multi-agent system is working:
 - **Escalation rate:** What % of tasks reach human escalation? (Should be low but not zero — zero means agents never admit uncertainty.)
 
 ---
-

@@ -777,7 +777,7 @@ async function checkCodeMode(entry, home, port, token) {
   ) {
     throw new Error(`kolo mcp list: exit ${list.code}: ${list.out.slice(-300)}`);
   }
-  return `mcp fake ready (${fake.tools.filter((t) => t.exposed).length}/${fake.tools.length} tools), script agents_list+mcp.fake.add=42, 401, timeout, ws ok, kolo mcp list live`;
+  return `mcp fake ready (${fake.tools.filter((t) => t.exposed).length}/${fake.tools.length} tools), script agents_list+mcp.fake.add=42, 401, timeout, ws ok, kurahi mcp list live`;
 }
 
 async function checkPlugins(entry, home, port, token) {
@@ -787,13 +787,17 @@ async function checkPlugins(entry, home, port, token) {
   }
   const row = (list.json.plugins ?? []).find((p) => p.id === "smoke-plugin");
   if (!row || row.status !== "loaded" || row.quarantined) {
-    throw new Error(`smoke-plugin: ${JSON.stringify(row ?? "missing").slice(0, 300)} (want loaded)`);
+    throw new Error(
+      `smoke-plugin: ${JSON.stringify(row ?? "missing").slice(0, 300)} (want loaded)`,
+    );
   }
   if (!row.gatewayMethods.includes("smoke.version")) {
     throw new Error(`smoke-plugin gateway methods: ${JSON.stringify(row.gatewayMethods)}`);
   }
   if (list.json.hotReload?.enabled !== true || list.json.hotReload?.watching !== true) {
-    throw new Error(`hot reload state: ${JSON.stringify(list.json.hotReload)} (want enabled + watching)`);
+    throw new Error(
+      `hot reload state: ${JSON.stringify(list.json.hotReload)} (want enabled + watching)`,
+    );
   }
   const unauth = await pairCall(port, "/api/plugins");
   if (unauth.status !== 401) {
@@ -818,7 +822,10 @@ async function checkPlugins(entry, home, port, token) {
   }
   // Rewrite the plugin and reload it in place.
   writeSmokePlugin(home, "v2");
-  const reload = await pairCall(port, "/api/plugins/smoke-plugin/reload", { token, method: "POST" });
+  const reload = await pairCall(port, "/api/plugins/smoke-plugin/reload", {
+    token,
+    method: "POST",
+  });
   if (reload.status !== 200 || reload.json.plugin?.ok !== true) {
     throw new Error(`reload: HTTP ${reload.status} ${JSON.stringify(reload.json).slice(0, 300)}`);
   }
@@ -828,13 +835,26 @@ async function checkPlugins(entry, home, port, token) {
   }
   // A broken rewrite is quarantined: listed with its error, gateway still answers.
   writeSmokePlugin(home, "v3", { broken: true });
-  const broken = await pairCall(port, "/api/plugins/smoke-plugin/reload", { token, method: "POST" });
-  if (broken.status !== 200 || broken.json.plugin?.ok !== false || broken.json.plugin?.status !== "error") {
-    throw new Error(`broken reload: HTTP ${broken.status} ${JSON.stringify(broken.json).slice(0, 300)}`);
+  const broken = await pairCall(port, "/api/plugins/smoke-plugin/reload", {
+    token,
+    method: "POST",
+  });
+  if (
+    broken.status !== 200 ||
+    broken.json.plugin?.ok !== false ||
+    broken.json.plugin?.status !== "error"
+  ) {
+    throw new Error(
+      `broken reload: HTTP ${broken.status} ${JSON.stringify(broken.json).slice(0, 300)}`,
+    );
   }
   const after = await pairCall(port, "/api/plugins", { token });
   const qrow = (after.json.plugins ?? []).find((p) => p.id === "smoke-plugin");
-  if (qrow?.status !== "error" || qrow?.quarantined !== true || !String(qrow?.error).includes("deliberately broken")) {
+  if (
+    qrow?.status !== "error" ||
+    qrow?.quarantined !== true ||
+    !String(qrow?.error).includes("deliberately broken")
+  ) {
     throw new Error(`quarantine: ${JSON.stringify(qrow).slice(0, 300)}`);
   }
   const health = await pairCall(port, "/health", { token });
@@ -850,7 +870,7 @@ async function checkPlugins(entry, home, port, token) {
   if (v4.code !== 0 || parseJsonOutput(v4.out).version !== "v4") {
     throw new Error(`smoke.version after fix: ${v4.out.slice(-200)} (want v4)`);
   }
-  return `loaded+watched, kolo plugins list live, reload v1->v2 ok, broken->quarantined (gateway up), fixed->v4 (reloads ${fixed.json.plugin.reloads})`;
+  return `loaded+watched, kurahi plugins list live, reload v1->v2 ok, broken->quarantined (gateway up), fixed->v4 (reloads ${fixed.json.plugin.reloads})`;
 }
 
 // `kolo mcp add|test|remove` need no gateway (test probes in-process); run them after the stop so

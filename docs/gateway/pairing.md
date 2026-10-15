@@ -37,11 +37,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-KoLo nodes pending
-KoLo nodes approve <requestId>
-KoLo nodes reject <requestId>
-KoLo nodes status
-KoLo nodes rename --node <id|name|ip> --name "Living Room iPad"
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
+Kurahi nodes reject <requestId>
+Kurahi nodes status
+Kurahi nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.

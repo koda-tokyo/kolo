@@ -1,5 +1,6 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * OpenCorporates plugin for KoLo.
+ * OpenCorporates plugin for Kurahi.
  *
  * Provides `company_search` tool — look up companies worldwide.
  * 200M+ companies across 140+ jurisdictions.
@@ -7,7 +8,6 @@
  * Source: https://api.opencorporates.com/
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 interface CompanyResult {
   name: string;
@@ -19,7 +19,11 @@ interface CompanyResult {
   opencorporates_url: string;
 }
 
-async function searchCompanies(query: string, jurisdiction?: string, apiToken?: string): Promise<CompanyResult[]> {
+async function searchCompanies(
+  query: string,
+  jurisdiction?: string,
+  apiToken?: string,
+): Promise<CompanyResult[]> {
   const params = new URLSearchParams({ q: query, format: "json" });
   if (jurisdiction) params.set("jurisdiction_code", jurisdiction.toLowerCase());
   if (apiToken) params.set("api_token", apiToken);
@@ -37,7 +41,11 @@ async function searchCompanies(query: string, jurisdiction?: string, apiToken?: 
   return (data.results?.companies ?? []).map((c) => c.company);
 }
 
-async function getCompany(jurisdictionCode: string, companyNumber: string, apiToken?: string): Promise<CompanyResult | null> {
+async function getCompany(
+  jurisdictionCode: string,
+  companyNumber: string,
+  apiToken?: string,
+): Promise<CompanyResult | null> {
   const params = new URLSearchParams({ format: "json" });
   if (apiToken) params.set("api_token", apiToken);
 
@@ -81,7 +89,9 @@ const opencorporatesPlugin = {
         parameters: Type.Object({
           query: Type.String({ description: "Company name or search terms" }),
           jurisdiction: Type.Optional(
-            Type.String({ description: 'Country/jurisdiction code (e.g. "gb", "ng", "ch", "us_de"). Optional.' }),
+            Type.String({
+              description: 'Country/jurisdiction code (e.g. "gb", "ng", "ch", "us_de"). Optional.',
+            }),
           ),
         }),
 
@@ -93,12 +103,15 @@ const opencorporatesPlugin = {
           const query = typeof params.query === "string" ? params.query.trim() : "";
           if (!query) return { content: [{ type: "text" as const, text: "No query provided." }] };
 
-          const jurisdiction = typeof params.jurisdiction === "string" ? params.jurisdiction.trim() : undefined;
+          const jurisdiction =
+            typeof params.jurisdiction === "string" ? params.jurisdiction.trim() : undefined;
 
           try {
             const results = await searchCompanies(query, jurisdiction, apiToken);
             if (results.length === 0) {
-              return { content: [{ type: "text" as const, text: `No companies found for: "${query}"` }] };
+              return {
+                content: [{ type: "text" as const, text: `No companies found for: "${query}"` }],
+              };
             }
 
             const text = results.slice(0, 5).map(formatCompany).join("\n\n---\n\n");
@@ -108,7 +121,9 @@ const opencorporatesPlugin = {
             };
           } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
-            return { content: [{ type: "text" as const, text: `Company search error: ${message}` }] };
+            return {
+              content: [{ type: "text" as const, text: `Company search error: ${message}` }],
+            };
           }
         },
       },
@@ -123,12 +138,22 @@ const opencorporatesPlugin = {
           .option("-j, --jurisdiction <code>", "Jurisdiction code (gb, ng, ch, us_de)")
           .action(async (parts: string[], opts: { jurisdiction?: string }) => {
             const query = parts.join(" ");
-            const apiToken = (api.pluginConfig?.apiToken as string | undefined) ?? process.env.OPENCORPORATES_API_TOKEN;
+            const apiToken =
+              (api.pluginConfig?.apiToken as string | undefined) ??
+              process.env.OPENCORPORATES_API_TOKEN;
             try {
               const results = await searchCompanies(query, opts.jurisdiction, apiToken);
-              if (results.length === 0) { console.log(`No results for: "${query}"`); return; }
-              for (const c of results.slice(0, 5)) { console.log(formatCompany(c) + "\n"); }
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+              if (results.length === 0) {
+                console.log(`No results for: "${query}"`);
+                return;
+              }
+              for (const c of results.slice(0, 5)) {
+                console.log(formatCompany(c) + "\n");
+              }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["company"] },

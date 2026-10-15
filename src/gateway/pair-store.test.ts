@@ -1,4 +1,4 @@
-import { generateDeviceKey, pairProofPayload, signWithDeviceKey } from "@kodasoken/kolo-client";
+import { generateDeviceKey, pairProofPayload, signWithDeviceKey } from "@kodasoken/kurahi-client";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

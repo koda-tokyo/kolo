@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `kolo logs` (tail gateway logs over RPC)"
+summary: "CLI reference for `kurahi logs` (tail gateway logs over RPC)"
 read_when:
   - You need to tail gateway logs without a shell on the gateway host
   - You want JSON log lines for tooling
 title: "logs"
 ---
 
-# `kolo logs`
+# `kurahi logs`
 
 Tail the gateway's file log over its RPC connection. Works against a remote gateway when
 `gateway.remote.url` is configured.
@@ -14,16 +14,16 @@ Tail the gateway's file log over its RPC connection. Works against a remote gate
 Related:
 
 - Logging overview: [Logging](/logging)
-- The OS service log (what the supervisor captured): `kolo service logs`
+- The OS service log (what the supervisor captured): `kurahi service logs`
 
 ## Examples
 
 ```bash
-kolo logs
-kolo logs --follow
-kolo logs --json
-kolo logs --limit 500
-kolo logs --url wss://gateway.example.com:18789
+kurahi logs
+kurahi logs --follow
+kurahi logs --json
+kurahi logs --limit 500
+kurahi logs --url wss://gateway.example.com:18789
 ```
 
 ## Options
@@ -40,7 +40,7 @@ kolo logs --url wss://gateway.example.com:18789
 ## Authentication
 
 There is no `--token` flag. The credential is discovered from `KOLO_HOME` the same way
-`kolo attach` and `kolo api` discover it: the owner token file, the secrets store, or
+`kurahi attach` and `kurahi api` discover it: the owner token file, the secrets store, or
 `gateway.remote.token` when a remote gateway is configured. Secrets never go on the command line.
 
 ## Exit codes

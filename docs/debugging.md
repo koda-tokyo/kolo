@@ -22,7 +22,7 @@ Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[KoLo]"
+/debug set messages.responsePrefix="[Kurahi]"
 /debug unset messages.responsePrefix
 /debug reset
 ```
@@ -60,10 +60,10 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-KOLO_PROFILE=dev KoLo tui
+KOLO_PROFILE=dev Kurahi tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm KoLo ...`.
+If you don’t have a global install yet, run the CLI via `pnpm Kurahi ...`.
 
 What this does:
 
@@ -92,7 +92,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-KOLO_PROFILE=dev KoLo gateway --dev --reset
+KOLO_PROFILE=dev Kurahi gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -101,12 +101,12 @@ KOLO_PROFILE=dev KoLo gateway --dev --reset
 Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 
 ```bash
-KoLo gateway stop
+Kurahi gateway stop
 ```
 
-## Raw stream logging (KoLo)
+## Raw stream logging (Kurahi)
 
-KoLo can log the **raw assistant stream** before any filtering/formatting.
+Kurahi can log the **raw assistant stream** before any filtering/formatting.
 This is the best way to see whether reasoning is arriving as plain text deltas
 (or as separate thinking blocks).
 

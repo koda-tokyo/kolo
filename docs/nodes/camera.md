@@ -8,7 +8,7 @@ title: "Camera Capture"
 
 # Camera capture (agent)
 
-KoLo supports **camera capture** for agent workflows:
+Kurahi supports **camera capture** for agent workflows:
 
 - **iOS node** (paired via Gateway): capture a **photo** (`jpg`) or **short video clip** (`mp4`, with optional audio) via `node.invoke`.
 - **Android node** (paired via Gateway): capture a **photo** (`jpg`) or **short video clip** (`mp4`, with optional audio) via `node.invoke`.
@@ -68,10 +68,10 @@ The easiest way to get attachments is via the CLI helper, which writes decoded m
 Examples:
 
 ```bash
-KoLo nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
-KoLo nodes camera snap --node <id> --facing front
-KoLo nodes camera clip --node <id> --duration 3000
-KoLo nodes camera clip --node <id> --no-audio
+Kurahi nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
+Kurahi nodes camera snap --node <id> --facing front
+Kurahi nodes camera clip --node <id> --duration 3000
+Kurahi nodes camera clip --node <id> --no-audio
 ```
 
 Notes:
@@ -116,25 +116,25 @@ The macOS companion app exposes a checkbox:
 
 ### CLI helper (node invoke)
 
-Use the main `KoLo` CLI to invoke camera commands on the macOS node.
+Use the main `Kurahi` CLI to invoke camera commands on the macOS node.
 
 Examples:
 
 ```bash
-KoLo nodes camera list --node <id>            # list camera ids
-KoLo nodes camera snap --node <id>            # prints MEDIA:<path>
-KoLo nodes camera snap --node <id> --max-width 1280
-KoLo nodes camera snap --node <id> --delay-ms 2000
-KoLo nodes camera snap --node <id> --device-id <id>
-KoLo nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
-KoLo nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
-KoLo nodes camera clip --node <id> --device-id <id>
-KoLo nodes camera clip --node <id> --no-audio
+Kurahi nodes camera list --node <id>            # list camera ids
+Kurahi nodes camera snap --node <id>            # prints MEDIA:<path>
+Kurahi nodes camera snap --node <id> --max-width 1280
+Kurahi nodes camera snap --node <id> --delay-ms 2000
+Kurahi nodes camera snap --node <id> --device-id <id>
+Kurahi nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
+Kurahi nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
+Kurahi nodes camera clip --node <id> --device-id <id>
+Kurahi nodes camera clip --node <id> --no-audio
 ```
 
 Notes:
 
-- `KoLo nodes camera snap` defaults to `maxWidth=1600` unless overridden.
+- `Kurahi nodes camera snap` defaults to `maxWidth=1600` unless overridden.
 - On macOS, `camera.snap` waits `delayMs` (default 2000ms) after warm-up/exposure settle before capturing.
 - Photo payloads are recompressed to keep base64 under 5 MB.
 
@@ -148,7 +148,7 @@ Notes:
 For _screen_ video (not camera), use the macOS companion:
 
 ```bash
-KoLo nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
+Kurahi nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
 ```
 
 Notes:

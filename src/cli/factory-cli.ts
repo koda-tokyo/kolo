@@ -1,19 +1,19 @@
-// `kolo factory …` — the factory through the gateway API (KoLo 2.0, M15c).
+// `kurahi factory …` — the factory through the gateway API (KoLo 2.0, M15c).
 //
-//   kolo factory boards [--json]                       boards with card counts per column
-//   kolo factory cards [--board id] [--column c] [--owner id] [--json]
-//   kolo factory create --goal "<text>" [--repo <path>] [--title t] [--board id] [--owner id]
+//   kurahi factory boards [--json]                       boards with card counts per column
+//   kurahi factory cards [--board id] [--column c] [--owner id] [--json]
+//   kurahi factory create --goal "<text>" [--repo <path>] [--title t] [--board id] [--owner id]
 //                       [--auto-merge] [--run] [--json]
-//   kolo factory show <cardId> [--json]                card with its timeline
-//   kolo factory move <cardId> <column> [--reason r]   audited move through the state machine
-//   kolo factory run <cardId> [--profile p] [--merge]  start the engine run (job id printed)
-//   kolo factory cancel <cardId>                       cancel the run in progress
+//   kurahi factory show <cardId> [--json]                card with its timeline
+//   kurahi factory move <cardId> <column> [--reason r]   audited move through the state machine
+//   kurahi factory run <cardId> [--profile p] [--merge]  start the engine run (job id printed)
+//   kurahi factory cancel <cardId>                       cancel the run in progress
 //
-// The gateway is discovered like `kolo api` (KOLO_HOME, run/gateway.lock, secrets/gateway.token
+// The gateway is discovered like `kurahi api` (KOLO_HOME, run/gateway.lock, secrets/gateway.token
 // or KOLO_GATEWAY_URL/KOLO_GATEWAY_TOKEN); the token never comes from argv.
 // Exit codes: 0 ok, 1 the gateway refused (HTTP error), 2 usage, 3 unreachable, 4 forbidden.
 import type { Command } from "commander";
-import { KoloApiError, KoloClient, KoloNetworkError } from "@kodasoken/kolo-client";
+import { KoloApiError, KoloClient, KoloNetworkError } from "@kodasoken/kurahi-client";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { formatDocsLink } from "../terminal/links.js";
 import { renderTable } from "../terminal/table.js";
@@ -72,7 +72,7 @@ export function describeFailure(command: string, err: unknown): { code: number; 
   if (err instanceof KoloNetworkError) {
     return {
       code: FACTORY_EXIT.unreachable,
-      message: `kolo factory ${command}: gateway unreachable (${err.message})`,
+      message: `kurahi factory ${command}: gateway unreachable (${err.message})`,
     };
   }
   if (err instanceof KoloApiError) {
@@ -90,14 +90,14 @@ export function describeFailure(command: string, err: unknown): { code: number; 
     if (err.status === 401 || err.status === 403) {
       return {
         code: FACTORY_EXIT.auth,
-        message: `kolo factory ${command}: ${err.status === 401 ? "not authenticated" : "forbidden"} (${detail}). Moving, running and cancelling need an admin or owner credential.`,
+        message: `kurahi factory ${command}: ${err.status === 401 ? "not authenticated" : "forbidden"} (${detail}). Moving, running and cancelling need an admin or owner credential.`,
       };
     }
-    return { code: FACTORY_EXIT.failed, message: `kolo factory ${command}: ${detail}` };
+    return { code: FACTORY_EXIT.failed, message: `kurahi factory ${command}: ${detail}` };
   }
   return {
     code: FACTORY_EXIT.failed,
-    message: `kolo factory ${command}: ${err instanceof Error ? err.message : String(err)}`,
+    message: `kurahi factory ${command}: ${err instanceof Error ? err.message : String(err)}`,
   };
 }
 
@@ -190,7 +190,7 @@ export async function runFactoryBoards(
     if (opts.json) {
       runtime.log(JSON.stringify(data, null, 2));
     } else if (data.boards.length === 0) {
-      runtime.log("factory: no boards yet. Create a card with: kolo factory create --goal ...");
+      runtime.log("factory: no boards yet. Create a card with: kurahi factory create --goal ...");
     } else {
       runtime.log(boardTable(data.boards));
     }
@@ -208,7 +208,7 @@ export async function runFactoryCards(
 ): Promise<number> {
   const runtime = deps.runtime ?? defaultRuntime;
   if (opts.column && !COLUMNS.includes(opts.column)) {
-    runtime.error(`kolo factory cards: --column must be one of ${COLUMNS.join(", ")}`);
+    runtime.error(`kurahi factory cards: --column must be one of ${COLUMNS.join(", ")}`);
     return FACTORY_EXIT.usage;
   }
   const params: Record<string, string> = {};
@@ -254,7 +254,7 @@ export async function runFactoryCreate(
   const runtime = deps.runtime ?? defaultRuntime;
   const goal = opts.goal?.trim() ?? "";
   if (!goal) {
-    runtime.error("kolo factory create: --goal is required");
+    runtime.error("kurahi factory create: --goal is required");
     return FACTORY_EXIT.usage;
   }
   try {
@@ -274,7 +274,7 @@ export async function runFactoryCreate(
     } else {
       runtime.log(
         cardLines(data.card, data.jobId ? { job: data.jobId } : {}).join("\n") +
-          `\nnext         ${formatCliCommand(`kolo factory ${data.jobId ? "show" : "run"} ${data.card.id}`)}`,
+          `\nnext         ${formatCliCommand(`kurahi factory ${data.jobId ? "show" : "run"} ${data.card.id}`)}`,
       );
     }
     return FACTORY_EXIT.ok;
@@ -293,7 +293,7 @@ export async function runFactoryShow(
   const runtime = deps.runtime ?? defaultRuntime;
   const id = cardId?.trim() ?? "";
   if (!id) {
-    runtime.error("kolo factory show: a card id is required");
+    runtime.error("kurahi factory show: a card id is required");
     return FACTORY_EXIT.usage;
   }
   try {
@@ -331,11 +331,11 @@ export async function runFactoryMove(
   const id = cardId?.trim() ?? "";
   const to = column?.trim().toLowerCase() ?? "";
   if (!id || !to) {
-    runtime.error("kolo factory move: a card id and a column are required");
+    runtime.error("kurahi factory move: a card id and a column are required");
     return FACTORY_EXIT.usage;
   }
   if (!COLUMNS.includes(to)) {
-    runtime.error(`kolo factory move: column must be one of ${COLUMNS.join(", ")}`);
+    runtime.error(`kurahi factory move: column must be one of ${COLUMNS.join(", ")}`);
     return FACTORY_EXIT.usage;
   }
   try {
@@ -364,7 +364,7 @@ export async function runFactoryRun(
   const runtime = deps.runtime ?? defaultRuntime;
   const id = cardId?.trim() ?? "";
   if (!id) {
-    runtime.error("kolo factory run: a card id is required");
+    runtime.error("kurahi factory run: a card id is required");
     return FACTORY_EXIT.usage;
   }
   try {
@@ -383,8 +383,8 @@ export async function runFactoryRun(
           `card         ${data.card.id}`,
           `job          ${data.jobId}`,
           `column       ${data.card.column}`,
-          `follow with  ${formatCliCommand(`kolo factory show ${data.card.id}`)}`,
-          `evidence     ${formatCliCommand(`kolo evidence show ${data.jobId}`)} (after the run ends)`,
+          `follow with  ${formatCliCommand(`kurahi factory show ${data.card.id}`)}`,
+          `evidence     ${formatCliCommand(`kurahi evidence show ${data.jobId}`)} (after the run ends)`,
         ].join("\n"),
       );
     }
@@ -404,7 +404,7 @@ export async function runFactoryCancel(
   const runtime = deps.runtime ?? defaultRuntime;
   const id = cardId?.trim() ?? "";
   if (!id) {
-    runtime.error("kolo factory cancel: a card id is required");
+    runtime.error("kurahi factory cancel: a card id is required");
     return FACTORY_EXIT.usage;
   }
   try {
@@ -436,11 +436,11 @@ export function registerFactoryCli(program: Command, deps: FactoryCliDeps = {}) 
       [
         "",
         theme.muted("Examples:"),
-        `  ${formatCliCommand("kolo factory boards")}`,
-        `  ${formatCliCommand('kolo factory create --goal "Add a /health endpoint" --repo /srv/app --run')}`,
-        `  ${formatCliCommand("kolo factory cards --column ready")}`,
-        `  ${formatCliCommand("kolo factory show 3f1c...")}`,
-        `  ${formatCliCommand('kolo factory move 3f1c... merged --reason "PR #42 merged"')}`,
+        `  ${formatCliCommand("kurahi factory boards")}`,
+        `  ${formatCliCommand('kurahi factory create --goal "Add a /health endpoint" --repo /srv/app --run')}`,
+        `  ${formatCliCommand("kurahi factory cards --column ready")}`,
+        `  ${formatCliCommand("kurahi factory show 3f1c...")}`,
+        `  ${formatCliCommand('kurahi factory move 3f1c... merged --reason "PR #42 merged"')}`,
         "",
         "Exit codes: 0 ok, 1 the gateway refused, 2 usage, 3 gateway unreachable, 4 not allowed.",
         `Docs: ${formatDocsLink("/factory")}`,

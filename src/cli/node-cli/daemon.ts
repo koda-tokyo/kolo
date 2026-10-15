@@ -47,7 +47,7 @@ type NodeDaemonStatusOptions = {
 };
 
 function renderNodeServiceStartHints(): string[] {
-  const base = [formatCliCommand("kolo node install"), formatCliCommand("kolo node start")];
+  const base = [formatCliCommand("kurahi node install"), formatCliCommand("kurahi node start")];
   switch (process.platform) {
     case "darwin":
       return [
@@ -173,7 +173,7 @@ export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
     });
     if (!json) {
       defaultRuntime.log(`Node service already ${service.loadedText}.`);
-      defaultRuntime.log(`Reinstall with: ${formatCliCommand("kolo node install --force")}`);
+      defaultRuntime.log(`Reinstall with: ${formatCliCommand("kurahi node install --force")}`);
     }
     return;
   }

@@ -39,7 +39,7 @@ at a time: `spec` → `spec`; `planning`, `coding`, `merging` → `build`; `qa` 
 `ready_to_merge` → `ready`; `merged` → `merged`; `failed`, `cancelled` → `failed`. The timeline
 keeps every engine event (status, phase, log, tool, progress, error, done) as one line with its
 bounded payload; the job's evidence log keeps the same events as `tool.result` entries under one
-`kip_engine_task` call, so an auditor can replay the run offline with `kolo evidence replay`.
+`kip_engine_task` call, so an auditor can replay the run offline with `kurahi evidence replay`.
 
 ## Setup
 
@@ -71,9 +71,9 @@ bounded payload; the job's evidence log keeps the same events as `tool.result` e
 3. Create a card and run it:
 
    ```bash
-   kolo factory create --goal "Add a /health endpoint with a test" --run
-   kolo factory cards
-   kolo factory show <card id>
+   kurahi factory create --goal "Add a /health endpoint with a test" --run
+   kurahi factory cards
+   kurahi factory show <card id>
    ```
 
    The board is also at `/factory` on the gateway (see below) and as `/factory` in the TUI.
@@ -113,7 +113,7 @@ are deny-by-default once an agent has any rule. `exec:factory_card:*` grants all
 The **merge permission** is the same rule the `kip_engine_task` tool uses: a rule matching
 `kip_engine_task:merge` (for example `exec:kip_engine_task:merge`) in the owner resident's
 `agents.list[].permissions`. When a run is started by an owner credential with `merge: true`
-(`kolo factory run <id> --merge`), the gate is allowed for that run; a pairing credential can
+(`kurahi factory run <id> --merge`), the gate is allowed for that run; a pairing credential can
 never widen it. A card whose policy asks for auto-merge but whose owner lacks the rule stays at
 `ready` with a timeline entry saying why, and the audit chain records `factory.merge.denied`.
 
@@ -157,13 +157,13 @@ The TUI prints the board as a table with `/factory [board]` and one card with `/
 ## CLI
 
 ```bash
-kolo factory boards                         # card counts per column
-kolo factory cards [--board id] [--column ready] [--owner alice]
-kolo factory create --goal "…" [--repo /srv/app] [--title t] [--board id] [--owner id] [--auto-merge] [--run]
-kolo factory show <card id>                 # facts, jobs, evidence links, last timeline entries
-kolo factory move <card id> <column> [--reason "…"]
-kolo factory run <card id> [--profile p] [--merge]
-kolo factory cancel <card id>
+kurahi factory boards                         # card counts per column
+kurahi factory cards [--board id] [--column ready] [--owner alice]
+kurahi factory create --goal "…" [--repo /srv/app] [--title t] [--board id] [--owner id] [--auto-merge] [--run]
+kurahi factory show <card id>                 # facts, jobs, evidence links, last timeline entries
+kurahi factory move <card id> <column> [--reason "…"]
+kurahi factory run <card id> [--profile p] [--merge]
+kurahi factory cancel <card id>
 ```
 
 Every command takes `--json`. Exit codes: 0 ok, 1 the gateway refused (for example an illegal
@@ -188,7 +188,7 @@ move), 2 usage, 3 gateway unreachable, 4 the credential may not do this.
 through the API, run, followed over the WebSocket (`inbox>spec`, `spec>build`, `build>review`,
 `review>ready`), its job (`kind: factory`, `succeeded`) and signed evidence read back, the Kanban
 page served without data, an illegal move refused with 409, a manual move to `merged` audited, and
-the same board read through `kolo factory boards|show|cards`. It honours `KOLO_SMOKE_HOME` (a
+the same board read through `kurahi factory boards|show|cards`. It honours `KOLO_SMOKE_HOME` (a
 path ending in `.kolo-test`) and `KOLO_SMOKE_PORT`.
 
 What the fake engine cannot prove: a real spec, build and QA on a repository, a real `gh` pull

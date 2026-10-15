@@ -1,14 +1,14 @@
 {
   "name": "@KoLo/tlon",
   "version": "2.0.0",
-  "description": "KoLo Tlon/Urbit channel plugin",
+  "description": "Kurahi Tlon/Urbit channel plugin",
   "type": "module",
   "dependencies": {
     "@urbit/aura": "^3.0.0",
     "@urbit/http-api": "^3.0.0"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

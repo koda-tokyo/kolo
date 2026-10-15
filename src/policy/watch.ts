@@ -1,7 +1,7 @@
 // Policy hot reload (KoLo 2.0, M13d): the same watcher shape as the M7 config reloader, but on
 // the policy directory only. A change to policy.yaml, its signature or owners.json reloads the
 // policy (a refused document never replaces the active one); a change to the runtime kill file
-// (written by `kolo policy kill|release` from another process) is picked up the same way.
+// (written by `kurahi policy kill|release` from another process) is picked up the same way.
 import chokidar from "chokidar";
 import type { PolicyEngine } from "./engine.js";
 

@@ -1,4 +1,4 @@
-// `kolo connect` end to end against fake channel adapters: no network, no phone, no gateway.
+// `kurahi connect` end to end against fake channel adapters: no network, no phone, no gateway.
 // Each flow is driven the way a person would: secrets typed or piped, the QR printed, then the
 // first message from the phone arrives through the same channel hook the gateway runs.
 import fs from "node:fs";
@@ -143,7 +143,7 @@ afterEach(() => {
   fs.rmSync(home, { recursive: true, force: true });
 });
 
-describe("kolo connect telegram", () => {
+describe("kurahi connect telegram", () => {
   test("token to the secrets store, deep-link QR, first /start binds the owner", async () => {
     let deps = makeDeps({ prompter: fakePrompter([BOT_TOKEN]) });
     const result = await runConnect(deps, { channel: "telegram", wait: false });
@@ -192,7 +192,7 @@ describe("kolo connect telegram", () => {
   });
 });
 
-describe("kolo connect line", () => {
+describe("kurahi connect line", () => {
   test("secrets from stdin, webhook guidance, add-friend QR, first message binds the owner", async () => {
     const deps = makeDeps({ readStdin: async () => `${LINE_SECRET}\n${LINE_TOKEN}\n` });
     const result = await runConnect(deps, { channel: "line", stdin: true, wait: false });
@@ -217,7 +217,7 @@ describe("kolo connect line", () => {
   });
 });
 
-describe("kolo connect whatsapp", () => {
+describe("kurahi connect whatsapp", () => {
   test("linked-device QR rendered, linked number bound as owner, welcome owed once", async () => {
     const deps = makeDeps({
       whatsappLink: async ({ onQr }) => {
@@ -254,7 +254,7 @@ describe("kolo connect whatsapp", () => {
   });
 });
 
-describe("kolo connect web", () => {
+describe("kurahi connect web", () => {
   test("loopback: not offered, with the reason and how to enable it", async () => {
     const result = await runConnect(makeDeps(), { channel: "web" });
     expect(result).toMatchObject({ ok: false, exitCode: 1 });
@@ -311,7 +311,7 @@ describe("kolo connect web", () => {
 });
 
 describe("unbind and the reply policy after binding", () => {
-  test("kolo connect --unbind removes the owner; web has no binding to remove", async () => {
+  test("kurahi connect --unbind removes the owner; web has no binding to remove", async () => {
     const deps = makeDeps({ prompter: fakePrompter([BOT_TOKEN]) });
     const result = await runConnect(deps, { channel: "telegram", wait: false });
     await phoneSends(deps, "telegram", "4242", `/start ${result.code}`);

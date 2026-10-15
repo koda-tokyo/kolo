@@ -1,5 +1,5 @@
 ---
-summary: "Model providers (LLMs) supported by KoLo"
+summary: "Model providers (LLMs) supported by Kurahi"
 read_when:
   - You want to choose a model provider
   - You need a quick overview of supported LLM backends
@@ -8,14 +8,14 @@ title: "Model Providers"
 
 # Model Providers
 
-KoLo can use many LLM providers. Pick a provider, authenticate, then set the
+Kurahi can use many LLM providers. Pick a provider, authenticate, then set the
 default model as `provider/model`.
 
 Looking for chat channel docs (WhatsApp/Telegram/Discord/Slack/Mattermost (plugin)/etc.)? See [Channels](/channels).
 
 ## Default for evaluations: Sakura AI Engine
 
-Japan-hosted, OpenAI-compatible, with a free tier of 3,000 chat requests a month. `kolo init` offers it first.
+Japan-hosted, OpenAI-compatible, with a free tier of 3,000 chat requests a month. `kurahi init` offers it first.
 
 - Default: `sakura/gpt-oss-120b`
 - Also in the preset: `sakura/llm-jp-3.1-8x13b-instruct`, `sakura/Kimi-K2.6` (public preview)
@@ -24,7 +24,7 @@ See [Sakura AI Engine](/providers/sakura) (日本語: [さくらのAI Engine](/j
 
 ## Quick start
 
-1. Authenticate with the provider (`kolo init` on a new installation, `kolo onboard` later).
+1. Authenticate with the provider (`kurahi init` on a new installation, `kurahi onboard` later).
 2. Set the default model:
 
 ```json5

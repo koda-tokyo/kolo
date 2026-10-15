@@ -1,5 +1,5 @@
 ---
-summary: "Frequently asked questions about KoLo setup, configuration, and usage"
+summary: "Frequently asked questions about Kurahi setup, configuration, and usage"
 title: "FAQ"
 ---
 
@@ -11,7 +11,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 
 - [Quick start and first-run setup](#quick-start-and-firstrun-setup)
   - [Im stuck whats the fastest way to get unstuck?](#im-stuck-whats-the-fastest-way-to-get-unstuck)
-  - [What’s the recommended way to install and set up KoLo?](#whats-the-recommended-way-to-install-and-set-up-KoLo)
+  - [What’s the recommended way to install and set up Kurahi?](#whats-the-recommended-way-to-install-and-set-up-KoLo)
   - [How do I open the dashboard after onboarding?](#how-do-i-open-the-dashboard-after-onboarding)
   - [How do I authenticate the dashboard (token) on localhost vs remote?](#how-do-i-authenticate-the-dashboard-token-on-localhost-vs-remote)
   - [What runtime do I need?](#what-runtime-do-i-need)
@@ -26,12 +26,12 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I try the latest bits?](#how-do-i-try-the-latest-bits)
   - [How long does install and onboarding usually take?](#how-long-does-install-and-onboarding-usually-take)
   - [Installer stuck? How do I get more feedback?](#installer-stuck-how-do-i-get-more-feedback)
-  - [Windows install says git not found or KoLo not recognized](#windows-install-says-git-not-found-or-kolo-not-recognized)
+  - [Windows install says git not found or Kurahi not recognized](#windows-install-says-git-not-found-or-kolo-not-recognized)
   - [The docs didn’t answer my question - how do I get a better answer?](#the-docs-didnt-answer-my-question-how-do-i-get-a-better-answer)
-  - [How do I install KoLo on Linux?](#how-do-i-install-kolo-on-linux)
-  - [How do I install KoLo on a VPS?](#how-do-i-install-kolo-on-a-vps)
+  - [How do I install Kurahi on Linux?](#how-do-i-install-kolo-on-linux)
+  - [How do I install Kurahi on a VPS?](#how-do-i-install-kolo-on-a-vps)
   - [Where are the cloud/VPS install guides?](#where-are-the-cloudvps-install-guides)
-  - [Can I ask KoLo to update itself?](#can-i-ask-kolo-to-update-itself)
+  - [Can I ask Kurahi to update itself?](#can-i-ask-kolo-to-update-itself)
   - [What does the onboarding wizard actually do?](#what-does-the-onboarding-wizard-actually-do)
   - [Do I need a Claude or OpenAI subscription to run this?](#do-i-need-a-claude-or-openai-subscription-to-run-this)
   - [Can I use Claude Max subscription without an API key](#can-i-use-claude-max-subscription-without-an-api-key)
@@ -47,23 +47,23 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I keep hosted model traffic in a specific region?](#how-do-i-keep-hosted-model-traffic-in-a-specific-region)
   - [Do I have to buy a Mac Mini to install this?](#do-i-have-to-buy-a-mac-mini-to-install-this)
   - [Do I need a Mac mini for iMessage support?](#do-i-need-a-mac-mini-for-imessage-support)
-  - [If I buy a Mac mini to run KoLo, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-kolo-can-i-connect-it-to-my-macbook-pro)
+  - [If I buy a Mac mini to run Kurahi, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-kolo-can-i-connect-it-to-my-macbook-pro)
   - [Telegram: what goes in `allowFrom`?](#telegram-what-goes-in-allowfrom)
-  - [Can multiple people use one WhatsApp number with different KoLo instances?](#can-multiple-people-use-one-whatsapp-number-with-different-kolo-instances)
+  - [Can multiple people use one WhatsApp number with different Kurahi instances?](#can-multiple-people-use-one-whatsapp-number-with-different-kolo-instances)
   - [Can I run a "fast chat" agent and an "Opus for coding" agent?](#can-i-run-a-fast-chat-agent-and-an-opus-for-coding-agent)
   - [Does Homebrew work on Linux?](#does-homebrew-work-on-linux)
   - [What’s the difference between the hackable (git) install and npm install?](#whats-the-difference-between-the-hackable-git-install-and-npm-install)
   - [Can I switch between npm and git installs later?](#can-i-switch-between-npm-and-git-installs-later)
   - [Should I run the Gateway on my laptop or a VPS?](#should-i-run-the-gateway-on-my-laptop-or-a-vps)
-  - [How important is it to run KoLo on a dedicated machine?](#how-important-is-it-to-run-kolo-on-a-dedicated-machine)
+  - [How important is it to run Kurahi on a dedicated machine?](#how-important-is-it-to-run-kolo-on-a-dedicated-machine)
   - [What are the minimum VPS requirements and recommended OS?](#what-are-the-minimum-vps-requirements-and-recommended-os)
-  - [Can I run KoLo in a VM and what are the requirements](#can-i-run-kolo-in-a-vm-and-what-are-the-requirements)
-- [What is KoLo?](#what-is-KoLo)
-  - [What is KoLo, in one paragraph?](#what-is-kolo-in-one-paragraph)
+  - [Can I run Kurahi in a VM and what are the requirements](#can-i-run-kolo-in-a-vm-and-what-are-the-requirements)
+- [What is Kurahi?](#what-is-KoLo)
+  - [What is Kurahi, in one paragraph?](#what-is-kolo-in-one-paragraph)
   - [What’s the value proposition?](#whats-the-value-proposition)
   - [I just set it up what should I do first](#i-just-set-it-up-what-should-i-do-first)
-  - [What are the top five everyday use cases for KoLo](#what-are-the-top-five-everyday-use-cases-for-KoLo)
-  - [Can KoLo help with lead gen outreach ads and blogs for a SaaS](#can-kolo-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
+  - [What are the top five everyday use cases for Kurahi](#what-are-the-top-five-everyday-use-cases-for-KoLo)
+  - [Can Kurahi help with lead gen outreach ads and blogs for a SaaS](#can-kolo-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
   - [What are the advantages vs Claude Code for web development?](#what-are-the-advantages-vs-claude-code-for-web-development)
 - [Skills and automation](#skills-and-automation)
   - [How do I customize skills without keeping the repo dirty?](#how-do-i-customize-skills-without-keeping-the-repo-dirty)
@@ -72,7 +72,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [The bot freezes while doing heavy work. How do I offload that?](#the-bot-freezes-while-doing-heavy-work-how-do-i-offload-that)
   - [Cron or reminders do not fire. What should I check?](#cron-or-reminders-do-not-fire-what-should-i-check)
   - [How do I install skills on Linux?](#how-do-i-install-skills-on-linux)
-  - [Can KoLo run tasks on a schedule or continuously in the background?](#can-kolo-run-tasks-on-a-schedule-or-continuously-in-the-background)
+  - [Can Kurahi run tasks on a schedule or continuously in the background?](#can-kolo-run-tasks-on-a-schedule-or-continuously-in-the-background)
   - [Can I run Apple/macOS-only skills from Linux?](#can-i-run-applemacosonly-skills-from-linux)
   - [Do you have a Notion or HeyGen integration?](#do-you-have-a-notion-or-heygen-integration)
   - [How do I install the Chrome extension for browser takeover?](#how-do-i-install-the-chrome-extension-for-browser-takeover)
@@ -84,11 +84,11 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [Does memory persist forever? What are the limits?](#does-memory-persist-forever-what-are-the-limits)
   - [Does semantic memory search require an OpenAI API key?](#does-semantic-memory-search-require-an-openai-api-key)
 - [Where things live on disk](#where-things-live-on-disk)
-  - [Is all data used with KoLo saved locally?](#is-all-data-used-with-kolo-saved-locally)
-  - [Where does KoLo store its data?](#where-does-kolo-store-its-data)
+  - [Is all data used with Kurahi saved locally?](#is-all-data-used-with-kolo-saved-locally)
+  - [Where does Kurahi store its data?](#where-does-kolo-store-its-data)
   - [Where should AGENTS.md / SOUL.md / USER.md / MEMORY.md live?](#where-should-agentsmd-soulmd-usermd-memorymd-live)
   - [What’s the recommended backup strategy?](#whats-the-recommended-backup-strategy)
-  - [How do I completely uninstall KoLo?](#how-do-i-completely-uninstall-KoLo)
+  - [How do I completely uninstall Kurahi?](#how-do-i-completely-uninstall-KoLo)
   - [Can agents work outside the workspace?](#can-agents-work-outside-the-workspace)
   - [I’m in remote mode - where is the session store?](#im-in-remote-mode-where-is-the-session-store)
 - [Config basics](#config-basics)
@@ -99,13 +99,13 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I enable web search (and web fetch)?](#how-do-i-enable-web-search-and-web-fetch)
   - [config.apply wiped my config. How do I recover and avoid this?](#configapply-wiped-my-config-how-do-i-recover-and-avoid-this)
   - [How do I run a central Gateway with specialized workers across devices?](#how-do-i-run-a-central-gateway-with-specialized-workers-across-devices)
-  - [Can the KoLo browser run headless?](#can-the-kolo-browser-run-headless)
+  - [Can the Kurahi browser run headless?](#can-the-kolo-browser-run-headless)
   - [How do I use Brave for browser control?](#how-do-i-use-brave-for-browser-control)
 - [Remote gateways + nodes](#remote-gateways-nodes)
   - [How do commands propagate between Telegram, the gateway, and nodes?](#how-do-commands-propagate-between-telegram-the-gateway-and-nodes)
   - [How can my agent access my computer if the Gateway is hosted remotely?](#how-can-my-agent-access-my-computer-if-the-gateway-is-hosted-remotely)
   - [Tailscale is connected but I get no replies. What now?](#tailscale-is-connected-but-i-get-no-replies-what-now)
-  - [Can two KoLo instances talk to each other (local + VPS)?](#can-two-kolo-instances-talk-to-each-other-local-vps)
+  - [Can two Kurahi instances talk to each other (local + VPS)?](#can-two-kolo-instances-talk-to-each-other-local-vps)
   - [Do I need separate VPSes for multiple agents](#do-i-need-separate-vpses-for-multiple-agents)
   - [Is there a benefit to using a node on my personal laptop instead of SSH from a VPS?](#is-there-a-benefit-to-using-a-node-on-my-personal-laptop-instead-of-ssh-from-a-vps)
   - [Do nodes run a gateway service?](#do-nodes-run-a-gateway-service)
@@ -115,21 +115,21 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I connect a Mac node to a remote Gateway (Tailscale Serve)?](#how-do-i-connect-a-mac-node-to-a-remote-gateway-tailscale-serve)
   - [Should I install on a second laptop or just add a node?](#should-i-install-on-a-second-laptop-or-just-add-a-node)
 - [Env vars and .env loading](#env-vars-and-env-loading)
-  - [How does KoLo load environment variables?](#how-does-kolo-load-environment-variables)
+  - [How does Kurahi load environment variables?](#how-does-kolo-load-environment-variables)
   - [“I started the Gateway via the service and my env vars disappeared.” What now?](#i-started-the-gateway-via-the-service-and-my-env-vars-disappeared-what-now)
   - [I set `COPILOT_GITHUB_TOKEN`, but models status shows “Shell env: off.” Why?](#i-set-copilotgithubtoken-but-models-status-shows-shell-env-off-why)
 - [Sessions & multiple chats](#sessions-multiple-chats)
   - [How do I start a fresh conversation?](#how-do-i-start-a-fresh-conversation)
   - [Do sessions reset automatically if I never send `/new`?](#do-sessions-reset-automatically-if-i-never-send-new)
-  - [Is there a way to make a team of KoLo instances one CEO and many agents](#is-there-a-way-to-make-a-team-of-kolo-instances-one-ceo-and-many-agents)
+  - [Is there a way to make a team of Kurahi instances one CEO and many agents](#is-there-a-way-to-make-a-team-of-kolo-instances-one-ceo-and-many-agents)
   - [Why did context get truncated mid-task? How do I prevent it?](#why-did-context-get-truncated-midtask-how-do-i-prevent-it)
-  - [How do I completely reset KoLo but keep it installed?](#how-do-i-completely-reset-kolo-but-keep-it-installed)
+  - [How do I completely reset Kurahi but keep it installed?](#how-do-i-completely-reset-kolo-but-keep-it-installed)
   - [I’m getting “context too large” errors - how do I reset or compact?](#im-getting-context-too-large-errors-how-do-i-reset-or-compact)
   - [Why am I seeing “LLM request rejected: messages.N.content.X.tool_use.input: Field required”?](#why-am-i-seeing-llm-request-rejected-messagesncontentxtooluseinput-field-required)
   - [Why am I getting heartbeat messages every 30 minutes?](#why-am-i-getting-heartbeat-messages-every-30-minutes)
   - [Do I need to add a “bot account” to a WhatsApp group?](#do-i-need-to-add-a-bot-account-to-a-whatsapp-group)
   - [How do I get the JID of a WhatsApp group?](#how-do-i-get-the-jid-of-a-whatsapp-group)
-  - [Why doesn’t KoLo reply in a group?](#why-doesnt-kolo-reply-in-a-group)
+  - [Why doesn’t Kurahi reply in a group?](#why-doesnt-kolo-reply-in-a-group)
   - [Do groups/threads share context with DMs?](#do-groupsthreads-share-context-with-dms)
   - [How many workspaces and agents can I create?](#how-many-workspaces-and-agents-can-i-create)
   - [Can I run multiple bots or chats at the same time (Slack), and how should I set that up?](#can-i-run-multiple-bots-or-chats-at-the-same-time-slack-and-how-should-i-set-that-up)
@@ -138,7 +138,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [What model do you recommend?](#what-model-do-you-recommend)
   - [How do I switch models without wiping my config?](#how-do-i-switch-models-without-wiping-my-config)
   - [Can I use self-hosted models (llama.cpp, vLLM, Ollama)?](#can-i-use-selfhosted-models-llamacpp-vllm-ollama)
-  - [What do KoLo, Flawd, and Krill use for models?](#what-do-kolo-flawd-and-krill-use-for-models)
+  - [What do Kurahi, Flawd, and Krill use for models?](#what-do-kolo-flawd-and-krill-use-for-models)
   - [How do I switch models on the fly (without restarting)?](#how-do-i-switch-models-on-the-fly-without-restarting)
   - [Can I use GPT 5.2 for daily tasks and Codex 5.2 for coding](#can-i-use-gpt-52-for-daily-tasks-and-codex-52-for-coding)
   - [Why do I see “Model … is not allowed” and then no reply?](#why-do-i-see-model-is-not-allowed-and-then-no-reply)
@@ -159,10 +159,10 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [OAuth vs API key: what’s the difference?](#oauth-vs-api-key-whats-the-difference)
 - [Gateway: ports, “already running”, and remote mode](#gateway-ports-already-running-and-remote-mode)
   - [What port does the Gateway use?](#what-port-does-the-gateway-use)
-  - [Why does `KoLo gateway status` say `Runtime: running` but `RPC probe: failed`?](#why-does-kolo-gateway-status-say-runtime-running-but-rpc-probe-failed)
-  - [Why does `KoLo gateway status` show `Config (cli)` and `Config (service)` different?](#why-does-kolo-gateway-status-show-config-cli-and-config-service-different)
+  - [Why does `Kurahi gateway status` say `Runtime: running` but `RPC probe: failed`?](#why-does-kolo-gateway-status-say-runtime-running-but-rpc-probe-failed)
+  - [Why does `Kurahi gateway status` show `Config (cli)` and `Config (service)` different?](#why-does-kolo-gateway-status-show-config-cli-and-config-service-different)
   - [What does “another gateway instance is already listening” mean?](#what-does-another-gateway-instance-is-already-listening-mean)
-  - [How do I run KoLo in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-kolo-in-remote-mode-client-connects-to-a-gateway-elsewhere)
+  - [How do I run Kurahi in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-kolo-in-remote-mode-client-connects-to-a-gateway-elsewhere)
   - [The Control UI says “unauthorized” (or keeps reconnecting). What now?](#the-control-ui-says-unauthorized-or-keeps-reconnecting-what-now)
   - [I set `gateway.bind: "tailnet"` but it can’t bind / nothing listens](#i-set-gatewaybind-tailnet-but-it-cant-bind-nothing-listens)
   - [Can I run multiple Gateways on the same host?](#can-i-run-multiple-gateways-on-the-same-host)
@@ -170,18 +170,18 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 - [Logging and debugging](#logging-and-debugging)
   - [Where are logs?](#where-are-logs)
   - [How do I start/stop/restart the Gateway service?](#how-do-i-startstoprestart-the-gateway-service)
-  - [I closed my terminal on Windows - how do I restart KoLo?](#i-closed-my-terminal-on-windows-how-do-i-restart-KoLo)
+  - [I closed my terminal on Windows - how do I restart Kurahi?](#i-closed-my-terminal-on-windows-how-do-i-restart-KoLo)
   - [The Gateway is up but replies never arrive. What should I check?](#the-gateway-is-up-but-replies-never-arrive-what-should-i-check)
   - ["Disconnected from gateway: no reason" - what now?](#disconnected-from-gateway-no-reason-what-now)
   - [Telegram setMyCommands fails with network errors. What should I check?](#telegram-setmycommands-fails-with-network-errors-what-should-i-check)
   - [TUI shows no output. What should I check?](#tui-shows-no-output-what-should-i-check)
   - [How do I completely stop then start the Gateway?](#how-do-i-completely-stop-then-start-the-gateway)
-  - [ELI5: `KoLo gateway restart` vs `KoLo gateway`](#eli5-kolo-gateway-restart-vs-kolo-gateway)
+  - [ELI5: `Kurahi gateway restart` vs `Kurahi gateway`](#eli5-kolo-gateway-restart-vs-kolo-gateway)
   - [What’s the fastest way to get more details when something fails?](#whats-the-fastest-way-to-get-more-details-when-something-fails)
 - [Media & attachments](#media-attachments)
   - [My skill generated an image/PDF, but nothing was sent](#my-skill-generated-an-imagepdf-but-nothing-was-sent)
 - [Security and access control](#security-and-access-control)
-  - [Is it safe to expose KoLo to inbound DMs?](#is-it-safe-to-expose-kolo-to-inbound-dms)
+  - [Is it safe to expose Kurahi to inbound DMs?](#is-it-safe-to-expose-kolo-to-inbound-dms)
   - [Is prompt injection only a concern for public bots?](#is-prompt-injection-only-a-concern-for-public-bots)
   - [Should my bot have its own email GitHub account or phone number](#should-my-bot-have-its-own-email-github-account-or-phone-number)
   - [Can I give it autonomy over my text messages and is that safe](#can-i-give-it-autonomy-over-my-text-messages-and-is-that-safe)
@@ -199,7 +199,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 1. **Quick status (first check)**
 
    ```bash
-   KoLo status
+   Kurahi status
    ```
 
    Fast local summary: OS + update, gateway/service reachability, agents/sessions, provider config + runtime issues (when gateway is reachable).
@@ -207,7 +207,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 2. **Pasteable report (safe to share)**
 
    ```bash
-   KoLo status --all
+   Kurahi status --all
    ```
 
    Read-only diagnosis with log tail (tokens redacted).
@@ -215,7 +215,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 3. **Daemon + port state**
 
    ```bash
-   KoLo gateway status
+   Kurahi gateway status
    ```
 
    Shows supervisor runtime vs RPC reachability, the probe target URL, and which config the service likely used.
@@ -223,7 +223,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 4. **Deep probes**
 
    ```bash
-   KoLo status --deep
+   Kurahi status --deep
    ```
 
    Runs gateway health checks + provider probes (requires a reachable gateway). See [Health](/gateway/health).
@@ -231,7 +231,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 5. **Tail the latest log**
 
    ```bash
-   KoLo logs --follow
+   Kurahi logs --follow
    ```
 
    If RPC is down, fall back to:
@@ -245,15 +245,15 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 6. **Run the doctor (repairs)**
 
    ```bash
-   KoLo doctor
+   Kurahi doctor
    ```
 
    Repairs/migrates config/state + runs health checks. See [Doctor](/gateway/doctor).
 
 7. **Gateway snapshot**
    ```bash
-   KoLo health --json
-   KoLo health --verbose   # shows the target URL + config path on errors
+   Kurahi health --json
+   Kurahi health --verbose   # shows the target URL + config path on errors
    ```
    Asks the running gateway for a full snapshot (WS-only). See [Health](/gateway/health).
 
@@ -273,10 +273,10 @@ setup (PATH, services, permissions, auth files). Give them the **full source che
 the hackable (git) install:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git
 ```
 
-This installs KoLo **from a git checkout**, so the agent can read the code + docs and
+This installs Kurahi **from a git checkout**, so the agent can read the code + docs and
 reason about the exact version you are running. You can always switch back to stable later
 by re-running the installer without `--install-method git`.
 
@@ -284,36 +284,36 @@ Tip: ask the agent to **plan and supervise** the fix (step-by-step), then execut
 necessary commands. That keeps changes small and easier to audit.
 
 If you discover a real bug or fix, please file a GitHub issue or send a PR:
-https://github.com/koda-tokyo/kolo/issues
-https://github.com/koda-tokyo/kolo/pulls
+https://github.com/koda-tokyo/kurahi/issues
+https://github.com/koda-tokyo/kurahi/pulls
 
 Start with these commands (share outputs when asking for help):
 
 ```bash
-KoLo status
-KoLo models status
-KoLo doctor
+Kurahi status
+Kurahi models status
+Kurahi doctor
 ```
 
 What they do:
 
-- `KoLo status`: quick snapshot of gateway/agent health + basic config.
-- `KoLo models status`: checks provider auth + model availability.
-- `KoLo doctor`: validates and repairs common config/state issues.
+- `Kurahi status`: quick snapshot of gateway/agent health + basic config.
+- `Kurahi models status`: checks provider auth + model availability.
+- `Kurahi doctor`: validates and repairs common config/state issues.
 
-Other useful CLI checks: `KoLo status --all`, `KoLo logs --follow`,
-`KoLo gateway status`, `KoLo health --verbose`.
+Other useful CLI checks: `Kurahi status --all`, `Kurahi logs --follow`,
+`Kurahi gateway status`, `Kurahi health --verbose`.
 
 Quick debug loop: [First 60 seconds if something's broken](#first-60-seconds-if-somethings-broken).
 Install docs: [Install](/install), [Installer flags](/install/installer), [Updating](/install/updating).
 
-### What's the recommended way to install and set up KoLo
+### What's the recommended way to install and set up Kurahi
 
 The repo recommends running from source and using the onboarding wizard:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
-KoLo onboard --install-daemon
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
+Kurahi onboard --install-daemon
 ```
 
 The wizard can also build UI assets automatically. After onboarding, you typically run the Gateway on port **18789**.
@@ -321,15 +321,15 @@ The wizard can also build UI assets automatically. After onboarding, you typical
 From source (contributors/dev):
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 pnpm install
 pnpm build
 pnpm ui:build # auto-installs UI deps on first run
-KoLo onboard
+Kurahi onboard
 ```
 
-If you don’t have a global install yet, run it via `pnpm KoLo onboard`.
+If you don’t have a global install yet, run it via `pnpm Kurahi onboard`.
 
 ### How do I open the dashboard after onboarding
 
@@ -340,14 +340,14 @@ The wizard now opens your browser with a tokenized dashboard URL right after onb
 **Localhost (same machine):**
 
 - Open `http://127.0.0.1:18789/`.
-- If it asks for auth, run `KoLo dashboard` and use the tokenized link (`?token=...`).
+- If it asks for auth, run `Kurahi dashboard` and use the tokenized link (`?token=...`).
 - The token is the same value as `gateway.auth.token` (or `KOLO_GATEWAY_TOKEN`) and is stored by the UI after first load.
 
 **Not on localhost:**
 
-- **Tailscale Serve** (recommended): keep bind loopback, run `KoLo gateway --tailscale serve`, open `https://<magicdns>/`. If `gateway.auth.allowTailscale` is `true`, identity headers satisfy auth (no token).
-- **Tailnet bind**: run `KoLo gateway --bind tailnet --token "<token>"`, open `http://<tailscale-ip>:18789/`, paste token in dashboard settings.
-- **SSH tunnel**: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/?token=...` from `KoLo dashboard`.
+- **Tailscale Serve** (recommended): keep bind loopback, run `Kurahi gateway --tailscale serve`, open `https://<magicdns>/`. If `gateway.auth.allowTailscale` is `true`, identity headers satisfy auth (no token).
+- **Tailnet bind**: run `Kurahi gateway --bind tailnet --token "<token>"`, open `http://<tailscale-ip>:18789/`, paste token in dashboard settings.
+- **SSH tunnel**: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/?token=...` from `Kurahi dashboard`.
 
 See [Dashboard](/web/dashboard) and [Web surfaces](/web) for bind modes and auth details.
 
@@ -386,21 +386,21 @@ and tokens stay at 0, the agent never ran.
 1. Restart the Gateway:
 
 ```bash
-KoLo gateway restart
+Kurahi gateway restart
 ```
 
 2. Check status + auth:
 
 ```bash
-KoLo status
-KoLo models status
-KoLo logs --follow
+Kurahi status
+Kurahi models status
+Kurahi logs --follow
 ```
 
 3. If it still hangs, run:
 
 ```bash
-KoLo doctor
+Kurahi doctor
 ```
 
 If the Gateway is remote, ensure the tunnel/Tailscale connection is up and that the UI
@@ -412,10 +412,10 @@ Yes. Copy the **state directory** and **workspace**, then run Doctor once. This
 keeps your bot “exactly the same” (memory, session history, auth, and channel
 state) as long as you copy **both** locations:
 
-1. Install KoLo on the new machine.
+1. Install Kurahi on the new machine.
 2. Copy `$KOLO_STATE_DIR` (default: `~/.kolo`) from the old machine.
 3. Copy your workspace (default: `~/.kolo/workspace`).
-4. Run `KoLo doctor` and restart the Gateway service.
+4. Run `Kurahi doctor` and restart the Gateway service.
 
 That preserves config, auth profiles, WhatsApp creds, sessions, and memory. If you’re in
 remote mode, remember the gateway host owns the session store and workspace.
@@ -431,7 +431,7 @@ Related: [Migrating](/install/migrating), [Where things live on disk](/help/faq#
 ### Where do I see whats new in the latest version
 
 Check the GitHub changelog:  
-https://github.com/koda-tokyo/kolo/blob/main/CHANGELOG.md
+https://github.com/koda-tokyo/kurahi/blob/main/CHANGELOG.md
 
 Newest entries are at the top. If the top section is marked **Unreleased**, the next dated
 section is the latest shipped version. Entries are grouped by **Highlights**, **Changes**, and
@@ -445,7 +445,7 @@ detail: [Troubleshooting](/help/troubleshooting#docsKoLoai-shows-an-ssl-error-co
 Please help us unblock it by reporting here: https://spa.xfinity.com/check_url_status.
 
 If you still can't reach the site, the docs are mirrored on GitHub:
-https://github.com/koda-tokyo/kolo/tree/main/docs
+https://github.com/koda-tokyo/kurahi/tree/main/docs
 
 ### What's the difference between stable and beta
 
@@ -459,7 +459,7 @@ that same version to `latest`**. That’s why beta and stable can point at the
 **same version**.
 
 See what changed:  
-https://github.com/koda-tokyo/kolo/blob/main/CHANGELOG.md
+https://github.com/koda-tokyo/kurahi/blob/main/CHANGELOG.md
 
 ### How do I install the beta version and whats the difference between beta and dev
 
@@ -469,15 +469,15 @@ https://github.com/koda-tokyo/kolo/blob/main/CHANGELOG.md
 One‑liners (macOS/Linux):
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://kodasoken.com/kolo/install.sh | bash -s -- --beta
+curl -fsSL --proto '=https' --tlsv1.2 https://kodasoken.com/kurahi/install.sh | bash -s -- --beta
 ```
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git
+curl -fsSL --proto '=https' --tlsv1.2 https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git
 ```
 
 Windows installer (PowerShell):
-https://kodasoken.com/kolo/install.ps1
+https://kodasoken.com/kurahi/install.ps1
 
 More detail: [Update](/cli/update) and [Installer internals](/install/installer).
 
@@ -498,7 +498,7 @@ Two options:
 1. **Dev channel (git checkout):**
 
 ```bash
-kolo update --channel dev
+kurahi update --channel dev
 ```
 
 This switches to the `main` branch and updates from source.
@@ -506,7 +506,7 @@ This switches to the `main` branch and updates from source.
 2. **Hackable install (from the installer site):**
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git
 ```
 
 That gives you a local repo you can edit, then update via git.
@@ -514,8 +514,8 @@ That gives you a local repo you can edit, then update via git.
 If you prefer a clean clone manually, use:
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 pnpm install
 pnpm build
 ```
@@ -528,24 +528,24 @@ Docs: [Update](/cli/update),
 Re-run the installer with **verbose output**:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --verbose
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --verbose
 ```
 
 Beta install with verbose:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --beta --verbose
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --beta --verbose
 ```
 
 For a hackable (git) install:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git --verbose
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git --verbose
 ```
 
 More options: [Installer flags](/install/installer).
 
-### Windows install says git not found or KoLo not recognized
+### Windows install says git not found or Kurahi not recognized
 
 Two common Windows issues:
 
@@ -554,7 +554,7 @@ Two common Windows issues:
 - Install **Git for Windows** and make sure `git` is on your PATH.
 - Close and reopen PowerShell, then re-run the installer.
 
-**2) KoLo is not recognized after install**
+**2) Kurahi is not recognized after install**
 
 - Your npm global bin folder is not on PATH.
 - Check the path:
@@ -573,12 +573,12 @@ Use the **hackable (git) install** so you have the full source and docs locally,
 your bot (or Claude/Codex) _from that folder_ so it can read the repo and answer precisely.
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git
 ```
 
 More detail: [Install](/install) and [Installer flags](/install/installer).
 
-### How do I install KoLo on Linux
+### How do I install Kurahi on Linux
 
 Short answer: follow the Linux guide, then run the onboarding wizard.
 
@@ -586,7 +586,7 @@ Short answer: follow the Linux guide, then run the onboarding wizard.
 - Full walkthrough: [Getting Started](/start/getting-started).
 - Installer + updates: [Install & updates](/install/updating).
 
-### How do I install KoLo on a VPS
+### How do I install Kurahi on a VPS
 
 Any Linux VPS works. Install on the server, then use SSH/Tailscale to reach the Gateway.
 
@@ -613,7 +613,7 @@ Gateway in the cloud.
 Hub: [Platforms](/platforms). Remote access: [Gateway remote](/gateway/remote).
 Nodes: [Nodes](/nodes), [Nodes CLI](/cli/nodes).
 
-### Can I ask KoLo to update itself
+### Can I ask Kurahi to update itself
 
 Short answer: **possible, not recommended**. The update flow can restart the
 Gateway (which drops the active session), may need a clean git checkout, and
@@ -622,24 +622,24 @@ can prompt for confirmation. Safer: run updates from a shell as the operator.
 Use the CLI:
 
 ```bash
-kolo update
-kolo update status
-kolo update --check
-kolo update --no-restart
+kurahi update
+kurahi update status
+kurahi update --check
+kurahi update --no-restart
 ```
 
 If you must automate from an agent:
 
 ```bash
-kolo update --yes --no-restart
-KoLo gateway restart
+kurahi update --yes --no-restart
+Kurahi gateway restart
 ```
 
 Docs: [Update](/cli/update), [Updating](/install/updating).
 
 ### What does the onboarding wizard actually do
 
-`KoLo onboard` is the recommended setup path. In **local mode** it walks you through:
+`Kurahi onboard` is the recommended setup path. In **local mode** it walks you through:
 
 - **Model/auth setup** (Anthropic **setup-token** recommended for Claude subscriptions, OpenAI Codex OAuth supported, API keys optional, LM Studio local models supported)
 - **Workspace** location + bootstrap files
@@ -652,7 +652,7 @@ It also warns if your configured model is unknown or missing auth.
 
 ### Do I need a Claude or OpenAI subscription to run this
 
-No. You can run KoLo with **API keys** (Anthropic/OpenAI/others) or with
+No. You can run Kurahi with **API keys** (Anthropic/OpenAI/others) or with
 **local‑only models** so your data stays on your device. Subscriptions (Claude
 Pro/Max or OpenAI Codex) are optional ways to authenticate those providers.
 
@@ -671,7 +671,7 @@ If you want the most explicit, supported path, use an Anthropic API key.
 
 ### How does Anthropic setuptoken auth work
 
-`claude setup-token` generates a **token string** via the Claude Code CLI (it is not available in the web console). You can run it on **any machine**. Choose **Anthropic token (paste setup-token)** in the wizard or paste it with `KoLo models auth paste-token --provider anthropic`. The token is stored as an auth profile for the **anthropic** provider and used like an API key (no auto-refresh). More detail: [OAuth](/concepts/oauth).
+`claude setup-token` generates a **token string** via the Claude Code CLI (it is not available in the web console). You can run it on **any machine**. Choose **Anthropic token (paste setup-token)** in the wizard or paste it with `Kurahi models auth paste-token --provider anthropic`. The token is stored as an auth profile for the **anthropic** provider and used like an API key (no auto-refresh). More detail: [OAuth](/concepts/oauth).
 
 ### Where do I find an Anthropic setuptoken
 
@@ -681,11 +681,11 @@ It is **not** in the Anthropic Console. The setup-token is generated by the **Cl
 claude setup-token
 ```
 
-Copy the token it prints, then choose **Anthropic token (paste setup-token)** in the wizard. If you want to run it on the gateway host, use `KoLo models auth setup-token --provider anthropic`. If you ran `claude setup-token` elsewhere, paste it on the gateway host with `KoLo models auth paste-token --provider anthropic`. See [Anthropic](/providers/anthropic).
+Copy the token it prints, then choose **Anthropic token (paste setup-token)** in the wizard. If you want to run it on the gateway host, use `Kurahi models auth setup-token --provider anthropic`. If you ran `claude setup-token` elsewhere, paste it on the gateway host with `Kurahi models auth paste-token --provider anthropic`. See [Anthropic](/providers/anthropic).
 
 ### Do you support Claude subscription auth (Claude Pro/Max)
 
-Yes — via **setup-token**. KoLo no longer reuses Claude Code CLI OAuth tokens; use a setup-token or an Anthropic API key. Generate the token anywhere and paste it on the gateway host. See [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
+Yes — via **setup-token**. Kurahi no longer reuses Claude Code CLI OAuth tokens; use a setup-token or an Anthropic API key. Generate the token anywhere and paste it on the gateway host. See [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
 
 Note: Claude subscription access is governed by Anthropic’s terms. For production or multi‑user workloads, API keys are usually the safer choice.
 
@@ -696,7 +696,7 @@ use a **Claude subscription** (setup‑token or Claude Code OAuth), wait for the
 reset or upgrade your plan. If you use an **Anthropic API key**, check the Anthropic Console
 for usage/billing and raise limits as needed.
 
-Tip: set a **fallback model** so KoLo can keep replying while a provider is rate‑limited.
+Tip: set a **fallback model** so Kurahi can keep replying while a provider is rate‑limited.
 See [Models](/cli/models) and [OAuth](/concepts/oauth).
 
 ### Is AWS Bedrock supported
@@ -705,11 +705,11 @@ Yes - via pi‑ai’s **Amazon Bedrock (Converse)** provider with **manual confi
 
 ### How does Codex auth work
 
-KoLo supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.2` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
+Kurahi supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.2` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
 
 ### Do you support OpenAI subscription auth Codex OAuth
 
-Yes. KoLo fully supports **OpenAI Code (Codex) subscription OAuth**. The onboarding wizard
+Yes. Kurahi fully supports **OpenAI Code (Codex) subscription OAuth**. The onboarding wizard
 can run the OAuth flow for you.
 
 See [OAuth](/concepts/oauth), [Model providers](/concepts/model-providers), and [Wizard](/start/wizard).
@@ -720,14 +720,14 @@ Gemini CLI uses a **plugin auth flow**, not a client id or secret in `kolo.json`
 
 Steps:
 
-1. Enable the plugin: `kolo plugins enable google-gemini-cli-auth`
-2. Login: `KoLo models auth login --provider google-gemini-cli --set-default`
+1. Enable the plugin: `kurahi plugins enable google-gemini-cli-auth`
+2. Login: `Kurahi models auth login --provider google-gemini-cli --set-default`
 
 This stores OAuth tokens in auth profiles on the gateway host. Details: [Model providers](/concepts/model-providers).
 
 ### Is a local model OK for casual chats
 
-Usually no. KoLo needs large context + strong safety; small cards truncate and leak. If you must, run the **largest** MiniMax M2.1 build you can locally (LM Studio) and see [/gateway/local-models](/gateway/local-models). Smaller/quantized models increase prompt-injection risk - see [Security](/gateway/security).
+Usually no. Kurahi needs large context + strong safety; small cards truncate and leak. If you must, run the **largest** MiniMax M2.1 build you can locally (LM Studio) and see [/gateway/local-models](/gateway/local-models). Smaller/quantized models increase prompt-injection risk - see [Security](/gateway/security).
 
 ### How do I keep hosted model traffic in a specific region
 
@@ -735,7 +735,7 @@ Pick region-pinned endpoints. OpenRouter exposes US-hosted options for MiniMax, 
 
 ### Do I have to buy a Mac Mini to install this
 
-No. KoLo runs on macOS or Linux (Windows via WSL2). A Mac mini is optional - some people
+No. Kurahi runs on macOS or Linux (Windows via WSL2). A Mac mini is optional - some people
 buy one as an always‑on host, but a small VPS, home server, or Raspberry Pi‑class box works too.
 
 You only need a Mac **for macOS‑only tools**. For iMessage, you can keep the Gateway on Linux
@@ -747,7 +747,7 @@ Docs: [iMessage](/channels/imessage), [Nodes](/nodes), [Mac remote mode](/platfo
 ### Do I need a Mac mini for iMessage support
 
 You need **some macOS device** signed into Messages. It does **not** have to be a Mac mini -
-any Mac works. KoLo’s iMessage integrations run on macOS (BlueBubbles or `imsg`), while
+any Mac works. Kurahi’s iMessage integrations run on macOS (BlueBubbles or `imsg`), while
 the Gateway can run elsewhere.
 
 Common setups:
@@ -759,7 +759,7 @@ Common setups:
 Docs: [iMessage](/channels/imessage), [BlueBubbles](/channels/bluebubbles),
 [Mac remote mode](/platforms/mac/remote).
 
-### If I buy a Mac mini to run KoLo can I connect it to my MacBook Pro
+### If I buy a Mac mini to run Kurahi can I connect it to my MacBook Pro
 
 Yes. The **Mac mini can run the Gateway**, and your MacBook Pro can connect as a
 **node** (companion device). Nodes don’t run the Gateway - they provide extra
@@ -769,7 +769,7 @@ Common pattern:
 
 - Gateway on the Mac mini (always‑on).
 - MacBook Pro runs the macOS app or a node host and pairs to the Gateway.
-- Use `KoLo nodes status` / `KoLo nodes list` to see it.
+- Use `Kurahi nodes status` / `Kurahi nodes list` to see it.
 
 Docs: [Nodes](/nodes), [Nodes CLI](/cli/nodes).
 
@@ -779,7 +779,7 @@ Docs: [Nodes](/nodes), [Nodes CLI](/cli/nodes).
 
 Safer (no third-party bot):
 
-- DM your bot, then run `KoLo logs --follow` and read `from.id`.
+- DM your bot, then run `Kurahi logs --follow` and read `from.id`.
 
 Official Bot API:
 
@@ -791,7 +791,7 @@ Third-party (less private):
 
 See [/channels/telegram](/channels/telegram#access-control-dms--groups).
 
-### Can multiple people use one WhatsApp number with different KoLo instances
+### Can multiple people use one WhatsApp number with different Kurahi instances
 
 Yes, via **multi‑agent routing**. Bind each sender’s WhatsApp **DM** (peer `kind: "dm"`, sender E.164 like `+15551234567`) to a different `agentId`, so each person gets their own workspace and session store. Replies still come from the **same WhatsApp account**, and DM access control (`channels.whatsapp.dmPolicy` / `channels.whatsapp.allowFrom`) is global per WhatsApp account. See [Multi-Agent Routing](/concepts/multi-agent) and [WhatsApp](/channels/whatsapp).
 
@@ -810,7 +810,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install <formula>
 ```
 
-If you run KoLo via systemd, ensure the service PATH includes `/home/linuxbrew/.linuxbrew/bin` (or your brew prefix) so `brew`-installed tools resolve in non‑login shells.
+If you run Kurahi via systemd, ensure the service PATH includes `/home/linuxbrew/.linuxbrew/bin` (or your brew prefix) so `brew`-installed tools resolve in non‑login shells.
 Recent builds also prepend common user bin dirs on Linux systemd services (for example `~/.local/bin`, `~/.npm-global/bin`, `~/.local/share/pnpm`, `~/.bun/bin`) and honor `PNPM_HOME`, `NPM_CONFIG_PREFIX`, `BUN_INSTALL`, `VOLTA_HOME`, `ASDF_DATA_DIR`, `NVM_DIR`, and `FNM_DIR` when set.
 
 ### What's the difference between the hackable git install and npm install
@@ -825,26 +825,26 @@ Docs: [Getting started](/start/getting-started), [Updating](/install/updating).
 ### Can I switch between npm and git installs later
 
 Yes. Install the other flavor, then run Doctor so the gateway service points at the new entrypoint.
-This **does not delete your data** - it only changes the KoLo code install. Your state
+This **does not delete your data** - it only changes the Kurahi code install. Your state
 (`~/.kolo`) and workspace (`~/.kolo/workspace`) stay untouched.
 
 From npm → git:
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 pnpm install
 pnpm build
-KoLo doctor
-KoLo gateway restart
+Kurahi doctor
+Kurahi gateway restart
 ```
 
 From git → npm:
 
 ```bash
-npm install -g @kodasoken/kolo@latest
-KoLo doctor
-KoLo gateway restart
+npm install -g kurahi@latest
+Kurahi doctor
+Kurahi gateway restart
 ```
 
 Doctor detects a gateway service entrypoint mismatch and offers to rewrite the service config to match the current install (use `--repair` in automation).
@@ -870,7 +870,7 @@ lowest friction and you’re okay with sleep/restarts, run it locally.
 
 **Recommended default:** VPS if you had gateway disconnects before. Local is great when you’re actively using the Mac and want local file access or UI automation with a visible browser.
 
-### How important is it to run KoLo on a dedicated machine
+### How important is it to run Kurahi on a dedicated machine
 
 Not required, but **recommended for reliability and isolation**.
 
@@ -882,7 +882,7 @@ For security guidance, read [Security](/gateway/security).
 
 ### What are the minimum VPS requirements and recommended OS
 
-KoLo is lightweight. For a basic Gateway + one chat channel:
+Kurahi is lightweight. For a basic Gateway + one chat channel:
 
 - **Absolute minimum:** 1 vCPU, 1GB RAM, ~500MB disk.
 - **Recommended:** 1-2 vCPU, 2GB RAM or more for headroom (logs, media, multiple channels). Node tools and browser automation can be resource hungry.
@@ -891,7 +891,7 @@ OS: use **Ubuntu LTS** (or any modern Debian/Ubuntu). The Linux install path is 
 
 Docs: [Linux](/platforms/linux), [VPS hosting](/vps).
 
-### Can I run KoLo in a VM and what are the requirements
+### Can I run Kurahi in a VM and what are the requirements
 
 Yes. Treat a VM the same as a VPS: it needs to be always on, reachable, and have enough
 RAM for the Gateway and any channels you enable.
@@ -906,15 +906,15 @@ If you are on Windows, **WSL2 is the easiest VM style setup** and has the best t
 compatibility. See [Windows](/platforms/windows), [VPS hosting](/vps).
 If you are running macOS in a VM, see [macOS VM](/platforms/macos-vm).
 
-## What is KoLo?
+## What is Kurahi?
 
-### What is KoLo in one paragraph
+### What is Kurahi in one paragraph
 
-KoLo is a personal AI assistant you run on your own devices. It replies on the messaging surfaces you already use (WhatsApp, Telegram, Slack, Mattermost (plugin), Discord, Google Chat, Signal, iMessage, WebChat) and can also do voice + a live Canvas on supported platforms. The **Gateway** is the always-on control plane; the assistant is the product.
+Kurahi is a personal AI assistant you run on your own devices. It replies on the messaging surfaces you already use (WhatsApp, Telegram, Slack, Mattermost (plugin), Discord, Google Chat, Signal, iMessage, WebChat) and can also do voice + a live Canvas on supported platforms. The **Gateway** is the always-on control plane; the assistant is the product.
 
 ### What's the value proposition
 
-KoLo is not “just a Claude wrapper.” It’s a **local-first control plane** that lets you run a
+Kurahi is not “just a Claude wrapper.” It’s a **local-first control plane** that lets you run a
 capable assistant on **your own hardware**, reachable from the chat apps you already use, with
 stateful sessions, memory, and tools - without handing control of your workflows to a hosted
 SaaS.
@@ -947,7 +947,7 @@ Good first projects:
 It can handle large tasks, but it works best when you split them into phases and
 use sub agents for parallel work.
 
-### What are the top five everyday use cases for KoLo
+### What are the top five everyday use cases for Kurahi
 
 Everyday wins usually look like:
 
@@ -957,21 +957,21 @@ Everyday wins usually look like:
 - **Browser automation:** filling forms, collecting data, and repeating web tasks.
 - **Cross device coordination:** send a task from your phone, let the Gateway run it on a server, and get the result back in chat.
 
-### Can KoLo help with lead gen outreach ads and blogs for a SaaS
+### Can Kurahi help with lead gen outreach ads and blogs for a SaaS
 
 Yes for **research, qualification, and drafting**. It can scan sites, build shortlists,
 summarize prospects, and write outreach or ad copy drafts.
 
 For **outreach or ad runs**, keep a human in the loop. Avoid spam, follow local laws and
 platform policies, and review anything before it is sent. The safest pattern is to let
-KoLo draft and you approve.
+Kurahi draft and you approve.
 
 Docs: [Security](/gateway/security).
 
 ### What are the advantages vs Claude Code for web development
 
-KoLo is a **personal assistant** and coordination layer, not an IDE replacement. Use
-Claude Code or Codex for the fastest direct coding loop inside a repo. Use KoLo when you
+Kurahi is a **personal assistant** and coordination layer, not an IDE replacement. Use
+Claude Code or Codex for the fastest direct coding loop inside a repo. Use Kurahi when you
 want durable memory, cross-device access, and tool orchestration.
 
 Advantages:
@@ -992,7 +992,7 @@ Use managed overrides instead of editing the repo copy. Put your changes in `~/.
 
 ### Can I load skills from a custom folder
 
-Yes. Add extra directories via `skills.load.extraDirs` in `~/.kolo/kolo.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.kolo/skills` → bundled → `skills.load.extraDirs`. `clawhub` installs into `./skills` by default, which KoLo treats as `<workspace>/skills`.
+Yes. Add extra directories via `skills.load.extraDirs` in `~/.kolo/kolo.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.kolo/skills` → bundled → `skills.load.extraDirs`. `clawhub` installs into `./skills` by default, which Kurahi treats as `<workspace>/skills`.
 
 ### How can I use different models for different tasks
 
@@ -1031,8 +1031,8 @@ Checklist:
 Debug:
 
 ```bash
-KoLo cron run <jobId> --force
-KoLo cron runs --id <jobId> --limit 50
+Kurahi cron run <jobId> --force
+Kurahi cron runs --id <jobId> --limit 50
 ```
 
 Docs: [Cron jobs](/automation/cron-jobs), [Cron vs Heartbeat](/automation/cron-vs-heartbeat).
@@ -1052,7 +1052,7 @@ npm i -g clawhub
 pnpm add -g clawhub
 ```
 
-### Can KoLo run tasks on a schedule or continuously in the background
+### Can Kurahi run tasks on a schedule or continuously in the background
 
 Yes. Use the Gateway scheduler:
 
@@ -1073,7 +1073,7 @@ You have three supported patterns:
 Run the Gateway where the macOS binaries exist, then connect from Linux in [remote mode](#how-do-i-run-kolo-in-remote-mode-client-connects-to-a-gateway-elsewhere) or over Tailscale. The skills load normally because the Gateway host is macOS.
 
 **Option B - use a macOS node (no SSH).**  
-Run the Gateway on Linux, pair a macOS node (menubar app), and set **Node Run Commands** to "Always Ask" or "Always Allow" on the Mac. KoLo can treat macOS-only skills as eligible when the required binaries exist on the node. The agent runs those skills via the `nodes` tool. If you choose "Always Ask", approving "Always Allow" in the prompt adds that command to the allowlist.
+Run the Gateway on Linux, pair a macOS node (menubar app), and set **Node Run Commands** to "Always Ask" or "Always Allow" on the Mac. Kurahi can treat macOS-only skills as eligible when the required binaries exist on the node. The agent runs those skills via the `nodes` tool. If you choose "Always Ask", approving "Always Allow" in the prompt adds that command to the allowlist.
 
 **Option C - proxy macOS binaries over SSH (advanced).**  
 Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wrappers that run on a Mac. Then override the skill to allow Linux so it stays eligible.
@@ -1090,12 +1090,12 @@ Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wra
    ---
    name: imsg
    description: iMessage/SMS CLI for listing chats, history, watch, and sending.
-   metadata: { "KoLo": { "os": ["darwin", "linux"], "requires": { "bins": ["imsg"] } } }
+   metadata: { "Kurahi": { "os": ["darwin", "linux"], "requires": { "bins": ["imsg"] } } }
    ---
    ```
 4. Start a new session so the skills snapshot refreshes.
 
-For iMessage specifically, you can also point `channels.imessage.cliPath` at an SSH wrapper (KoLo only needs stdio). See [iMessage](/channels/imessage).
+For iMessage specifically, you can also point `channels.imessage.cliPath` at an SSH wrapper (Kurahi only needs stdio). See [iMessage](/channels/imessage).
 
 ### Do you have a Notion or HeyGen integration
 
@@ -1121,15 +1121,15 @@ clawhub install <skill-slug>
 clawhub update --all
 ```
 
-ClawHub installs into `./skills` under your current directory (or falls back to your configured KoLo workspace); KoLo treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.kolo/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawHub](/tools/clawhub).
+ClawHub installs into `./skills` under your current directory (or falls back to your configured Kurahi workspace); Kurahi treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.kolo/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawHub](/tools/clawhub).
 
 ### How do I install the Chrome extension for browser takeover
 
 Use the built-in installer, then load the unpacked extension in Chrome:
 
 ```bash
-KoLo browser extension install
-KoLo browser extension path
+Kurahi browser extension install
+Kurahi browser extension path
 ```
 
 Then Chrome → `chrome://extensions` → enable “Developer mode” → “Load unpacked” → pick that folder.
@@ -1175,12 +1175,12 @@ Set `agents.defaults.sandbox.docker.binds` to `["host:path:mode"]` (e.g., `"/hom
 
 ### How does memory work
 
-KoLo memory is just Markdown files in the agent workspace:
+Kurahi memory is just Markdown files in the agent workspace:
 
 - Daily notes in `memory/YYYY-MM-DD.md`
 - Curated long-term notes in `MEMORY.md` (main/private sessions only)
 
-KoLo also runs a **silent pre-compaction memory flush** to remind the model
+Kurahi also runs a **silent pre-compaction memory flush** to remind the model
 to write durable notes before auto-compaction. This only runs when the workspace
 is writable (read-only sandboxes skip it). See [Memory](/concepts/memory).
 
@@ -1202,11 +1202,11 @@ does **not** grant embeddings access, so **signing in with Codex (OAuth or the
 Codex CLI login)** does not help for semantic memory search. OpenAI embeddings
 still need a real API key (`OPENAI_API_KEY` or `models.providers.openai.apiKey`).
 
-If you don’t set a provider explicitly, KoLo auto-selects a provider when it
+If you don’t set a provider explicitly, Kurahi auto-selects a provider when it
 can resolve an API key (auth profiles, `models.providers.*.apiKey`, or env vars).
 It prefers OpenAI if an OpenAI key resolves, otherwise Gemini if a Gemini key
 resolves. If neither key is available, memory search stays disabled until you
-configure it. If you have a local model path configured and present, KoLo
+configure it. If you have a local model path configured and present, Kurahi
 prefers `local`.
 
 If you’d rather stay local, set `memorySearch.provider = "local"` (and optionally
@@ -1226,9 +1226,9 @@ Docs: [Memory](/concepts/memory), [Context](/concepts/context).
 
 ## Where things live on disk
 
-### Is all data used with KoLo saved locally
+### Is all data used with Kurahi saved locally
 
-No - **KoLo’s state is local**, but **external services still see what you send them**.
+No - **Kurahi’s state is local**, but **external services still see what you send them**.
 
 - **Local by default:** sessions, memory files, config, and workspace live on the Gateway host
   (`~/.kolo` + your workspace directory).
@@ -1240,13 +1240,13 @@ No - **KoLo’s state is local**, but **external services still see what you sen
 
 Related: [Agent workspace](/concepts/agent-workspace), [Memory](/concepts/memory).
 
-### Where does KoLo store its data
+### Where does Kurahi store its data
 
 Everything lives under `$KOLO_STATE_DIR` (default: `~/.kolo`):
 
-| Path                                                            | Purpose                                                      |
-| --------------------------------------------------------------- | ------------------------------------------------------------ |
-| `$KOLO_STATE_DIR/kolo.json`                             | Main config (JSON5)                                          |
+| Path                                                        | Purpose                                                      |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| `$KOLO_STATE_DIR/kolo.json`                                 | Main config (JSON5)                                          |
 | `$KOLO_STATE_DIR/credentials/oauth.json`                    | Legacy OAuth import (copied into auth profiles on first use) |
 | `$KOLO_STATE_DIR/agents/<agentId>/agent/auth-profiles.json` | Auth profiles (OAuth + API keys)                             |
 | `$KOLO_STATE_DIR/agents/<agentId>/agent/auth.json`          | Runtime auth cache (managed automatically)                   |
@@ -1255,7 +1255,7 @@ Everything lives under `$KOLO_STATE_DIR` (default: `~/.kolo`):
 | `$KOLO_STATE_DIR/agents/<agentId>/sessions/`                | Conversation history & state (per agent)                     |
 | `$KOLO_STATE_DIR/agents/<agentId>/sessions/sessions.json`   | Session metadata (per agent)                                 |
 
-Legacy single‑agent path: `~/.kolo/agent/*` (migrated by `KoLo doctor`).
+Legacy single‑agent path: `~/.kolo/agent/*` (migrated by `Kurahi doctor`).
 
 Your **workspace** (AGENTS.md, memory files, skills, etc.) is separate and configured via `agents.defaults.workspace` (default: `~/.kolo/workspace`).
 
@@ -1297,7 +1297,7 @@ separately (see the migration question above).
 
 Docs: [Agent workspace](/concepts/agent-workspace).
 
-### How do I completely uninstall KoLo
+### How do I completely uninstall Kurahi
 
 See the dedicated guide: [Uninstall](/install/uninstall).
 
@@ -1308,7 +1308,7 @@ Relative paths resolve inside the workspace, but absolute paths can access other
 host locations unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) or per‑agent sandbox settings. If you
 want a repo to be the default working directory, point that agent’s
-`workspace` to the repo root. The KoLo repo is just source code; keep the
+`workspace` to the repo root. The Kurahi repo is just source code; keep the
 workspace separate unless you intentionally want the agent to work inside it.
 
 Example (repo as default cwd):
@@ -1331,7 +1331,7 @@ Session state is owned by the **gateway host**. If you’re in remote mode, the 
 
 ### What format is the config Where is it
 
-KoLo reads an optional **JSON5** config from `$KOLO_CONFIG_PATH` (default: `~/.kolo/kolo.json`):
+Kurahi reads an optional **JSON5** config from `$KOLO_CONFIG_PATH` (default: `~/.kolo/kolo.json`):
 
 ```
 $KOLO_CONFIG_PATH
@@ -1364,7 +1364,7 @@ Notes:
 
 The wizard generates a gateway token by default (even on loopback) so **local WS clients must authenticate**. This blocks other local processes from calling the Gateway. Paste the token into the Control UI settings (or your client config) to connect.
 
-If you **really** want open loopback, remove `gateway.auth` from your config. Doctor can generate a token for you any time: `KoLo doctor --generate-gateway-token`.
+If you **really** want open loopback, remove `gateway.auth` from your config. Doctor can generate a token for you any time: `Kurahi doctor --generate-gateway-token`.
 
 ### Do I have to restart after changing config
 
@@ -1376,7 +1376,7 @@ The Gateway watches the config and supports hot‑reload:
 ### How do I enable web search and web fetch
 
 `web_fetch` works without an API key. `web_search` requires a Brave Search API
-key. **Recommended:** run `KoLo configure --section web` to store it in
+key. **Recommended:** run `Kurahi configure --section web` to store it in
 `tools.web.search.apiKey`. Environment alternative: set `BRAVE_API_KEY` for the
 Gateway process.
 
@@ -1417,7 +1417,7 @@ The common pattern is **one Gateway** (e.g. Raspberry Pi) plus **nodes** and **a
 
 Docs: [Nodes](/nodes), [Remote access](/gateway/remote), [Multi-Agent Routing](/concepts/multi-agent), [Sub-agents](/tools/subagents), [TUI](/tui).
 
-### Can the KoLo browser run headless
+### Can the Kurahi browser run headless
 
 Yes. It’s a config option:
 
@@ -1470,8 +1470,8 @@ Typical setup:
    so it can register as a node.
 5. Approve the node on the Gateway:
    ```bash
-   KoLo nodes pending
-   KoLo nodes approve <requestId>
+   Kurahi nodes pending
+   Kurahi nodes approve <requestId>
    ```
 
 No separate TCP bridge is required; nodes connect over the Gateway WebSocket.
@@ -1485,9 +1485,9 @@ Docs: [Nodes](/nodes), [Gateway protocol](/gateway/protocol), [macOS remote mode
 
 Check the basics:
 
-- Gateway is running: `KoLo gateway status`
-- Gateway health: `KoLo status`
-- Channel health: `KoLo channels status`
+- Gateway is running: `Kurahi gateway status`
+- Gateway health: `Kurahi status`
+- Channel health: `Kurahi channels status`
 
 Then verify auth and routing:
 
@@ -1497,7 +1497,7 @@ Then verify auth and routing:
 
 Docs: [Tailscale](/gateway/tailscale), [Remote access](/gateway/remote), [Channels](/channels).
 
-### Can two KoLo instances talk to each other local VPS
+### Can two Kurahi instances talk to each other local VPS
 
 Yes. There is no built-in "bot-to-bot" bridge, but you can wire it up in a few
 reliable ways:
@@ -1506,14 +1506,14 @@ reliable ways:
 Have Bot A send a message to Bot B, then let Bot B reply as usual.
 
 **CLI bridge (generic):** run a script that calls the other Gateway with
-`KoLo agent --message ... --deliver`, targeting a chat where the other bot
+`Kurahi agent --message ... --deliver`, targeting a chat where the other bot
 listens. If one bot is on a remote VPS, point your CLI at that remote Gateway
 via SSH/Tailscale (see [Remote access](/gateway/remote)).
 
 Example pattern (run from a machine that can reach the target Gateway):
 
 ```bash
-KoLo agent --message "Hello from local bot" --deliver --channel telegram --reply-to <chat-id>
+Kurahi agent --message "Hello from local bot" --deliver --channel telegram --reply-to <chat-id>
 ```
 
 Tip: add a guardrail so the two bots do not loop endlessly (mention-only, channel
@@ -1579,14 +1579,14 @@ else is removed.
 Recover:
 
 - Restore from backup (git or a copied `~/.kolo/kolo.json`).
-- If you have no backup, re-run `KoLo doctor` and reconfigure channels/models.
+- If you have no backup, re-run `Kurahi doctor` and reconfigure channels/models.
 - If this was unexpected, file a bug and include your last known config or any backup.
 - A local coding agent can often reconstruct a working config from logs or history.
 
 Avoid it:
 
-- Use `KoLo config set` for small changes.
-- Use `KoLo configure` for interactive edits.
+- Use `Kurahi config set` for small changes.
+- Use `Kurahi configure` for interactive edits.
 
 Docs: [Config](/cli/config), [Configure](/cli/configure), [Doctor](/gateway/doctor).
 
@@ -1621,7 +1621,7 @@ Minimal steps:
 If you want the Control UI without SSH, use Tailscale Serve on the VPS:
 
 ```bash
-KoLo gateway --tailscale serve
+Kurahi gateway --tailscale serve
 ```
 
 This keeps the gateway bound to loopback and exposes HTTPS via Tailscale. See [Tailscale](/gateway/tailscale).
@@ -1637,17 +1637,17 @@ Recommended setup:
    The app will tunnel the Gateway port and connect as a node.
 3. **Approve the node** on the gateway:
    ```bash
-   KoLo nodes pending
-   KoLo nodes approve <requestId>
+   Kurahi nodes pending
+   Kurahi nodes approve <requestId>
    ```
 
 Docs: [Gateway protocol](/gateway/protocol), [Discovery](/gateway/discovery), [macOS remote mode](/platforms/mac/remote).
 
 ## Env vars and .env loading
 
-### How does KoLo load environment variables
+### How does Kurahi load environment variables
 
-KoLo reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
+Kurahi reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
 
 - `.env` from the current working directory
 - a global fallback `.env` from `~/.kolo/.env` (aka `$KOLO_STATE_DIR/.env`)
@@ -1690,8 +1690,8 @@ This runs your login shell and imports only missing expected keys (never overrid
 
 ### I set COPILOTGITHUBTOKEN but models status shows Shell env off Why
 
-`KoLo models status` reports whether **shell env import** is enabled. “Shell env: off”
-does **not** mean your env vars are missing - it just means KoLo won’t load
+`Kurahi models status` reports whether **shell env import** is enabled. “Shell env: off”
+does **not** mean your env vars are missing - it just means Kurahi won’t load
 your login shell automatically.
 
 If the Gateway runs as a service (launchd/systemd), it won’t inherit your shell
@@ -1707,7 +1707,7 @@ environment. Fix by doing one of these:
 Then restart the gateway and recheck:
 
 ```bash
-KoLo models status
+Kurahi models status
 ```
 
 Copilot tokens are read from `COPILOT_GITHUB_TOKEN` (also `GH_TOKEN` / `GITHUB_TOKEN`).
@@ -1733,7 +1733,7 @@ transcripts - it just starts a new session.
 }
 ```
 
-### Is there a way to make a team of KoLo instances one CEO and many agents
+### Is there a way to make a team of Kurahi instances one CEO and many agents
 
 Yes, via **multi-agent routing** and **sub-agents**. You can create one coordinator
 agent and several worker agents with their own workspaces and models.
@@ -1758,31 +1758,31 @@ What helps:
 - Use sub-agents for long or parallel work so the main chat stays smaller.
 - Pick a model with a larger context window if this happens often.
 
-### How do I completely reset KoLo but keep it installed
+### How do I completely reset Kurahi but keep it installed
 
 Use the reset command:
 
 ```bash
-KoLo reset
+Kurahi reset
 ```
 
 Non-interactive full reset:
 
 ```bash
-KoLo reset --scope full --yes --non-interactive
+Kurahi reset --scope full --yes --non-interactive
 ```
 
 Then re-run onboarding:
 
 ```bash
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
 Notes:
 
 - The onboarding wizard also offers **Reset** if it sees an existing config. See [Wizard](/start/wizard).
 - If you used profiles (`--profile` / `KOLO_PROFILE`), reset each state dir (defaults are `~/.kolo-<profile>`).
-- Dev reset: `KoLo gateway --dev --reset` (dev-only; wipes dev config + credentials + sessions + workspace).
+- Dev reset: `Kurahi gateway --dev --reset` (dev-only; wipes dev config + credentials + sessions + workspace).
 
 ### Im getting context too large errors how do I reset or compact
 
@@ -1834,14 +1834,14 @@ Heartbeats run every **30m** by default. Tune or disable them:
 ```
 
 If `HEARTBEAT.md` exists but is effectively empty (only blank lines and markdown
-headers like `# Heading`), KoLo skips the heartbeat run to save API calls.
+headers like `# Heading`), Kurahi skips the heartbeat run to save API calls.
 If the file is missing, the heartbeat still runs and the model decides what to do.
 
 Per-agent overrides use `agents.list[].heartbeat`. Docs: [Heartbeat](/gateway/heartbeat).
 
 ### Do I need to add a bot account to a WhatsApp group
 
-No. KoLo runs on **your own account**, so if you’re in the group, KoLo can see it.
+No. Kurahi runs on **your own account**, so if you’re in the group, Kurahi can see it.
 By default, group replies are blocked until you allow senders (`groupPolicy: "allowlist"`).
 
 If you want only **you** to be able to trigger group replies:
@@ -1862,7 +1862,7 @@ If you want only **you** to be able to trigger group replies:
 Option 1 (fastest): tail logs and send a test message in the group:
 
 ```bash
-KoLo logs --follow --json
+Kurahi logs --follow --json
 ```
 
 Look for `chatId` (or `from`) ending in `@g.us`, like:
@@ -1871,12 +1871,12 @@ Look for `chatId` (or `from`) ending in `@g.us`, like:
 Option 2 (if already configured/allowlisted): list groups from config:
 
 ```bash
-KoLo directory groups list --channel whatsapp
+Kurahi directory groups list --channel whatsapp
 ```
 
 Docs: [WhatsApp](/channels/whatsapp), [Directory](/cli/directory), [Logs](/cli/logs).
 
-### Why doesnt KoLo reply in a group
+### Why doesnt Kurahi reply in a group
 
 Two common causes:
 
@@ -1901,7 +1901,7 @@ Tips:
 
 - Keep one **active** workspace per agent (`agents.defaults.workspace`).
 - Prune old sessions (delete JSONL or store entries) if disk grows.
-- Use `KoLo doctor` to spot stray workspaces and profile mismatches.
+- Use `Kurahi doctor` to spot stray workspaces and profile mismatches.
 
 ### Can I run multiple bots or chats at the same time Slack and how should I set that up
 
@@ -1926,13 +1926,13 @@ Docs: [Multi‑Agent Routing](/concepts/multi-agent), [Slack](/channels/slack),
 
 ### What is the default model
 
-KoLo’s default model is whatever you set as:
+Kurahi’s default model is whatever you set as:
 
 ```
 agents.defaults.model.primary
 ```
 
-Models are referenced as `provider/model` (example: `anthropic/claude-opus-4-5`). If you omit the provider, KoLo currently assumes `anthropic` as a temporary deprecation fallback - but you should still **explicitly** set `provider/model`.
+Models are referenced as `provider/model` (example: `anthropic/claude-opus-4-5`). If you omit the provider, Kurahi currently assumes `anthropic` as a temporary deprecation fallback - but you should still **explicitly** set `provider/model`.
 
 ### What model do you recommend
 
@@ -1974,18 +1974,18 @@ Use **model commands** or edit only the **model** fields. Avoid full config repl
 Safe options:
 
 - `/model` in chat (quick, per-session)
-- `KoLo models set ...` (updates just model config)
-- `KoLo configure --section models` (interactive)
+- `Kurahi models set ...` (updates just model config)
+- `Kurahi configure --section models` (interactive)
 - edit `agents.defaults.model` in `~/.kolo/kolo.json`
 
 Avoid `config.apply` with a partial object unless you intend to replace the whole config.
-If you did overwrite config, restore from backup or re-run `KoLo doctor` to repair.
+If you did overwrite config, restore from backup or re-run `Kurahi doctor` to repair.
 
 Docs: [Models](/concepts/models), [Configure](/cli/configure), [Config](/cli/config), [Doctor](/gateway/doctor).
 
-### What do KoLo, Flawd, and Krill use for models
+### What do Kurahi, Flawd, and Krill use for models
 
-- **KoLo + Flawd:** Anthropic Opus (`anthropic/claude-opus-4-5`) - see [Anthropic](/providers/anthropic).
+- **Kurahi + Flawd:** Anthropic Opus (`anthropic/claude-opus-4-5`) - see [Anthropic](/providers/anthropic).
 - **Krill:** MiniMax M2.1 (`minimax/MiniMax-M2.1`) - see [MiniMax](/providers/minimax).
 
 ### How do I switch models on the fly without restarting
@@ -2068,7 +2068,7 @@ Fix checklist:
    `minimax/MiniMax-M2.1-lightning`.
 4. Run:
    ```bash
-   KoLo models list
+   Kurahi models list
    ```
    and pick from the list (or `/model list` in chat).
 
@@ -2112,7 +2112,7 @@ Docs: [Models](/concepts/models), [Multi-Agent Routing](/concepts/multi-agent), 
 
 ### Are opus sonnet gpt builtin shortcuts
 
-Yes. KoLo ships a few default shorthands (only applied when the model exists in `agents.defaults.models`):
+Yes. Kurahi ships a few default shorthands (only applied when the model exists in `agents.defaults.models`):
 
 - `opus` → `anthropic/claude-opus-4-5`
 - `sonnet` → `anthropic/claude-sonnet-4-5`
@@ -2187,7 +2187,7 @@ stored in:
 
 Fix options:
 
-- Run `KoLo agents add <id>` and configure auth during the wizard.
+- Run `Kurahi agents add <id>` and configure auth during the wizard.
 - Or copy `auth-profiles.json` from the main agent’s `agentDir` into the new agent’s `agentDir`.
 
 Do **not** reuse `agentDir` across agents; it causes auth/session collisions.
@@ -2201,7 +2201,7 @@ Failover happens in two stages:
 1. **Auth profile rotation** within the same provider.
 2. **Model fallback** to the next model in `agents.defaults.model.fallbacks`.
 
-Cooldowns apply to failing profiles (exponential backoff), so KoLo can keep responding even when a provider is rate‑limited or temporarily failing.
+Cooldowns apply to failing profiles (exponential backoff), so Kurahi can keep responding even when a provider is rate‑limited or temporarily failing.
 
 ### What does this error mean
 
@@ -2215,13 +2215,13 @@ It means the system attempted to use the auth profile ID `anthropic:default`, bu
 
 - **Confirm where auth profiles live** (new vs legacy paths)
   - Current: `~/.kolo/agents/<agentId>/agent/auth-profiles.json`
-  - Legacy: `~/.kolo/agent/*` (migrated by `KoLo doctor`)
+  - Legacy: `~/.kolo/agent/*` (migrated by `Kurahi doctor`)
 - **Confirm your env var is loaded by the Gateway**
   - If you set `ANTHROPIC_API_KEY` in your shell but run the Gateway via systemd/launchd, it may not inherit it. Put it in `~/.kolo/.env` or enable `env.shellEnv`.
 - **Make sure you’re editing the correct agent**
   - Multi‑agent setups mean there can be multiple `auth-profiles.json` files.
 - **Sanity‑check model/auth status**
-  - Use `KoLo models status` to see configured models and whether providers are authenticated.
+  - Use `Kurahi models status` to see configured models and whether providers are authenticated.
 
 **Fix checklist for No credentials found for profile anthropic**
 
@@ -2229,20 +2229,20 @@ This means the run is pinned to an Anthropic auth profile, but the Gateway
 can’t find it in its auth store.
 
 - **Use a setup-token**
-  - Run `claude setup-token`, then paste it with `KoLo models auth setup-token --provider anthropic`.
-  - If the token was created on another machine, use `KoLo models auth paste-token --provider anthropic`.
+  - Run `claude setup-token`, then paste it with `Kurahi models auth setup-token --provider anthropic`.
+  - If the token was created on another machine, use `Kurahi models auth paste-token --provider anthropic`.
 - **If you want to use an API key instead**
   - Put `ANTHROPIC_API_KEY` in `~/.kolo/.env` on the **gateway host**.
   - Clear any pinned order that forces a missing profile:
     ```bash
-    KoLo models auth order clear --provider anthropic
+    Kurahi models auth order clear --provider anthropic
     ```
 - **Confirm you’re running commands on the gateway host**
   - In remote mode, auth profiles live on the gateway machine, not your laptop.
 
 ### Why did it also try Google Gemini and fail
 
-If your model config includes Google Gemini as a fallback (or you switched to a Gemini shorthand), KoLo will try it during model fallback. If you haven’t configured Google credentials, you’ll see `No API key found for provider "google"`.
+If your model config includes Google Gemini as a fallback (or you switched to a Gemini shorthand), Kurahi will try it during model fallback. If you haven’t configured Google credentials, you’ll see `No API key found for provider "google"`.
 
 Fix: either provide Google auth, or remove/avoid Google models in `agents.defaults.model.fallbacks` / aliases so fallback doesn’t route there.
 
@@ -2251,7 +2251,7 @@ Fix: either provide Google auth, or remove/avoid Google models in `agents.defaul
 Cause: the session history contains **thinking blocks without signatures** (often from
 an aborted/partial stream). Google Antigravity requires signatures for thinking blocks.
 
-Fix: KoLo now strips unsigned thinking blocks for Google Antigravity Claude. If it still appears, start a **new session** or set `/thinking off` for that agent.
+Fix: Kurahi now strips unsigned thinking blocks for Google Antigravity Claude. If it still appears, start a **new session** or set `/thinking off` for that agent.
 
 ## Auth profiles: what they are and how to manage them
 
@@ -2267,7 +2267,7 @@ An auth profile is a named credential record (OAuth or API key) tied to a provid
 
 ### What are typical profile IDs
 
-KoLo uses provider‑prefixed IDs like:
+Kurahi uses provider‑prefixed IDs like:
 
 - `anthropic:default` (common when no email identity exists)
 - `anthropic:<email>` for OAuth identities
@@ -2277,33 +2277,33 @@ KoLo uses provider‑prefixed IDs like:
 
 Yes. Config supports optional metadata for profiles and an ordering per provider (`auth.order.<provider>`). This does **not** store secrets; it maps IDs to provider/mode and sets rotation order.
 
-KoLo may temporarily skip a profile if it’s in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `KoLo models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
+Kurahi may temporarily skip a profile if it’s in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `Kurahi models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
 
 You can also set a **per-agent** order override (stored in that agent’s `auth-profiles.json`) via the CLI:
 
 ```bash
 # Defaults to the configured default agent (omit --agent)
-KoLo models auth order get --provider anthropic
+Kurahi models auth order get --provider anthropic
 
 # Lock rotation to a single profile (only try this one)
-KoLo models auth order set --provider anthropic anthropic:default
+Kurahi models auth order set --provider anthropic anthropic:default
 
 # Or set an explicit order (fallback within provider)
-KoLo models auth order set --provider anthropic anthropic:work anthropic:default
+Kurahi models auth order set --provider anthropic anthropic:work anthropic:default
 
 # Clear override (fall back to config auth.order / round-robin)
-KoLo models auth order clear --provider anthropic
+Kurahi models auth order clear --provider anthropic
 ```
 
 To target a specific agent:
 
 ```bash
-KoLo models auth order set --provider anthropic --agent main anthropic:default
+Kurahi models auth order set --provider anthropic --agent main anthropic:default
 ```
 
 ### OAuth vs API key whats the difference
 
-KoLo supports both:
+Kurahi supports both:
 
 - **OAuth** often leverages subscription access (where applicable).
 - **API keys** use pay‑per‑token billing.
@@ -2322,35 +2322,35 @@ Precedence:
 --port > KOLO_GATEWAY_PORT > gateway.port > default 18789
 ```
 
-### Why does KoLo gateway status say Runtime running but RPC probe failed
+### Why does Kurahi gateway status say Runtime running but RPC probe failed
 
 Because “running” is the **supervisor’s** view (launchd/systemd/schtasks). The RPC probe is the CLI actually connecting to the gateway WebSocket and calling `status`.
 
-Use `KoLo gateway status` and trust these lines:
+Use `Kurahi gateway status` and trust these lines:
 
 - `Probe target:` (the URL the probe actually used)
 - `Listening:` (what’s actually bound on the port)
 - `Last gateway error:` (common root cause when the process is alive but the port isn’t listening)
 
-### Why does KoLo gateway status show Config cli and Config service different
+### Why does Kurahi gateway status show Config cli and Config service different
 
 You’re editing one config file while the service is running another (often a `--profile` / `KOLO_STATE_DIR` mismatch).
 
 Fix:
 
 ```bash
-KoLo gateway install --force
+Kurahi gateway install --force
 ```
 
 Run that from the same `--profile` / environment you want the service to use.
 
 ### What does another gateway instance is already listening mean
 
-KoLo enforces a runtime lock by binding the WebSocket listener immediately on startup (default `ws://127.0.0.1:18789`). If the bind fails with `EADDRINUSE`, it throws `GatewayLockError` indicating another instance is already listening.
+Kurahi enforces a runtime lock by binding the WebSocket listener immediately on startup (default `ws://127.0.0.1:18789`). If the bind fails with `EADDRINUSE`, it throws `GatewayLockError` indicating another instance is already listening.
 
-Fix: stop the other instance, free the port, or run with `KoLo gateway --port <port>`.
+Fix: stop the other instance, free the port, or run with `Kurahi gateway --port <port>`.
 
-### How do I run KoLo in remote mode client connects to a Gateway elsewhere
+### How do I run Kurahi in remote mode client connects to a Gateway elsewhere
 
 Set `gateway.mode: "remote"` and point to a remote WebSocket URL, optionally with a token/password:
 
@@ -2369,7 +2369,7 @@ Set `gateway.mode: "remote"` and point to a remote WebSocket URL, optionally wit
 
 Notes:
 
-- `KoLo gateway` only starts when `gateway.mode` is `local` (or you pass the override flag).
+- `Kurahi gateway` only starts when `gateway.mode` is `local` (or you pass the override flag).
 - The macOS app watches the config file and switches modes live when these values change.
 
 ### The Control UI says unauthorized or keeps reconnecting What now
@@ -2383,12 +2383,12 @@ Facts (from code):
 
 Fix:
 
-- Fastest: `KoLo dashboard` (prints + copies tokenized link, tries to open; shows SSH hint if headless).
-- If you don’t have a token yet: `KoLo doctor --generate-gateway-token`.
+- Fastest: `Kurahi dashboard` (prints + copies tokenized link, tries to open; shows SSH hint if headless).
+- If you don’t have a token yet: `Kurahi doctor --generate-gateway-token`.
 - If remote, tunnel first: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/?token=...`.
 - Set `gateway.auth.token` (or `KOLO_GATEWAY_TOKEN`) on the gateway host.
 - In the Control UI settings, paste the same token (or refresh with a one-time `?token=...` link).
-- Still stuck? Run `KoLo status --all` and follow [Troubleshooting](/gateway/troubleshooting). See [Dashboard](/web/dashboard) for auth details.
+- Still stuck? Run `Kurahi status --all` and follow [Troubleshooting](/gateway/troubleshooting). See [Dashboard](/web/dashboard) for auth details.
 
 ### I set gatewaybind tailnet but it cant bind nothing listens
 
@@ -2414,11 +2414,11 @@ Yes, but you must isolate:
 
 Quick setup (recommended):
 
-- Use `KoLo --profile <name> …` per instance (auto-creates `~/.kolo-<name>`).
+- Use `Kurahi --profile <name> …` per instance (auto-creates `~/.kolo-<name>`).
 - Set a unique `gateway.port` in each profile config (or pass `--port` for manual runs).
-- Install a per-profile service: `KoLo --profile <name> gateway install`.
+- Install a per-profile service: `Kurahi --profile <name> gateway install`.
 
-Profiles also suffix service names (`com.kodasoken.kolo.<id>`; legacy `com.kolo.*`, `kolo-gateway-<profile>.service`, `KoLo Gateway (<profile>)`).
+Profiles also suffix service names (`com.kodasoken.kolo.<id>`; legacy `com.kolo.*`, `kolo-gateway-<profile>.service`, `Kurahi Gateway (<profile>)`).
 Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 ### What does invalid handshake code 1008 mean
@@ -2442,7 +2442,7 @@ Quick fixes:
 If you’re using the CLI or TUI, the URL should look like:
 
 ```
-KoLo tui --url ws://<host>:18789 --token <token>
+Kurahi tui --url ws://<host>:18789 --token <token>
 ```
 
 Protocol details: [Gateway protocol](/gateway/protocol).
@@ -2462,14 +2462,14 @@ You can set a stable path via `logging.file`. File log level is controlled by `l
 Fastest log tail:
 
 ```bash
-KoLo logs --follow
+Kurahi logs --follow
 ```
 
 Service/supervisor logs (when the gateway runs via launchd/systemd):
 
 - macOS: `$KOLO_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)
 - Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST`
 
 See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
 
@@ -2478,13 +2478,13 @@ See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
 Use the gateway helpers:
 
 ```bash
-KoLo gateway status
-KoLo gateway restart
+Kurahi gateway status
+Kurahi gateway restart
 ```
 
-If you run the gateway manually, `KoLo gateway --force` can reclaim the port. See [Gateway](/gateway).
+If you run the gateway manually, `Kurahi gateway --force` can reclaim the port. See [Gateway](/gateway).
 
-### I closed my terminal on Windows how do I restart KoLo
+### I closed my terminal on Windows how do I restart Kurahi
 
 There are **two Windows install modes**:
 
@@ -2494,14 +2494,14 @@ Open PowerShell, enter WSL, then restart:
 
 ```powershell
 wsl
-KoLo gateway status
-KoLo gateway restart
+Kurahi gateway status
+Kurahi gateway restart
 ```
 
 If you never installed the service, start it in the foreground:
 
 ```bash
-KoLo gateway run
+Kurahi gateway run
 ```
 
 **2) Native Windows (not recommended):** the Gateway runs directly in Windows.
@@ -2509,14 +2509,14 @@ KoLo gateway run
 Open PowerShell and run:
 
 ```powershell
-KoLo gateway status
-KoLo gateway restart
+Kurahi gateway status
+Kurahi gateway restart
 ```
 
 If you run it manually (no service), use:
 
 ```powershell
-KoLo gateway run
+Kurahi gateway run
 ```
 
 Docs: [Windows (WSL2)](/platforms/windows), [Gateway service runbook](/gateway).
@@ -2526,10 +2526,10 @@ Docs: [Windows (WSL2)](/platforms/windows), [Gateway service runbook](/gateway).
 Start with a quick health sweep:
 
 ```bash
-KoLo status
-KoLo models status
-KoLo channels status
-KoLo logs --follow
+Kurahi status
+Kurahi models status
+Kurahi channels status
+Kurahi logs --follow
 ```
 
 Common causes:
@@ -2547,15 +2547,15 @@ Docs: [Channels](/channels), [Troubleshooting](/gateway/troubleshooting), [Remot
 
 This usually means the UI lost the WebSocket connection. Check:
 
-1. Is the Gateway running? `KoLo gateway status`
-2. Is the Gateway healthy? `KoLo status`
-3. Does the UI have the right token? `KoLo dashboard`
+1. Is the Gateway running? `Kurahi gateway status`
+2. Is the Gateway healthy? `Kurahi status`
+3. Does the UI have the right token? `Kurahi dashboard`
 4. If remote, is the tunnel/Tailscale link up?
 
 Then tail logs:
 
 ```bash
-KoLo logs --follow
+Kurahi logs --follow
 ```
 
 Docs: [Dashboard](/web/dashboard), [Remote access](/gateway/remote), [Troubleshooting](/gateway/troubleshooting).
@@ -2565,8 +2565,8 @@ Docs: [Dashboard](/web/dashboard), [Remote access](/gateway/remote), [Troublesho
 Start with logs and channel status:
 
 ```bash
-KoLo channels status
-KoLo channels logs --channel telegram
+Kurahi channels status
+Kurahi channels logs --channel telegram
 ```
 
 If you are on a VPS or behind a proxy, confirm outbound HTTPS is allowed and DNS works.
@@ -2579,9 +2579,9 @@ Docs: [Telegram](/channels/telegram), [Channel troubleshooting](/channels/troubl
 First confirm the Gateway is reachable and the agent can run:
 
 ```bash
-KoLo status
-KoLo models status
-KoLo logs --follow
+Kurahi status
+Kurahi models status
+Kurahi logs --follow
 ```
 
 In the TUI, use `/status` to see the current state. If you expect replies in a chat
@@ -2594,8 +2594,8 @@ Docs: [TUI](/tui), [Slash commands](/tools/slash-commands).
 If you installed the service:
 
 ```bash
-KoLo gateway stop
-KoLo gateway start
+Kurahi gateway stop
+Kurahi gateway start
 ```
 
 This stops/starts the **supervised service** (launchd on macOS, systemd on Linux).
@@ -2604,17 +2604,17 @@ Use this when the Gateway runs in the background as a daemon.
 If you’re running in the foreground, stop with Ctrl‑C, then:
 
 ```bash
-KoLo gateway run
+Kurahi gateway run
 ```
 
 Docs: [Gateway service runbook](/gateway).
 
-### ELI5 KoLo gateway restart vs KoLo gateway
+### ELI5 Kurahi gateway restart vs Kurahi gateway
 
-- `KoLo gateway restart`: restarts the **background service** (launchd/systemd).
-- `KoLo gateway`: runs the gateway **in the foreground** for this terminal session.
+- `Kurahi gateway restart`: restarts the **background service** (launchd/systemd).
+- `Kurahi gateway`: runs the gateway **in the foreground** for this terminal session.
 
-If you installed the service, use the gateway commands. Use `KoLo gateway` when
+If you installed the service, use the gateway commands. Use `Kurahi gateway` when
 you want a one-off, foreground run.
 
 ### What's the fastest way to get more details when something fails
@@ -2625,12 +2625,12 @@ Start the Gateway with `--verbose` to get more console detail. Then inspect the 
 
 ### My skill generated an imagePDF but nothing was sent
 
-Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [KoLo assistant setup](/start/KoLo) and [Agent send](/tools/agent-send).
+Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [Kurahi assistant setup](/start/Kurahi) and [Agent send](/tools/agent-send).
 
 CLI sending:
 
 ```bash
-KoLo message send --target +15555550123 --message "Here you go" --media /path/to/file.png
+Kurahi message send --target +15555550123 --message "Here you go" --media /path/to/file.png
 ```
 
 Also check:
@@ -2642,17 +2642,17 @@ See [Images](/nodes/images).
 
 ## Security and access control
 
-### Is it safe to expose KoLo to inbound DMs
+### Is it safe to expose Kurahi to inbound DMs
 
 Treat inbound DMs as untrusted input. Defaults are designed to reduce risk:
 
 - Default behavior on DM‑capable channels is **pairing**:
   - Unknown senders receive a pairing code; the bot does not process their message.
-  - Approve with: `KoLo pairing approve <channel> <code>`
-  - Pending requests are capped at **3 per channel**; check `KoLo pairing list <channel>` if a code didn’t arrive.
+  - Approve with: `Kurahi pairing approve <channel> <code>`
+  - Pending requests are capped at **3 per channel**; check `Kurahi pairing list <channel>` if a code didn’t arrive.
 - Opening DMs publicly requires explicit opt‑in (`dmPolicy: "open"` and allowlist `"*"`).
 
-Run `KoLo doctor` to surface risky DM policies.
+Run `Kurahi doctor` to surface risky DM policies.
 
 ### Is prompt injection only a concern for public bots
 
@@ -2707,7 +2707,7 @@ Pairing codes are sent **only** when an unknown sender messages the bot and
 Check pending requests:
 
 ```bash
-KoLo pairing list telegram
+Kurahi pairing list telegram
 ```
 
 If you want immediate access, allowlist your sender id or set `dmPolicy: "open"`
@@ -2715,18 +2715,18 @@ for that account.
 
 ### WhatsApp will it message my contacts How does pairing work
 
-No. Default WhatsApp DM policy is **pairing**. Unknown senders only get a pairing code and their message is **not processed**. KoLo only replies to chats it receives or to explicit sends you trigger.
+No. Default WhatsApp DM policy is **pairing**. Unknown senders only get a pairing code and their message is **not processed**. Kurahi only replies to chats it receives or to explicit sends you trigger.
 
 Approve pairing with:
 
 ```bash
-KoLo pairing approve whatsapp <code>
+Kurahi pairing approve whatsapp <code>
 ```
 
 List pending requests:
 
 ```bash
-KoLo pairing list whatsapp
+Kurahi pairing list whatsapp
 ```
 
 Wizard phone number prompt: it’s used to set your **allowlist/owner** so your own DMs are permitted. It’s not used for auto-sending. If you run on your personal WhatsApp number, use that number and enable `channels.whatsapp.selfChatMode`.
@@ -2778,7 +2778,7 @@ Most commands must be sent as a **standalone** message that starts with `/`, but
 
 ### How do I send a Discord message from Telegram Crosscontext messaging denied
 
-KoLo blocks **cross‑provider** messaging by default. If a tool call is bound
+Kurahi blocks **cross‑provider** messaging by default. If a tool call is bound
 to Telegram, it won’t send to Discord unless you explicitly allow it.
 
 Enable cross‑provider messaging for the agent:
@@ -2819,8 +2819,8 @@ You can add options like `debounce:2s cap:25 drop:summarize` for followup modes.
 
 **Q: “What’s the default model for Anthropic with an API key?”**
 
-**A:** In KoLo, credentials and model selection are separate. Setting `ANTHROPIC_API_KEY` (or storing an Anthropic API key in auth profiles) enables authentication, but the actual default model is whatever you configure in `agents.defaults.model.primary` (for example, `anthropic/claude-sonnet-4-5` or `anthropic/claude-opus-4-5`). If you see `No credentials found for profile "anthropic:default"`, it means the Gateway couldn’t find Anthropic credentials in the expected `auth-profiles.json` for the agent that’s running.
+**A:** In Kurahi, credentials and model selection are separate. Setting `ANTHROPIC_API_KEY` (or storing an Anthropic API key in auth profiles) enables authentication, but the actual default model is whatever you configure in `agents.defaults.model.primary` (for example, `anthropic/claude-sonnet-4-5` or `anthropic/claude-opus-4-5`). If you see `No credentials found for profile "anthropic:default"`, it means the Gateway couldn’t find Anthropic credentials in the expected `auth-profiles.json` for the agent that’s running.
 
 ---
 
-Still stuck? Ask in [Discord](https://discord.com/invite/clawd) or open a [GitHub discussion](https://github.com/koda-tokyo/kolo/discussions).
+Still stuck? Ask in [Discord](https://discord.com/invite/clawd) or open a [GitHub discussion](https://github.com/koda-tokyo/kurahi/discussions).

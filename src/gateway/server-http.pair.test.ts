@@ -5,7 +5,7 @@ import {
   generateDeviceKey,
   pairProofPayload,
   signWithDeviceKey,
-} from "@kodasoken/kolo-client";
+} from "@kodasoken/kurahi-client";
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";

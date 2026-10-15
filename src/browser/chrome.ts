@@ -263,14 +263,14 @@ export async function launchKoLoChrome(
       });
       log.info(`🦞 KoLo browser profile decorated (${profile.color})`);
     } catch (err) {
-      log.warn(`KoLo browser profile decoration failed: ${String(err)}`);
+      log.warn(`Kurahi browser profile decoration failed: ${String(err)}`);
     }
   }
 
   try {
     ensureProfileCleanExit(userDataDir);
   } catch (err) {
-    log.warn(`kolo browser clean-exit prefs failed: ${String(err)}`);
+    log.warn(`kurahi browser clean-exit prefs failed: ${String(err)}`);
   }
 
   const proc = spawnOnce();

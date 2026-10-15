@@ -487,7 +487,7 @@ export class PolicyEngine {
     return (allowed as readonly string[]).includes(scope);
   }
 
-  /** Re-read the runtime kill file (written by another process, e.g. `kolo policy kill`). */
+  /** Re-read the runtime kill file (written by another process, e.g. `kurahi policy kill`). */
   reloadKillState(): KillState {
     this.ensureLoaded();
     if (this.persist) {

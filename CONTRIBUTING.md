@@ -1,11 +1,11 @@
-# Contributing to KoLo
+# Contributing to Kurahi
 
 Thank you for taking the time. This page covers how to report problems, propose changes and get a pull request merged.
 
 ## Where things happen
 
-- Bugs and feature requests: https://github.com/koda-tokyo/kolo/issues
-- Design discussions: https://github.com/koda-tokyo/kolo/discussions
+- Bugs and feature requests: https://github.com/koda-tokyo/kurahi/issues
+- Design discussions: https://github.com/koda-tokyo/kurahi/discussions
 - Security reports: never in a public issue; see [SECURITY.md](SECURITY.md)
 - Documentation: https://kodasoken.com/kolo (source under `docs/`)
 
@@ -31,15 +31,15 @@ pnpm test
 
 Useful commands:
 
-| Command | What it does |
-|---|---|
-| `pnpm build` | full build into `dist/` (TypeScript, UI bundle, OpenAPI, manifest) |
-| `pnpm check` | typecheck, lint, format check, OpenAPI and client drift checks |
-| `pnpm test` | unit tests (vitest) |
-| `pnpm smoke` | boots a throwaway gateway on a free port and exercises auth, API, pairing, sessions, integrity |
-| `pnpm release:check` | the npm pack must contain every file reachable from the entry points |
-| `pnpm pack:check` | installs the packed tarball into an empty directory and runs the CLI |
-| `node kolo.mjs <command>` | run the CLI from the build |
+| Command                   | What it does                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `pnpm build`              | full build into `dist/` (TypeScript, UI bundle, OpenAPI, manifest)                             |
+| `pnpm check`              | typecheck, lint, format check, OpenAPI and client drift checks                                 |
+| `pnpm test`               | unit tests (vitest)                                                                            |
+| `pnpm smoke`              | boots a throwaway gateway on a free port and exercises auth, API, pairing, sessions, integrity |
+| `pnpm release:check`      | the npm pack must contain every file reachable from the entry points                           |
+| `pnpm pack:check`         | installs the packed tarball into an empty directory and runs the CLI                           |
+| `node kolo.mjs <command>` | run the CLI from the build                                                                     |
 
 Run the gateway against an isolated state directory while developing: `KOLO_HOME=/tmp/kolo-dev node kolo.mjs gateway --allow-unconfigured --port 18880`. Never point a development build at a state directory that a live service uses.
 

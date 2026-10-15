@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo nodes` (list/status/approve/invoke, camera/canvas/screen)"
+summary: "CLI reference for `Kurahi nodes` (list/status/approve/invoke, camera/canvas/screen)"
 read_when:
   - You’re managing paired nodes (cameras, screen, canvas)
   - You need to approve requests or invoke node commands
 title: "nodes"
 ---
 
-# `KoLo nodes`
+# `Kurahi nodes`
 
 Manage paired nodes (devices) and invoke node capabilities.
 
@@ -23,14 +23,14 @@ Common options:
 ## Common commands
 
 ```bash
-KoLo nodes list
-KoLo nodes list --connected
-KoLo nodes list --last-connected 24h
-KoLo nodes pending
-KoLo nodes approve <requestId>
-KoLo nodes status
-KoLo nodes status --connected
-KoLo nodes status --last-connected 24h
+Kurahi nodes list
+Kurahi nodes list --connected
+Kurahi nodes list --last-connected 24h
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
+Kurahi nodes status
+Kurahi nodes status --connected
+Kurahi nodes status --last-connected 24h
 ```
 
 `nodes list` prints pending/paired tables. Paired rows include the most recent connect age (Last Connect).
@@ -40,10 +40,10 @@ filter to nodes that connected within a duration (e.g. `24h`, `7d`).
 ## Invoke / run
 
 ```bash
-KoLo nodes invoke --node <id|name|ip> --command <command> --params <json>
-KoLo nodes run --node <id|name|ip> <command...>
-KoLo nodes run --raw "git status"
-KoLo nodes run --agent main --node <id|name|ip> --raw "git status"
+Kurahi nodes invoke --node <id|name|ip> --command <command> --params <json>
+Kurahi nodes run --node <id|name|ip> <command...>
+Kurahi nodes run --raw "git status"
+Kurahi nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 Invoke flags:

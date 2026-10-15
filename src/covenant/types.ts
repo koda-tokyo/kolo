@@ -1,7 +1,7 @@
 // src/covenant/types.ts
 
 /**
- * How KoLo should relate to this user in general.
+ * How Kurahi should relate to this user in general.
  * This affects tone, directness, and how "personal" responses should be.
  */
 export type RelationshipMode =
@@ -27,7 +27,7 @@ export interface UserValue {
 }
 
 /**
- * A hard boundary the user does not want KoLo to cross.
+ * A hard boundary the user does not want Kurahi to cross.
  * Example:
  * - "Do not help me with gambling."
  * - "Do not generate content that insults specific people."
@@ -78,9 +78,9 @@ export interface MoralInvariant {
  * The full covenant object stored in KoLo's backend.
  *
  * This is the canonical source of truth about:
- * - how KoLo should relate to the user,
- * - which values KoLo should respect,
- * - which boundaries KoLo must not cross.
+ * - how Kurahi should relate to the user,
+ * - which values Kurahi should respect,
+ * - which boundaries Kurahi must not cross.
  */
 export interface Covenant {
   id: string;

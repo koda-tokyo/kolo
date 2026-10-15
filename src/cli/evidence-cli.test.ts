@@ -57,7 +57,7 @@ afterEach(() => {
   fs.rmSync(home, { recursive: true, force: true });
 });
 
-describe("kolo evidence", () => {
+describe("kurahi evidence", () => {
   test("list and show", () => {
     expect(runEvidenceList({}, { runtime, env })).toBe(0);
     expect(out[0]).toContain("no jobs recorded yet");

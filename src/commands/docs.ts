@@ -164,10 +164,10 @@ export async function docsSearchCommand(queryParts: string[], runtime: RuntimeEn
     const docs = formatDocsLink("/");
     if (isRich()) {
       runtime.log(`${theme.muted("Docs:")} ${docs}`);
-      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('kolo docs "your query"')}`);
+      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('kurahi docs "your query"')}`);
     } else {
       runtime.log(`Docs: ${DOCS_URL}/`);
-      runtime.log(`Search: ${formatCliCommand('kolo docs "your query"')}`);
+      runtime.log(`Search: ${formatCliCommand('kurahi docs "your query"')}`);
     }
     return;
   }

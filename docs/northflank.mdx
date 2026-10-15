@@ -2,7 +2,7 @@
 title: Deploy on Northflank
 ---
 
-Deploy KoLo on Northflank with a one-click template and finish setup in your browser.
+Deploy Kurahi on Northflank with a one-click template and finish setup in your browser.
 This is the easiest "no terminal on the server" path: Northflank runs the Gateway for you,
 and you configure everything via the `/setup` web wizard.
 
@@ -10,17 +10,17 @@ and you configure everything via the `/setup` web wizard.
 
 1. Create a new Northflank service from this repository (Dockerfile build).
 2. Create an [account on Northflank](https://app.northflank.com/signup) if you don't already have one.
-3. Click **Deploy KoLo now**.
+3. Click **Deploy Kurahi now**.
 4. Set the required environment variable: `SETUP_PASSWORD`.
-5. Click **Deploy stack** to build and run the KoLo template.
+5. Click **Deploy stack** to build and run the Kurahi template.
 6. Wait for the deployment to complete, then click **View resources**.
-7. Open the KoLo service.
-8. Open the public KoLo URL and complete setup at `/setup`.
+7. Open the Kurahi service.
+8. Open the public Kurahi URL and complete setup at `/setup`.
 9. Open the Control UI at `/kolo`.
 
 ## What you get
 
-- Hosted KoLo Gateway + Control UI
+- Hosted Kurahi Gateway + Control UI
 - Web setup wizard at `/setup` (no terminal commands)
 - Persistent storage via Northflank Volume (`/data`) so config/credentials/workspace survive redeploys
 

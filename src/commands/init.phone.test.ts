@@ -48,7 +48,7 @@ afterEach(() => {
   }
 });
 
-describe("kolo init --phone (M16)", () => {
+describe("kurahi init --phone (M16)", () => {
   test("--phone skip leaves init's behaviour and output unchanged", async () => {
     const a = tempHome();
     const b = tempHome();

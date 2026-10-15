@@ -1,7 +1,7 @@
 ---
 summary: "Context: what the model sees, how it is built, and how to inspect it"
 read_when:
-  - You want to understand what “context” means in KoLo
+  - You want to understand what “context” means in Kurahi
   - You are debugging why the model “knows” something (or forgot it)
   - You want to reduce context overhead (/context, /status, /compact)
 title: "Context"
@@ -9,7 +9,7 @@ title: "Context"
 
 # Context
 
-“Context” is **everything KoLo sends to the model for a run**. It is bounded by the model’s **context window** (token limit).
+“Context” is **everything Kurahi sends to the model for a run**. It is bounded by the model’s **context window** (token limit).
 
 Beginner mental model:
 
@@ -87,7 +87,7 @@ Everything the model receives counts, including:
 - Compaction summaries and pruning artifacts.
 - Provider “wrappers” or hidden headers (not visible, still counted).
 
-## How KoLo builds the system prompt
+## How Kurahi builds the system prompt
 
 The system prompt is **kolo-owned** and rebuilt each run. It includes:
 
@@ -102,7 +102,7 @@ Full breakdown: [System Prompt](/concepts/system-prompt).
 
 ## Injected workspace files (Project Context)
 
-By default, KoLo injects a fixed set of workspace files (if present):
+By default, Kurahi injects a fixed set of workspace files (if present):
 
 - `AGENTS.md`
 - `SOUL.md`

@@ -349,7 +349,7 @@ export async function runTui(opts: TuiOptions) {
     const agentLabel = formatAgentLabel(currentAgentId);
     header.setText(
       theme.header(
-        `kolo tui - ${client.connection.url} - agent ${agentLabel} - session ${sessionLabel}`,
+        `kurahi tui - ${client.connection.url} - agent ${agentLabel} - session ${sessionLabel}`,
       ),
     );
   };
@@ -859,9 +859,9 @@ export async function runTui(opts: TuiOptions) {
     fleetPaused?: { rule: string } | null;
   }) => {
     if (status.kill?.fleet) {
-      policyNotice = `policy: fleet stopped by ${status.kill.fleet.by}. Release with: kolo policy release --all`;
+      policyNotice = `policy: fleet stopped by ${status.kill.fleet.by}. Release with: kurahi policy release --all`;
     } else if (status.kill?.agents?.[currentAgentId]) {
-      policyNotice = `policy: agent ${currentAgentId} stopped by ${status.kill.agents[currentAgentId].by}. Release with: kolo policy release --agent ${currentAgentId}`;
+      policyNotice = `policy: agent ${currentAgentId} stopped by ${status.kill.agents[currentAgentId].by}. Release with: kurahi policy release --agent ${currentAgentId}`;
     } else if (status.fleetPaused) {
       policyNotice = `policy: fleet paused (${status.fleetPaused.rule})`;
     } else if (status.paused?.[currentAgentId]) {

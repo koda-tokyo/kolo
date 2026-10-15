@@ -6,7 +6,7 @@ Report privately to **security@kodasoken.com**. Do not open a public issue for a
 
 Include:
 
-- the version (`kolo --version`) and OS,
+- the version (`kurahi --version`) and OS,
 - reproduction steps or a minimal proof of concept,
 - the impact as you understand it,
 - whether the issue is already public anywhere.
@@ -15,18 +15,18 @@ If you prefer encrypted mail, say so in a first plain message and a key will be 
 
 ## What to expect
 
-| Step | Target |
-|---|---|
-| Acknowledgement | within 3 working days |
-| Triage and severity | within 10 working days |
-| Fix or mitigation for confirmed high or critical issues | within 30 days, earlier when exploitation is likely |
-| Public disclosure | coordinated with the reporter after a fix is available; at most 90 days after the report unless agreed otherwise |
+| Step                                                    | Target                                                                                                           |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Acknowledgement                                         | within 3 working days                                                                                            |
+| Triage and severity                                     | within 10 working days                                                                                           |
+| Fix or mitigation for confirmed high or critical issues | within 30 days, earlier when exploitation is likely                                                              |
+| Public disclosure                                       | coordinated with the reporter after a fix is available; at most 90 days after the report unless agreed otherwise |
 
 Credit is given in the release notes unless you ask not to be named. There is no paid bounty programme at this time.
 
 ## Supported versions
 
-Security fixes are released for the latest stable release and the latest beta. Older releases are not patched; upgrade with `kolo update`.
+Security fixes are released for the latest stable release and the latest beta. Older releases are not patched; upgrade with `kurahi update`.
 
 ## Scope
 
@@ -41,14 +41,14 @@ Out of scope: exposing the gateway to the public internet without the documented
 - Credential attempts are rate limited per source.
 - Pairing uses one-shot invitations with a scope, device-key proofs over a server nonce, short-lived access tokens and rotating refresh tokens; reuse of a retired refresh token revokes the whole family.
 - Secrets live in an encrypted store under `KOLO_HOME/secrets` (file mode 0600); tokens are never read from the command line.
-- The audit log is append-only and hash-chained; `kolo audit verify` detects truncation or edits.
+- The audit log is append-only and hash-chained; `kurahi audit verify` detects truncation or edits.
 - The boot integrity gate refuses to start the gateway when a registered file has changed.
 
 The security guide for operators is at https://kodasoken.com/kolo/security.
 
 ## Runtime requirements
 
-KoLo requires Node.js 22.12.0 or later, which carries the current security patches for the runtime. Check with `node --version`.
+Kurahi requires Node.js 22.12.0 or later, which carries the current security patches for the runtime. Check with `node --version`.
 
 ## Secret scanning
 

@@ -13,22 +13,22 @@ title: "Troubleshooting"
 Run these in order:
 
 ```bash
-KoLo status
-KoLo status --all
-KoLo gateway probe
-KoLo logs --follow
-KoLo doctor
+Kurahi status
+Kurahi status --all
+Kurahi gateway probe
+Kurahi logs --follow
+Kurahi doctor
 ```
 
 If the gateway is reachable, deep probes:
 
 ```bash
-KoLo status --deep
+Kurahi status --deep
 ```
 
 ## Common “it broke” cases
 
-### `KoLo: command not found`
+### `Kurahi: command not found`
 
 Almost always a Node/npm PATH issue. Start here:
 
@@ -39,13 +39,13 @@ Almost always a Node/npm PATH issue. Start here:
 Re-run the installer in verbose mode to see the full trace and npm output:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --verbose
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --verbose
 ```
 
 For beta installs:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --beta --verbose
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --beta --verbose
 ```
 
 You can also set `KOLO_VERBOSE=1` instead of the flag.
@@ -83,7 +83,7 @@ Disable Advanced Security or add `kodasoken.com/kolo` to the allowlist, then ret
 This usually means `agents.defaults.models` is configured as an allowlist. When it’s non-empty,
 only those provider/model keys can be selected.
 
-- Check the allowlist: `KoLo config get agents.defaults.models`
+- Check the allowlist: `Kurahi config get agents.defaults.models`
 - Add the model you want (or clear the allowlist) and retry `/model`
 - Use `/models` to browse the allowed providers/models
 
@@ -92,7 +92,7 @@ only those provider/model keys can be selected.
 Paste a safe report:
 
 ```bash
-KoLo status --all
+Kurahi status --all
 ```
 
-If you can, include the relevant log tail from `KoLo logs --follow`.
+If you can, include the relevant log tail from `Kurahi logs --follow`.

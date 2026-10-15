@@ -8,7 +8,7 @@ title: "Skills"
 
 # Skills (macOS)
 
-The macOS app surfaces KoLo skills via the gateway; it does not parse skills locally.
+The macOS app surfaces Kurahi skills via the gateway; it does not parse skills locally.
 
 ## Data source
 

@@ -105,7 +105,7 @@ describe("replay stepper", () => {
   });
 });
 
-describe("kolo evidence replay", () => {
+describe("kurahi evidence replay", () => {
   let out: string[];
   let errs: string[];
   let runtime: RuntimeEnv;

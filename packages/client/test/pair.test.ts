@@ -152,7 +152,7 @@ function fakeGateway() {
   return { fetch, calls, families };
 }
 
-describe("@kodasoken/kolo-client pairing helpers (M3a)", () => {
+describe("@kodasoken/kurahi-client pairing helpers (M3a)", () => {
   let home: string;
   beforeEach(() => {
     home = fs.mkdtempSync(path.join(os.tmpdir(), "kolo-client-pair-"));

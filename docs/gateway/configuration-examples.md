@@ -1,9 +1,9 @@
 ---
-summary: "Schema-accurate configuration examples for common KoLo setups"
+summary: "Schema-accurate configuration examples for common Kurahi setups"
 read_when:
-  - Learning how to configure KoLo
+  - Learning how to configure Kurahi
   - Looking for configuration examples
-  - Setting up KoLo for the first time
+  - Setting up Kurahi for the first time
 title: "Configuration Examples"
 ---
 
@@ -97,7 +97,7 @@ Save to `~/.kolo/kolo.json` and you can DM the bot from that number.
 
   // Message formatting
   messages: {
-    messagePrefix: "[KoLo]",
+    messagePrefix: "[Kurahi]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -106,7 +106,7 @@ Save to `~/.kolo/kolo.json` and you can DM the bot from that number.
   // Routing + queue
   routing: {
     groupChat: {
-      mentionPatterns: ["@KoLo", "KoLo"],
+      mentionPatterns: ["@Kurahi", "Kurahi"],
       historyLimit: 50,
     },
     queue: {
@@ -212,7 +212,7 @@ Save to `~/.kolo/kolo.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "KoLo",
+        name: "Kurahi",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -372,7 +372,7 @@ Save to `~/.kolo/kolo.json` and you can DM the bot from that number.
       },
     ],
     gmail: {
-      account: "KoLo@gmail.com",
+      account: "Kurahi@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -391,7 +391,7 @@ Save to `~/.kolo/kolo.json` and you can DM the bot from that number.
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/KoLo" },
+    controlUi: { enabled: true, basePath: "/Kurahi" },
     auth: {
       mode: "token",
       token: "gateway-token",

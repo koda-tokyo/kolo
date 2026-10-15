@@ -48,8 +48,8 @@ title: "Strict Config Validation"
 - Doctor runs **every time** config is loaded (dry-run by default).
 - If config invalid:
   - Print a summary + actionable errors.
-  - Instruct: `KoLo doctor --fix`.
-- `KoLo doctor --fix`:
+  - Instruct: `Kurahi doctor --fix`.
+- `Kurahi doctor --fix`:
   - Applies migrations.
   - Removes unknown keys.
   - Writes updated config.
@@ -58,14 +58,14 @@ title: "Strict Config Validation"
 
 Allowed (diagnostic-only):
 
-- `KoLo doctor`
-- `KoLo logs`
-- `KoLo health`
-- `KoLo help`
-- `KoLo status`
-- `KoLo gateway status`
+- `Kurahi doctor`
+- `Kurahi logs`
+- `Kurahi health`
+- `Kurahi help`
+- `Kurahi status`
+- `Kurahi gateway status`
 
-Everything else must hard-fail with: “Config invalid. Run `KoLo doctor --fix`.”
+Everything else must hard-fail with: “Config invalid. Run `Kurahi doctor --fix`.”
 
 ## Error UX format
 

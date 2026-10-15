@@ -1,5 +1,5 @@
 ---
-summary: "Run the Gateway under the OS service manager with kolo service (systemd, launchd, Task Scheduler)"
+summary: "Run the Gateway under the OS service manager with kurahi service (systemd, launchd, Task Scheduler)"
 read_when:
   - Running the Gateway in the background or at login
   - Running several gateway identities on one host
@@ -9,15 +9,15 @@ title: "Gateway service"
 
 # Gateway service
 
-`kolo service` is the one supported way to run a Gateway in the background. It hands the
+`kurahi service` is the one supported way to run a Gateway in the background. It hands the
 process to the operating system's service manager, which starts it at login (or boot),
 restarts it when it exits and reports its real state:
 
-| OS      | Manager                 | Definition                                                           |
-| ------- | ----------------------- | -------------------------------------------------------------------- |
-| Linux   | systemd `--user`        | `~/.config/systemd/user/kolo-gateway@<id>.service`                   |
-| macOS   | launchd (LaunchAgent)   | `~/Library/LaunchAgents/com.kodasoken.kolo.<id>.plist`               |
-| Windows | Task Scheduler + runner | task `\KoLo\gateway-<id>`, action `<state root>\service\gateway.cmd` |
+| OS      | Manager                 | Definition                                                             |
+| ------- | ----------------------- | ---------------------------------------------------------------------- |
+| Linux   | systemd `--user`        | `~/.config/systemd/user/kolo-gateway@<id>.service`                     |
+| macOS   | launchd (LaunchAgent)   | `~/Library/LaunchAgents/com.kodasoken.kolo.<id>.plist`                 |
+| Windows | Task Scheduler + runner | task `\Kurahi\gateway-<id>`, action `<state root>\service\gateway.cmd` |
 
 The Gateway exits on fatal errors on purpose. The service manager brings it back
 (systemd `Restart=always`, `RestartSec=3`; launchd `KeepAlive`; the Windows runner restarts
@@ -26,13 +26,13 @@ after 3 s).
 ## Commands
 
 ```bash
-kolo service install   [--id <identity>] [--port <port>] [--home <dir>] [--no-start]
-kolo service start     [--id <identity>]
-kolo service stop      [--id <identity>]
-kolo service restart   [--id <identity>]
-kolo service status    [--id <identity>] [--no-probe] [--json]
-kolo service logs      [--id <identity>] [-n <lines>] [--max-bytes <n>]
-kolo service uninstall [--id <identity>]
+kurahi service install   [--id <identity>] [--port <port>] [--home <dir>] [--no-start]
+kurahi service start     [--id <identity>]
+kurahi service stop      [--id <identity>]
+kurahi service restart   [--id <identity>]
+kurahi service status    [--id <identity>] [--no-probe] [--json]
+kurahi service logs      [--id <identity>] [-n <lines>] [--max-bytes <n>]
+kurahi service uninstall [--id <identity>]
 ```
 
 - `install` writes the definition, enables it and starts it (unless `--no-start`). It is
@@ -50,26 +50,26 @@ kolo service uninstall [--id <identity>]
 Each identity is its own service with its own state root and port, so several gateways can
 run side by side without sharing locks, sessions or credentials.
 
-| Identity         | State root (`KOLO_HOME`)                                                            |
-| ---------------- | ----------------------------------------------------------------------------------- |
-| `default`        | `$KOLO_HOME` if set, otherwise `~/.kolo` (Windows: `%LOCALAPPDATA%\KoLo`)           |
-| any other `<id>` | the default root plus `-<id>`: `~/.kolo-<id>` (Windows: `%LOCALAPPDATA%\KoLo-<id>`) |
-| `--home <dir>`   | `<dir>` (overrides both)                                                            |
+| Identity         | State root (`KOLO_HOME`)                                                              |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| `default`        | `$KOLO_HOME` if set, otherwise `~/.kolo` (Windows: `%LOCALAPPDATA%\Kurahi`)           |
+| any other `<id>` | the default root plus `-<id>`: `~/.kolo-<id>` (Windows: `%LOCALAPPDATA%\Kurahi-<id>`) |
+| `--home <dir>`   | `<dir>` (overrides both)                                                              |
 
 Ids are 1 to 32 characters of `a-z`, `0-9`, `-` and `_`.
 
 The port comes from `--port`, then from the last install (`<state root>/service/service.json`),
 then from `gateway.port` in `<state root>/kolo.json`, then `18789`.
 
-Pick any free port per identity; nothing in KoLo reserves a fixed set. Check that a port is
+Pick any free port per identity; nothing in Kurahi reserves a fixed set. Check that a port is
 unused before installing.
 
 Example: two identities on one host (`<port-a>` and `<port-b>` are ports you choose).
 
 ```bash
-kolo service install --id alpha --port <port-a>
-kolo service install --id beta  --port <port-b>
-kolo service status  --id beta
+kurahi service install --id alpha --port <port-a>
+kurahi service install --id beta  --port <port-b>
+kurahi service status  --id beta
 ```
 
 ## Secrets: the env file
@@ -112,7 +112,7 @@ service after editing it.
 
 ## Freeing a busy port (`--force`)
 
-`kolo gateway run --force` no longer needs `lsof` or `fuser`. It probes the port with Node's
+`kurahi gateway run --force` no longer needs `lsof` or `fuser`. It probes the port with Node's
 `net` module and only signals the pid named in the identity's gateway lock
 (`<state root>/run/gateway.lock`, or the legacy lock in the temp dir). On Linux it also checks
 `/proc` that the pid owns the listening socket. A port held by any other process is reported
@@ -121,7 +121,7 @@ and left alone.
 ## PM2 (deprecated)
 
 A PM2 `ecosystem.config.cjs` may still exist on older hosts, but PM2 is no longer the supported
-supervisor. `kolo service install`, `start`, `restart` and `status` print a notice when they
+supervisor. `kurahi service install`, `start`, `restart` and `status` print a notice when they
 see PM2 managing a gateway (they read PM2's pid files under `$PM2_HOME/pids`; they never run
 or signal PM2).
 
@@ -130,14 +130,14 @@ Migrating one identity:
 1. Note its state root and port from the PM2 app definition.
 2. Copy any secret environment variables into `<state root>/env`.
 3. Stop the PM2 app (`pm2 stop <app>` and `pm2 delete <app>`, then `pm2 save`).
-4. `kolo service install --id <id> --home <state root> --port <port>`.
-5. `kolo service status --id <id>` shows `running` and `health: ok`.
+4. `kurahi service install --id <id> --home <state root> --port <port>`.
+5. `kurahi service status --id <id>` shows `running` and `health: ok`.
 
 ## Legacy commands
 
-`kolo gateway install|start|stop|restart|status` and `kolo daemon ...` still manage the older
-single-profile service (`kolo-gateway.service`, `ai.kolo.gateway`, task "KoLo Gateway"). They print
-a pointer to `kolo service`. Do not run both for the same state root and port.
+`kurahi gateway install|start|stop|restart|status` and `kurahi daemon ...` still manage the older
+single-profile service (`kolo-gateway.service`, `ai.kolo.gateway`, task "Kurahi Gateway"). They print
+a pointer to `kurahi service`. Do not run both for the same state root and port.
 
 ## Smoke test
 

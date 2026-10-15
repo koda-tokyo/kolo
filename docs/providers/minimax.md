@@ -1,7 +1,7 @@
 ---
-summary: "Use MiniMax M2.1 in KoLo"
+summary: "Use MiniMax M2.1 in Kurahi"
 read_when:
-  - You want MiniMax models in KoLo
+  - You want MiniMax models in Kurahi
   - You need MiniMax setup guidance
 title: "MiniMax"
 ---
@@ -44,9 +44,9 @@ MiniMax highlights these improvements in M2.1:
 Enable the bundled OAuth plugin and authenticate:
 
 ```bash
-kolo plugins enable minimax-portal-auth  # skip if already loaded.
-KoLo gateway restart  # restart if gateway is already running
-KoLo onboard --auth-choice minimax-portal
+kurahi plugins enable minimax-portal-auth  # skip if already loaded.
+Kurahi gateway restart  # restart if gateway is already running
+Kurahi onboard --auth-choice minimax-portal
 ```
 
 You will be prompted to select an endpoint:
@@ -54,7 +54,7 @@ You will be prompted to select an endpoint:
 - **Global** - International users (`api.minimax.io`)
 - **CN** - Users in China (`api.minimaxi.com`)
 
-See [MiniMax OAuth plugin README](https://github.com/koda-tokyo/kolo/tree/main/extensions/minimax-portal-auth) for details.
+See [MiniMax OAuth plugin README](https://github.com/koda-tokyo/kurahi/tree/main/extensions/minimax-portal-auth) for details.
 
 ### MiniMax M2.1 (API key)
 
@@ -62,7 +62,7 @@ See [MiniMax OAuth plugin README](https://github.com/koda-tokyo/kolo/tree/main/e
 
 Configure via CLI:
 
-- Run `KoLo configure`
+- Run `Kurahi configure`
 - Select **Model/auth**
 - Choose **MiniMax M2.1**
 
@@ -156,11 +156,11 @@ Configure manually via `kolo.json`:
 }
 ```
 
-## Configure via `KoLo configure`
+## Configure via `Kurahi configure`
 
 Use the interactive config wizard to set MiniMax without editing JSON:
 
-1. Run `KoLo configure`.
+1. Run `Kurahi configure`.
 2. Select **Model/auth**.
 3. Choose **MiniMax M2.1**.
 4. Pick your default model when prompted.
@@ -181,7 +181,7 @@ Use the interactive config wizard to set MiniMax without editing JSON:
 - Update pricing values in `models.json` if you need exact cost tracking.
 - Referral link for MiniMax Coding Plan (10% off): https://platform.minimax.io/subscribe/coding-plan?code=DbXJTRClnb&source=link
 - See [/concepts/model-providers](/concepts/model-providers) for provider rules.
-- Use `KoLo models list` and `KoLo models set minimax/MiniMax-M2.1` to switch.
+- Use `Kurahi models list` and `Kurahi models set minimax/MiniMax-M2.1` to switch.
 
 ## Troubleshooting
 
@@ -192,7 +192,7 @@ and no MiniMax auth profile/env key found). A fix for this detection is in
 **2026.1.12** (unreleased at the time of writing). Fix by:
 
 - Upgrading to **2026.1.12** (or run from source `main`), then restarting the gateway.
-- Running `KoLo configure` and selecting **MiniMax M2.1**, or
+- Running `Kurahi configure` and selecting **MiniMax M2.1**, or
 - Adding the `models.providers.minimax` block manually, or
 - Setting `MINIMAX_API_KEY` (or a MiniMax auth profile) so the provider can be injected.
 
@@ -204,5 +204,5 @@ Make sure the model id is **case‑sensitive**:
 Then recheck with:
 
 ```bash
-KoLo models list
+Kurahi models list
 ```

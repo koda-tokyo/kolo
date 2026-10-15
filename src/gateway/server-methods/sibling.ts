@@ -127,7 +127,7 @@ function checkRateLimit(from: string, to: string): { ok: boolean; retryAfterMs?:
 
 // Clean up rate limit entries periodically (every 5 minutes). unref: this module is imported
 // transitively by CLI subcommands, and a referenced interval would keep every `kolo` process
-// alive after its command finished (seen as a hang in `kolo completion --install`).
+// alive after its command finished (seen as a hang in `kurahi completion --install`).
 const rateLimitPrune = setInterval(
   () => {
     const now = Date.now();

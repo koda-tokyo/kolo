@@ -1,4 +1,4 @@
-// `kolo connect whatsapp`: the WhatsApp extension's linked-device login, with the pairing QR
+// `kurahi connect whatsapp`: the WhatsApp extension's linked-device login, with the pairing QR
 // rendered in this terminal. Scanning it from WhatsApp > Linked devices proves possession of the
 // number, so the linked number is bound as the channel owner directly (no code). The owner talks
 // to the resident in "Message yourself"; the first message gets a one-line welcome.
@@ -31,17 +31,17 @@ export async function connectWhatsApp(
     return fail(
       "whatsapp",
       EXIT.error,
-      `WhatsApp linking did not finish (${err instanceof Error ? err.message : String(err)}). Run kolo connect whatsapp again`,
+      `WhatsApp linking did not finish (${err instanceof Error ? err.message : String(err)}). Run kurahi connect whatsapp again`,
     );
   }
   if (linked.alreadyLinked) {
-    say("WhatsApp is already linked on this machine (kolo connect whatsapp --force relinks).");
+    say("WhatsApp is already linked on this machine (kurahi connect whatsapp --force relinks).");
   }
   if (!linked.e164) {
     return fail(
       "whatsapp",
       EXIT.error,
-      "Linked, but the phone number could not be read from the session. Add it by hand: kolo config set channels.whatsapp.identities.<+number> owner",
+      "Linked, but the phone number could not be read from the session. Add it by hand: kurahi config set channels.whatsapp.identities.<+number> owner",
     );
   }
   await bindChannelOwner(
@@ -61,7 +61,7 @@ export async function connectWhatsApp(
   say(`linked     ${linked.e164} (owner)`);
   say('Open WhatsApp, choose "Message yourself" and write a message; your resident answers there.');
   if (!gatewayUp) {
-    say("The gateway is not running here yet: kolo service install (or kolo gateway).");
+    say("The gateway is not running here yet: kurahi service install (or kurahi gateway).");
   }
   return {
     ok: true,

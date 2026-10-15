@@ -1,7 +1,7 @@
 ---
 summary: "Nostr DM channel via NIP-04 encrypted messages"
 read_when:
-  - You want KoLo to receive DMs via Nostr
+  - You want Kurahi to receive DMs via Nostr
   - You're setting up decentralized messaging
 title: "Nostr"
 ---
@@ -10,13 +10,13 @@ title: "Nostr"
 
 **Status:** Optional plugin (disabled by default).
 
-Nostr is a decentralized protocol for social networking. This channel enables KoLo to receive and respond to encrypted direct messages (DMs) via NIP-04.
+Nostr is a decentralized protocol for social networking. This channel enables Kurahi to receive and respond to encrypted direct messages (DMs) via NIP-04.
 
 ## Install (on demand)
 
 ### Onboarding (recommended)
 
-- The onboarding wizard (`KoLo onboard`) and `KoLo channels add` list optional channel plugins.
+- The onboarding wizard (`Kurahi onboard`) and `Kurahi channels add` list optional channel plugins.
 - Selecting Nostr prompts you to install the plugin on demand.
 
 Install defaults:
@@ -29,13 +29,13 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-kolo plugins install @KoLo/nostr
+kurahi plugins install @Kurahi/nostr
 ```
 
 Use a local checkout (dev workflows):
 
 ```bash
-kolo plugins install --link <path-to-KoLo>/extensions/nostr
+kurahi plugins install --link <path-to-KoLo>/extensions/nostr
 ```
 
 Restart the Gateway after installing or enabling plugins.
@@ -93,14 +93,14 @@ Example:
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "KoLo",
-        "displayName": "KoLo",
+        "name": "Kurahi",
+        "displayName": "Kurahi",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "KoLo@example.com",
-        "lud16": "KoLo@example.com"
+        "nip05": "Kurahi@example.com",
+        "lud16": "Kurahi@example.com"
       }
     }
   }

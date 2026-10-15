@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo models` (status/list/set/scan, aliases, fallbacks, auth)"
+summary: "CLI reference for `Kurahi models` (status/list/set/scan, aliases, fallbacks, auth)"
 read_when:
   - You want to change default models or view provider auth status
   - You want to scan available models/providers and debug auth profiles
 title: "models"
 ---
 
-# `KoLo models`
+# `Kurahi models`
 
 Model discovery, scanning, and configuration (default model, fallbacks, auth profiles).
 
@@ -18,13 +18,13 @@ Related:
 ## Common commands
 
 ```bash
-KoLo models status
-KoLo models list
-KoLo models set <model-or-alias>
-KoLo models scan
+Kurahi models status
+Kurahi models list
+Kurahi models set <model-or-alias>
+Kurahi models scan
 ```
 
-`KoLo models status` shows the resolved default/fallbacks plus an auth overview.
+`Kurahi models status` shows the resolved default/fallbacks plus an auth overview.
 When provider usage snapshots are available, the OAuth/token status section includes
 provider usage headers.
 Add `--probe` to run live auth probes against each configured provider profile.
@@ -37,7 +37,7 @@ Notes:
 
 - `models set <model-or-alias>` accepts `provider/model` or an alias.
 - Model refs are parsed by splitting on the **first** `/`. If the model ID includes `/` (OpenRouter-style), include the provider prefix (example: `openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, KoLo treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Kurahi treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 ### `models status`
 
@@ -57,9 +57,9 @@ Options:
 ## Bench and the KODA tested catalogue
 
 ```bash
-kolo models tested [--residency jp] [--min-score 70] [--tested-only] [--json]
-kolo models bench --model <provider/model> [--quick-model <provider/model>] [--only <ids>] [--max-tokens <n>]
-kolo models bench-merge <bench-report.json...> --out <dir> [--update-catalogue <file>]
+kurahi models tested [--residency jp] [--min-score 70] [--tested-only] [--json]
+kurahi models bench --model <provider/model> [--quick-model <provider/model>] [--only <ids>] [--max-tokens <n>]
+kurahi models bench-merge <bench-report.json...> --out <dir> [--update-catalogue <file>]
 ```
 
 `models tested` prints the shipped catalogue: scores per axis, residency, cost per resident-hour and
@@ -69,21 +69,21 @@ writes a signed report with evidence bundles. See [KODA tested models](/provider
 ## Aliases + fallbacks
 
 ```bash
-KoLo models aliases list
-KoLo models fallbacks list
+Kurahi models aliases list
+Kurahi models fallbacks list
 ```
 
 ## Auth profiles
 
 ```bash
-KoLo models auth add
-KoLo models auth login --provider <id>
-KoLo models auth setup-token
-KoLo models auth paste-token
+Kurahi models auth add
+Kurahi models auth login --provider <id>
+Kurahi models auth setup-token
+Kurahi models auth paste-token
 ```
 
 `models auth login` runs a provider plugin’s auth flow (OAuth/API key). Use
-`kolo plugins list` to see which providers are installed.
+`kurahi plugins list` to see which providers are installed.
 
 Notes:
 

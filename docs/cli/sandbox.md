@@ -11,29 +11,29 @@ Manage Docker-based sandbox containers for isolated agent execution.
 
 ## Overview
 
-KoLo can run agents in isolated Docker containers for security. The `sandbox` commands help you manage these containers, especially after updates or configuration changes.
+Kurahi can run agents in isolated Docker containers for security. The `sandbox` commands help you manage these containers, especially after updates or configuration changes.
 
 ## Commands
 
-### `KoLo sandbox explain`
+### `Kurahi sandbox explain`
 
 Inspect the **effective** sandbox mode/scope/workspace access, sandbox tool policy, and elevated gates (with fix-it config key paths).
 
 ```bash
-KoLo sandbox explain
-KoLo sandbox explain --session agent:main:main
-KoLo sandbox explain --agent work
-KoLo sandbox explain --json
+Kurahi sandbox explain
+Kurahi sandbox explain --session agent:main:main
+Kurahi sandbox explain --agent work
+Kurahi sandbox explain --json
 ```
 
-### `KoLo sandbox list`
+### `Kurahi sandbox list`
 
 List all sandbox containers with their status and configuration.
 
 ```bash
-KoLo sandbox list
-KoLo sandbox list --browser  # List only browser containers
-KoLo sandbox list --json     # JSON output
+Kurahi sandbox list
+Kurahi sandbox list --browser  # List only browser containers
+Kurahi sandbox list --json     # JSON output
 ```
 
 **Output includes:**
@@ -44,16 +44,16 @@ KoLo sandbox list --json     # JSON output
 - Idle time (time since last use)
 - Associated session/agent
 
-### `KoLo sandbox recreate`
+### `Kurahi sandbox recreate`
 
 Remove sandbox containers to force recreation with updated images/config.
 
 ```bash
-KoLo sandbox recreate --all                # Recreate all containers
-KoLo sandbox recreate --session main       # Specific session
-KoLo sandbox recreate --agent mybot        # Specific agent
-KoLo sandbox recreate --browser            # Only browser containers
-KoLo sandbox recreate --all --force        # Skip confirmation
+Kurahi sandbox recreate --all                # Recreate all containers
+Kurahi sandbox recreate --session main       # Specific session
+Kurahi sandbox recreate --agent mybot        # Specific agent
+Kurahi sandbox recreate --browser            # Only browser containers
+Kurahi sandbox recreate --all --force        # Skip confirmation
 ```
 
 **Options:**
@@ -79,7 +79,7 @@ docker tag kolo-sandbox:latest kolo-sandbox:bookworm-slim
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-KoLo sandbox recreate --all
+Kurahi sandbox recreate --all
 ```
 
 ### After changing sandbox configuration
@@ -88,22 +88,22 @@ KoLo sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-KoLo sandbox recreate --all
+Kurahi sandbox recreate --all
 ```
 
 ### After changing setupCommand
 
 ```bash
-KoLo sandbox recreate --all
+Kurahi sandbox recreate --all
 # or just one agent:
-KoLo sandbox recreate --agent family
+Kurahi sandbox recreate --agent family
 ```
 
 ### For a specific agent only
 
 ```bash
 # Update only one agent's containers
-KoLo sandbox recreate --agent alfred
+Kurahi sandbox recreate --agent alfred
 ```
 
 ## Why is this needed?
@@ -114,9 +114,9 @@ KoLo sandbox recreate --agent alfred
 - Containers are only pruned after 24h of inactivity
 - Regularly-used agents keep old containers running indefinitely
 
-**Solution:** Use `KoLo sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
+**Solution:** Use `Kurahi sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
 
-Tip: prefer `KoLo sandbox recreate` over manual `docker rm`. It uses the
+Tip: prefer `Kurahi sandbox recreate` over manual `docker rm`. It uses the
 Gateway’s container naming and avoids mismatches when scope/session keys change.
 
 ## Configuration

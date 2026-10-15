@@ -74,7 +74,7 @@ async function startChatServer(
   };
 }
 
-describe("kolo models bench", () => {
+describe("kurahi models bench", () => {
   it("refuses usage errors with exit 2 and missing keys with exit 4", async () => {
     const { runtime } = makeRuntime();
     await expect(modelsBenchCommand({}, runtime, { env, loadConfig: cfg })).rejects.toMatchObject({
@@ -177,7 +177,7 @@ describe("kolo models bench", () => {
   });
 });
 
-describe("kolo models tested", () => {
+describe("kurahi models tested", () => {
   const catalogue: Catalogue = {
     version: 1,
     suite: "2026.10.1",

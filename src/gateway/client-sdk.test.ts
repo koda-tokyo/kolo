@@ -1,4 +1,4 @@
-// @kodasoken/kolo-client against a real gateway (M4b): /health and /doc through the generated client,
+// @kodasoken/kurahi-client against a real gateway (M4b): /health and /doc through the generated client,
 // plus one WebSocket call through the ws() helper.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { KoloApiError, KoloClient } from "../../packages/client/src/index.js";
@@ -23,7 +23,7 @@ afterAll(async () => {
   await server?.close();
 });
 
-describe("@kodasoken/kolo-client against the gateway", () => {
+describe("@kodasoken/kurahi-client against the gateway", () => {
   it("getHealth() returns the deep health document", async () => {
     const client = new KoloClient({ baseUrl: `http://127.0.0.1:${port}` });
     // The test gateway has no auth profiles, so it may report unhealthy (503 with the same body).

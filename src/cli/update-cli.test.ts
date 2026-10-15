@@ -184,7 +184,7 @@ describe("update-cli", () => {
     await updateStatusCommand({ json: false });
 
     const logs = vi.mocked(defaultRuntime.log).mock.calls.map((call) => call[0]);
-    expect(logs.join("\n")).toContain("KoLo update status");
+    expect(logs.join("\n")).toContain("Kurahi update status");
   });
 
   it("updateStatusCommand emits JSON", async () => {

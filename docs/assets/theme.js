@@ -1,4 +1,4 @@
-const THEME_STORAGE_KEY = "KoLo:theme";
+const THEME_STORAGE_KEY = "Kurahi:theme";
 
 function safeGet(key) {
   try {

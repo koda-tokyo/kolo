@@ -163,7 +163,7 @@ function warnIfConfigFromFuture(cfg: KoLoConfig, logger: Pick<typeof console, "w
   }
   if (cmp < 0) {
     logger.warn(
-      `Config was last written by a newer KoLo (${touched}); current version is ${VERSION}.`,
+      `Config was last written by a newer Kurahi (${touched}); current version is ${VERSION}.`,
     );
   }
 }

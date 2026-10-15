@@ -1,4 +1,4 @@
-// `kolo connect line`: guided Messaging API setup. The channel secret and access token go to the
+// `kurahi connect line`: guided Messaging API setup. The channel secret and access token go to the
 // secrets store; the config points at them with `$secret` refs. LINE delivers messages only to a
 // public HTTPS webhook, so the flow prints the URL to register and the documented ways to expose
 // it; it never creates a tunnel itself. A QR of the bot's add-friend URL and a one-time code
@@ -55,7 +55,7 @@ export async function connectLine(deps: ConnectDeps, opts: ConnectOptions): Prom
     return fail(
       "line",
       EXIT.error,
-      `LINE rejected the channel access token (${probe.error ?? "no bot id"}). Issue a new one in the console and run kolo connect line again`,
+      `LINE rejected the channel access token (${probe.error ?? "no bot id"}). Issue a new one in the console and run kurahi connect line again`,
     );
   }
   const store = deps.secrets();
@@ -106,7 +106,7 @@ export async function connectLine(deps: ConnectDeps, opts: ConnectOptions): Prom
     say(
       "The gateway is not running here. Start it and finish the webhook before the code expires:",
     );
-    say("kolo service install (or kolo gateway in another terminal).");
+    say("kurahi service install (or kurahi gateway in another terminal).");
   }
   if (shouldWait) {
     say("");
@@ -116,7 +116,7 @@ export async function connectLine(deps: ConnectDeps, opts: ConnectOptions): Prom
       owner = bound.senderId;
       say(`owner      LINE user ${bound.senderId} bound. Your resident answers you there.`);
     } else {
-      say("No message arrived before the code expired. Run kolo connect line for a new code.");
+      say("No message arrived before the code expired. Run kurahi connect line for a new code.");
     }
   }
   return {

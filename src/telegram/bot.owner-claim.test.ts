@@ -1,4 +1,4 @@
-// M16: `/start KOLO-…` from the deep link printed by `kolo connect telegram` binds the sender as
+// M16: `/start KOLO-…` from the deep link printed by `kurahi connect telegram` binds the sender as
 // owner through the real Telegram handler (fake Bot API), before the pairing gate.
 import fs from "node:fs";
 import path from "node:path";

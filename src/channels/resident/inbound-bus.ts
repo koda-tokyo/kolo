@@ -1,6 +1,6 @@
 // Inbound channel events (KoLo 2.0, M14a): every message a channel hands to the resident is
 // announced here before the agent runs. The gateway subscribes once and broadcasts
-// `channel.inbound` to attached clients, so `kolo attach` and the TUI show the person's side of
+// `channel.inbound` to attached clients, so `kurahi attach` and the TUI show the person's side of
 // the conversation in real time, with channel and sender metadata. No listener: nothing happens.
 
 export type ChannelInboundEvent = {

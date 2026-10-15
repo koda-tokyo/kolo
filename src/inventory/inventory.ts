@@ -1,7 +1,7 @@
 // AI inventory (KoLo 2.0): one signed document listing every agent this runtime hosts, the models
 // and providers it may call, its tools and sandbox, the policy rules that bind it, the MCP servers
 // and channels it can reach, and how much evidence it has left. It is the "AI bill of materials"
-// governance teams ask for first; KoLo can produce it from facts because it is the runtime.
+// governance teams ask for first; Kurahi can produce it from facts because it is the runtime.
 //
 // Never included: secrets, environment values, request headers, command arguments, URL credentials
 // or query strings, prompts, memory, or any evidence content. Only names, shapes and counts.

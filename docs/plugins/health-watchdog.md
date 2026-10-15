@@ -33,15 +33,15 @@ and escalated, never restarted: a gateway only restarts itself.
   plugins: {
     entries: {
       "health-watchdog": {
-        enabled: true,             // default: on (bundled, enabled by default)
+        enabled: true, // default: on (bundled, enabled by default)
         config: {
-          intervalMs: 60000,       // >= 5000
+          intervalMs: 60000, // >= 5000
           failureThreshold: 3,
           escalateAfter: 6,
-          restart: true,           // false: audit + escalate only
+          restart: true, // false: audit + escalate only
           restartCooldownMs: 300000,
-          leaseStaleMs: 60000,     // heartbeat older than this = stale
-          port: 18789,             // default: gateway.port, else the lease's port
+          leaseStaleMs: 60000, // heartbeat older than this = stale
+          port: 18789, // default: gateway.port, else the lease's port
           probeTimeoutMs: 2000,
           escalation: { sessionKey: "agent:main:main", message: "custom text" },
           targets: [{ id: "sibling", port: 18791, leaseFile: "~/.kolo-sibling/run/gateway.lock" }],
@@ -52,7 +52,7 @@ and escalated, never restarted: a gateway only restarts itself.
 }
 ```
 
-Disable with `kolo plugins disable health-watchdog` (applied live; no restart).
+Disable with `kurahi plugins disable health-watchdog` (applied live; no restart).
 
 ## Notes
 

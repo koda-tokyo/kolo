@@ -140,7 +140,7 @@ export async function createWaSocket(
           if (status === DisconnectReason.loggedOut) {
             console.error(
               danger(
-                `WhatsApp session logged out. Run: ${formatCliCommand("kolo channels login")}`,
+                `WhatsApp session logged out. Run: ${formatCliCommand("kurahi channels login")}`,
               ),
             );
           }

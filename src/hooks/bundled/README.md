@@ -1,6 +1,6 @@
 # Bundled Hooks
 
-This directory contains hooks that ship with KoLo. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
+This directory contains hooks that ship with Kurahi. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
 
 ## Available Hooks
 
@@ -15,7 +15,7 @@ Automatically saves session context to memory when you issue `/new`.
 **Enable**:
 
 ```bash
-KoLo hooks enable session-memory
+Kurahi hooks enable session-memory
 ```
 
 ### 📝 command-logger
@@ -29,7 +29,7 @@ Logs all command events to a centralized audit file.
 **Enable**:
 
 ```bash
-KoLo hooks enable command-logger
+Kurahi hooks enable command-logger
 ```
 
 ### 😈 soul-evil
@@ -44,7 +44,7 @@ Swaps injected `SOUL.md` content with `SOUL_EVIL.md` during a purge window or by
 **Enable**:
 
 ```bash
-KoLo hooks enable soul-evil
+Kurahi hooks enable soul-evil
 ```
 
 ### 🚀 boot-md
@@ -58,7 +58,7 @@ Runs `BOOT.md` whenever the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-KoLo hooks enable boot-md
+Kurahi hooks enable boot-md
 ```
 
 ## Hook Structure
@@ -84,7 +84,7 @@ name: my-hook
 description: "Short description"
 homepage: https://kodasoken.com/kolo/hooks#my-hook
 metadata:
-  { "KoLo": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "Kurahi": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 # Hook Title
 
@@ -117,26 +117,26 @@ Custom hooks follow the same structure as bundled hooks.
 List all hooks:
 
 ```bash
-KoLo hooks list
+Kurahi hooks list
 ```
 
 Show hook details:
 
 ```bash
-KoLo hooks info session-memory
+Kurahi hooks info session-memory
 ```
 
 Check hook status:
 
 ```bash
-KoLo hooks check
+Kurahi hooks check
 ```
 
 Enable/disable:
 
 ```bash
-KoLo hooks enable session-memory
-KoLo hooks disable command-logger
+Kurahi hooks enable session-memory
+Kurahi hooks disable command-logger
 ```
 
 ## Configuration
@@ -214,8 +214,8 @@ export default myHandler;
 Test your hooks by:
 
 1. Place hook in workspace hooks directory
-2. Restart gateway: `pkill -9 -f 'KoLo.*gateway' && pnpm KoLo gateway`
-3. Enable the hook: `KoLo hooks enable my-hook`
+2. Restart gateway: `pkill -9 -f 'Kurahi.*gateway' && pnpm Kurahi gateway`
+3. Enable the hook: `Kurahi hooks enable my-hook`
 4. Trigger the event (e.g., send `/new` command)
 5. Check gateway logs for hook execution
 

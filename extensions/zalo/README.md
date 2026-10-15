@@ -1,17 +1,17 @@
-# @KoLo/zalo
+# @Kurahi/zalo
 
-Zalo channel plugin for KoLo (Bot API).
+Zalo channel plugin for Kurahi (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-KoLo plugins install ./extensions/zalo
+Kurahi plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-KoLo plugins install @KoLo/zalo
+Kurahi plugins install @Kurahi/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

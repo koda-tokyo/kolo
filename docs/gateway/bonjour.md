@@ -8,7 +8,7 @@ title: "Bonjour Discovery"
 
 # Bonjour / mDNS discovery
 
-KoLo uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
+Kurahi uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
 an active Gateway (WebSocket endpoint). It is best‑effort and does **not** replace SSH or
 Tailnet-based connectivity.
 
@@ -26,7 +26,7 @@ High‑level steps:
 3. Configure Tailscale **split DNS** so your chosen domain resolves via that
    DNS server for clients (including iOS).
 
-KoLo supports any discovery domain; `KoLo.internal.` is just an example.
+Kurahi supports any discovery domain; `KoLo.internal.` is just an example.
 iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 
 ### Gateway config (recommended)
@@ -41,7 +41,7 @@ iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 ### One‑time DNS server setup (gateway host)
 
 ```bash
-KoLo dns setup --apply
+Kurahi dns setup --apply
 ```
 
 This installs CoreDNS and configures it to:
@@ -97,7 +97,7 @@ The Gateway advertises small non‑secret hints to make UI flows convenient:
 - `canvasPort=<port>` (only when the canvas host is enabled; default `18793`)
 - `sshPort=<port>` (defaults to 22 when not overridden)
 - `transport=gateway`
-- `cliPath=<path>` (optional; absolute path to a runnable `KoLo` entrypoint)
+- `cliPath=<path>` (optional; absolute path to a runnable `Kurahi` entrypoint)
 - `tailnetDns=<magicdns>` (optional hint when Tailnet is available)
 
 ## Debugging on macOS

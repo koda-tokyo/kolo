@@ -1,4 +1,4 @@
-// `kolo models list --live` (KoLo 2.0, M9c): ask each configured provider that has a models
+// `kurahi models list --live` (KoLo 2.0, M9c): ask each configured provider that has a models
 // endpoint for its current list and add the models the offline registry does not know.
 import type { KoLoConfig } from "../../config/config.js";
 import type { ModelRow } from "./list.types.js";

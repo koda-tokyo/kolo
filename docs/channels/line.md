@@ -1,7 +1,7 @@
 ---
 summary: "LINE Messaging API plugin setup, config, and usage"
 read_when:
-  - You want to connect KoLo to LINE
+  - You want to connect Kurahi to LINE
   - You need LINE webhook + credential setup
   - You want LINE-specific message options
 title: LINE
@@ -9,7 +9,7 @@ title: LINE
 
 # LINE (plugin)
 
-LINE connects to KoLo via the LINE Messaging API. The plugin runs as a webhook
+LINE connects to Kurahi via the LINE Messaging API. The plugin runs as a webhook
 receiver on the gateway and uses your channel access token + channel secret for
 authentication.
 
@@ -22,13 +22,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-kolo plugins install @KoLo/line
+kurahi plugins install @Kurahi/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-kolo plugins install ./extensions/line
+kurahi plugins install ./extensions/line
 ```
 
 ## Setup
@@ -107,8 +107,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-KoLo pairing list line
-KoLo pairing approve line <CODE>
+Kurahi pairing list line
+Kurahi pairing approve line <CODE>
 ```
 
 Allowlists and policies:
@@ -194,7 +194,7 @@ LINE follows the shared model described in [Channel residents](/channels/README)
 - Identities: keys are LINE user ids (`U…`); group chats carry the sender's user id.
 
   ```json5
-  { channels: { line: { identities: { "U1234567890abcdef": "owner" }, locale: "ja" } } }
+  { channels: { line: { identities: { U1234567890abcdef: "owner" }, locale: "ja" } } }
   ```
 
 - Commands: `/status`, `/jobs`, `/cancel`, `/evidence`, `/pause`, `/resume`, `/help` work in
@@ -205,5 +205,5 @@ LINE follows the shared model described in [Channel residents](/channels/README)
   shown while the resident works. Read receipts are not available on the Messaging API.
 - Attachments: images, video, audio and files are copied to `<KOLO_HOME>/inbox/line/` within
   the `channels.inbox` caps. Media above `mediaMaxMb` is not downloaded.
-- Delivery: every reply goes through the outbound queue; `kolo channels status` shows the
+- Delivery: every reply goes through the outbound queue; `kurahi channels status` shows the
   LINE queue, retries and dead letters.

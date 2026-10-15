@@ -248,7 +248,7 @@ describe("$secret refs in kolo.json", () => {
   });
 });
 
-describe("kolo secrets migrate", () => {
+describe("kurahi secrets migrate", () => {
   it("finds plaintext credentials with canonical names", () => {
     const found = findPlaintextSecrets({
       gateway: { auth: { token: FAKE_TOKEN, tokenFile: "/x" }, remote: { token: FAKE_TOKEN } },

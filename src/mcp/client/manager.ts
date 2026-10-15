@@ -160,7 +160,7 @@ export async function stopMcp(): Promise<void> {
   }
 }
 
-/** One-shot probe used by `kolo mcp test`: connect, inventory, disconnect. */
+/** One-shot probe used by `kurahi mcp test`: connect, inventory, disconnect. */
 export async function probeMcpServer(
   id: string,
   config: McpServerConfig,

@@ -2,7 +2,7 @@
 
 ## Overview
 
-User documentation at KoLo/KODA KENKŌ follows the **Diátaxis framework** — a systematic approach that categorizes all documentation into four distinct modes. This ensures users always find the right kind of content for their current need.
+User documentation at Kurahi/KODA KENKŌ follows the **Diátaxis framework** — a systematic approach that categorizes all documentation into four distinct modes. This ensures users always find the right kind of content for their current need.
 
 ## The Diátaxis Framework
 
@@ -23,12 +23,12 @@ User documentation at KoLo/KODA KENKŌ follows the **Diátaxis framework** — a
 
 ### The Four Modes
 
-| Mode | Purpose | User's Question | Example |
-|------|---------|----------------|---------|
-| **Tutorials** | Learning by doing | "How do I get started?" | "Create your first KoLo agent in 10 minutes" |
-| **How-To Guides** | Solving a problem | "How do I do X?" | "How to configure MHLW audit logging" |
-| **Explanation** | Understanding | "Why does it work this way?" | "How KoLo's memory system works" |
-| **Reference** | Looking up facts | "What does this do?" | "Agent Runtime API reference" |
+| Mode              | Purpose           | User's Question              | Example                                        |
+| ----------------- | ----------------- | ---------------------------- | ---------------------------------------------- |
+| **Tutorials**     | Learning by doing | "How do I get started?"      | "Create your first Kurahi agent in 10 minutes" |
+| **How-To Guides** | Solving a problem | "How do I do X?"             | "How to configure MHLW audit logging"          |
+| **Explanation**   | Understanding     | "Why does it work this way?" | "How Kurahi's memory system works"             |
+| **Reference**     | Looking up facts  | "What does this do?"         | "Agent Runtime API reference"                  |
 
 **Critical rule:** Never mix modes on the same page. A tutorial that includes explanation details loses the learner. A how-to guide with conceptual background hides the solution. Each page serves exactly one mode.
 
@@ -36,30 +36,30 @@ User documentation at KoLo/KODA KENKŌ follows the **Diátaxis framework** — a
 
 ### Structure
 
-```markdown
+````markdown
 ---
-title: "Create Your First KoLo Agent"
+title: "Create Your First Kurahi Agent"
 lang: bilingual
 type: tutorial
 time_to_complete: "10 minutes"
-prerequisites: ["Node.js 22+", "KoLo CLI installed", "API key"]
+prerequisites: ["Node.js 22+", "Kurahi CLI installed", "API key"]
 product: koLo
 ---
 
-# 初めてのKoLoエージェント作成 / Create Your First KoLo Agent
+# 初めてのKoLoエージェント作成 / Create Your First Kurahi Agent
 
 ## 目標 / Goal
 
 このチュートリアルを完了すると、最初のKoLoエージェントが作成され、
 「Hello, World」を返すようになります。
 
-By the end of this tutorial, you'll have created your first KoLo agent
+By the end of this tutorial, you'll have created your first Kurahi agent
 that responds with "Hello, World."
 
 ## 前提条件 / Prerequisites
 
 - [x] Node.js 22以上 / Node.js 22 or higher
-- [x] KoLo CLIインストール済み / KoLo CLI installed
+- [x] Kurahi CLIインストール済み / Kurahi CLI installed
 - [x] APIキー取得済み / API key obtained
 
 ## Step 1: プロジェクトの初期化 / Initialize Your Project
@@ -67,8 +67,9 @@ that responds with "Hello, World."
 ```bash
 mkdir my-first-agent
 cd my-first-agent
-kolo init
+kurahi init
 ```
+````
 
 Expected output:
 
@@ -93,7 +94,7 @@ prompt: |
 ## Step 3: エージェントの起動 / Start Your Agent
 
 ```bash
-kolo agent start --config agent.yaml
+kurahi agent start --config agent.yaml
 ```
 
 Visit http://localhost:3000 and type "Hello!"
@@ -109,7 +110,8 @@ Hello, World! How can I help you today?
 - [How to add memory to your agent](memory-guide.md)
 - [Deploying agents to production](deployment.md)
 - [Agent API reference](api/agents.md)
-```
+
+````
 
 ### Quickstart Principles
 
@@ -159,7 +161,7 @@ Explanations answer "why?" They are:
 
 ```markdown
 ---
-title: "KoLo Agent Memory Architecture"
+title: "Kurahi Agent Memory Architecture"
 lang: bilingual
 type: explanation
 last_reviewed: 2026-05-20
@@ -167,14 +169,14 @@ audience: developer
 depth: intermediate
 ---
 
-# KoLoエージェントメモリアーキテクチャ / KoLo Agent Memory Architecture
+# KoLoエージェントメモリアーキテクチャ / Kurahi Agent Memory Architecture
 
 ## 概要 / Overview
 
 KoLoエージェントは3層のメモリシステムを持ちます。
 各層は異なる寿命と検索特性を持ち、人間の記憶システムをモデルにしています。
 
-KoLo agents use a three-tier memory system. Each tier has different
+Kurahi agents use a three-tier memory system. Each tier has different
 lifespan and retrieval characteristics, modeled after human memory systems.
 
 ## 3層構造 / The Three Tiers
@@ -189,7 +191,7 @@ lifespan and retrieval characteristics, modeled after human memory systems.
 ## この設計の理由 / Why This Design?
 
 [...historical context, alternative approaches considered...]
-```
+````
 
 ## How-To Guides
 
@@ -213,6 +215,7 @@ KODA KENKŌのMHLW監査ログ出力を設定します。
 This guide configures MHLW audit logging for KODA KENKŌ.
 
 ## 前提条件 / Prerequisites
+
 - [ ] KODA KENKŌ v2.1+ running
 - [ ] Admin access to the configuration panel
 - [ ] MHLW facility code (施設コード)
@@ -238,9 +241,11 @@ This guide configures MHLW audit logging for KODA KENKŌ.
 ## トラブルシューティング / Troubleshooting
 
 ### "監査ログ出力先エラー" が発生する場合
+
 [diagnosis steps...]
 
 ### ログがMHLW形式で出力されない場合
+
 [diagnosis steps...]
 ```
 
@@ -257,6 +262,7 @@ This guide configures MHLW audit logging for KODA KENKŌ.
 ### API Reference Generation
 
 API reference is auto-generated from the OpenAPI spec (see `references/api-documentation.md`). The reference docs:
+
 - List every endpoint, parameter, response
 - Are organized by tag/domain
 - Include bilingual descriptions (JA/EN toggle)
@@ -269,14 +275,15 @@ API reference is auto-generated from the OpenAPI spec (see `references/api-docum
 
 ## `agent.runtime`
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `model` | string | `"default"` | AI model for agent inference |
-| `maxTokens` | integer | `4096` | Maximum output tokens per turn |
-| `memoryProfile` | string | `"balanced"` | `minimal`, `balanced`, or `expansive` |
-| `streaming` | boolean | `true` | Enable streaming responses |
+| Property        | Type    | Default      | Description                           |
+| --------------- | ------- | ------------ | ------------------------------------- |
+| `model`         | string  | `"default"`  | AI model for agent inference          |
+| `maxTokens`     | integer | `4096`       | Maximum output tokens per turn        |
+| `memoryProfile` | string  | `"balanced"` | `minimal`, `balanced`, or `expansive` |
+| `streaming`     | boolean | `true`       | Enable streaming responses            |
 
 ## `gateway.tls`
+
 ...
 ```
 
@@ -291,41 +298,50 @@ API reference is auto-generated from the OpenAPI spec (see `references/api-docum
 
 ### Structure
 
-```markdown
+````markdown
 # Troubleshooting: Agent Won't Start
 
 ## Symptoms
-- `kolo agent start` hangs at "Initializing..."
+
+- `kurahi agent start` hangs at "Initializing..."
 - Error: `EADDRINUSE` on port 3000
 - Agent process exits immediately with code 1
 
 ## Diagnostic Steps
 
 ### 1. Check Port Availability
+
 ```bash
 lsof -i :3000
 ```
+````
+
 **If occupied:** Kill the existing process or change port in `kolo.config.yaml`
 
 ### 2. Check Logs
+
 ```bash
-kolo logs agent --tail 50
+kurahi logs agent --tail 50
 ```
+
 **Look for:** `FATAL`, `PANIC`, or connection refused errors
 
 ### 3. Verify Configuration
+
 ```bash
-kolo config validate
+kurahi config validate
 ```
+
 **Common issues:** YAML syntax errors, missing required fields
 
 ## Solutions
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| `EADDRINUSE` | Another process on port 3000 | Kill process or change port |
-| Exit code 1, no error | Missing API key | Export `KOLO_API_KEY` |
-| "Initializing..." hangs | Network timeout | Check firewall / VPN |
+| Symptom                 | Cause                        | Fix                         |
+| ----------------------- | ---------------------------- | --------------------------- |
+| `EADDRINUSE`            | Another process on port 3000 | Kill process or change port |
+| Exit code 1, no error   | Missing API key              | Export `KOLO_API_KEY`       |
+| "Initializing..." hangs | Network timeout              | Check firewall / VPN        |
+
 ```
 
 ### Troubleshooting Design Principles
@@ -363,3 +379,4 @@ See `assets/tech-writing-toolkit.json` for:
 - Reference template
 - Troubleshooting template
 - User guide quality checklist
+```

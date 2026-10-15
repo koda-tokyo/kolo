@@ -1,5 +1,5 @@
-// `kolo integrity …` — boot integrity registry (KoLo 2.0, M2b). Operator actions only:
-// agent tools are refused `kolo integrity init|update` by the core write policy.
+// `kurahi integrity …` — boot integrity registry (KoLo 2.0, M2b). Operator actions only:
+// agent tools are refused `kurahi integrity init|update` by the core write policy.
 import type { Command } from "commander";
 import os from "node:os";
 import path from "node:path";
@@ -44,7 +44,7 @@ async function confirm(question: string, yes?: boolean): Promise<boolean> {
   }
   if (!process.stdin.isTTY) {
     defaultRuntime.error(
-      "kolo integrity: not a terminal; pass --yes to confirm this operator action",
+      "kurahi integrity: not a terminal; pass --yes to confirm this operator action",
     );
     return false;
   }
@@ -52,7 +52,7 @@ async function confirm(question: string, yes?: boolean): Promise<boolean> {
 }
 
 function fail(message: string, code = 1): never {
-  defaultRuntime.error(`kolo integrity: ${message}`);
+  defaultRuntime.error(`kurahi integrity: ${message}`);
   return defaultRuntime.exit(code);
 }
 

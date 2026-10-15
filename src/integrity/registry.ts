@@ -1,8 +1,8 @@
 // Boot integrity registry (KoLo 2.0, M2b).
 //
 // <KOLO_HOME>/integrity/registry.json lists the constitution files (soul, covenants, redlines,
-// locked policies) with their SHA-256. It is created by `kolo integrity init` and changed only by
-// `kolo integrity update <path>` — both operator actions, both audited. The registry is signed
+// locked policies) with their SHA-256. It is created by `kurahi integrity init` and changed only by
+// `kurahi integrity update <path>` — both operator actions, both audited. The registry is signed
 // with HMAC-SHA256 under a key in <KOLO_HOME>/secrets/integrity.key (0600; override with
 // KOLO_INTEGRITY_KEY_FILE to keep it off the state root). A registry edited without the key
 // fails verification; a deleted registry while the key still exists also fails (fail closed).
@@ -169,7 +169,7 @@ export function initRegistry(params: {
   const loc = params.loc ?? resolveIntegrityLocations();
   if (fs.existsSync(loc.registryPath) && !params.force) {
     throw new Error(
-      `integrity registry already exists at ${loc.registryPath}; use \`kolo integrity update <path>\` (or init --force to rebuild)`,
+      `integrity registry already exists at ${loc.registryPath}; use \`kurahi integrity update <path>\` (or init --force to rebuild)`,
     );
   }
   const hadKey = readKey(loc.keyPath) !== null;
@@ -213,7 +213,7 @@ export function updateRegistry(params: {
   const current = readRegistryFile(loc);
   if (!current) {
     throw new Error(
-      `no integrity registry at ${loc.registryPath}; run \`kolo integrity init\` first`,
+      `no integrity registry at ${loc.registryPath}; run \`kurahi integrity init\` first`,
     );
   }
   const key = readKey(loc.keyPath);
@@ -222,7 +222,7 @@ export function updateRegistry(params: {
   }
   if (!signatureValid(current, key)) {
     throw new Error(
-      `integrity registry signature is invalid (${loc.registryPath}); refusing to update a tampered registry — rebuild with \`kolo integrity init --force\``,
+      `integrity registry signature is invalid (${loc.registryPath}); refusing to update a tampered registry — rebuild with \`kurahi integrity init --force\``,
     );
   }
   const ts = (params.now ?? new Date()).toISOString();
@@ -335,7 +335,7 @@ export function verifyRegistry(
           path: loc.registryPath,
           kind: "registry",
           message:
-            "integrity registry signature is invalid (registry edited outside `kolo integrity`)",
+            "integrity registry signature is invalid (registry edited outside `kurahi integrity`)",
         },
       ],
     };

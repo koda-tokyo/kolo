@@ -13,7 +13,7 @@ and returns a value. Loops, filtering, joining results and any multi-step job wh
 data need not reach the model run in one round trip.
 
 The agent sees it as the `code_mode_run` tool; the gateway exposes the same thing as
-`POST /api/code-mode/run` (`kolo api runCodeMode`).
+`POST /api/code-mode/run` (`kurahi api runCodeMode`).
 
 ## What the script can do
 
@@ -36,15 +36,15 @@ return jobs.jobs.map((j) => j.id);
 The script runs in a worker thread with no filesystem, network or process access of its own; the
 only way out is a tool call, and every tool call is audited under the run id.
 
-| Limit | Default |
-|---|---|
-| wall clock (`timeoutMs`) | 60 s (1 s to 600 s per run) |
-| tool calls per script | 200 |
-| heap (old / young generation) | 128 MB / 32 MB |
-| stack | 4 MB |
-| result size | 1 MB |
-| tool result size | 4 MB |
-| log output | 64 KB |
+| Limit                         | Default                     |
+| ----------------------------- | --------------------------- |
+| wall clock (`timeoutMs`)      | 60 s (1 s to 600 s per run) |
+| tool calls per script         | 200                         |
+| heap (old / young generation) | 128 MB / 32 MB              |
+| stack                         | 4 MB                        |
+| result size                   | 1 MB                        |
+| tool result size              | 4 MB                        |
+| log output                    | 64 KB                       |
 
 Each limit can be lowered per agent; raising one is capped by a built-in ceiling.
 

@@ -20,7 +20,7 @@ agent (with a session switcher for other sessions).
 - Manual: Lobster menu → “Open Chat”.
 - Auto‑open for testing:
   ```bash
-  dist/KoLo.app/Contents/MacOS/KoLo --webchat
+  dist/KoLo.app/Contents/MacOS/Kurahi --webchat
   ```
 - Logs: `./scripts/clawlog.sh` (subsystem `com.kodasoken.kolo`, category `WebChatSwiftUI`).
 

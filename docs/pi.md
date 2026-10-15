@@ -4,11 +4,11 @@ title: "Pi Integration Architecture"
 
 # Pi Integration Architecture
 
-This document describes how KoLo integrates with [pi-coding-agent](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) and its sibling packages (`pi-ai`, `pi-agent-core`, `pi-tui`) to power its AI agent capabilities.
+This document describes how Kurahi integrates with [pi-coding-agent](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) and its sibling packages (`pi-ai`, `pi-agent-core`, `pi-tui`) to power its AI agent capabilities.
 
 ## Overview
 
-KoLo uses the pi SDK to embed an AI coding agent into its messaging gateway architecture. Instead of spawning pi as a subprocess or using RPC mode, KoLo directly imports and instantiates pi's `AgentSession` via `createAgentSession()`. This embedded approach provides:
+Kurahi uses the pi SDK to embed an AI coding agent into its messaging gateway architecture. Instead of spawning pi as a subprocess or using RPC mode, Kurahi directly imports and instantiates pi's `AgentSession` via `createAgentSession()`. This embedded approach provides:
 
 - Full control over session lifecycle and event handling
 - Custom tool injection (messaging, sandbox, channel-specific actions)
@@ -33,7 +33,7 @@ KoLo uses the pi SDK to embed an AI coding agent into its messaging gateway arch
 | `pi-ai`           | Core LLM abstractions: `Model`, `streamSimple`, message types, provider APIs                           |
 | `pi-agent-core`   | Agent loop, tool execution, `AgentMessage` types                                                       |
 | `pi-coding-agent` | High-level SDK: `createAgentSession`, `SessionManager`, `AuthStorage`, `ModelRegistry`, built-in tools |
-| `pi-tui`          | Terminal UI components (used in KoLo's local TUI mode)                                             |
+| `pi-tui`          | Terminal UI components (used in Kurahi's local TUI mode)                                               |
 
 ## File Structure
 
@@ -233,8 +233,8 @@ The SDK handles the full agent loop: sending to LLM, executing tool calls, strea
 ### Tool Pipeline
 
 1. **Base Tools**: pi's `codingTools` (read, bash, edit, write)
-2. **Custom Replacements**: KoLo replaces bash with `exec`/`process`, customizes read/edit/write for sandbox
-3. **KoLo Tools**: messaging, browser, canvas, sessions, cron, gateway, etc.
+2. **Custom Replacements**: Kurahi replaces bash with `exec`/`process`, customizes read/edit/write for sandbox
+3. **Kurahi Tools**: messaging, browser, canvas, sessions, cron, gateway, etc.
 4. **Channel Tools**: Discord/Telegram/Slack/WhatsApp-specific action tools
 5. **Policy Filtering**: Tools filtered by profile, provider, agent, group, sandbox policies
 6. **Schema Normalization**: Schemas cleaned for Gemini/OpenAI quirks
@@ -272,11 +272,11 @@ export function splitSdkTools(options: { tools: AnyAgentTool[]; sandboxEnabled: 
 }
 ```
 
-This ensures KoLo's policy filtering, sandbox integration, and extended toolset remain consistent across providers.
+This ensures Kurahi's policy filtering, sandbox integration, and extended toolset remain consistent across providers.
 
 ## System Prompt Construction
 
-The system prompt is built in `buildAgentSystemPrompt()` (`system-prompt.ts`). It assembles a full prompt with sections including Tooling, Tool Call Style, Safety guardrails, KoLo CLI reference, Skills, Docs, Workspace, Sandbox, Messaging, Reply Tags, Voice, Silent Replies, Heartbeats, Runtime metadata, plus Memory and Reactions when enabled, and optional context files and extra system prompt content. Sections are trimmed for minimal prompt mode used by subagents.
+The system prompt is built in `buildAgentSystemPrompt()` (`system-prompt.ts`). It assembles a full prompt with sections including Tooling, Tool Call Style, Safety guardrails, Kurahi CLI reference, Skills, Docs, Workspace, Sandbox, Messaging, Reply Tags, Voice, Silent Replies, Heartbeats, Runtime metadata, plus Memory and Reactions when enabled, and optional context files and extra system prompt content. Sections are trimmed for minimal prompt mode used by subagents.
 
 The prompt is applied after session creation via `applySystemPromptOverrideToSession()`:
 
@@ -295,7 +295,7 @@ Sessions are JSONL files with tree structure (id/parentId linking). Pi's `Sessio
 const sessionManager = SessionManager.open(params.sessionFile);
 ```
 
-KoLo wraps this with `guardSessionManager()` for tool result safety.
+Kurahi wraps this with `guardSessionManager()` for tool result safety.
 
 ### Session Caching
 
@@ -325,7 +325,7 @@ const compactResult = await compactEmbeddedPiSessionDirect({
 
 ### Auth Profiles
 
-KoLo maintains an auth profile store with multiple API keys per provider:
+Kurahi maintains an auth profile store with multiple API keys per provider:
 
 ```typescript
 const authStore = ensureAuthProfileStore(agentDir, { allowKeychainPrompt: false });
@@ -373,7 +373,7 @@ if (fallbackConfigured && isFailoverErrorMessage(errorText)) {
 
 ## Pi Extensions
 
-KoLo loads custom pi extensions for specialized behavior:
+Kurahi loads custom pi extensions for specialized behavior:
 
 ### Compaction Safeguard
 
@@ -500,7 +500,7 @@ if (sandboxRoot) {
 
 ## TUI Integration
 
-KoLo also has a local TUI mode that uses pi-tui components directly:
+Kurahi also has a local TUI mode that uses pi-tui components directly:
 
 ```typescript
 // src/tui/tui.ts
@@ -511,15 +511,15 @@ This provides the interactive terminal experience similar to pi's native mode.
 
 ## Key Differences from Pi CLI
 
-| Aspect          | Pi CLI                  | KoLo Embedded                                                                              |
-| --------------- | ----------------------- | ---------------------------------------------------------------------------------------------- |
-| Invocation      | `pi` command / RPC      | SDK via `createAgentSession()`                                                                 |
-| Tools           | Default coding tools    | Custom KoLo tool suite                                                                     |
-| System prompt   | AGENTS.md + prompts     | Dynamic per-channel/context                                                                    |
+| Aspect          | Pi CLI                  | Kurahi Embedded                                                                        |
+| --------------- | ----------------------- | -------------------------------------------------------------------------------------- |
+| Invocation      | `pi` command / RPC      | SDK via `createAgentSession()`                                                         |
+| Tools           | Default coding tools    | Custom Kurahi tool suite                                                               |
+| System prompt   | AGENTS.md + prompts     | Dynamic per-channel/context                                                            |
 | Session storage | `~/.pi/agent/sessions/` | `~/.kolo/agents/<agentId>/sessions/` (or `$KOLO_STATE_DIR/agents/<agentId>/sessions/`) |
-| Auth            | Single credential       | Multi-profile with rotation                                                                    |
-| Extensions      | Loaded from disk        | Programmatic + disk paths                                                                      |
-| Event handling  | TUI rendering           | Callback-based (onBlockReply, etc.)                                                            |
+| Auth            | Single credential       | Multi-profile with rotation                                                            |
+| Extensions      | Loaded from disk        | Programmatic + disk paths                                                              |
+| Event handling  | TUI rendering           | Callback-based (onBlockReply, etc.)                                                    |
 
 ## Future Considerations
 

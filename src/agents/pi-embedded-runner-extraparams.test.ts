@@ -86,7 +86,7 @@ describe("applyExtraParamsToAgent", () => {
 
     expect(calls).toHaveLength(1);
     expect(calls[0]?.headers).toEqual({
-      "HTTP-Referer": "https://kodasoken.com/kolo",
+      "HTTP-Referer": "https://kurahi.kodasoken.com/docs",
       "X-Title": "KoLo",
       "X-Custom": "1",
     });

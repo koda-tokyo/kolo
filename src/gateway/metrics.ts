@@ -29,7 +29,7 @@ import { loadConfig } from "../config/config.js";
 import { resolveKoloHome } from "../config/kolo-home.js";
 import { getAllConsciousnessStates } from "../consciousness/engine.js";
 
-/** Resolve the KoLo data directory. */
+/** Resolve the Kurahi data directory. */
 function resolveKoloDir(): string {
   // Check env first (allows override)
   if (process.env.KOLO_DIR) return process.env.KOLO_DIR;

@@ -1,4 +1,4 @@
-// `kolo audit …` — hash-chained audit log (KoLo 2.0, M2b).
+// `kurahi audit …` — hash-chained audit log (KoLo 2.0, M2b).
 import type { Command } from "commander";
 import { resolveAuditDir } from "../audit/audit-log.js";
 import { formatAuditEntry, tailAudit, verifyAuditChain } from "../audit/verify.js";
@@ -14,7 +14,7 @@ export function registerAuditCli(program: Command) {
     .option("--json", "JSON output")
     .action((opts: { month?: string; json?: boolean }) => {
       if (opts.month && !/^\d{4}-\d{2}$/.test(opts.month)) {
-        defaultRuntime.error("kolo audit: --month must be YYYY-MM");
+        defaultRuntime.error("kurahi audit: --month must be YYYY-MM");
         defaultRuntime.exit(2);
       }
       const dir = resolveAuditDir();

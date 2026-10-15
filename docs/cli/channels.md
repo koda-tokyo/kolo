@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo channels` (accounts, status, login/logout, logs)"
+summary: "CLI reference for `Kurahi channels` (accounts, status, login/logout, logs)"
 read_when:
   - You want to add/remove channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost (plugin)/Signal/iMessage)
   - You want to check channel status or tail channel logs
 title: "channels"
 ---
 
-# `KoLo channels`
+# `Kurahi channels`
 
 Manage chat channel accounts and their runtime status on the Gateway.
 
@@ -18,43 +18,43 @@ Related docs:
 ## Common commands
 
 ```bash
-KoLo channels list
-KoLo channels status
-KoLo channels capabilities
-KoLo channels capabilities --channel discord --target channel:123
-KoLo channels resolve --channel slack "#general" "@jane"
-KoLo channels logs --channel all
+Kurahi channels list
+Kurahi channels status
+Kurahi channels capabilities
+Kurahi channels capabilities --channel discord --target channel:123
+Kurahi channels resolve --channel slack "#general" "@jane"
+Kurahi channels logs --channel all
 ```
 
 ## Add / remove accounts
 
 ```bash
-KoLo channels add --channel telegram --token <bot-token>
-KoLo channels remove --channel telegram --delete
+Kurahi channels add --channel telegram --token <bot-token>
+Kurahi channels remove --channel telegram --delete
 ```
 
-Tip: `KoLo channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
+Tip: `Kurahi channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
 
 ## Login / logout (interactive)
 
 ```bash
-KoLo channels login --channel whatsapp
-KoLo channels logout --channel whatsapp
+Kurahi channels login --channel whatsapp
+Kurahi channels logout --channel whatsapp
 ```
 
 ## Troubleshooting
 
-- Run `KoLo status --deep` for a broad probe.
-- Use `KoLo doctor` for guided fixes.
-- `KoLo channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- Run `Kurahi status --deep` for a broad probe.
+- Use `Kurahi doctor` for guided fixes.
+- `Kurahi channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
 
 ## Capabilities probe
 
 Fetch provider capability hints (intents/scopes where available) plus static feature support:
 
 ```bash
-KoLo channels capabilities
-KoLo channels capabilities --channel discord --target channel:123
+Kurahi channels capabilities
+Kurahi channels capabilities --channel discord --target channel:123
 ```
 
 Notes:
@@ -68,9 +68,9 @@ Notes:
 Resolve channel/user names to IDs using the provider directory:
 
 ```bash
-KoLo channels resolve --channel slack "#general" "@jane"
-KoLo channels resolve --channel discord "My Server/#support" "@someone"
-KoLo channels resolve --channel matrix "Project Room"
+Kurahi channels resolve --channel slack "#general" "@jane"
+Kurahi channels resolve --channel discord "My Server/#support" "@someone"
+Kurahi channels resolve --channel matrix "Project Room"
 ```
 
 Notes:
@@ -80,7 +80,7 @@ Notes:
 
 ## Delivery status (M14)
 
-`kolo channels status` ends with a Delivery section when any channel has sent something since
+`kurahi channels status` ends with a Delivery section when any channel has sent something since
 the gateway started:
 
 ```
@@ -89,5 +89,5 @@ Delivery:
 - dead letters slack: 1 in /home/alice/.kolo/channels/dead-letter/slack.jsonl
 ```
 
-The same data is available as `kolo api getChannelsDeliveryStatus`. See
+The same data is available as `kurahi api getChannelsDeliveryStatus`. See
 [Channel residents](/channels/README) for the queue semantics.

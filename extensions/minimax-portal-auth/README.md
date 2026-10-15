@@ -1,4 +1,4 @@
-# MiniMax OAuth (KoLo plugin)
+# MiniMax OAuth (Kurahi plugin)
 
 OAuth provider plugin for **MiniMax** (OAuth).
 
@@ -7,19 +7,19 @@ OAuth provider plugin for **MiniMax** (OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-KoLo plugins enable minimax-portal-auth
+Kurahi plugins enable minimax-portal-auth
 ```
 
 Restart the Gateway after enabling.
 
 ```bash
-KoLo gateway restart
+Kurahi gateway restart
 ```
 
 ## Authenticate
 
 ```bash
-KoLo models auth login --provider minimax-portal --set-default
+Kurahi models auth login --provider minimax-portal --set-default
 ```
 
 You will be prompted to select an endpoint:

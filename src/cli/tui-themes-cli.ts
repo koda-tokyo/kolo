@@ -9,7 +9,7 @@ import { isTuiThemeName } from "../tui/theme/palettes.js";
 import { exportThemeDocument, loadThemeFile } from "../tui/theme/theme-file.js";
 
 /**
- * `kolo tui themes list|export|check` (KoLo 2.0, M10). `export` writes a built-in theme as a JSON
+ * `kurahi tui themes list|export|check` (KoLo 2.0, M10). `export` writes a built-in theme as a JSON
  * theme file so it can be copied and edited; `check` validates a theme file without starting the
  * terminal UI.
  */
@@ -42,7 +42,7 @@ export function registerTuiThemesCli(tui: Command) {
       const key = name.trim().toLowerCase();
       if (!isTuiThemeName(key)) {
         defaultRuntime.error(
-          `kolo tui themes export: unknown theme ${name}. Available: ${TUI_THEME_NAMES.join(", ")}`,
+          `kurahi tui themes export: unknown theme ${name}. Available: ${TUI_THEME_NAMES.join(", ")}`,
         );
         defaultRuntime.exit(2);
         return;
@@ -57,7 +57,7 @@ export function registerTuiThemesCli(tui: Command) {
         fs.mkdirSync(path.dirname(target), { recursive: true });
         fs.writeFileSync(target, text, "utf8");
       } catch (err) {
-        defaultRuntime.error(`kolo tui themes export: cannot write ${target} (${String(err)})`);
+        defaultRuntime.error(`kurahi tui themes export: cannot write ${target} (${String(err)})`);
         defaultRuntime.exit(1);
         return;
       }
@@ -92,7 +92,7 @@ export function registerTuiThemesCli(tui: Command) {
         if (opts.json) {
           defaultRuntime.log(JSON.stringify({ ok: false, error: (err as Error).message }));
         } else {
-          defaultRuntime.error(`kolo tui themes check: ${(err as Error).message}`);
+          defaultRuntime.error(`kurahi tui themes check: ${(err as Error).message}`);
         }
         defaultRuntime.exit(1);
       }

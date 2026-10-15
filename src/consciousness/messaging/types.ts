@@ -1,6 +1,6 @@
 // src/consciousness/messaging/types.ts
 //
-// Structured inter-agent messaging protocol for KoLo consciousness.
+// Structured inter-agent messaging protocol for Kurahi consciousness.
 // TeamMessage provides typed message kinds for agent coordination,
 // task delegation, status reporting, and sibling communication.
 

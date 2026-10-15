@@ -2,31 +2,31 @@
 summary: "Integrated browser control service + action commands"
 read_when:
   - Adding agent-controlled browser automation
-  - Debugging why KoLo is interfering with your own Chrome
+  - Debugging why Kurahi is interfering with your own Chrome
   - Implementing browser settings + lifecycle in the macOS app
 title: "Browser (kolo-managed)"
 ---
 
 # Browser (kolo-managed)
 
-KoLo can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
+Kurahi can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
 It is isolated from your personal browser and is managed through a small local
 control service inside the Gateway (loopback only).
 
 Beginner view:
 
 - Think of it as a **separate, agent-only browser**.
-- The `KoLo` profile does **not** touch your personal browser profile.
+- The `Kurahi` profile does **not** touch your personal browser profile.
 - The agent can **open tabs, read pages, click, and type** in a safe lane.
 - The default `chrome` profile uses the **system default Chromium browser** via the
-  extension relay; switch to `KoLo` for the isolated managed browser.
+  extension relay; switch to `Kurahi` for the isolated managed browser.
 
 ## What you get
 
-- A separate browser profile named **KoLo** (orange accent by default).
+- A separate browser profile named **Kurahi** (orange accent by default).
 - Deterministic tab control (list/open/focus/close).
 - Agent actions (click/type/drag/select), snapshots, screenshots, PDFs.
-- Optional multi-profile support (`KoLo`, `work`, `remote`, ...).
+- Optional multi-profile support (`Kurahi`, `work`, `remote`, ...).
 
 This browser is **not** your daily driver. It is a safe, isolated surface for
 agent automation and verification.
@@ -34,22 +34,22 @@ agent automation and verification.
 ## Quick start
 
 ```bash
-KoLo browser --browser-profile KoLo status
-KoLo browser --browser-profile KoLo start
-KoLo browser --browser-profile KoLo open https://example.com
-KoLo browser --browser-profile KoLo snapshot
+Kurahi browser --browser-profile Kurahi status
+Kurahi browser --browser-profile Kurahi start
+Kurahi browser --browser-profile Kurahi open https://example.com
+Kurahi browser --browser-profile Kurahi snapshot
 ```
 
 If you get “Browser disabled”, enable it in config (see below) and restart the
 Gateway.
 
-## Profiles: `KoLo` vs `chrome`
+## Profiles: `Kurahi` vs `chrome`
 
-- `KoLo`: managed, isolated browser (no extension required).
-- `chrome`: extension relay to your **system browser** (requires the KoLo
+- `Kurahi`: managed, isolated browser (no extension required).
+- `chrome`: extension relay to your **system browser** (requires the Kurahi
   extension to be attached to a tab).
 
-Set `browser.defaultProfile: "KoLo"` if you want managed mode by default.
+Set `browser.defaultProfile: "Kurahi"` if you want managed mode by default.
 
 ## Configuration
 
@@ -69,7 +69,7 @@ Browser settings live in `~/.kolo/kolo.json`.
     attachOnly: false,
     executablePath: "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
     profiles: {
-      KoLo: { cdpPort: 18800, color: "#FF4500" },
+      Kurahi: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
     },
@@ -88,20 +88,20 @@ Notes:
 - `remoteCdpHandshakeTimeoutMs` applies to remote CDP WebSocket reachability checks.
 - `attachOnly: true` means “never launch a local browser; only attach if it is already running.”
 - `color` + per-profile `color` tint the browser UI so you can see which profile is active.
-- Default profile is `chrome` (extension relay). Use `defaultProfile: "KoLo"` for the managed browser.
+- Default profile is `chrome` (extension relay). Use `defaultProfile: "Kurahi"` for the managed browser.
 - Auto-detect order: system default browser if Chromium-based; otherwise Chrome → Brave → Edge → Chromium → Chrome Canary.
-- Local `KoLo` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
+- Local `Kurahi` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
 
 ## Use Brave (or another Chromium-based browser)
 
 If your **system default** browser is Chromium-based (Chrome/Brave/Edge/etc),
-KoLo uses it automatically. Set `browser.executablePath` to override
+Kurahi uses it automatically. Set `browser.executablePath` to override
 auto-detection:
 
 CLI example:
 
 ```bash
-KoLo config set browser.executablePath "/usr/bin/google-chrome"
+Kurahi config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -132,20 +132,20 @@ KoLo config set browser.executablePath "/usr/bin/google-chrome"
 - **Local control (default):** the Gateway starts the loopback control service and can launch a local browser.
 - **Remote control (node host):** run a node host on the machine that has the browser; the Gateway proxies browser actions to it.
 - **Remote CDP:** set `browser.profiles.<name>.cdpUrl` (or `browser.cdpUrl`) to
-  attach to a remote Chromium-based browser. In this case, KoLo will not launch a local browser.
+  attach to a remote Chromium-based browser. In this case, Kurahi will not launch a local browser.
 
 Remote CDP URLs can include auth:
 
 - Query tokens (e.g., `https://provider.example?token=<token>`)
 - HTTP Basic auth (e.g., `https://user:pass@provider.example`)
 
-KoLo preserves the auth when calling `/json/*` endpoints and when connecting
+Kurahi preserves the auth when calling `/json/*` endpoints and when connecting
 to the CDP WebSocket. Prefer environment variables or secrets managers for
 tokens instead of committing them to config files.
 
 ## Node browser proxy (zero-config default)
 
-If you run a **node host** on the machine that has your browser, KoLo can
+If you run a **node host** on the machine that has your browser, Kurahi can
 auto-route browser tool calls to that node without any extra browser config.
 This is the default path for remote gateways.
 
@@ -160,7 +160,7 @@ Notes:
 ## Browserless (hosted remote CDP)
 
 [Browserless](https://browserless.io) is a hosted Chromium service that exposes
-CDP endpoints over HTTPS. You can point a KoLo browser profile at a
+CDP endpoints over HTTPS. You can point a Kurahi browser profile at a
 Browserless region endpoint and authenticate with your API key.
 
 Example:
@@ -202,7 +202,7 @@ Remote CDP tips:
 
 ## Profiles (multi-browser)
 
-KoLo supports multiple named profiles (routing configs). Profiles can be:
+Kurahi supports multiple named profiles (routing configs). Profiles can be:
 
 - **kolo-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
 - **remote**: an explicit CDP URL (Chromium-based browser running elsewhere)
@@ -210,7 +210,7 @@ KoLo supports multiple named profiles (routing configs). Profiles can be:
 
 Defaults:
 
-- The `KoLo` profile is auto-created if missing.
+- The `Kurahi` profile is auto-created if missing.
 - The `chrome` profile is built-in for the Chrome extension relay (points at `http://127.0.0.1:18792` by default).
 - Local CDP ports allocate from **18800–18899** by default.
 - Deleting a profile moves its local data directory to Trash.
@@ -219,7 +219,7 @@ All control endpoints accept `?profile=<name>`; the CLI uses `--browser-profile`
 
 ## Chrome extension relay (use your existing Chrome)
 
-KoLo can also drive **your existing Chrome tabs** (no separate “KoLo” Chrome instance) via a local CDP relay + a Chrome extension.
+Kurahi can also drive **your existing Chrome tabs** (no separate “Kurahi” Chrome instance) via a local CDP relay + a Chrome extension.
 
 Full guide: [Chrome extension](/tools/chrome-extension)
 
@@ -227,7 +227,7 @@ Flow:
 
 - The Gateway runs locally (same machine) or a node host runs on the browser machine.
 - A local **relay server** listens at a loopback `cdpUrl` (default: `http://127.0.0.1:18792`).
-- You click the **KoLo Browser Relay** extension icon on a tab to attach (it does not auto-attach).
+- You click the **Kurahi Browser Relay** extension icon on a tab to attach (it does not auto-attach).
 - The agent controls that tab via the normal `browser` tool, by selecting the right profile.
 
 If the Gateway runs elsewhere, run a node host on the browser machine so the Gateway can proxy browser actions.
@@ -245,22 +245,22 @@ Chrome extension relay takeover requires host browser control, so either:
 1. Load the extension (dev/unpacked):
 
 ```bash
-KoLo browser extension install
+Kurahi browser extension install
 ```
 
 - Chrome → `chrome://extensions` → enable “Developer mode”
-- “Load unpacked” → select the directory printed by `KoLo browser extension path`
+- “Load unpacked” → select the directory printed by `Kurahi browser extension path`
 - Pin the extension, then click it on the tab you want to control (badge shows `ON`).
 
 2. Use it:
 
-- CLI: `KoLo browser --browser-profile chrome tabs`
+- CLI: `Kurahi browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 Optional: if you want a different name or relay port, create your own profile:
 
 ```bash
-KoLo browser create-profile \
+Kurahi browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -280,7 +280,7 @@ Notes:
 
 ## Browser selection
 
-When launching locally, KoLo picks the first available:
+When launching locally, Kurahi picks the first available:
 
 1. Chrome
 2. Brave
@@ -324,7 +324,7 @@ For the Chrome extension relay driver, ARIA snapshots and screenshots require Pl
 
 If you see `Playwright is not available in this gateway build`, install the full
 Playwright package (not `playwright-core`) and restart the gateway, or reinstall
-KoLo with browser support.
+Kurahi with browser support.
 
 #### Docker Playwright install
 
@@ -360,79 +360,79 @@ All commands also accept `--json` for machine-readable output (stable payloads).
 
 Basics:
 
-- `KoLo browser status`
-- `KoLo browser start`
-- `KoLo browser stop`
-- `KoLo browser tabs`
-- `KoLo browser tab`
-- `KoLo browser tab new`
-- `KoLo browser tab select 2`
-- `KoLo browser tab close 2`
-- `KoLo browser open https://example.com`
-- `KoLo browser focus abcd1234`
-- `KoLo browser close abcd1234`
+- `Kurahi browser status`
+- `Kurahi browser start`
+- `Kurahi browser stop`
+- `Kurahi browser tabs`
+- `Kurahi browser tab`
+- `Kurahi browser tab new`
+- `Kurahi browser tab select 2`
+- `Kurahi browser tab close 2`
+- `Kurahi browser open https://example.com`
+- `Kurahi browser focus abcd1234`
+- `Kurahi browser close abcd1234`
 
 Inspection:
 
-- `KoLo browser screenshot`
-- `KoLo browser screenshot --full-page`
-- `KoLo browser screenshot --ref 12`
-- `KoLo browser screenshot --ref e12`
-- `KoLo browser snapshot`
-- `KoLo browser snapshot --format aria --limit 200`
-- `KoLo browser snapshot --interactive --compact --depth 6`
-- `KoLo browser snapshot --efficient`
-- `KoLo browser snapshot --labels`
-- `KoLo browser snapshot --selector "#main" --interactive`
-- `KoLo browser snapshot --frame "iframe#main" --interactive`
-- `KoLo browser console --level error`
-- `KoLo browser errors --clear`
-- `KoLo browser requests --filter api --clear`
-- `KoLo browser pdf`
-- `KoLo browser responsebody "**/api" --max-chars 5000`
+- `Kurahi browser screenshot`
+- `Kurahi browser screenshot --full-page`
+- `Kurahi browser screenshot --ref 12`
+- `Kurahi browser screenshot --ref e12`
+- `Kurahi browser snapshot`
+- `Kurahi browser snapshot --format aria --limit 200`
+- `Kurahi browser snapshot --interactive --compact --depth 6`
+- `Kurahi browser snapshot --efficient`
+- `Kurahi browser snapshot --labels`
+- `Kurahi browser snapshot --selector "#main" --interactive`
+- `Kurahi browser snapshot --frame "iframe#main" --interactive`
+- `Kurahi browser console --level error`
+- `Kurahi browser errors --clear`
+- `Kurahi browser requests --filter api --clear`
+- `Kurahi browser pdf`
+- `Kurahi browser responsebody "**/api" --max-chars 5000`
 
 Actions:
 
-- `KoLo browser navigate https://example.com`
-- `KoLo browser resize 1280 720`
-- `KoLo browser click 12 --double`
-- `KoLo browser click e12 --double`
-- `KoLo browser type 23 "hello" --submit`
-- `KoLo browser press Enter`
-- `KoLo browser hover 44`
-- `KoLo browser scrollintoview e12`
-- `KoLo browser drag 10 11`
-- `KoLo browser select 9 OptionA OptionB`
-- `KoLo browser download e12 /tmp/report.pdf`
-- `KoLo browser waitfordownload /tmp/report.pdf`
-- `KoLo browser upload /tmp/file.pdf`
-- `KoLo browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `KoLo browser dialog --accept`
-- `KoLo browser wait --text "Done"`
-- `KoLo browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `KoLo browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `KoLo browser highlight e12`
-- `KoLo browser trace start`
-- `KoLo browser trace stop`
+- `Kurahi browser navigate https://example.com`
+- `Kurahi browser resize 1280 720`
+- `Kurahi browser click 12 --double`
+- `Kurahi browser click e12 --double`
+- `Kurahi browser type 23 "hello" --submit`
+- `Kurahi browser press Enter`
+- `Kurahi browser hover 44`
+- `Kurahi browser scrollintoview e12`
+- `Kurahi browser drag 10 11`
+- `Kurahi browser select 9 OptionA OptionB`
+- `Kurahi browser download e12 /tmp/report.pdf`
+- `Kurahi browser waitfordownload /tmp/report.pdf`
+- `Kurahi browser upload /tmp/file.pdf`
+- `Kurahi browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `Kurahi browser dialog --accept`
+- `Kurahi browser wait --text "Done"`
+- `Kurahi browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `Kurahi browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `Kurahi browser highlight e12`
+- `Kurahi browser trace start`
+- `Kurahi browser trace stop`
 
 State:
 
-- `KoLo browser cookies`
-- `KoLo browser cookies set session abc123 --url "https://example.com"`
-- `KoLo browser cookies clear`
-- `KoLo browser storage local get`
-- `KoLo browser storage local set theme dark`
-- `KoLo browser storage session clear`
-- `KoLo browser set offline on`
-- `KoLo browser set headers --json '{"X-Debug":"1"}'`
-- `KoLo browser set credentials user pass`
-- `KoLo browser set credentials --clear`
-- `KoLo browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `KoLo browser set geo --clear`
-- `KoLo browser set media dark`
-- `KoLo browser set timezone America/New_York`
-- `KoLo browser set locale en-US`
-- `KoLo browser set device "iPhone 14"`
+- `Kurahi browser cookies`
+- `Kurahi browser cookies set session abc123 --url "https://example.com"`
+- `Kurahi browser cookies clear`
+- `Kurahi browser storage local get`
+- `Kurahi browser storage local set theme dark`
+- `Kurahi browser storage session clear`
+- `Kurahi browser set offline on`
+- `Kurahi browser set headers --json '{"X-Debug":"1"}'`
+- `Kurahi browser set credentials user pass`
+- `Kurahi browser set credentials --clear`
+- `Kurahi browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `Kurahi browser set geo --clear`
+- `Kurahi browser set media dark`
+- `Kurahi browser set timezone America/New_York`
+- `Kurahi browser set locale en-US`
+- `Kurahi browser set device "iPhone 14"`
 
 Notes:
 
@@ -453,16 +453,16 @@ Notes:
 
 ## Snapshots and refs
 
-KoLo supports two “snapshot” styles:
+Kurahi supports two “snapshot” styles:
 
-- **AI snapshot (numeric refs)**: `KoLo browser snapshot` (default; `--format ai`)
+- **AI snapshot (numeric refs)**: `Kurahi browser snapshot` (default; `--format ai`)
   - Output: a text snapshot that includes numeric refs.
-  - Actions: `KoLo browser click 12`, `KoLo browser type 23 "hello"`.
+  - Actions: `Kurahi browser click 12`, `Kurahi browser type 23 "hello"`.
   - Internally, the ref is resolved via Playwright’s `aria-ref`.
 
-- **Role snapshot (role refs like `e12`)**: `KoLo browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
+- **Role snapshot (role refs like `e12`)**: `Kurahi browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
   - Output: a role-based list/tree with `[ref=e12]` (and optional `[nth=1]`).
-  - Actions: `KoLo browser click e12`, `KoLo browser highlight e12`.
+  - Actions: `Kurahi browser click e12`, `Kurahi browser highlight e12`.
   - Internally, the ref is resolved via `getByRole(...)` (plus `nth()` for duplicates).
   - Add `--labels` to include a viewport screenshot with overlayed `e12` labels.
 
@@ -476,18 +476,18 @@ Ref behavior:
 You can wait on more than just time/text:
 
 - Wait for URL (globs supported by Playwright):
-  - `KoLo browser wait --url "**/dash"`
+  - `Kurahi browser wait --url "**/dash"`
 - Wait for load state:
-  - `KoLo browser wait --load networkidle`
+  - `Kurahi browser wait --load networkidle`
 - Wait for a JS predicate:
-  - `KoLo browser wait --fn "window.ready===true"`
+  - `Kurahi browser wait --fn "window.ready===true"`
 - Wait for a selector to become visible:
-  - `KoLo browser wait "#main"`
+  - `Kurahi browser wait "#main"`
 
 These can be combined:
 
 ```bash
-KoLo browser wait "#main" \
+Kurahi browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -498,16 +498,16 @@ KoLo browser wait "#main" \
 
 When an action fails (e.g. “not visible”, “strict mode violation”, “covered”):
 
-1. `KoLo browser snapshot --interactive`
+1. `Kurahi browser snapshot --interactive`
 2. Use `click <ref>` / `type <ref>` (prefer role refs in interactive mode)
-3. If it still fails: `KoLo browser highlight <ref>` to see what Playwright is targeting
+3. If it still fails: `Kurahi browser highlight <ref>` to see what Playwright is targeting
 4. If the page behaves oddly:
-   - `KoLo browser errors --clear`
-   - `KoLo browser requests --filter api --clear`
+   - `Kurahi browser errors --clear`
+   - `Kurahi browser requests --filter api --clear`
 5. For deep debugging: record a trace:
-   - `KoLo browser trace start`
+   - `Kurahi browser trace start`
    - reproduce the issue
-   - `KoLo browser trace stop` (prints `TRACE:<path>`)
+   - `Kurahi browser trace stop` (prints `TRACE:<path>`)
 
 ## JSON output
 
@@ -516,10 +516,10 @@ When an action fails (e.g. “not visible”, “strict mode violation”, “co
 Examples:
 
 ```bash
-KoLo browser status --json
-KoLo browser snapshot --interactive --json
-KoLo browser requests --filter api --json
-KoLo browser cookies --json
+Kurahi browser status --json
+Kurahi browser snapshot --interactive --json
+Kurahi browser requests --filter api --json
+Kurahi browser cookies --json
 ```
 
 Role snapshots in JSON include `refs` plus a small `stats` block (lines/chars/refs/interactive) so tools can reason about payload size and density.
@@ -542,8 +542,8 @@ These are useful for “make the site behave like X” workflows:
 
 ## Security & privacy
 
-- The KoLo browser profile may contain logged-in sessions; treat it as sensitive.
-- `browser act kind=evaluate` / `KoLo browser evaluate` and `wait --fn`
+- The Kurahi browser profile may contain logged-in sessions; treat it as sensitive.
+- `browser act kind=evaluate` / `Kurahi browser evaluate` and `wait --fn`
   execute arbitrary JavaScript in the page context. Prompt injection can steer
   this. Disable it with `browser.evaluateEnabled=false` if you do not need it.
 - For logins and anti-bot notes (X/Twitter, etc.), see [Browser login + X/Twitter posting](/tools/browser-login).
@@ -567,7 +567,7 @@ How it maps:
 - `browser act` uses the snapshot `ref` IDs to click/type/drag/select.
 - `browser screenshot` captures pixels (full page or element).
 - `browser` accepts:
-  - `profile` to choose a named browser profile (KoLo, chrome, or remote CDP).
+  - `profile` to choose a named browser profile (Kurahi, chrome, or remote CDP).
   - `target` (`sandbox` | `host` | `node`) to select where the browser lives.
   - In sandboxed sessions, `target: "host"` requires `agents.defaults.sandbox.browser.allowHostControl=true`.
   - If `target` is omitted: sandboxed sessions default to `sandbox`, non-sandbox sessions default to `host`.

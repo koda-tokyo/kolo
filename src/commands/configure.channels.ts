@@ -25,7 +25,7 @@ export async function removeChannelConfigWizard(
       note(
         [
           "No channel config found in kolo.json.",
-          `Tip: \`${formatCliCommand("kolo channels status")}\` shows what is configured and enabled.`,
+          `Tip: \`${formatCliCommand("kurahi channels status")}\` shows what is configured and enabled.`,
         ].join("\n"),
         "Remove channel",
       );

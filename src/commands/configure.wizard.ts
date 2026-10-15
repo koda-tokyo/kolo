@@ -177,7 +177,7 @@ export async function runConfigureWizard(
 ) {
   try {
     printWizardHeader(runtime);
-    intro(opts.command === "update" ? "kolo update wizard" : "kolo configure");
+    intro(opts.command === "update" ? "kurahi update wizard" : "kurahi configure");
     const prompter = createClackPrompter();
 
     const snapshot = await readConfigFileSnapshot();
@@ -198,7 +198,7 @@ export async function runConfigureWizard(
       }
       if (!snapshot.valid) {
         outro(
-          `Config invalid. Run \`${formatCliCommand("kolo doctor")}\` to repair it, then re-run configure.`,
+          `Config invalid. Run \`${formatCliCommand("kurahi doctor")}\` to repair it, then re-run configure.`,
         );
         runtime.exit(1);
         return;

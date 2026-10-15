@@ -1,15 +1,15 @@
-// `kolo policy …` — policy as code (KoLo 2.0, M13d). Operator actions only; the policy document
+// `kurahi policy …` — policy as code (KoLo 2.0, M13d). Operator actions only; the policy document
 // is signed by an owner key and enforced by the gateway for every resident.
 //
-//   kolo policy init                       write a documented starter policy, create the owner key, sign
-//   kolo policy show|validate [file]       print / check a policy document
-//   kolo policy sign|verify [file]         attest with the owner key / check the attestation
-//   kolo policy diff <file>                changes a candidate would make to the active policy
-//   kolo policy apply <file> [--sign]      install a candidate (and its signature) as the active policy
-//   kolo policy status                     mode, attestation, kill switch, pauses (gateway or local)
-//   kolo policy kill|release --agent <id>|--all
-//   kolo policy budget [--agent <id>] [--reset]
-//   kolo policy schema                     the JSON Schema of the document
+//   kurahi policy init                       write a documented starter policy, create the owner key, sign
+//   kurahi policy show|validate [file]       print / check a policy document
+//   kurahi policy sign|verify [file]         attest with the owner key / check the attestation
+//   kurahi policy diff <file>                changes a candidate would make to the active policy
+//   kurahi policy apply <file> [--sign]      install a candidate (and its signature) as the active policy
+//   kurahi policy status                     mode, attestation, kill switch, pauses (gateway or local)
+//   kurahi policy kill|release --agent <id>|--all
+//   kurahi policy budget [--agent <id>] [--reset]
+//   kurahi policy schema                     the JSON Schema of the document
 //
 // Exit codes: 0 ok, 1 the command ran and failed (invalid, unsigned, refused), 2 usage.
 import type { Command } from "commander";
@@ -41,11 +41,11 @@ export function registerPolicyCli(program: Command) {
       [
         "",
         "Examples:",
-        "  kolo policy init",
-        "  kolo policy validate && kolo policy sign",
-        "  kolo policy diff ./candidate.yaml && kolo policy apply ./candidate.yaml --sign",
-        "  kolo policy kill --agent ops-bot --reason 'incident 42'",
-        "  kolo policy release --all",
+        "  kurahi policy init",
+        "  kurahi policy validate && kurahi policy sign",
+        "  kurahi policy diff ./candidate.yaml && kurahi policy apply ./candidate.yaml --sign",
+        "  kurahi policy kill --agent ops-bot --reason 'incident 42'",
+        "  kurahi policy release --all",
         "",
         `Docs: ${formatDocsLink("/policy")}`,
       ].join("\n"),

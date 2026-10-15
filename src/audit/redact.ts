@@ -1,7 +1,7 @@
 // Redaction for audit entries (KoLo 2.0, M2b).
 //
 // Applied twice: when an entry is appended (secret values never reach disk) and again when
-// `kolo audit tail` prints (defence in depth for entries written by older code).
+// `kurahi audit tail` prints (defence in depth for entries written by older code).
 
 import { redactSensitiveText } from "../logging/redact.js";
 

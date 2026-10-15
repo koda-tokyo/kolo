@@ -45,9 +45,9 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
   };
 
   if (!json) {
-    // KoLo 2.0: `kolo service` is the one supervisor command (per-identity units).
+    // KoLo 2.0: `kurahi service` is the one supervisor command (per-identity units).
     defaultRuntime.error(
-      "note: this installer is legacy; prefer `kolo service install --id <identity> --port <port>` (docs/gateway/service.md).",
+      "note: this installer is legacy; prefer `kurahi service install --id <identity> --port <port>` (docs/gateway/service.md).",
     );
   }
 
@@ -92,7 +92,7 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
       });
       if (!json) {
         defaultRuntime.log(`Gateway service already ${service.loadedText}.`);
-        defaultRuntime.log(`Reinstall with: ${formatCliCommand("kolo gateway install --force")}`);
+        defaultRuntime.log(`Reinstall with: ${formatCliCommand("kurahi gateway install --force")}`);
       }
       return;
     }

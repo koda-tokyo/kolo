@@ -103,7 +103,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     }
     defaultRuntime.error(
       warnText(
-        `Recommendation: run "${formatCliCommand("kolo doctor")}" (or "${formatCliCommand("kolo doctor --repair")}").`,
+        `Recommendation: run "${formatCliCommand("kurahi doctor")}" (or "${formatCliCommand("kurahi doctor --repair")}").`,
       ),
     );
   }
@@ -137,7 +137,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
       );
       defaultRuntime.error(
         errorText(
-          `Fix: rerun \`${formatCliCommand("kolo gateway install --force")}\` from the same --profile / KOLO_STATE_DIR you expect.`,
+          `Fix: rerun \`${formatCliCommand("kurahi gateway install --force")}\` from the same --profile / KOLO_STATE_DIR you expect.`,
         ),
       );
     }
@@ -241,7 +241,9 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
         `LaunchAgent label cached but plist missing. Clear with: launchctl bootout gui/$UID/${labelValue}`,
       ),
     );
-    defaultRuntime.error(errorText(`Then reinstall: ${formatCliCommand("kolo gateway install")}`));
+    defaultRuntime.error(
+      errorText(`Then reinstall: ${formatCliCommand("kurahi gateway install")}`),
+    );
     spacer();
   }
 
@@ -315,6 +317,6 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     spacer();
   }
 
-  defaultRuntime.log(`${label("Troubles:")} run ${formatCliCommand("kolo status")}`);
+  defaultRuntime.log(`${label("Troubles:")} run ${formatCliCommand("kurahi status")}`);
   defaultRuntime.log(`${label("Troubleshooting:")} ${DOCS_URL}/troubleshooting`);
 }

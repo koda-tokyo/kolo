@@ -1,5 +1,5 @@
 /**
- * Hook system for KoLo agent events
+ * Hook system for Kurahi agent events
  *
  * Provides an extensible event-driven hook system for agent events
  * like command processing, session lifecycle, etc.

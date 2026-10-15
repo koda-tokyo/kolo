@@ -82,7 +82,7 @@ Or tail while reproducing:
 tail -f /tmp/kolo/kolo-$(date +%F).log | rg "telegram http error"
 ```
 
-For remote gateways, you can also use `KoLo logs --follow` (see [/cli/logs](/cli/logs)).
+For remote gateways, you can also use `Kurahi logs --follow` (see [/cli/logs](/cli/logs)).
 
 ## Notes
 

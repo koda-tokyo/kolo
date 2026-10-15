@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { ensureKoLoCliOnPath } from "./path-env.js";
 
 describe("ensureKoLoCliOnPath", () => {
-  it("prepends the bundled app bin dir when a sibling KoLo exists", async () => {
+  it("prepends the bundled app bin dir when a sibling Kurahi exists", async () => {
     const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "kolo-path-"));
     try {
       const appBinDir = path.join(tmp, "AppBin");

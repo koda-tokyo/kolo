@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `kolo plugins` (list, info, enable, disable, install, update, reload, doctor)"
+summary: "CLI reference for `kurahi plugins` (list, info, enable, disable, install, update, reload, doctor)"
 read_when:
   - You want to install or manage in-process gateway plugins
   - You want to debug a plugin that did not load
 title: "plugins"
 ---
 
-# `kolo plugins`
+# `kurahi plugins`
 
 Manage the plugins (extensions) the gateway loads in-process.
 
@@ -19,14 +19,14 @@ Related:
 ## Commands
 
 ```bash
-kolo plugins list [--enabled] [--verbose] [--json]
-kolo plugins info <id> [--json]
-kolo plugins enable <id>
-kolo plugins disable <id>
-kolo plugins install <path-or-spec> [--link]
-kolo plugins update <id> | --all [--dry-run]
-kolo plugins reload <id> [--json]
-kolo plugins doctor
+kurahi plugins list [--enabled] [--verbose] [--json]
+kurahi plugins info <id> [--json]
+kurahi plugins enable <id>
+kurahi plugins disable <id>
+kurahi plugins install <path-or-spec> [--link]
+kurahi plugins update <id> | --all [--dry-run]
+kurahi plugins reload <id> [--json]
+kurahi plugins doctor
 ```
 
 - `list` shows every discovered plugin with its source (bundled, workspace, global, config path)
@@ -48,7 +48,7 @@ kolo plugins doctor
 
 Every plugin ships a `KoLo.plugin.json` manifest with an inline JSON Schema (`configSchema`, even
 when empty). A missing or invalid manifest or schema prevents the plugin from loading and shows in
-`kolo plugins doctor`.
+`kurahi plugins doctor`.
 
 ## Configuration
 

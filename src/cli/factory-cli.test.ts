@@ -1,4 +1,4 @@
-import { KoloClient } from "@kodasoken/kolo-client";
+import { KoloClient } from "@kodasoken/kurahi-client";
 import { describe, expect, it } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import {
@@ -64,7 +64,7 @@ const card = {
   ],
 };
 
-describe("kolo factory", () => {
+describe("kurahi factory", () => {
   it("prints boards as a table and as JSON", async () => {
     const { createClient } = clientWith(() =>
       json(200, {

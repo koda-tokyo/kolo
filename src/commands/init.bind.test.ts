@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { INIT_BIND_POLICIES, resolveInitBind } from "./init.js";
 
-describe("kolo init --bind", () => {
+describe("kurahi init --bind", () => {
   it("accepts the five policies", () => {
     expect([...INIT_BIND_POLICIES]).toEqual(["loopback", "lan", "tailnet", "custom", "remote"]);
   });

@@ -1,5 +1,5 @@
 ---
-summary: "KoLo CLI reference for `KoLo` commands, subcommands, and options"
+summary: "Kurahi CLI reference for `Kurahi` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -58,7 +58,7 @@ This page describes the current CLI behavior. If commands change, update this do
 - `--dev`: isolate state under `~/.kolo-dev` and shift default ports.
 - `--profile <name>`: isolate state under `~/.kolo-<name>`.
 - `--no-color`: disable ANSI colors.
-- `--update`: shorthand for `kolo update` (source installs only).
+- `--update`: shorthand for `kurahi update` (source installs only).
 - `-V`, `--version`, `-v`: print version and exit.
 
 ## Output styling
@@ -71,7 +71,7 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Color palette
 
-KoLo uses a lobster palette for CLI output.
+Kurahi uses a lobster palette for CLI output.
 
 - `accent` (#FF5A2D): headings, labels, primary highlights.
 - `accentBright` (#FF7A3D): command names, emphasis.
@@ -87,7 +87,7 @@ Palette source of truth: `src/terminal/palette.ts` (aka “lobster seam”).
 ## Command tree
 
 ```
-KoLo [--dev] [--profile <name>] <command>
+Kurahi [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -238,23 +238,23 @@ KoLo [--dev] [--profile <name>] <command>
   tui
 ```
 
-Note: plugins can add additional top-level commands (for example `KoLo voicecall`).
+Note: plugins can add additional top-level commands (for example `Kurahi voicecall`).
 
 ## Security
 
-- `KoLo security audit` — audit config + local state for common security foot-guns.
-- `KoLo security audit --deep` — best-effort live Gateway probe.
-- `KoLo security audit --fix` — tighten safe defaults and chmod state/config.
+- `Kurahi security audit` — audit config + local state for common security foot-guns.
+- `Kurahi security audit --deep` — best-effort live Gateway probe.
+- `Kurahi security audit --fix` — tighten safe defaults and chmod state/config.
 
 ## Plugins
 
 Manage extensions and their config:
 
-- `kolo plugins list` — discover plugins (use `--json` for machine output).
-- `kolo plugins info <id>` — show details for a plugin.
-- `kolo plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
-- `kolo plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
-- `kolo plugins doctor` — report plugin load errors.
+- `kurahi plugins list` — discover plugins (use `--json` for machine output).
+- `kurahi plugins info <id>` — show details for a plugin.
+- `kurahi plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
+- `kurahi plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
+- `kurahi plugins doctor` — report plugin load errors.
 
 Most plugin changes require a gateway restart. See [/plugin](/plugin).
 
@@ -262,9 +262,9 @@ Most plugin changes require a gateway restart. See [/plugin](/plugin).
 
 Vector search over `MEMORY.md` + `memory/*.md`:
 
-- `KoLo memory status` — show index stats.
-- `KoLo memory index` — reindex memory files.
-- `KoLo memory search "<query>"` — semantic search over memory.
+- `Kurahi memory status` — show index stats.
+- `Kurahi memory index` — reindex memory files.
+- `Kurahi memory search "<query>"` — semantic search over memory.
 
 ## Chat slash commands
 
@@ -344,7 +344,7 @@ Interactive configuration wizard (models, channels, skills, gateway).
 
 ### `config`
 
-Non-interactive config helpers (get/set/unset). Running `KoLo config` with no
+Non-interactive config helpers (get/set/unset). Running `Kurahi config` with no
 subcommand launches the wizard.
 
 Subcommands:
@@ -373,8 +373,8 @@ Manage chat channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Matter
 Subcommands:
 
 - `channels list`: show configured channels and auth profiles.
-- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `KoLo health` or `KoLo status --deep` for gateway health probes).
-- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `KoLo doctor`).
+- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `Kurahi health` or `Kurahi status --deep` for gateway health probes).
+- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `Kurahi doctor`).
 - `channels logs`: show recent channel logs from the gateway log file.
 - `channels add`: wizard-style setup when no flags are passed; flags switch to non-interactive mode.
 - `channels remove`: disable by default; pass `--delete` to remove config entries without prompts.
@@ -414,11 +414,11 @@ More detail: [/concepts/oauth](/concepts/oauth)
 Examples:
 
 ```bash
-KoLo channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-KoLo channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-KoLo channels remove --channel discord --account work --delete
-KoLo channels status --probe
-KoLo status --deep
+Kurahi channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+Kurahi channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+Kurahi channels remove --channel discord --account work --delete
+Kurahi channels status --probe
+Kurahi status --deep
 ```
 
 ### `skills`
@@ -487,8 +487,8 @@ Subcommands:
 
 Examples:
 
-- `KoLo message send --target +15555550123 --message "Hi"`
-- `KoLo message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `Kurahi message send --target +15555550123 --message "Hi"`
+- `Kurahi message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -573,12 +573,12 @@ Notes:
 
 ### Usage tracking
 
-KoLo can surface provider usage/quota when OAuth/API creds are available.
+Kurahi can surface provider usage/quota when OAuth/API creds are available.
 
 Surfaces:
 
 - `/status` (adds a short provider usage line when available)
-- `KoLo status --usage` (prints full provider breakdown)
+- `Kurahi status --usage` (prints full provider breakdown)
 - macOS menu bar (Usage section under Context)
 
 Notes:
@@ -688,7 +688,7 @@ Notes:
 
 - `gateway status` probes the Gateway RPC by default using the service’s resolved port/config (override with `--url/--token/--password`).
 - `gateway status` supports `--no-probe`, `--deep`, and `--json` for scripting.
-- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named KoLo services are treated as first-class and aren't flagged as "extra".
+- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Kurahi services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
 - `gateway install|uninstall|start|stop|restart` support `--json` for scripting (default output stays human-friendly).
 - `gateway install` defaults to Node runtime; bun is **not recommended** (WhatsApp/Telegram bugs).
@@ -706,11 +706,11 @@ Notes:
 Examples:
 
 ```bash
-KoLo logs --follow
-KoLo logs --limit 200
-KoLo logs --plain
-KoLo logs --json
-KoLo logs --no-color
+Kurahi logs --follow
+Kurahi logs --limit 200
+Kurahi logs --plain
+Kurahi logs --json
+Kurahi logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -744,13 +744,13 @@ Preferred Anthropic auth (setup-token):
 
 ```bash
 claude setup-token
-KoLo models auth setup-token --provider anthropic
-KoLo models status
+Kurahi models auth setup-token --provider anthropic
+Kurahi models status
 ```
 
 ### `models` (root)
 
-`KoLo models` is an alias for `models status`.
+`Kurahi models` is an alias for `models status`.
 
 Root options:
 
@@ -906,7 +906,7 @@ All `cron` commands accept `--url`, `--token`, `--timeout`, `--expect-final`.
 ## Node host
 
 `node` runs a **headless node host** or manages it as a background service. See
-[`KoLo node`](/cli/node).
+[`Kurahi node`](/cli/node).
 
 Subcommands:
 
@@ -961,7 +961,7 @@ Location:
 
 ## Browser
 
-Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`KoLo browser`](/cli/browser) and the [Browser tool](/tools/browser).
+Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`Kurahi browser`](/cli/browser) and the [Browser tool](/tools/browser).
 
 Common options:
 

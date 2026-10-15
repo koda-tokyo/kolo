@@ -31,7 +31,7 @@ cron is the mechanism.
 Create a one-shot reminder, verify it exists, and run it immediately:
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Reminder" \
   --at "2026-02-01T16:00:00Z" \
   --session main \
@@ -39,15 +39,15 @@ KoLo cron add \
   --wake now \
   --delete-after-run
 
-KoLo cron list
-KoLo cron run <job-id> --force
-KoLo cron runs --id <job-id>
+Kurahi cron list
+Kurahi cron run <job-id> --force
+Kurahi cron runs --id <job-id>
 ```
 
 Schedule a recurring isolated job with delivery:
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Morning brief" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -66,7 +66,7 @@ For the canonical JSON shapes and examples, see [JSON schema for tool calls](/au
 
 Cron jobs are persisted on the Gateway host at `~/.kolo/cron/jobs.json` by default.
 The Gateway loads the file into memory and writes it back on changes, so manual edits
-are only safe when the Gateway is stopped. Prefer `KoLo cron add/edit` or the cron
+are only safe when the Gateway is stopped. Prefer `Kurahi cron add/edit` or the cron
 tool call API for changes.
 
 ## Beginner-friendly overview
@@ -321,7 +321,7 @@ Disable cron entirely:
 One-shot reminder (UTC ISO, auto-delete after success):
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Send reminder" \
   --at "2026-01-12T18:00:00Z" \
   --session main \
@@ -333,7 +333,7 @@ KoLo cron add \
 One-shot reminder (main session, wake immediately):
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Calendar check" \
   --at "20m" \
   --session main \
@@ -344,7 +344,7 @@ KoLo cron add \
 Recurring isolated job (deliver to WhatsApp):
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Morning status" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -358,7 +358,7 @@ KoLo cron add \
 Recurring isolated job (deliver to a Telegram topic):
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Nightly summary (topic)" \
   --cron "0 22 * * *" \
   --tz "America/Los_Angeles" \
@@ -372,7 +372,7 @@ KoLo cron add \
 Isolated job with model and thinking override:
 
 ```bash
-KoLo cron add \
+Kurahi cron add \
   --name "Deep analysis" \
   --cron "0 6 * * 1" \
   --tz "America/Los_Angeles" \
@@ -389,23 +389,23 @@ Agent selection (multi-agent setups):
 
 ```bash
 # Pin a job to agent "ops" (falls back to default if that agent is missing)
-KoLo cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
+Kurahi cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
 
 # Switch or clear the agent on an existing job
-KoLo cron edit <jobId> --agent ops
-KoLo cron edit <jobId> --clear-agent
+Kurahi cron edit <jobId> --agent ops
+Kurahi cron edit <jobId> --clear-agent
 ```
 
 Manual run (debug):
 
 ```bash
-KoLo cron run <jobId> --force
+Kurahi cron run <jobId> --force
 ```
 
 Edit an existing job (patch fields):
 
 ```bash
-KoLo cron edit <jobId> \
+Kurahi cron edit <jobId> \
   --message "Updated prompt" \
   --model "opus" \
   --thinking low
@@ -414,20 +414,20 @@ KoLo cron edit <jobId> \
 Run history:
 
 ```bash
-KoLo cron runs --id <jobId> --limit 50
+Kurahi cron runs --id <jobId> --limit 50
 ```
 
 Immediate system event without creating a job:
 
 ```bash
-KoLo system event --mode now --text "Next heartbeat: check battery."
+Kurahi system event --mode now --text "Next heartbeat: check battery."
 ```
 
 ## Gateway API surface
 
 - `cron.list`, `cron.status`, `cron.add`, `cron.update`, `cron.remove`
 - `cron.run` (force or due), `cron.runs`
-  For immediate system events without a job, use [`KoLo system event`](/cli/system).
+  For immediate system events without a job, use [`Kurahi system event`](/cli/system).
 
 ## Troubleshooting
 

@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `KoLo agent` (send one agent turn via the Gateway)"
+summary: "CLI reference for `Kurahi agent` (send one agent turn via the Gateway)"
 read_when:
   - You want to run one agent turn from scripts (optionally deliver reply)
 title: "agent"
 ---
 
-# `KoLo agent`
+# `Kurahi agent`
 
 Run an agent turn via the Gateway (use `--local` for embedded).
 Use `--agent <id>` to target a configured agent directly.
@@ -18,7 +18,7 @@ gateway's lease (`<KOLO_HOME>/run/gateway.lock`) names a port, that port wins. P
 sibling's home to address the sibling through its own gateway:
 
 ```bash
-KOLO_HOME=~/.kolo-ops-bot kolo agent --agent ops-bot --message "status?"
+KOLO_HOME=~/.kolo-ops-bot kurahi agent --agent ops-bot --message "status?"
 ```
 
 If no gateway answers, the command exits `3` with a line naming the state dir and port it
@@ -33,8 +33,8 @@ Related:
 ## Examples
 
 ```bash
-KoLo agent --to +15555550123 --message "status update" --deliver
-KoLo agent --agent ops --message "Summarize logs"
-KoLo agent --session-id 1234 --message "Summarize inbox" --thinking medium
-KoLo agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+Kurahi agent --to +15555550123 --message "status update" --deliver
+Kurahi agent --agent ops --message "Summarize logs"
+Kurahi agent --session-id 1234 --message "Summarize inbox" --thinking medium
+Kurahi agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```

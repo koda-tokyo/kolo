@@ -90,7 +90,7 @@ export function getCommandPath(argv: string[], depth = 2): string[] {
       break;
     }
     if (arg.startsWith("-")) {
-      // Global flags that take a value: skip the value too, or `kolo --lang ja init` would
+      // Global flags that take a value: skip the value too, or `kurahi --lang ja init` would
       // read "ja" as the command.
       if (GLOBAL_VALUE_FLAGS.has(arg)) {
         i += 1;

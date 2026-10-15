@@ -1,12 +1,12 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * Open-Meteo weather plugin for KoLo.
+ * Open-Meteo weather plugin for Kurahi.
  *
  * Provides `weather_query` tool — unlimited, NO API key needed.
  * Covers: current weather, forecasts, historical data.
  * Source: https://open-meteo.com/
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 interface GeoResult {
   latitude: number;
@@ -41,18 +41,36 @@ async function getWeather(lat: number, lon: number): Promise<string> {
   if (!c || !cu) return "No weather data available.";
 
   const weatherCodes: Record<number, string> = {
-    0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
-    45: "Foggy", 48: "Rime fog", 51: "Light drizzle", 53: "Moderate drizzle",
-    55: "Dense drizzle", 61: "Slight rain", 63: "Moderate rain", 65: "Heavy rain",
-    71: "Slight snow", 73: "Moderate snow", 75: "Heavy snow", 80: "Slight showers",
-    81: "Moderate showers", 82: "Violent showers", 95: "Thunderstorm",
+    0: "Clear sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Foggy",
+    48: "Rime fog",
+    51: "Light drizzle",
+    53: "Moderate drizzle",
+    55: "Dense drizzle",
+    61: "Slight rain",
+    63: "Moderate rain",
+    65: "Heavy rain",
+    71: "Slight snow",
+    73: "Moderate snow",
+    75: "Heavy snow",
+    80: "Slight showers",
+    81: "Moderate showers",
+    82: "Violent showers",
+    95: "Thunderstorm",
   };
 
   const lines: string[] = [];
   const code = c.weather_code as number;
-  lines.push(`**Now:** ${weatherCodes[code] ?? "Unknown"}, ${c.temperature_2m}${cu.temperature_2m}`);
+  lines.push(
+    `**Now:** ${weatherCodes[code] ?? "Unknown"}, ${c.temperature_2m}${cu.temperature_2m}`,
+  );
   lines.push(`**Feels like:** ${c.apparent_temperature}${cu.apparent_temperature}`);
-  lines.push(`**Humidity:** ${c.relative_humidity_2m}${cu.relative_humidity_2m} | **Wind:** ${c.wind_speed_10m} ${cu.wind_speed_10m}`);
+  lines.push(
+    `**Humidity:** ${c.relative_humidity_2m}${cu.relative_humidity_2m} | **Wind:** ${c.wind_speed_10m} ${cu.wind_speed_10m}`,
+  );
 
   if (d?.time) {
     lines.push("");
@@ -60,7 +78,9 @@ async function getWeather(lat: number, lon: number): Promise<string> {
     for (let i = 0; i < Math.min(3, d.time.length); i++) {
       const dayCode = (d.weather_code as number[])[i];
       const desc = weatherCodes[dayCode] ?? "Unknown";
-      lines.push(`- ${d.time[i]}: ${desc}, ${(d.temperature_2m_min as number[])[i]}–${(d.temperature_2m_max as number[])[i]}°C, rain: ${(d.precipitation_sum as number[])[i]}mm`);
+      lines.push(
+        `- ${d.time[i]}: ${desc}, ${(d.temperature_2m_min as number[])[i]}–${(d.temperature_2m_max as number[])[i]}°C, rain: ${(d.precipitation_sum as number[])[i]}mm`,
+      );
     }
   }
 
@@ -80,7 +100,7 @@ const openMeteoPlugin = {
         name: "weather_query",
         label: "Weather",
         description:
-          'Get current weather and 3-day forecast for any location. ' +
+          "Get current weather and 3-day forecast for any location. " +
           'Examples: "weather in Dubai", "Tokyo forecast", "London weather".',
         parameters: Type.Object({
           location: Type.String({ description: "City name or location" }),
@@ -95,7 +115,11 @@ const openMeteoPlugin = {
           try {
             const geo = await geocode(location);
             if (!geo) {
-              return { content: [{ type: "text" as const, text: `Could not find location: "${location}"` }] };
+              return {
+                content: [
+                  { type: "text" as const, text: `Could not find location: "${location}"` },
+                ],
+              };
             }
 
             const label = [geo.name, geo.admin1, geo.country].filter(Boolean).join(", ");
@@ -103,7 +127,12 @@ const openMeteoPlugin = {
 
             return {
               content: [{ type: "text" as const, text: `## Weather for ${label}\n\n${weather}` }],
-              details: { location: label, lat: geo.latitude, lon: geo.longitude, source: "open-meteo" },
+              details: {
+                location: label,
+                lat: geo.latitude,
+                lon: geo.longitude,
+                source: "open-meteo",
+              },
             };
           } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
@@ -123,11 +152,18 @@ const openMeteoPlugin = {
             const location = parts.join(" ");
             try {
               const geo = await geocode(location);
-              if (!geo) { console.error(`Could not find: "${location}"`); process.exitCode = 1; return; }
+              if (!geo) {
+                console.error(`Could not find: "${location}"`);
+                process.exitCode = 1;
+                return;
+              }
               const label = [geo.name, geo.admin1, geo.country].filter(Boolean).join(", ");
               console.log(`Weather for ${label}\n`);
               console.log(await getWeather(geo.latitude, geo.longitude));
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["weather"] },

@@ -1,5 +1,5 @@
 import JSON5 from "json5";
-// `kolo secrets migrate`: move plaintext credentials out of kolo.json into the store and replace
+// `kurahi secrets migrate`: move plaintext credentials out of kolo.json into the store and replace
 // them with `$secret` refs. The original file is backed up (0600) before it is rewritten.
 import crypto from "node:crypto";
 import fs from "node:fs";

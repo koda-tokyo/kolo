@@ -1,4 +1,4 @@
-// `kolo gateway --force`: free the gateway port without lsof/fuser or a shell.
+// `kurahi gateway --force`: free the gateway port without lsof/fuser or a shell.
 // The only pids ever signalled are the ones recorded in this identity's gateway lock files
 // (see src/infra/port-probe.ts); an unknown process holding the port is reported, not killed.
 import {
@@ -71,7 +71,7 @@ export async function forceFreePort(
   const owners = listPortListeners(port, env);
   if (owners.length === 0) {
     throw new Error(
-      `port ${port} is in use by a process that no KoLo gateway lock names; refusing to kill it. ` +
+      `port ${port} is in use by a process that no Kurahi gateway lock names; refusing to kill it. ` +
         `Identify it with your OS tools (ss -ltnp, netstat -ano, Resource Monitor) or pick another --port.`,
     );
   }

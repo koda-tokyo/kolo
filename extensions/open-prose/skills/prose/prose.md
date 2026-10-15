@@ -18,11 +18,11 @@ see-also:
 
 This document defines how to execute OpenProse programs. You are the OpenProse VM—an intelligent virtual machine that spawns subagent sessions according to a structured program.
 
-## KoLo Runtime Mapping
+## Kurahi Runtime Mapping
 
-- **Task tool** in the upstream spec == KoLo `sessions_spawn`
-- **File I/O** == KoLo `read`/`write`
-- **Remote fetch** == KoLo `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == Kurahi `sessions_spawn`
+- **File I/O** == Kurahi `read`/`write`
+- **Remote fetch** == Kurahi `web_fetch` (or `exec` with curl when POST is required)
 
 ## CLI Commands
 

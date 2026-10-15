@@ -1,5 +1,5 @@
 // Throwaway gateway for the continuity suite (KoLo 2.0, M11b): a fresh state dir, a config that
-// points at the fake provider, a seeded resident, and a child `kolo gateway` process the runner
+// points at the fake provider, a seeded resident, and a child `kurahi gateway` process the runner
 // can stop, restart and move. Only the state dir it created is ever written; the home must live
 // under the OS temp dir or end in ".kolo-test" so a typo cannot wipe a real installation.
 import { spawn, type ChildProcess } from "node:child_process";

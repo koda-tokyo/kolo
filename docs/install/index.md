@@ -1,7 +1,7 @@
 ---
-summary: "Install KoLo with the installer script, from a release bundle, or from source"
+summary: "Install Kurahi with the installer script, from a release bundle, or from source"
 read_when:
-  - Installing KoLo
+  - Installing Kurahi
   - You want to install from GitHub
 title: "Install"
 ---
@@ -15,42 +15,42 @@ Requirements: Linux, macOS, or Windows 10/11. The installer bundle ships its own
 Linux and macOS:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
 Windows (PowerShell 7 or Windows PowerShell 5.1):
 
 ```powershell
-iwr -useb https://kodasoken.com/kolo/install.ps1 | iex
+iwr -useb https://kodasoken.com/kurahi/install.ps1 | iex
 ```
 
 The installer:
 
 1. picks the release bundle for your OS and CPU from GitHub Releases (`kolo-<version>-<os>-<arch>.tar.gz`, `.zip` on Windows);
 2. verifies its SHA-256 against the `SHA256SUMS.txt` published with the release before unpacking;
-3. installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\KoLo\app\<version>`) and links the `kolo` command into `~/.local/bin` (Windows: `%LOCALAPPDATA%\KoLo\bin`, added to your user PATH);
-4. runs `kolo init --non-interactive` and `kolo service install`;
+3. installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\Kurahi\app\<version>`) and links the `kolo` command into `~/.local/bin` (Windows: `%LOCALAPPDATA%\Kurahi\bin`, added to your user PATH);
+4. runs `kurahi init --non-interactive` and `kurahi service install`;
 5. prints a one-use pairing invitation for a second device or terminal.
 
 Nothing is downloaded from anywhere but github.com, and nothing runs as root or administrator.
 
 Flags (`install.sh --help`, `install.ps1 -?`):
 
-| Flag | Effect |
-|---|---|
-| `--version <v>` / `-Version` | install a specific release |
-| `--prefix <dir>` / `-Prefix` | install directory |
-| `--bin-dir <dir>` / `-BinDir` | where the `kolo` command is linked |
-| `--name <id>` / `-Name` | identity name for the first run (default `default`) |
-| `--no-init`, `--no-service`, `--no-invite` / `-NoInit`, `-NoService`, `-NoInvite` | skip a step |
-| `--bundle <file> --sums <file>` / `-Bundle -Sums` | install from a local bundle (offline, air-gapped) |
-| `--dry-run` / `-DryRun` | print the resolved asset and paths; download nothing |
+| Flag                                                                              | Effect                                               |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `--version <v>` / `-Version`                                                      | install a specific release                           |
+| `--prefix <dir>` / `-Prefix`                                                      | install directory                                    |
+| `--bin-dir <dir>` / `-BinDir`                                                     | where the `kolo` command is linked                   |
+| `--name <id>` / `-Name`                                                           | identity name for the first run (default `default`)  |
+| `--no-init`, `--no-service`, `--no-invite` / `-NoInit`, `-NoService`, `-NoInvite` | skip a step                                          |
+| `--bundle <file> --sums <file>` / `-Bundle -Sums`                                 | install from a local bundle (offline, air-gapped)    |
+| `--dry-run` / `-DryRun`                                                           | print the resolved asset and paths; download nothing |
 
-Both scripts are in the repository under [`scripts/`](https://github.com/koda-tokyo/kolo/tree/main/scripts) and are served unchanged. Read them before piping them into a shell if your policy requires it.
+Both scripts are in the repository under [`scripts/`](https://github.com/koda-tokyo/kurahi/tree/main/scripts) and are served unchanged. Read them before piping them into a shell if your policy requires it.
 
 ## Offline or air-gapped
 
-Download the bundle and `SHA256SUMS.txt` from the [releases page](https://github.com/koda-tokyo/kolo/releases) on a connected machine, copy both files over, then:
+Download the bundle and `SHA256SUMS.txt` from the [releases page](https://github.com/koda-tokyo/kurahi/releases) on a connected machine, copy both files over, then:
 
 ```bash
 bash install.sh --bundle kolo-<version>-linux-x64.tar.gz --sums SHA256SUMS
@@ -59,7 +59,7 @@ bash install.sh --bundle kolo-<version>-linux-x64.tar.gz --sums SHA256SUMS
 ## From source
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
+git clone https://github.com/koda-tokyo/kurahi.git
 cd kolo
 pnpm install --frozen-lockfile
 pnpm build
@@ -71,18 +71,18 @@ node kolo.mjs --version
 ## After installing
 
 ```bash
-kolo init               # if you skipped it: state directory, config, gateway token, doctor
-kolo service install    # gateway under systemd / launchd / Task Scheduler
-kolo health             # one status line
-kolo tui                # talk to the agent
+kurahi init               # if you skipped it: state directory, config, gateway token, doctor
+kurahi service install    # gateway under systemd / launchd / Task Scheduler
+kurahi health             # one status line
+kurahi tui                # talk to the agent
 ```
 
 See [Getting started](/start/getting-started), [Gateway service](/gateway/service) and [Pairing](/start/pairing).
 
 ## Updating and removing
 
-- `kolo update` checks for and installs a newer release; `kolo update status` shows the current channel and version. See [Updating](/install/updating).
-- `kolo uninstall --all` removes the service, the state directory and the workspace; delete the install directory and the `kolo` link to remove the program. See [Uninstall](/install/uninstall).
+- `kurahi update` checks for and installs a newer release; `kurahi update status` shows the current channel and version. See [Updating](/install/updating).
+- `kurahi uninstall --all` removes the service, the state directory and the workspace; delete the install directory and the `kolo` link to remove the program. See [Uninstall](/install/uninstall).
 
 ## Troubleshooting
 

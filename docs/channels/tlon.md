@@ -7,7 +7,7 @@ title: "Tlon"
 
 # Tlon (plugin)
 
-Tlon is a decentralized messenger built on Urbit. KoLo connects to your Urbit ship and can
+Tlon is a decentralized messenger built on Urbit. Kurahi connects to your Urbit ship and can
 respond to DMs and group chat messages. Group replies require an @ mention by default and can
 be further restricted via allowlists.
 
@@ -21,13 +21,13 @@ Tlon ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-kolo plugins install @KoLo/tlon
+kurahi plugins install @Kurahi/tlon
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-kolo plugins install ./extensions/tlon
+kurahi plugins install ./extensions/tlon
 ```
 
 Details: [Plugins](/plugin)
@@ -120,7 +120,7 @@ Group authorization (restricted by default):
 
 ## Delivery targets (CLI/cron)
 
-Use these with `KoLo message send` or cron delivery:
+Use these with `Kurahi message send` or cron delivery:
 
 - DM: `~sampel-palnet` or `dm/~sampel-palnet`
 - Group: `chat/~host-ship/channel` or `group:~host-ship/channel`
@@ -128,5 +128,5 @@ Use these with `KoLo message send` or cron delivery:
 ## Notes
 
 - Group replies require a mention (e.g. `~your-bot-ship`) to respond.
-- Thread replies: if the inbound message is in a thread, KoLo replies in-thread.
+- Thread replies: if the inbound message is in a thread, Kurahi replies in-thread.
 - Media: `sendMedia` falls back to text + URL (no native upload).

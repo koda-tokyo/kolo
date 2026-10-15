@@ -355,7 +355,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart KoLo.",
+      description: "Restart Kurahi.",
       textAlias: "/restart",
       category: "tools",
     }),

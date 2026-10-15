@@ -179,7 +179,7 @@ export async function startGatewayServer(
     const { config: migrated, changes } = migrateLegacyConfig(configSnapshot.parsed);
     if (!migrated) {
       throw new Error(
-        `Legacy config entries detected but auto-migration failed. Run "${formatCliCommand("KoLo doctor")}" to migrate.`,
+        `Legacy config entries detected but auto-migration failed. Run "${formatCliCommand("Kurahi doctor")}" to migrate.`,
       );
     }
     await writeConfigFile(migrated);
@@ -201,7 +201,7 @@ export async function startGatewayServer(
             .join("\n")
         : "Unknown validation issue.";
     throw new Error(
-      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("KoLo doctor")}" to repair, then retry.`,
+      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("Kurahi doctor")}" to repair, then retry.`,
     );
   }
 
@@ -228,7 +228,7 @@ export async function startGatewayServer(
       );
     } else {
       log.info(
-        `policy gate: no policy (mode ${policyStatus.mode}); run \`kolo policy init\` to add one`,
+        `policy gate: no policy (mode ${policyStatus.mode}); run \`kurahi policy init\` to add one`,
       );
     }
     for (const warning of policyStatus.warnings) {

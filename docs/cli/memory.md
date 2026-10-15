@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo memory` (status/index/search)"
+summary: "CLI reference for `Kurahi memory` (status/index/search)"
 read_when:
   - You want to index or search semantic memory
   - You’re debugging memory availability or indexing
 title: "memory"
 ---
 
-# `KoLo memory`
+# `Kurahi memory`
 
 Manage semantic memory indexing and search.
 Provided by the active memory plugin (default: `memory-core`; set `plugins.slots.memory = "none"` to disable).
@@ -19,15 +19,15 @@ Related:
 ## Examples
 
 ```bash
-KoLo memory status
-KoLo memory status --deep
-KoLo memory status --deep --index
-KoLo memory status --deep --index --verbose
-KoLo memory index
-KoLo memory index --verbose
-KoLo memory search "release checklist"
-KoLo memory status --agent main
-KoLo memory index --agent main --verbose
+Kurahi memory status
+Kurahi memory status --deep
+Kurahi memory status --deep --index
+Kurahi memory status --deep --index --verbose
+Kurahi memory index
+Kurahi memory index --verbose
+Kurahi memory search "release checklist"
+Kurahi memory status --agent main
+Kurahi memory index --agent main --verbose
 ```
 
 ## Options

@@ -1,9 +1,11 @@
 # Quality Streak Loop
 
 ## Purpose
+
 Fix product failures until a defined streak of realistic tests passes consecutively.
 
 ## Trigger
+
 - Scheduled: Pre-release quality gate
 - Event-driven: Any test failure in CI
 - Threshold: Failure rate exceeds acceptable level
@@ -22,28 +24,33 @@ Fix product failures until a defined streak of realistic tests passes consecutiv
 ```
 
 ## Verification
+
 - Each fix is validated by the failing scenario + regression suite
 - Evidence recorded for every pass/fail (logs, screenshots, timestamps)
 
 ## Stop Conditions
+
 - ✅ N consecutive full-suite passes achieved
 - ✅ Remaining failures are documented as known/acceptable trade-offs
 - ⚠️ After 3 iterations without progress: escalate to human, document blockers
 
 ## Parameters
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `N` | 5 | Required consecutive passes |
-| `max_iterations` | 20 | Hard stop to prevent infinite loops |
-| `scenario_count` | varies | Number of realistic scenarios to cover |
-| `timeout_per_iteration` | 30 min | Max time per fix cycle |
+
+| Parameter               | Default | Description                            |
+| ----------------------- | ------- | -------------------------------------- |
+| `N`                     | 5       | Required consecutive passes            |
+| `max_iterations`        | 20      | Hard stop to prevent infinite loops    |
+| `scenario_count`        | varies  | Number of realistic scenarios to cover |
+| `timeout_per_iteration` | 30 min  | Max time per fix cycle                 |
 
 ## Output
+
 - Streak report: N passed, total iterations, failures fixed, failures deferred
 - Evidence package: per-scenario results with timestamps
 - Regression coverage delta: tests added
 
-## Example (KoLo House)
+## Example (Kurahi House)
+
 ```
 Trigger: Gateway health check fails
 Scenario: "Gateway responds to health probe within 2s"

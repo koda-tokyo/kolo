@@ -49,6 +49,6 @@ Every injection is audited (`memory.boot_injected`, with the files and whether e
 
 - The plugin never writes the files; it only reads them at injection time, so an updated handoff
   is picked up on the next gateway start (or next turn with `once: false`).
-- Reloading the plugin (`kolo plugins reload memory-boot-inject`) resets the per-session
+- Reloading the plugin (`kurahi plugins reload memory-boot-inject`) resets the per-session
   bookkeeping: the next turn injects again.
 - Audit source: `plugin:memory-boot-inject`.

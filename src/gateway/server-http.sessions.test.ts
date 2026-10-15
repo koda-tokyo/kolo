@@ -3,7 +3,7 @@ import {
   generateDeviceKey,
   pairProofPayload,
   signWithDeviceKey,
-} from "@kodasoken/kolo-client";
+} from "@kodasoken/kurahi-client";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

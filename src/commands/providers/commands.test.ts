@@ -113,7 +113,7 @@ afterEach(() => {
 
 const agentDir = () => path.join(home, "agent");
 
-describe("kolo providers", () => {
+describe("kurahi providers", () => {
   it("lists every registry entry as unconfigured on a fresh home", async () => {
     const { runtime, logs } = makeRuntime();
     await providersListCommand({ json: true }, runtime, { agentDir });

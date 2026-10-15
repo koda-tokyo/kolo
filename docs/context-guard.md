@@ -33,34 +33,34 @@ Add `data.redact` to the signed policy:
 version: 1
 data:
   redact:
-    fields: ["@personal"]                 # mask values of these JSON keys
-    restoreTo: [message, "mcp:care/*"]    # tools that receive the real values back
+    fields: ["@personal"] # mask values of these JSON keys
+    restoreTo: [message, "mcp:care/*"] # tools that receive the real values back
 ```
 
 That is enough for most deployments: the built-in detectors are on by default.
 
-| Key | Meaning | Default |
-|---|---|---|
-| `detectors` | Built-in pattern detectors to run | all except `ip` |
-| `fields` | JSON keys whose values are masked (globs, case-insensitive). `@personal` adds common name, address, birth-date, phone and e-mail keys in English, Japanese and Portuguese | none |
-| `patterns` | Your own detectors: `{ name, regex }` | none |
-| `agents` | Agents the guard applies to | all |
-| `tools` | Tools whose results are guarded; `mcp:<server>/<tool>` for MCP tools | all |
-| `exceptTools` | Tools whose results are never guarded | none |
-| `restoreTo` | Tools whose arguments get real values back | none |
+| Key           | Meaning                                                                                                                                                                   | Default         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `detectors`   | Built-in pattern detectors to run                                                                                                                                         | all except `ip` |
+| `fields`      | JSON keys whose values are masked (globs, case-insensitive). `@personal` adds common name, address, birth-date, phone and e-mail keys in English, Japanese and Portuguese | none            |
+| `patterns`    | Your own detectors: `{ name, regex }`                                                                                                                                     | none            |
+| `agents`      | Agents the guard applies to                                                                                                                                               | all             |
+| `tools`       | Tools whose results are guarded; `mcp:<server>/<tool>` for MCP tools                                                                                                      | all             |
+| `exceptTools` | Tools whose results are never guarded                                                                                                                                     | none            |
+| `restoreTo`   | Tools whose arguments get real values back                                                                                                                                | none            |
 
 ## Built-in detectors
 
-| Detector | Finds | Validation |
-|---|---|---|
-| `email` | e-mail addresses | |
-| `phone` | international numbers, Japanese landlines and mobiles, Brazilian numbers | |
-| `jp-my-number` | Japanese Individual Numbers (マイナンバー) | check digit |
-| `br-cpf` | Brazilian CPF | both check digits |
-| `br-cnpj` | Brazilian CNPJ | both check digits |
-| `credit-card` | payment card numbers | Luhn |
-| `jp-postal` | Japanese postal codes | |
-| `ip` | IPv4 addresses (opt-in) | |
+| Detector       | Finds                                                                    | Validation        |
+| -------------- | ------------------------------------------------------------------------ | ----------------- |
+| `email`        | e-mail addresses                                                         |                   |
+| `phone`        | international numbers, Japanese landlines and mobiles, Brazilian numbers |                   |
+| `jp-my-number` | Japanese Individual Numbers (マイナンバー)                               | check digit       |
+| `br-cpf`       | Brazilian CPF                                                            | both check digits |
+| `br-cnpj`      | Brazilian CNPJ                                                           | both check digits |
+| `credit-card`  | payment card numbers                                                     | Luhn              |
+| `jp-postal`    | Japanese postal codes                                                    |                   |
+| `ip`           | IPv4 addresses (opt-in)                                                  |                   |
 
 Numbers that fail their check digit are left alone, so order numbers and IDs are not masked by
 mistake. Names cannot be found reliably by pattern: mask them through `fields`, which works on any
@@ -83,7 +83,7 @@ the `tool.result` event in the same bundle already holds the masked text, so the
 exactly what the model was given.
 
 ```text
-kolo evidence replay <job>
+kurahi evidence replay <job>
   ...
   context guard on mcp:care/residents: 4 name, 2 phone masked
   context guard on message: nothing masked, 2 value(s) restored into arguments
@@ -95,5 +95,5 @@ kolo evidence replay <job>
 - What the user types into a chat goes to the model as written; the guard covers what tools return.
 - A reply the agent writes keeps placeholders. Reveal real values to people through your own
   system of record, where their access rights already apply.
-- Detectors are patterns. Test them against your own data with `kolo evidence replay` before relying on them for
+- Detectors are patterns. Test them against your own data with `kurahi evidence replay` before relying on them for
   regulated data, and add `patterns` for identifiers specific to your organisation.

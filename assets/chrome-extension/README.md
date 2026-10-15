@@ -1,16 +1,16 @@
-# KoLo Chrome Extension (Browser Relay)
+# Kurahi Chrome Extension (Browser Relay)
 
-Purpose: attach KoLo to an existing Chrome tab so the Gateway can automate it (via the local CDP relay server).
+Purpose: attach Kurahi to an existing Chrome tab so the Gateway can automate it (via the local CDP relay server).
 
 ## Dev / load unpacked
 
-1. Build/run KoLo Gateway with browser control enabled.
+1. Build/run Kurahi Gateway with browser control enabled.
 2. Ensure the relay server is reachable at `http://127.0.0.1:18792/` (default).
 3. Install the extension to a stable path:
 
    ```bash
-   KoLo browser extension install
-   KoLo browser extension path
+   Kurahi browser extension install
+   Kurahi browser extension path
    ```
 
 4. Chrome → `chrome://extensions` → enable “Developer mode”.

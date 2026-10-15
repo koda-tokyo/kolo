@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/telegram",
   "version": "2.0.0",
-  "description": "KoLo Telegram channel plugin",
+  "description": "Kurahi Telegram channel plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

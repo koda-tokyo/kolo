@@ -464,7 +464,7 @@ describe("backward compatibility (profile parameter)", () => {
       profiles: Array<{ name: string }>;
     };
     expect(Array.isArray(result.profiles)).toBe(true);
-    // Should at least have the default KoLo profile
+    // Should at least have the default Kurahi profile
     expect(result.profiles.some((p) => p.name === "KoLo")).toBe(true);
   });
 

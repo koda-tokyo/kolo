@@ -1,4 +1,4 @@
-import { KoloClient, KoloNetworkError } from "@kodasoken/kolo-client";
+import { KoloClient, KoloNetworkError } from "@kodasoken/kurahi-client";
 import { PassThrough } from "node:stream";
 import { describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
@@ -53,7 +53,7 @@ function runtime() {
   };
 }
 
-describe("kolo attach: target resolution", () => {
+describe("kurahi attach: target resolution", () => {
   it("resolves by id, key, label, then agent (main session first)", () => {
     expect(resolveAttachTarget(rows, "sid-2")?.key).toBe("agent:atlas:ops");
     expect(resolveAttachTarget(rows, "AGENT:ATLAS:OPS")?.id).toBe("sid-2");
@@ -65,7 +65,7 @@ describe("kolo attach: target resolution", () => {
   });
 });
 
-describe("kolo attach --list", () => {
+describe("kurahi attach --list", () => {
   it("prints the sessions the gateway returns (JSON and table)", async () => {
     const rt = runtime();
     const client = { listSessions: vi.fn(async () => ({ ok: true, sessions: rows })) };
@@ -97,7 +97,7 @@ describe("kolo attach --list", () => {
   });
 });
 
-describe("kolo attach <target>", () => {
+describe("kurahi attach <target>", () => {
   it("attaches through the gateway, replays history, sends stdin lines and detaches", async () => {
     const rt = runtime();
     const calls: Array<{ method: string; params: unknown }> = [];
@@ -208,7 +208,7 @@ describe("kolo attach <target>", () => {
   it("is a usage error without a target and exit 1 when the session is unknown", async () => {
     const rt = runtime();
     expect(await runAttach(undefined, {}, { runtime: rt })).toBe(ATTACH_EXIT.usage);
-    const { KoloApiError } = await import("@kodasoken/kolo-client");
+    const { KoloApiError } = await import("@kodasoken/kurahi-client");
     const client = {
       getSession: vi.fn(async () => {
         throw new KoloApiError(

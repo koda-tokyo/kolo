@@ -1,4 +1,4 @@
-// `kolo doctor` section for the self-check plugin report (KoLo 2.0, M7).
+// `kurahi doctor` section for the self-check plugin report (KoLo 2.0, M7).
 // The plugin (extensions/self-check) writes <stateDir>/self-check/latest.json on every run; doctor
 // only reads it, so a doctor run never needs the gateway to be up.
 import { readSelfCheckReport, selfCheckReportPath } from "../cli/plugins-cli.js";

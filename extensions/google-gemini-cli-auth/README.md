@@ -1,4 +1,4 @@
-# Google Gemini CLI Auth (KoLo plugin)
+# Google Gemini CLI Auth (Kurahi plugin)
 
 OAuth provider plugin for **Gemini CLI** (Google Code Assist).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Gemini CLI** (Google Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-KoLo plugins enable google-gemini-cli-auth
+Kurahi plugins enable google-gemini-cli-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-KoLo models auth login --provider google-gemini-cli --set-default
+Kurahi models auth login --provider google-gemini-cli --set-default
 ```
 
 ## Requirements

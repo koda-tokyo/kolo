@@ -165,7 +165,7 @@ export function renderRuntimeHints(
     }
   })();
   if (runtime.missingUnit) {
-    hints.push(`Service not installed. Run: ${formatCliCommand("kolo gateway install", env)}`);
+    hints.push(`Service not installed. Run: ${formatCliCommand("kurahi gateway install", env)}`);
     if (fileLog) {
       hints.push(`File logs: ${fileLog}`);
     }
@@ -192,8 +192,8 @@ export function renderRuntimeHints(
 
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const base = [
-    formatCliCommand("kolo gateway install", env),
-    formatCliCommand("kolo gateway", env),
+    formatCliCommand("kurahi gateway install", env),
+    formatCliCommand("kurahi gateway", env),
   ];
   const profile = env.KOLO_PROFILE;
   switch (process.platform) {

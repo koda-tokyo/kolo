@@ -147,7 +147,7 @@ export class McpConnection {
     await this.connectOnce();
   }
 
-  /** One connection attempt without supervision (used by `kolo mcp test`). */
+  /** One connection attempt without supervision (used by `kurahi mcp test`). */
   async connectOnce(): Promise<void> {
     if (this.state === "connecting" || this.state === "ready") {
       return;

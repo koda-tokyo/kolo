@@ -13,13 +13,13 @@ title: "TUI"
 1. Start the Gateway.
 
 ```bash
-KoLo gateway
+Kurahi gateway
 ```
 
 2. Open the TUI.
 
 ```bash
-KoLo tui
+Kurahi tui
 ```
 
 3. Type a message and press Enter.
@@ -27,7 +27,7 @@ KoLo tui
 Remote Gateway:
 
 ```bash
-KoLo tui --url ws://<host>:<port> --token <gateway-token>
+Kurahi tui --url ws://<host>:<port> --token <gateway-token>
 ```
 
 Use `--password` if your Gateway uses password auth.
@@ -58,7 +58,7 @@ Use `--password` if your Gateway uses password auth.
 - Turn delivery on:
   - `/deliver on`
   - or the Settings panel
-  - or start with `KoLo tui --deliver`
+  - or start with `Kurahi tui --deliver`
 
 ## Pickers + overlays
 
@@ -134,21 +134,21 @@ Eight built-in themes: `dark` (default), `light`, `high-contrast`, `dusk`, `fore
 { "tui": { "theme": "./sunset.json" } }
 ```
 
-Relative paths resolve against the directory `kolo tui` starts in. Unknown tokens are reported as a system line and ignored; an invalid colour or base rejects the file and the TUI starts with `dark`.
+Relative paths resolve against the directory `kurahi tui` starts in. Unknown tokens are reported as a system line and ignored; an invalid colour or base rejects the file and the TUI starts with `dark`.
 
-- `kolo tui themes list` prints the built-in names.
-- `kolo tui themes export <name> [--out <path>]` writes a built-in theme as a complete theme file to edit.
-- `kolo tui themes check <path>` validates a theme file without opening the TUI.
+- `kurahi tui themes list` prints the built-in names.
+- `kurahi tui themes export <name> [--out <path>]` writes a built-in theme as a complete theme file to edit.
+- `kurahi tui themes check <path>` validates a theme file without opening the TUI.
 
 Tokens: `text`, `dim`, `accent`, `accentSoft`, `border`, `userBg`, `userText`, `systemText`, `toolPendingBg`, `toolSuccessBg`, `toolErrorBg`, `toolTitle`, `toolOutput`, `quote`, `quoteBorder`, `code`, `codeBlock`, `codeBorder`, `link`, `error`, `success`, `diffAdded`, `diffRemoved`, `diffHunk`, `diffContext`, `reasoning`, `banner`, `bannerBg`.
 
 ## File references
 
-Type `@` and start a path: the editor completes files from the directory `kolo tui` was started in (`@src/app.ts`, or `@"a file with spaces.md"`). When the message is sent, each reference that names a readable text file is appended to it as a fenced block headed `File: <path>`, so the agent reads it in the same turn; the chat log shows the line as typed and one system line naming what was attached. Limits: 64 KiB per file, 256 KiB and ten files per message; binary files are skipped and reported. A reference that is not a file (an address, a name) is left as typed.
+Type `@` and start a path: the editor completes files from the directory `kurahi tui` was started in (`@src/app.ts`, or `@"a file with spaces.md"`). When the message is sent, each reference that names a readable text file is appended to it as a fenced block headed `File: <path>`, so the agent reads it in the same turn; the chat log shows the line as typed and one system line naming what was attached. Limits: 64 KiB per file, 256 KiB and ten files per message; binary files are skipped and reported. A reference that is not a file (an address, a name) is left as typed.
 
 ## Export and external editor
 
-`/export` writes the session transcript to a file. The default is Markdown in the directory `kolo tui` was started from, named `kolo-session-<key>-<timestamp>.md`; `/export json` writes the raw message records, and a path argument chooses the file (a `.json` path implies JSON). Existing files are never overwritten. Secrets are redacted with the same patterns as the logs (`logging.redactPatterns`), always, even when log redaction is off. Up to 1000 messages are exported.
+`/export` writes the session transcript to a file. The default is Markdown in the directory `kurahi tui` was started from, named `kolo-session-<key>-<timestamp>.md`; `/export json` writes the raw message records, and a path argument chooses the file (a `.json` path implies JSON). Existing files are never overwritten. Secrets are redacted with the same patterns as the logs (`logging.redactPatterns`), always, even when log redaction is off. Up to 1000 messages are exported.
 
 `/editor` opens the current prompt in `$VISUAL`, else `$EDITOR` (on Windows, `notepad` when neither is set). The TUI releases the terminal while the editor runs and restores it afterwards; when the editor exits with code 0 the file's contents replace the prompt. The temp file lives under `<KOLO_HOME>/tmp` with mode 600 and is removed afterwards. Nothing is sent until you press Enter.
 
@@ -234,7 +234,7 @@ While the model thinks, the block is expanded and follows the newest lines, unde
 - `/reasoning on|off|collapsed|expanded` sets the view: `collapsed` (the default) shows the first lines once the answer starts, `expanded` keeps whole blocks open, `off` hides reasoning, and `on` turns it back on with the last layout. The choice is saved on the session (`reasoningView`), so every terminal attached to the session shows the same thing; `off` also stops the gateway from streaming reasoning to that session.
 - A block is never taller than `tui.reasoning.maxLines` (default 400): longer reasoning ends with `… N more lines` (or starts with `… N earlier lines` while it streams). Escape sequences and control characters are removed before display, so reasoning cannot disturb tool cards or diffs.
 - Operators can keep reasoning on the gateway: `agents.defaults.reasoning.expose: false` (or `agents.list[].reasoning.expose` per agent), or the policy key `agents[<glob>].reasoning.expose: false`. Reasoning that leaves the gateway is redacted with the built-in secret patterns and `logging.redactPatterns`.
-- `kolo attach` prints reasoning dimmed under the same headers, and the dashboard chat shows it as a collapsible `Thinking` section.
+- `kurahi attach` prints reasoning dimmed under the same headers, and the dashboard chat shows it as a collapsible `Thinking` section.
 
 ```json5
 {
@@ -275,13 +275,13 @@ While the model thinks, the block is expanded and follows the newest lines, unde
 No output after sending a message:
 
 - Run `/status` in the TUI to confirm the Gateway is connected and idle/busy.
-- Check the Gateway logs: `KoLo logs --follow`.
-- Confirm the agent can run: `KoLo status` and `KoLo models status`.
+- Check the Gateway logs: `Kurahi logs --follow`.
+- Confirm the agent can run: `Kurahi status` and `Kurahi models status`.
 - If you expect messages in a chat channel, enable delivery (`/deliver on` or `--deliver`).
 - `--history-limit <n>`: History entries to load (default 200)
 
 ## Troubleshooting
 
 - `disconnected`: ensure the Gateway is running and your `--url/--token/--password` are correct.
-- No agents in picker: check `KoLo agents list` and your routing config.
+- No agents in picker: check `Kurahi agents list` and your routing config.
 - Empty session picker: you might be in global scope or have no sessions yet.

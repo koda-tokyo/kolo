@@ -26,7 +26,7 @@ export type ChannelsInboxConfig = {
   maxFileBytes?: number;
   /** Attachments kept per inbound message (default 8). */
   maxFilesPerMessage?: number;
-  /** Days an inbox file is kept before `kolo channels prune` removes it (default 30). */
+  /** Days an inbox file is kept before `kurahi channels prune` removes it (default 30). */
   retentionDays?: number;
 };
 

@@ -753,7 +753,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
 
     const doctorStep = await runStep(
       step(
-        "kolo doctor",
+        "kurahi doctor",
         managerScriptArgs(manager, "KoLo", ["doctor", "--non-interactive"]),
         gitRoot,
         { KOLO_UPDATE_IN_PROGRESS: "1" },

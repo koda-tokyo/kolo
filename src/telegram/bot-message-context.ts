@@ -229,7 +229,7 @@ export const buildTelegramMessageContext = async ({
     if (dmPolicy === "disabled") {
       return null;
     }
-    // M16: `/start KOLO-…` from the deep link printed by `kolo connect telegram` binds the owner.
+    // M16: `/start KOLO-…` from the deep link printed by `kurahi connect telegram` binds the owner.
     // Checked before the allowlist because the person claiming is not on it yet.
     if (
       await ownerClaimHook({
@@ -309,7 +309,7 @@ export const buildTelegramMessageContext = async ({
                       `Pairing code: ${code}`,
                       "",
                       "Ask the bot owner to approve with:",
-                      formatCliCommand("kolo pairing approve telegram <code>"),
+                      formatCliCommand("kurahi pairing approve telegram <code>"),
                     ].join("\n"),
                   ),
               });

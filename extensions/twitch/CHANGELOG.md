@@ -3,36 +3,38 @@
 ## 2.0.0
 
 ### Changes
-- Version alignment with core KoLo release numbers.
+
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.2.1-kolo.1
 
 ### Changes
-- Version alignment with core KoLo release numbers.
+
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.2.1
 
 ### Changes
 
-- Version alignment with core KoLo release numbers.
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.1.31
 
 ### Changes
 
-- Version alignment with core KoLo release numbers.
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.1.30
 
 ### Changes
 
-- Version alignment with core KoLo release numbers.
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.1.29
 
 ### Changes
 
-- Version alignment with core KoLo release numbers.
+- Version alignment with core Kurahi release numbers.
 
 ## 2026.1.23
 

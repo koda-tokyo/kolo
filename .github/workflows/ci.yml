@@ -74,7 +74,7 @@ jobs:
       - name: Install dependencies (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
-      - name: Build @kodasoken/kolo-client (the CLI imports its types)
+      - name: Build @kodasoken/kurahi-client (the CLI imports its types)
         run: pnpm client:build
 
       - name: Typecheck

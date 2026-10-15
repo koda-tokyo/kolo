@@ -1,4 +1,4 @@
-// `kolo service …` — the one supervisor command (KoLo 2.0, M1c).
+// `kurahi service …` — the one supervisor command (KoLo 2.0, M1c).
 // systemd --user on Linux, launchd on macOS, Task Scheduler + Node runner on Windows.
 import type { Command } from "commander";
 import fs from "node:fs";
@@ -57,7 +57,7 @@ async function guard(opts: CommonOpts, fn: () => Promise<void>) {
     if (opts.json) {
       defaultRuntime.log(JSON.stringify({ ok: false, error: message }));
     } else {
-      defaultRuntime.error(`kolo service: ${message}`);
+      defaultRuntime.error(`kurahi service: ${message}`);
     }
     defaultRuntime.exit(1);
   }
@@ -77,7 +77,7 @@ export async function runServiceInstall(opts: CommonOpts & { start?: boolean }) 
   const warnings: string[] = [];
   if (!fs.existsSync(path.join(identity.home, "kolo.json"))) {
     warnings.push(
-      `no kolo.json in ${identity.home}; the gateway will not start until it is configured (KOLO_HOME=${identity.home} kolo setup).`,
+      `no kolo.json in ${identity.home}; the gateway will not start until it is configured (KOLO_HOME=${identity.home} kurahi setup).`,
     );
   }
   out(opts, { ok: true, action: "install", identity, manager: backend.manager, lines, warnings }, [

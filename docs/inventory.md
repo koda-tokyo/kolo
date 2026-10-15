@@ -10,30 +10,30 @@ title: "AI inventory"
 # AI inventory
 
 Governance starts with knowing which AI systems exist. Most organisations build that list by hand,
-from surveys and spreadsheets, and it is out of date the day it is finished. KoLo is the runtime the
-agents run in, so it can produce the list from facts: `kolo inventory` reads the configuration, the
+from surveys and spreadsheets, and it is out of date the day it is finished. Kurahi is the runtime the
+agents run in, so it can produce the list from facts: `kurahi inventory` reads the configuration, the
 active [policy](/policy) and the [evidence](/evidence) store, and prints what is actually there.
 
 ```bash
-kolo inventory                                  # table
-kolo inventory --json                           # JSON with a digest
-kolo inventory export -o inventory.json         # signed JSON
-kolo inventory export --csv -o inventory.csv    # one row per agent, for spreadsheets
-kolo inventory verify inventory.json            # exit 1 if edited or badly signed
+kurahi inventory                                  # table
+kurahi inventory --json                           # JSON with a digest
+kurahi inventory export -o inventory.json         # signed JSON
+kurahi inventory export --csv -o inventory.csv    # one row per agent, for spreadsheets
+kurahi inventory verify inventory.json            # exit 1 if edited or badly signed
 ```
 
 ## What it lists
 
-| Section | Contents |
-|---|---|
-| Runtime | KoLo version; the host name only with `--host` |
-| Policy | whether a policy is loaded, its SHA-256, attestation state, enforcement mode, fleet kill state |
-| Agents | id, name, default agent, primary and fallback models, providers, tool profile and allow/deny lists, permissions, sandbox mode |
-| Policy per agent | matching rules, allowed providers, models and channels, tool rules, approval classes, budget, stopped |
-| Evidence per agent | number of evidence jobs and when the last one started |
-| MCP servers | id, transport, redacted endpoint, enabled, tool allowlist |
-| Channels | configured channels and whether each is enabled |
-| Totals | agents, distinct models, providers, MCP servers, channels, evidence jobs |
+| Section            | Contents                                                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Runtime            | Kurahi version; the host name only with `--host`                                                                              |
+| Policy             | whether a policy is loaded, its SHA-256, attestation state, enforcement mode, fleet kill state                                |
+| Agents             | id, name, default agent, primary and fallback models, providers, tool profile and allow/deny lists, permissions, sandbox mode |
+| Policy per agent   | matching rules, allowed providers, models and channels, tool rules, approval classes, budget, stopped                         |
+| Evidence per agent | number of evidence jobs and when the last one started                                                                         |
+| MCP servers        | id, transport, redacted endpoint, enabled, tool allowlist                                                                     |
+| Channels           | configured channels and whether each is enabled                                                                               |
+| Totals             | agents, distinct models, providers, MCP servers, channels, evidence jobs                                                      |
 
 ## What it never contains
 
@@ -44,10 +44,10 @@ the machine, so it carries names, shapes and counts only.
 
 ## Signing and verification
 
-`kolo inventory export` signs the JSON with the gateway's Ed25519 key, the same key that signs
+`kurahi inventory export` signs the JSON with the gateway's Ed25519 key, the same key that signs
 [evidence bundles](/evidence) and continuity manifests. The document carries a SHA-256 digest of
 its canonical content, the signer's public key and key id, and the signature over the digest.
-`kolo inventory verify` recomputes the digest and checks the signature with no access to the
+`kurahi inventory verify` recomputes the digest and checks the signature with no access to the
 gateway, so an auditor can check a file they received by e-mail. Any change to the content, or a
 signature made with another key, fails verification.
 

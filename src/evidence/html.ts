@@ -75,7 +75,7 @@ export function renderEvidenceHtml(input: {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence ${esc(jobId)}</title><style>${STYLE}</style></head>
 <body>
 <h1>Evidence for job <code>${esc(jobId)}</code></h1>
-<p class="muted">Read-only timeline. Verify offline with <code>kolo evidence verify</code> on an exported bundle.</p>
+<p class="muted">Read-only timeline. Verify offline with <code>kurahi evidence verify</code> on an exported bundle.</p>
 <dl class="facts">
 <dt>Agent</dt><dd>${esc(s.agent)}</dd>
 <dt>Session</dt><dd>${esc(s.sessionKey)}</dd>

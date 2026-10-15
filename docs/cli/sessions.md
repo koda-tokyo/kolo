@@ -1,16 +1,16 @@
 ---
-summary: "CLI reference for `KoLo sessions` (list stored sessions + usage)"
+summary: "CLI reference for `Kurahi sessions` (list stored sessions + usage)"
 read_when:
   - You want to list stored sessions and see recent activity
 title: "sessions"
 ---
 
-# `KoLo sessions`
+# `Kurahi sessions`
 
 List stored conversation sessions.
 
 ```bash
-KoLo sessions
-KoLo sessions --active 120
-KoLo sessions --json
+Kurahi sessions
+Kurahi sessions --active 120
+Kurahi sessions --json
 ```

@@ -1,7 +1,7 @@
 {
   "name": "@KoLo/diagnostics-otel",
   "version": "2.0.0",
-  "description": "KoLo diagnostics OpenTelemetry exporter",
+  "description": "Kurahi diagnostics OpenTelemetry exporter",
   "type": "module",
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
@@ -17,7 +17,7 @@
     "@opentelemetry/semantic-conventions": "^1.39.0"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

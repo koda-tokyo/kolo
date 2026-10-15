@@ -33,7 +33,7 @@ Credentials are **not** shared between agents. Never reuse `agentDir` across age
 If you want to share creds, copy `auth-profiles.json` into the other agent's `agentDir`.
 
 For how sandboxing behaves at runtime, see [Sandboxing](/gateway/sandboxing).
-For debugging “why is this blocked?”, see [Sandbox vs Tool Policy vs Elevated](/gateway/sandbox-vs-tool-policy-vs-elevated) and `KoLo sandbox explain`.
+For debugging “why is this blocked?”, see [Sandbox vs Tool Policy vs Elevated](/gateway/sandbox-vs-tool-policy-vs-elevated) and `Kurahi sandbox explain`.
 
 ---
 
@@ -234,7 +234,7 @@ Tool policies (global, agent, sandbox) support `group:*` entries that expand to 
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:KoLo`: all built-in KoLo tools (excludes provider plugins)
+- `group:Kurahi`: all built-in Kurahi tools (excludes provider plugins)
 
 ### Elevated Mode
 
@@ -291,7 +291,7 @@ Mitigation patterns:
 }
 ```
 
-Legacy `agent.*` configs are migrated by `KoLo doctor`; prefer `agents.defaults` + `agents.list` going forward.
+Legacy `agent.*` configs are migrated by `Kurahi doctor`; prefer `agents.defaults` + `agents.list` going forward.
 
 ---
 
@@ -348,7 +348,7 @@ After configuring multi-agent sandbox and tools:
 1. **Check agent resolution:**
 
    ```exec
-   KoLo agents list --bindings
+   Kurahi agents list --bindings
    ```
 
 2. **Verify sandbox containers:**

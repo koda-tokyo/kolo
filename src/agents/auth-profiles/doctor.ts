@@ -42,6 +42,6 @@ export function formatAuthDoctorHint(params: {
     }`,
     `- auth store oauth profiles: ${storeOauthProfiles || "(none)"}`,
     `- suggested profile: ${suggested}`,
-    `Fix: run "${formatCliCommand("kolo doctor --yes")}"`,
+    `Fix: run "${formatCliCommand("kurahi doctor --yes")}"`,
   ].join("\n");
 }

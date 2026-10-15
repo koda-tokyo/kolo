@@ -16,17 +16,17 @@ Nextcloud Talk ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-kolo plugins install @KoLo/nextcloud-talk
+kurahi plugins install @Kurahi/nextcloud-talk
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-kolo plugins install ./extensions/nextcloud-talk
+kurahi plugins install ./extensions/nextcloud-talk
 ```
 
 If you choose Nextcloud Talk during configure/onboarding and a git checkout is detected,
-KoLo will offer the local install path automatically.
+Kurahi will offer the local install path automatically.
 
 Details: [Plugins](/plugin)
 
@@ -35,10 +35,10 @@ Details: [Plugins](/plugin)
 1. Install the Nextcloud Talk plugin.
 2. On your Nextcloud server, create a bot:
    ```bash
-   ./occ talk:bot:install "KoLo" "<shared-secret>" "<webhook-url>" --feature reaction
+   ./occ talk:bot:install "Kurahi" "<shared-secret>" "<webhook-url>" --feature reaction
    ```
 3. Enable the bot in the target room settings.
-4. Configure KoLo:
+4. Configure Kurahi:
    - Config: `channels.nextcloud-talk.baseUrl` + `channels.nextcloud-talk.botSecret`
    - Or env: `NEXTCLOUD_TALK_BOT_SECRET` (default account only)
 5. Restart the gateway (or finish onboarding).
@@ -69,8 +69,8 @@ Minimal config:
 
 - Default: `channels.nextcloud-talk.dmPolicy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `KoLo pairing list nextcloud-talk`
-  - `KoLo pairing approve nextcloud-talk <CODE>`
+  - `Kurahi pairing list nextcloud-talk`
+  - `Kurahi pairing approve nextcloud-talk <CODE>`
 - Public DMs: `channels.nextcloud-talk.dmPolicy="open"` plus `channels.nextcloud-talk.allowFrom=["*"]`.
 
 ## Rooms (groups)

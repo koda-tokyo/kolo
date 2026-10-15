@@ -46,7 +46,7 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
       [
         "Non-interactive onboarding requires explicit risk acknowledgement.",
         `Read: ${DOCS_URL}/security`,
-        `Re-run with: ${formatCliCommand("kolo onboard --non-interactive --accept-risk ...")}`,
+        `Re-run with: ${formatCliCommand("kurahi onboard --non-interactive --accept-risk ...")}`,
       ].join("\n"),
     );
     runtime.exit(1);

@@ -85,7 +85,7 @@ const STEP_LABELS: Record<string, string> = {
   "deps install": "Installing dependencies",
   build: "Building",
   "ui:build": "Building UI",
-  "kolo doctor": "Running doctor checks",
+  "kurahi doctor": "Running doctor checks",
   "git rev-parse HEAD (after)": "Verifying update",
   "global update": "Updating via package manager",
   "global install": "Installing global package",
@@ -273,7 +273,7 @@ async function ensureGitCheckout(params: {
     const empty = await isEmptyDir(params.dir);
     if (!empty) {
       throw new Error(
-        `KOLO_GIT_DIR points at a non-git directory: ${params.dir}. Set KOLO_GIT_DIR to an empty folder or an KoLo checkout.`,
+        `KOLO_GIT_DIR points at a non-git directory: ${params.dir}. Set KOLO_GIT_DIR to an empty folder or an Kurahi checkout.`,
       );
     }
     return await runUpdateStep({
@@ -332,7 +332,7 @@ function formatGitStatusLine(params: {
 }
 
 export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<void> {
-  // Bundle installs: status is the same as `kolo update --check`.
+  // Bundle installs: status is the same as `kurahi update --check`.
   if (await maybeRunBundleUpdate({ check: true, json: opts.json, timeout: opts.timeout })) {
     return;
   }
@@ -419,7 +419,7 @@ export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<vo
     },
   ];
 
-  defaultRuntime.log(theme.heading("KoLo update status"));
+  defaultRuntime.log(theme.heading("Kurahi update status"));
   defaultRuntime.log("");
   defaultRuntime.log(
     renderTable({
@@ -588,7 +588,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
   }
   if (opts.check) {
     defaultRuntime.error(
-      "--check applies to prebuilt bundle installs; use `kolo update status` for git and package installs.",
+      "--check applies to prebuilt bundle installs; use `kurahi update status` for git and package installs.",
     );
     defaultRuntime.exit(1);
     return;
@@ -712,7 +712,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
   const showProgress = !opts.json && process.stdout.isTTY;
 
   if (!opts.json) {
-    defaultRuntime.log(theme.heading("Updating KoLo..."));
+    defaultRuntime.log(theme.heading("Updating Kurahi..."));
     defaultRuntime.log("");
   }
 
@@ -856,12 +856,12 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.reason === "not-git-install") {
       defaultRuntime.log(
         theme.warn(
-          `Skipped: this KoLo install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("kolo doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("kolo gateway restart"), CLI_NAME)}\`.`,
+          `Skipped: this Kurahi install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("kurahi doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("kurahi gateway restart"), CLI_NAME)}\`.`,
         ),
       );
       defaultRuntime.log(
         theme.muted(
-          `Examples: \`${replaceCliName("npm i -g @kodasoken/kolo@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g @kodasoken/kolo@latest", CLI_NAME)}\``,
+          `Examples: \`${replaceCliName("npm i -g kurahi@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g kurahi@latest", CLI_NAME)}\``,
         ),
       );
     }
@@ -988,7 +988,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
         defaultRuntime.log(theme.warn(`Daemon restart failed: ${String(err)}`));
         defaultRuntime.log(
           theme.muted(
-            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("kolo gateway restart"), CLI_NAME)}`,
+            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("kurahi gateway restart"), CLI_NAME)}`,
           ),
         );
       }
@@ -998,13 +998,13 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.mode === "npm" || result.mode === "pnpm") {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("kolo doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("kolo gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("kurahi doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("kurahi gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     } else {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("kolo gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("kurahi gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     }
@@ -1018,7 +1018,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
 export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promise<void> {
   if (!process.stdin.isTTY) {
     defaultRuntime.error(
-      "Update wizard requires a TTY. Use `kolo update --channel <stable|beta|dev>` instead.",
+      "Update wizard requires a TTY. Use `kurahi update --channel <stable|beta|dev>` instead.",
     );
     defaultRuntime.exit(1);
     return;
@@ -1109,7 +1109,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
         const empty = await isEmptyDir(gitDir);
         if (!empty) {
           defaultRuntime.error(
-            `KOLO_GIT_DIR points at a non-git directory: ${gitDir}. Set KOLO_GIT_DIR to an empty folder or an KoLo checkout.`,
+            `KOLO_GIT_DIR points at a non-git directory: ${gitDir}. Set KOLO_GIT_DIR to an empty folder or an Kurahi checkout.`,
           );
           defaultRuntime.exit(1);
           return;
@@ -1154,7 +1154,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
 export function registerUpdateCli(program: Command) {
   const update = program
     .command("update")
-    .description("Update KoLo to the latest version")
+    .description("Update Kurahi to the latest version")
     .option("--json", "Output result as JSON", false)
     .option("--no-restart", "Skip restarting the gateway service after a successful update")
     .option(
@@ -1167,16 +1167,16 @@ export function registerUpdateCli(program: Command) {
     .option("--check", "Only check for a newer release (prebuilt bundles); never downloads", false)
     .addHelpText("after", () => {
       const examples = [
-        ["kolo update", "Update a source checkout (git)"],
-        ["kolo update --check", "Prebuilt bundle: report the newest release, change nothing"],
-        ["kolo update --channel beta", "Switch to beta channel (git + npm)"],
-        ["kolo update --channel dev", "Switch to dev channel (git + npm)"],
-        ["kolo update --tag beta", "One-off update to a dist-tag or version"],
-        ["kolo update --no-restart", "Update without restarting the service"],
-        ["kolo update --json", "Output result as JSON"],
-        ["kolo update --yes", "Non-interactive (accept downgrade prompts)"],
-        ["kolo update wizard", "Interactive update wizard"],
-        ["kolo --update", "Shorthand for KoLo update"],
+        ["kurahi update", "Update a source checkout (git)"],
+        ["kurahi update --check", "Prebuilt bundle: report the newest release, change nothing"],
+        ["kurahi update --channel beta", "Switch to beta channel (git + npm)"],
+        ["kurahi update --channel dev", "Switch to dev channel (git + npm)"],
+        ["kurahi update --tag beta", "One-off update to a dist-tag or version"],
+        ["kurahi update --no-restart", "Update without restarting the service"],
+        ["kurahi update --json", "Output result as JSON"],
+        ["kurahi update --yes", "Non-interactive (accept downgrade prompts)"],
+        ["kurahi update wizard", "Interactive update wizard"],
+        ["kurahi --update", "Shorthand for Kurahi update"],
       ] as const;
       const fmtExamples = examples
         .map(([cmd, desc]) => `  ${theme.command(cmd)} ${theme.muted(`# ${desc}`)}`)
@@ -1189,7 +1189,7 @@ ${theme.heading("What this does:")}
 
 ${theme.heading("Switch channels:")}
   - Use --channel stable|beta|dev to persist the update channel in config
-  - Run KoLo update status to see the active channel and source
+  - Run Kurahi update status to see the active channel and source
   - Use --tag <dist-tag|version> for a one-off npm update without persisting
 
 ${theme.heading("Non-interactive:")}
@@ -1249,9 +1249,9 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update")}`;
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["kolo update status", "Show channel + version status."],
-          ["kolo update status --json", "JSON output."],
-          ["kolo update status --timeout 10", "Custom timeout."],
+          ["kurahi update status", "Show channel + version status."],
+          ["kurahi update status --json", "JSON output."],
+          ["kurahi update status --timeout 10", "Custom timeout."],
         ])}\n\n${theme.heading("Notes:")}\n${theme.muted(
           "- Shows current update channel (stable/beta/dev) and source",
         )}\n${theme.muted("- Includes git tag/branch/SHA for source checkouts")}\n\n${theme.muted(

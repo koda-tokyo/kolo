@@ -30,7 +30,7 @@ Availability: internal preview. The iOS app is not publicly distributed yet.
 1. Start the Gateway:
 
 ```bash
-KoLo gateway --port 18789
+Kurahi gateway --port 18789
 ```
 
 2. In the iOS app, open Settings and pick a discovered gateway (or enable Manual Host and enter host/port).
@@ -38,15 +38,15 @@ KoLo gateway --port 18789
 3. Approve the pairing request on the gateway host:
 
 ```bash
-KoLo nodes pending
-KoLo nodes approve <requestId>
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
 ```
 
 4. Verify connection:
 
 ```bash
-KoLo nodes status
-KoLo gateway call node.list --params "{}"
+Kurahi nodes status
+Kurahi gateway call node.list --params "{}"
 ```
 
 ## Discovery paths
@@ -69,7 +69,7 @@ In Settings, enable **Manual Host** and enter the gateway host + port (default `
 The iOS node renders a WKWebView canvas. Use `node.invoke` to drive it:
 
 ```bash
-KoLo nodes invoke --node "iOS Node" --command canvas.navigate --params '{"url":"http://<gateway-host>:18793/__KOLO__/canvas/"}'
+Kurahi nodes invoke --node "iOS Node" --command canvas.navigate --params '{"url":"http://<gateway-host>:18793/__KOLO__/canvas/"}'
 ```
 
 Notes:
@@ -81,11 +81,11 @@ Notes:
 ### Canvas eval / snapshot
 
 ```bash
-KoLo nodes invoke --node "iOS Node" --command canvas.eval --params '{"javaScript":"(() => { const {ctx} = window.__KoLo; ctx.clearRect(0,0,innerWidth,innerHeight); ctx.lineWidth=6; ctx.strokeStyle=\"#ff2d55\"; ctx.beginPath(); ctx.moveTo(40,40); ctx.lineTo(innerWidth-40, innerHeight-40); ctx.stroke(); return \"ok\"; })()"}'
+Kurahi nodes invoke --node "iOS Node" --command canvas.eval --params '{"javaScript":"(() => { const {ctx} = window.__KoLo; ctx.clearRect(0,0,innerWidth,innerHeight); ctx.lineWidth=6; ctx.strokeStyle=\"#ff2d55\"; ctx.beginPath(); ctx.moveTo(40,40); ctx.lineTo(innerWidth-40, innerHeight-40); ctx.stroke(); return \"ok\"; })()"}'
 ```
 
 ```bash
-KoLo nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxWidth":900,"format":"jpeg"}'
+Kurahi nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxWidth":900,"format":"jpeg"}'
 ```
 
 ## Voice wake + talk mode
@@ -97,7 +97,7 @@ KoLo nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxWid
 
 - `NODE_BACKGROUND_UNAVAILABLE`: bring the iOS app to the foreground (canvas/camera/screen commands require it).
 - `A2UI_HOST_NOT_CONFIGURED`: the Gateway did not advertise a canvas host URL; check `canvasHost` in [Gateway configuration](/gateway/configuration).
-- Pairing prompt never appears: run `KoLo nodes pending` and approve manually.
+- Pairing prompt never appears: run `Kurahi nodes pending` and approve manually.
 - Reconnect fails after reinstall: the Keychain pairing token was cleared; re-pair the node.
 
 ## Related docs

@@ -104,7 +104,7 @@ export function reportToMarkdown(report: ContinuityReport): string {
     lines.push("");
   }
   lines.push(
-    "Verify this report with `kolo continuity verify <path to continuity-report.json>`.",
+    "Verify this report with `kurahi continuity verify <path to continuity-report.json>`.",
     "",
   );
   return lines.join("\n");

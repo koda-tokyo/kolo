@@ -168,7 +168,7 @@ describe("runBundleUpdate", () => {
       currentVersion: "2026.10.16",
       channel: "stable",
       checkOnly: true,
-      repo: "koda-tokyo/kolo",
+      repo: "koda-tokyo/kurahi",
       apiBase: "https://api.example",
       fetchImpl: fakeFetch({ release, files, calls }),
       platform: "linux",
@@ -178,7 +178,7 @@ describe("runBundleUpdate", () => {
     expect(out.available).toBe(true);
     expect(out.latestVersion).toBe("2026.10.17");
     expect(out.performed).toBe(false);
-    expect(calls).toEqual(["https://api.example/repos/koda-tokyo/kolo/releases/latest"]);
+    expect(calls).toEqual(["https://api.example/repos/koda-tokyo/kurahi/releases/latest"]);
     expect(audits.map((a) => a.action)).toEqual(["update.check"]);
     expect(fs.existsSync(path.join(bundle.root, ".update"))).toBe(false);
   });

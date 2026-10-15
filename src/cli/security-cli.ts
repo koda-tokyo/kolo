@@ -61,12 +61,12 @@ export function registerSecurityCli(program: Command) {
       const muted = (text: string) => (rich ? theme.muted(text) : text);
 
       const lines: string[] = [];
-      lines.push(heading("kolo security audit"));
+      lines.push(heading("kurahi security audit"));
       lines.push(muted(`Summary: ${formatSummary(report.summary)}`));
-      lines.push(muted(`Run deeper: ${formatCliCommand("kolo security audit --deep")}`));
+      lines.push(muted(`Run deeper: ${formatCliCommand("kurahi security audit --deep")}`));
 
       if (opts.fix) {
-        lines.push(muted(`Fix: ${formatCliCommand("kolo security audit --fix")}`));
+        lines.push(muted(`Fix: ${formatCliCommand("kurahi security audit --fix")}`));
         if (!fixResult) {
           lines.push(muted("Fixes: failed to apply (unexpected error)"));
         } else if (

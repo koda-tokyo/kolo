@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/copilot-proxy",
   "version": "2.0.0",
-  "description": "KoLo Copilot Proxy provider plugin",
+  "description": "Kurahi Copilot Proxy provider plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

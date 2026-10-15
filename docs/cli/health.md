@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `KoLo health` (gateway health endpoint via RPC)"
+summary: "CLI reference for `Kurahi health` (gateway health endpoint via RPC)"
 read_when:
   - You want to quickly check the running Gateway’s health
 title: "health"
 ---
 
-# `KoLo health`
+# `Kurahi health`
 
 Fetch health from the running Gateway.
 
 ```bash
-KoLo health
-KoLo health --json
-KoLo health --verbose
+Kurahi health
+Kurahi health --json
+Kurahi health --verbose
 ```
 
 Notes:

@@ -11,7 +11,7 @@ type Disposer = () => void | Promise<void>;
 
 export type PluginLifecycleHandle = {
   api: KoLoPluginLifecycle;
-  /** Number of resources still held (tests, `kolo plugins list --verbose`). */
+  /** Number of resources still held (tests, `kurahi plugins list --verbose`). */
   size: () => number;
   dispose: (onError?: (what: string, err: unknown) => void) => Promise<void>;
 };

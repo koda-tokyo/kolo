@@ -210,7 +210,7 @@ async function loadValidConfig() {
   for (const issue of snapshot.issues) {
     defaultRuntime.error(`- ${issue.path || "<root>"}: ${issue.message}`);
   }
-  defaultRuntime.error(`Run \`${formatCliCommand("kolo doctor")}\` to repair, then retry.`);
+  defaultRuntime.error(`Run \`${formatCliCommand("kurahi doctor")}\` to repair, then retry.`);
   defaultRuntime.exit(1);
   return snapshot;
 }

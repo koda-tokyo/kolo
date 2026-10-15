@@ -12,7 +12,7 @@ title: "Slack"
 
 1. Create a Slack app and enable **Socket Mode**.
 2. Create an **App Token** (`xapp-...`) and **Bot Token** (`xoxb-...`).
-3. Set tokens for KoLo and start the gateway.
+3. Set tokens for Kurahi and start the gateway.
 
 Minimal config:
 
@@ -42,14 +42,14 @@ Minimal config:
    - `channel_rename`
    - `pin_added`, `pin_removed`
 6. Invite the bot to channels you want it to read.
-7. Slash Commands → create `/KoLo` if you use `channels.slack.slashCommand`. If you enable native commands, add one slash command per built-in command (same names as `/help`). Native defaults to off for Slack unless you set `channels.slack.commands.native: true` (global `commands.native` is `"auto"` which leaves Slack off).
+7. Slash Commands → create `/Kurahi` if you use `channels.slack.slashCommand`. If you enable native commands, add one slash command per built-in command (same names as `/help`). Native defaults to off for Slack unless you set `channels.slack.commands.native: true` (global `commands.native` is `"auto"` which leaves Slack off).
 8. App Home → enable the **Messages Tab** so users can DM the bot.
 
 Use the manifest below so scopes and events stay in sync.
 
 Multi-account support: use `channels.slack.accounts` with per-account tokens and optional `name`. See [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) for the shared pattern.
 
-### KoLo config (minimal)
+### Kurahi config (minimal)
 
 Set tokens via env vars (recommended):
 
@@ -72,7 +72,7 @@ Or via config:
 
 ### User token (optional)
 
-KoLo can use a Slack user token (`xoxp-...`) for read operations (history,
+Kurahi can use a Slack user token (`xoxp-...`) for read operations (history,
 pins, reactions, emoji, member info). By default this stays read-only: reads
 prefer the user token when present, and writes still use the bot token unless
 you explicitly opt in. Even with `userTokenReadOnly: false`, the bot token stays
@@ -118,7 +118,7 @@ Example with userTokenReadOnly explicitly set (allow user token writes):
   search) prefer the user token when configured, otherwise the bot token.
 - Write operations (send/edit/delete messages, add/remove reactions, pin/unpin,
   file uploads) use the bot token by default. If `userTokenReadOnly: false` and
-  no bot token is available, KoLo falls back to the user token.
+  no bot token is available, Kurahi falls back to the user token.
 
 ### History context
 
@@ -142,7 +142,7 @@ HTTP mode uses the Events API + Interactivity + Slash Commands with a shared req
 Example request URL:
 `https://gateway-host/slack/events`
 
-### KoLo config (minimal)
+### Kurahi config (minimal)
 
 ```json5
 {
@@ -169,12 +169,12 @@ user scopes if you plan to configure a user token.
 ```json
 {
   "display_information": {
-    "name": "KoLo",
-    "description": "Slack connector for KoLo"
+    "name": "Kurahi",
+    "description": "Slack connector for Kurahi"
   },
   "features": {
     "bot_user": {
-      "display_name": "KoLo",
+      "display_name": "Kurahi",
       "always_online": false
     },
     "app_home": {
@@ -183,8 +183,8 @@ user scopes if you plan to configure a user token.
     },
     "slash_commands": [
       {
-        "command": "/KoLo",
-        "description": "Send a message to KoLo",
+        "command": "/Kurahi",
+        "description": "Send a message to Kurahi",
         "should_escape": false
       }
     ]
@@ -348,7 +348,7 @@ Slack uses Socket Mode only (no HTTP webhook server). Provide both tokens:
     },
     "slashCommand": {
       "enabled": true,
-      "name": "KoLo",
+      "name": "Kurahi",
       "sessionPrefix": "slack:slash",
       "ephemeral": true
     },
@@ -375,7 +375,7 @@ ack reaction after the bot replies.
 
 ## Reply threading
 
-By default, KoLo replies in the main channel. Use `channels.slack.replyToMode` to control automatic threading:
+By default, Kurahi replies in the main channel. Use `channels.slack.replyToMode` to control automatic threading:
 
 | Mode    | Behavior                                                                                                                                                            |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -470,14 +470,14 @@ For fine-grained control, use these tags in agent responses:
 - DMs share the `main` session (like WhatsApp/Telegram).
 - Channels map to `agent:<agentId>:slack:channel:<channelId>` sessions.
 - Slash commands use `agent:<agentId>:slack:slash:<userId>` sessions (prefix configurable via `channels.slack.slashCommand.sessionPrefix`).
-- If Slack doesn’t provide `channel_type`, KoLo infers it from the channel ID prefix (`D`, `C`, `G`) and defaults to `channel` to keep session keys stable.
+- If Slack doesn’t provide `channel_type`, Kurahi infers it from the channel ID prefix (`D`, `C`, `G`) and defaults to `channel` to keep session keys stable.
 - Native command registration uses `commands.native` (global default `"auto"` → Slack off) and can be overridden per-workspace with `channels.slack.commands.native`. Text commands require standalone `/...` messages and can be disabled with `commands.text: false`. Slack slash commands are managed in the Slack app and are not removed automatically. Use `commands.useAccessGroups: false` to bypass access-group checks for commands.
 - Full command list + config: [Slash commands](/tools/slash-commands)
 
 ## DM security (pairing)
 
 - Default: `channels.slack.dm.policy="pairing"` — unknown DM senders get a pairing code (expires after 1 hour).
-- Approve via: `KoLo pairing approve slack <code>`.
+- Approve via: `Kurahi pairing approve slack <code>`.
 - To allow anyone: set `channels.slack.dm.policy="open"` and `channels.slack.dm.allowFrom=["*"]`.
 - `channels.slack.dm.allowFrom` accepts user IDs, @handles, or emails (resolved at startup when tokens allow). The wizard accepts usernames and resolves them to ids during setup when tokens allow.
 
@@ -490,7 +490,7 @@ For fine-grained control, use these tags in agent responses:
   `channels.defaults.groupPolicy`, or a channel allowlist to lock it down.
 - The configure wizard accepts `#channel` names and resolves them to IDs when possible
   (public + private); if multiple matches exist, it prefers the active channel.
-- On startup, KoLo resolves channel/user names in allowlists to IDs (when tokens allow)
+- On startup, Kurahi resolves channel/user names in allowlists to IDs (when tokens allow)
   and logs the mapping; unresolved entries are kept as typed.
 - To allow **no channels**, set `channels.slack.groupPolicy: "disabled"` (or keep an empty allowlist).
 
@@ -573,4 +573,4 @@ Slack follows the shared model described in [Channel residents](/channels/README
 - Attachments: files shared with the app are copied to `<KOLO_HOME>/inbox/slack/` within the
   `channels.inbox` caps.
 - Delivery: replies go through the outbound queue; Slack rate limits (429) are retried with
-  backoff; `kolo channels status` shows the Slack queue and dead letters.
+  backoff; `kurahi channels status` shows the Slack queue and dead letters.

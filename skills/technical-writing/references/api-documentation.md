@@ -2,7 +2,7 @@
 
 ## Overview
 
-API documentation at KoLo/KodaSōken is treated as a first-class product deliverable. Every public API endpoint, SDK method, and integration surface must have complete, accurate, and tested documentation. We use OpenAPI 3.1+ as the single source of truth for REST APIs.
+API documentation at Kurahi/KodaSōken is treated as a first-class product deliverable. Every public API endpoint, SDK method, and integration surface must have complete, accurate, and tested documentation. We use OpenAPI 3.1+ as the single source of truth for REST APIs.
 
 ## The OpenAPI-First Workflow
 
@@ -32,7 +32,7 @@ info:
     Full description in Japanese (for Japanese consumers)
     followed by English translation.
   contact:
-    name: "KoLo API Team"
+    name: "Kurahi API Team"
     email: "api@kolo.dev"
   license:
     name: "Proprietary"
@@ -62,7 +62,7 @@ components:
 ### Every Endpoint Must Include
 
 1. **Summary** (50 chars max, English): One-line description
-2. **Description** (bilingual): Full explanation including business context, edge cases, and rate limits. Japanese first for KODA KENKŌ endpoints, English first for KoLo developer endpoints.
+2. **Description** (bilingual): Full explanation including business context, edge cases, and rate limits. Japanese first for KODA KENKŌ endpoints, English first for Kurahi developer endpoints.
 3. **Operation ID**: Unique, camelCase, semantically meaningful: `getAgentStatus`, `createHealthRecord`
 4. **Tags**: At least one, for logical grouping
 5. **Path parameters**: Description, type, format, validation rules
@@ -174,7 +174,7 @@ components:
 
 ### Standard Error Response Format
 
-All KoLo APIs use a consistent error envelope:
+All Kurahi APIs use a consistent error envelope:
 
 ```json
 {
@@ -196,6 +196,7 @@ All KoLo APIs use a consistent error envelope:
 ### Error Code Naming Convention
 
 `UPPER_SNAKE_CASE` with domain prefix:
+
 - `AUTH_*` — Authentication/authorization errors
 - `AGENT_*` — Agent lifecycle errors
 - `GATEWAY_*` — Gateway infrastructure errors
@@ -213,8 +214,8 @@ Every endpoint explicitly states its auth requirements:
 
 ```yaml
 security:
-  - bearerAuth: []    # Requires JWT token
-  - apiKeyAuth: []    # Alternative: API key
+  - bearerAuth: [] # Requires JWT token
+  - apiKeyAuth: [] # Alternative: API key
 ```
 
 ### Auth Documentation Sections Required
@@ -254,18 +255,22 @@ sdk/
 ## SDK v2.1.0 (2026-05-20)
 
 ### Added
+
 - `client.agents.getMetrics()` — Agent performance metrics endpoint
 - TypeScript type exports for all response models
 
 ### Changed
+
 - `client.agents.create()` now accepts `memoryProfile` parameter
 - Minimum Node.js version bumped to 22.x
 
 ### Deprecated
+
 - `client.agents.status()` — Use `client.agents.getStatus()` instead
 - `legacyAuth` parameter — Removed in v3.0.0
 
 ### Fixed
+
 - Race condition in token refresh during high-concurrency scenarios
 ```
 
@@ -283,15 +288,18 @@ sdk/
 
 ```markdown
 # Deprecation: GET /v1/agents/status
+
 **Sunset Date:** 2026-08-01
 **Replacement:** GET /v2/agents/{agentId}/status
 
 ## Migration Steps
+
 1. Update endpoint URL from `/v1/agents/status?agentId=X` to `/v2/agents/X/status`
 2. Response format changes: `state` field renamed to `status`
 3. New required header: `X-KoLo-Client-Version`
 
 ## Why This Is Changing
+
 The v1 agents endpoint grouped all agent data under flat query parameters and returned
 inconsistent status codes. v2 uses resource-oriented URLs and standardized error responses.
 ```

@@ -122,7 +122,7 @@ function createLogWriters() {
     onBrokenPipe: (err, stream) => {
       const code = err.code ?? "EPIPE";
       const target = stream === process.stdout ? "stdout" : "stderr";
-      const message = `kolo logs: output ${target} closed (${code}). Stopping tail.`;
+      const message = `kurahi logs: output ${target} closed (${code}). Stopping tail.`;
       try {
         clearActiveProgressLine();
         process.stderr.write(`${message}\n`);
@@ -150,7 +150,7 @@ function emitGatewayError(
 ) {
   const details = buildGatewayConnectionDetails({ url: opts.url });
   const message = "Gateway not reachable. Is it running and accessible?";
-  const hint = `Hint: run \`${formatCliCommand("kolo doctor")}\`.`;
+  const hint = `Hint: run \`${formatCliCommand("kurahi doctor")}\`.`;
   const errorText = err instanceof Error ? err.message : String(err);
 
   if (mode === "json") {
@@ -192,7 +192,7 @@ export function registerLogsCli(program: Command) {
     .option("--plain", "Plain text output (no ANSI styling)", false)
     .option("--no-color", "Disable ANSI colors")
     // The token is never taken from argv: it is discovered from KOLO_HOME (the owner token file,
-    // the secrets store or gateway.remote) exactly as `kolo attach` and `kolo api` do.
+    // the secrets store or gateway.remote) exactly as `kurahi attach` and `kurahi api` do.
     .option(
       "--url <url>",
       "Gateway WebSocket URL (default: gateway.remote.url, else the local gateway)",

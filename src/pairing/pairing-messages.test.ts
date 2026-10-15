@@ -52,7 +52,7 @@ describe("buildPairingReply", () => {
       expect(text).toContain(`Pairing code: ${testCase.code}`);
       // CLI commands should respect KOLO_PROFILE when set (most tests run with isolated profile)
       const commandRe = new RegExp(
-        `kolo --profile isolated pairing approve ${testCase.channel} <code>`,
+        `kurahi --profile isolated pairing approve ${testCase.channel} <code>`,
       );
       expect(text).toMatch(commandRe);
     });

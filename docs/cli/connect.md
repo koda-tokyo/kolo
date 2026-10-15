@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `kolo connect` (connect your phone: WhatsApp, Telegram, LINE, phone browser; owner binding)"
+summary: "CLI reference for `kurahi connect` (connect your phone: WhatsApp, Telegram, LINE, phone browser; owner binding)"
 read_when:
   - You want the resident to answer you on your phone
   - You are scripting channel setup without prompts
@@ -7,18 +7,18 @@ read_when:
 title: "connect"
 ---
 
-# `kolo connect`
+# `kurahi connect`
 
-Connects a phone to the resident. The same flows run as the last step of `kolo init`
+Connects a phone to the resident. The same flows run as the last step of `kurahi init`
 (`--phone`). Walkthrough: [Connect your phone](/start/phone).
 
 ```bash
-kolo connect telegram
-kolo connect whatsapp
-printf '%s\n%s\n' "$LINE_SECRET" "$LINE_TOKEN" | kolo connect line --stdin --no-wait
-kolo connect web
-kolo connect --unbind telegram
-kolo connect --list --json
+kurahi connect telegram
+kurahi connect whatsapp
+printf '%s\n%s\n' "$LINE_SECRET" "$LINE_TOKEN" | kurahi connect line --stdin --no-wait
+kurahi connect web
+kurahi connect --unbind telegram
+kurahi connect --list --json
 ```
 
 ## Channels

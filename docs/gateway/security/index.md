@@ -7,16 +7,16 @@ title: "Security"
 
 # Security 🔒
 
-## Quick check: `KoLo security audit`
+## Quick check: `Kurahi security audit`
 
 See also: [Formal Verification (Security Models)](/security/formal-verification/)
 
 Run this regularly (especially after changing config or exposing network surfaces):
 
 ```bash
-KoLo security audit
-KoLo security audit --deep
-KoLo security audit --fix
+Kurahi security audit
+Kurahi security audit --deep
+Kurahi security audit --fix
 ```
 
 It flags common footguns (Gateway auth exposure, browser control exposure, elevated allowlists, filesystem permissions).
@@ -29,7 +29,7 @@ It flags common footguns (Gateway auth exposure, browser control exposure, eleva
 
 Running an AI agent with shell access on your machine is... _spicy_. Here’s how to not get pwned.
 
-KoLo is both a product and an experiment: you’re wiring frontier-model behavior into real messaging surfaces and real tools. **There is no “perfectly secure” setup.** The goal is to be deliberate about:
+Kurahi is both a product and an experiment: you’re wiring frontier-model behavior into real messaging surfaces and real tools. **There is no “perfectly secure” setup.** The goal is to be deliberate about:
 
 - who can talk to your bot
 - where the bot is allowed to act
@@ -47,7 +47,7 @@ Start with the smallest access that still works, then widen it as you gain confi
 - **Plugins** (extensions exist without an explicit allowlist).
 - **Model hygiene** (warn when configured models look legacy; not a hard block).
 
-If you run `--deep`, KoLo also attempts a best-effort live Gateway probe.
+If you run `--deep`, Kurahi also attempts a best-effort live Gateway probe.
 
 ## Credential storage map
 
@@ -83,7 +83,7 @@ For break-glass scenarios only, `gateway.controlUi.dangerouslyDisableDeviceAuth`
 disables device identity checks entirely. This is a severe security downgrade;
 keep it off unless you are actively debugging and can revert quickly.
 
-`KoLo security audit` warns when this setting is enabled.
+`Kurahi security audit` warns when this setting is enabled.
 
 ## Reverse Proxy Configuration
 
@@ -104,7 +104,7 @@ When `trustedProxies` is configured, the Gateway will use `X-Forwarded-For` head
 
 ## Local session logs live on disk
 
-KoLo stores session transcripts on disk under `~/.kolo/agents/<agentId>/sessions/*.jsonl`.
+Kurahi stores session transcripts on disk under `~/.kolo/agents/<agentId>/sessions/*.jsonl`.
 This is required for session continuity and (optionally) session memory indexing, but it also means
 **any process/user with filesystem access can read those logs**. Treat disk access as the trust
 boundary and lock down permissions on `~/.kolo` (see the audit section below). If you need
@@ -120,7 +120,7 @@ If a macOS node is paired, the Gateway can invoke `system.run` on that node. Thi
 
 ## Dynamic skills (watcher / remote nodes)
 
-KoLo can refresh the skills list mid-session:
+Kurahi can refresh the skills list mid-session:
 
 - **Skills watcher**: changes to `SKILL.md` can update the skills snapshot on the next agent turn.
 - **Remote nodes**: connecting a macOS node can make macOS-only skills eligible (based on bin probing).
@@ -146,7 +146,7 @@ People who message you can:
 
 Most failures here are not fancy exploits — they’re “someone messaged the bot and the bot did what they asked.”
 
-KoLo’s stance:
+Kurahi’s stance:
 
 - **Identity first:** decide who can talk to the bot (DM pairing / allowlists / explicit “open”).
 - **Scope next:** decide where the bot is allowed to act (group allowlists + mention gating, tools, sandboxing, device permissions).
@@ -170,9 +170,9 @@ Plugins run **in-process** with the Gateway. Treat them as trusted code:
 - Prefer explicit `plugins.allow` allowlists.
 - Review plugin config before enabling.
 - Restart the Gateway after plugin changes.
-- If you install plugins from npm (`kolo plugins install <npm-spec>`), treat it like running untrusted code:
+- If you install plugins from npm (`kurahi plugins install <npm-spec>`), treat it like running untrusted code:
   - The install path is `~/.kolo/extensions/<pluginId>/` (or `$KOLO_STATE_DIR/extensions/<pluginId>/`).
-  - KoLo uses `npm pack` and then runs `npm install --omit=dev` in that directory (npm lifecycle scripts can execute code during install).
+  - Kurahi uses `npm pack` and then runs `npm install --omit=dev` in that directory (npm lifecycle scripts can execute code during install).
   - Prefer pinned, exact versions (`@scope/pkg@1.2.3`), and inspect the unpacked code on disk before enabling.
 
 Details: [Plugins](/plugin)
@@ -189,15 +189,15 @@ All current DM-capable channels support a DM policy (`dmPolicy` or `*.dm.policy`
 Approve via CLI:
 
 ```bash
-KoLo pairing list <channel>
-KoLo pairing approve <channel> <code>
+Kurahi pairing list <channel>
+Kurahi pairing approve <channel> <code>
 ```
 
 Details + files on disk: [Pairing](/start/pairing)
 
 ## DM session isolation (multi-user mode)
 
-By default, KoLo routes **all DMs into the main session** so your assistant has continuity across devices and channels. If **multiple people** can DM the bot (open DMs or a multi-person allowlist), consider isolating DM sessions:
+By default, Kurahi routes **all DMs into the main session** so your assistant has continuity across devices and channels. If **multiple people** can DM the bot (open DMs or a multi-person allowlist), consider isolating DM sessions:
 
 ```json5
 {
@@ -209,7 +209,7 @@ This prevents cross-user context leakage while keeping group chats isolated. If 
 
 ## Allowlists (DM + groups) — terminology
 
-KoLo has two separate “who can trigger me?” layers:
+Kurahi has two separate “who can trigger me?” layers:
 
 - **DM allowlist** (`allowFrom` / `channels.discord.dm.allowFrom` / `channels.slack.dm.allowFrom`): who is allowed to talk to the bot in direct messages.
   - When `dmPolicy="pairing"`, approvals are written to `<KOLO_HOME>/credentials/<channel>-allowFrom.json` (merged with config allowlists).
@@ -298,7 +298,7 @@ Assume “compromised” means: someone got into a room that can trigger the bot
    - Check Gateway logs and recent sessions/transcripts for unexpected tool calls.
    - Review `extensions/` and remove anything you don’t fully trust.
 4. **Re-run audit**
-   - `KoLo security audit --deep` and confirm the report is clean.
+   - `Kurahi security audit --deep` and confirm the report is clean.
 
 ## Lessons Learned (The Hard Way)
 
@@ -325,7 +325,7 @@ Keep config + state private on the gateway host:
 - `~/.kolo/kolo.json`: `600` (user read/write only)
 - `~/.kolo`: `700` (user only)
 
-`KoLo doctor` can warn and offer to tighten these permissions.
+`Kurahi doctor` can warn and offer to tighten these permissions.
 
 ### 0.4) Network exposure (bind + port + firewall)
 
@@ -409,7 +409,7 @@ Set a token so **all** WS clients must authenticate:
 }
 ```
 
-Doctor can generate one for you: `KoLo doctor --generate-gateway-token`.
+Doctor can generate one for you: `Kurahi doctor --generate-gateway-token`.
 
 Note: `gateway.remote.token` is **only** for remote CLI calls; it does not
 protect local WS access.
@@ -436,9 +436,9 @@ Rotation checklist (token/password):
 
 ### 0.6) Tailscale Serve identity headers
 
-When `gateway.auth.allowTailscale` is `true` (default for Serve), KoLo
+When `gateway.auth.allowTailscale` is `true` (default for Serve), Kurahi
 accepts Tailscale Serve identity headers (`tailscale-user-login`) as
-authentication. KoLo verifies the identity by resolving the
+authentication. Kurahi verifies the identity by resolving the
 `x-forwarded-for` address through the local Tailscale daemon (`tailscale whois`)
 and matching it to the header. This only triggers for requests that hit loopback
 and include `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host` as
@@ -451,7 +451,7 @@ you terminate TLS or proxy in front of the gateway, disable
 Trusted proxies:
 
 - If you terminate TLS in front of the Gateway, set `gateway.trustedProxies` to your proxy IPs.
-- KoLo will trust `x-forwarded-for` (or `x-real-ip`) from those IPs to determine the client IP for local pairing checks and HTTP auth/local checks.
+- Kurahi will trust `x-forwarded-for` (or `x-real-ip`) from those IPs to determine the client IP for local pairing checks and HTTP auth/local checks.
 - Ensure your proxy **overwrites** `x-forwarded-for` and blocks direct access to the Gateway port.
 
 See [Tailscale](/gateway/tailscale) and [Web overview](/web).
@@ -500,7 +500,7 @@ Recommendations:
 
 - Keep tool summary redaction on (`logging.redactSensitive: "tools"`; default).
 - Add custom patterns for your environment via `logging.redactPatterns` (tokens, hostnames, internal URLs).
-- When sharing diagnostics, prefer `KoLo status --all` (pasteable, secrets redacted) over raw logs.
+- When sharing diagnostics, prefer `Kurahi status --all` (pasteable, secrets redacted) over raw logs.
 - Prune old session transcripts and log files if you don’t need long retention.
 
 Details: [Logging](/gateway/logging)
@@ -528,7 +528,7 @@ Details: [Logging](/gateway/logging)
     "list": [
       {
         "id": "main",
-        "groupChat": { "mentionPatterns": ["@KoLo", "@mybot"] }
+        "groupChat": { "mentionPatterns": ["@Kurahi", "@mybot"] }
       }
     ]
   }
@@ -603,14 +603,14 @@ Enabling browser control gives the model the ability to drive a real browser.
 If that browser profile already contains logged-in sessions, the model can
 access those accounts and data. Treat browser profiles as **sensitive state**:
 
-- Prefer a dedicated profile for the agent (the default `KoLo` profile).
+- Prefer a dedicated profile for the agent (the default `Kurahi` profile).
 - Avoid pointing the agent at your personal daily-driver profile.
 - Keep host browser control disabled for sandboxed agents unless you trust them.
 - Treat browser downloads as untrusted input; prefer an isolated downloads directory.
 - Disable browser sync/password managers in the agent profile if possible (reduces blast radius).
 - For remote gateways, assume “browser control” is equivalent to “operator access” to whatever that profile can reach.
 - Keep the Gateway and node hosts tailnet-only; avoid exposing relay/control ports to LAN or public Internet.
-- The Chrome extension relay’s CDP endpoint is auth-gated; only KoLo clients can connect.
+- The Chrome extension relay’s CDP endpoint is auth-gated; only Kurahi clients can connect.
 - Disable browser proxy routing when you don’t need it (`gateway.nodes.browser.mode="off"`).
 - Chrome extension relay mode is **not** “safer”; it can take over your existing Chrome tabs. Assume it can act as you in whatever that tab/profile can reach.
 
@@ -733,7 +733,7 @@ If your AI does something bad:
 
 ### Contain
 
-1. **Stop it:** stop the macOS app (if it supervises the Gateway) or terminate your `KoLo gateway` process.
+1. **Stop it:** stop the macOS app (if it supervises the Gateway) or terminate your `Kurahi gateway` process.
 2. **Close exposure:** set `gateway.bind: "loopback"` (or disable Tailscale Funnel/Serve) until you understand what happened.
 3. **Freeze access:** switch risky DMs/groups to `dmPolicy: "disabled"` / require mentions, and remove `"*"` allow-all entries if you had them.
 
@@ -751,7 +751,7 @@ If your AI does something bad:
 
 ### Collect for a report
 
-- Timestamp, gateway host OS + KoLo version
+- Timestamp, gateway host OS + Kurahi version
 - The session transcript(s) + a short log tail (after redacting)
 - What the attacker sent + what the agent did
 - Whether the Gateway was exposed beyond loopback (LAN/Tailscale Funnel/Serve)
@@ -803,7 +803,7 @@ Mario asking for find ~
 
 ## Reporting Security Issues
 
-Found a vulnerability in KoLo? Please report responsibly:
+Found a vulnerability in Kurahi? Please report responsibly:
 
 1. Email: security@kodasoken.com
 2. Don't post publicly until fixed

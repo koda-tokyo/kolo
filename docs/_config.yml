@@ -1,4 +1,4 @@
-title: "KoLo Docs"
+title: "Kurahi Docs"
 description: "A TypeScript/Node gateway + macOS/iOS/Android companions for WhatsApp (web) and Telegram (bot)."
 markdown: kramdown
 highlighter: rouge
@@ -22,8 +22,8 @@ defaults:
 nav:
   - title: "Home"
     url: "/"
-  - title: "KoLo Assistant"
-    url: "/start/KoLo/"
+  - title: "Kurahi Assistant"
+    url: "/start/Kurahi/"
   - title: "Gateway"
     url: "/gateway/"
   - title: "Remote"

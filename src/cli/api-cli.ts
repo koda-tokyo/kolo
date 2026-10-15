@@ -1,8 +1,8 @@
-// `kolo api …` — call the gateway's described API through the generated @kodasoken/kolo-client (M4b).
+// `kurahi api …` — call the gateway's described API through the generated @kodasoken/kurahi-client (M4b).
 //
-//   kolo api list [--ws] [--json]                 operations (or WebSocket methods/events)
-//   kolo api <operationId> [-p k=v]... [-b json|@file|@-] [--raw]
-//   kolo api ws <method> [json] [--expect-final] [--raw]
+//   kurahi api list [--ws] [--json]                 operations (or WebSocket methods/events)
+//   kurahi api <operationId> [-p k=v]... [-b json|@file|@-] [--raw]
+//   kurahi api ws <method> [json] [--expect-final] [--raw]
 //
 // The gateway is discovered like every other client: KOLO_HOME (or KOLO_STATE_DIR) ->
 // run/gateway.lock for the port and secrets/gateway.token for the token; KOLO_GATEWAY_URL,
@@ -20,7 +20,7 @@ import {
   wsMethods,
   type DiscoveredGateway,
   type KoloSocket,
-} from "@kodasoken/kolo-client";
+} from "@kodasoken/kurahi-client";
 import fs from "node:fs";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { VERSION } from "../version.js";
@@ -195,7 +195,7 @@ export function resolveOperationId(target: string): string | undefined {
   return byPath.length === 1 ? byPath[0].operationId : undefined;
 }
 
-/** Run `kolo api <operationId>`. Returns the exit code (does not exit). */
+/** Run `kurahi api <operationId>`. Returns the exit code (does not exit). */
 export async function runApiCall(
   operationId: string,
   opts: ApiCliOptions,
@@ -205,7 +205,7 @@ export async function runApiCall(
   try {
     const resolved = resolveOperationId(operationId);
     if (!resolved) {
-      throw new UsageError(`unknown operationId "${operationId}" (see \`kolo api list\`)`);
+      throw new UsageError(`unknown operationId "${operationId}" (see \`kurahi api list\`)`);
     }
     const params = parseParams(opts.param);
     const body = parseJsonArg(opts.body, deps, "--body");
@@ -240,11 +240,11 @@ export async function runApiCall(
 
 function reportError(runtime: RuntimeEnv, err: unknown, raw: boolean | undefined): number {
   if (err instanceof UsageError) {
-    runtime.error(`kolo api: ${err.message}`);
+    runtime.error(`kurahi api: ${err.message}`);
     return API_EXIT.usage;
   }
   if (err instanceof KoloNetworkError) {
-    runtime.error(`kolo api: gateway unreachable: ${err.message}`);
+    runtime.error(`kurahi api: gateway unreachable: ${err.message}`);
     return API_EXIT.unreachable;
   }
   if (err instanceof KoloApiError) {
@@ -268,13 +268,13 @@ function reportError(runtime: RuntimeEnv, err: unknown, raw: boolean | undefined
     return API_EXIT.http;
   }
   const message = err instanceof Error ? err.message : String(err);
-  runtime.error(`kolo api: ${message}`);
+  runtime.error(`kurahi api: ${message}`);
   return /connect: socket (error|closed before hello-ok)|ECONNREFUSED/.test(message)
     ? API_EXIT.unreachable
     : API_EXIT.http;
 }
 
-/** Run `kolo api ws <method> [json]`: one handshake, one call, close. */
+/** Run `kurahi api ws <method> [json]`: one handshake, one call, close. */
 export async function runApiWs(
   method: string | undefined,
   paramsArg: string | undefined,
@@ -285,7 +285,7 @@ export async function runApiWs(
   let socket: KoloSocket | undefined;
   try {
     if (!method) {
-      throw new UsageError("usage: kolo api ws <method> [json] (see `kolo api list --ws`)");
+      throw new UsageError("usage: kurahi api ws <method> [json] (see `kurahi api list --ws`)");
     }
     const params = parseJsonArg(paramsArg, deps, "ws params");
     const timeoutMs = parseTimeout(opts.timeout);
@@ -294,7 +294,7 @@ export async function runApiWs(
       timeoutMs,
     });
     socket = await client.ws({
-      client: { id: "cli", mode: "cli", version: VERSION, displayName: "kolo api" },
+      client: { id: "cli", mode: "cli", version: VERSION, displayName: "kurahi api" },
       callTimeoutMs: timeoutMs,
     });
     const result = await socket.call(method, params, { expectFinal: opts.expectFinal });
@@ -307,7 +307,7 @@ export async function runApiWs(
   }
 }
 
-/** Where `kolo api` would connect (no token value, only its source). */
+/** Where `kurahi api` would connect (no token value, only its source). */
 export function describeDiscovery(found: DiscoveredGateway): Record<string, unknown> {
   return {
     baseUrl: found.baseUrl,
@@ -347,14 +347,14 @@ export function registerApiCli(program: Command, deps: ApiCliDeps = {}) {
       [
         "",
         "Examples:",
-        "  kolo api list",
-        "  kolo api getHealth            (shorthand: kolo api health)",
-        "  kolo api listAuditEvents -p limit=20 -p action=integrity.init",
-        "  kolo api getCovenant -p userId=u_123",
-        '  kolo api hookWake -b \'{"text":"ping"}\'',
-        "  kolo api ws health",
-        "  kolo api ws sessions.list '{\"limit\":5}'",
-        "  kolo api discover",
+        "  kurahi api list",
+        "  kurahi api getHealth            (shorthand: kurahi api health)",
+        "  kurahi api listAuditEvents -p limit=20 -p action=integrity.init",
+        "  kurahi api getCovenant -p userId=u_123",
+        '  kurahi api hookWake -b \'{"text":"ping"}\'',
+        "  kurahi api ws health",
+        "  kurahi api ws sessions.list '{\"limit\":5}'",
+        "  kurahi api discover",
         "",
         "Exit codes: 0 ok, 1 HTTP or gateway error (error model on stderr), 2 usage, 3 unreachable.",
       ].join("\n"),
@@ -367,12 +367,14 @@ export function registerApiCli(program: Command, deps: ApiCliDeps = {}) {
       } else if (target === "ws") {
         code = await runApiWs(args[0], args[1], opts, deps);
       } else if (target === "discover") {
-        const { discover } = await import("@kodasoken/kolo-client");
+        const { discover } = await import("@kodasoken/kurahi-client");
         print(runtime, describeDiscovery(await discover()), opts.raw);
         code = API_EXIT.ok;
       } else {
         if (args.length > 0) {
-          runtime.error(`kolo api: unexpected arguments: ${args.join(" ")} (use -p k=v / -b json)`);
+          runtime.error(
+            `kurahi api: unexpected arguments: ${args.join(" ")} (use -p k=v / -b json)`,
+          );
           code = API_EXIT.usage;
         } else {
           code = await runApiCall(target, opts, deps);

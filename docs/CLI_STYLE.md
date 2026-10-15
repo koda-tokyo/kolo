@@ -4,9 +4,9 @@ Every string a person can see from the `kolo` command follows this page. Reviewe
 
 ## Voice
 
-- Plain sentences, present tense, second person where a person is addressed ("run `kolo init`"). No jokes, no mascots, no emoji, no exclamation marks.
+- Plain sentences, present tense, second person where a person is addressed ("run `kurahi init`"). No jokes, no mascots, no emoji, no exclamation marks.
 - The same input produces the same text. No rotating taglines, holiday variants or random quips.
-- Name the thing, then the state, then the next action: `gateway unreachable on port 18789 (connection refused). Start it with: kolo service install`.
+- Name the thing, then the state, then the next action: `gateway unreachable on port 18789 (connection refused). Start it with: kurahi service install`.
 - No product-internal names, no personal names, no machine paths from a developer's computer, no model vendor names in copy. Providers are configuration; the copy says "provider".
 - Examples use neutral identities: `alice`, `ops-bot`, `default`, `@ops-channel`, `+15555550100`.
 - English only in the product. Translations live in the i18n table and never in call sites.
@@ -21,13 +21,13 @@ Every string a person can see from the `kolo` command follows this page. Reviewe
 
 ## Exit codes
 
-| Code | Meaning |
-|---|---|
-| 0 | success |
-| 1 | the command ran and failed (including "gateway not running" for status commands) |
-| 2 | usage: unknown command, bad flag, invalid value; usage text is printed |
-| 3 | the gateway is unreachable where reaching it was the point (`kolo api`, `kolo attach`, `kolo agent`) |
-| 4 | authentication or authorization failed |
+| Code | Meaning                                                                                                    |
+| ---- | ---------------------------------------------------------------------------------------------------------- |
+| 0    | success                                                                                                    |
+| 1    | the command ran and failed (including "gateway not running" for status commands)                           |
+| 2    | usage: unknown command, bad flag, invalid value; usage text is printed                                     |
+| 3    | the gateway is unreachable where reaching it was the point (`kurahi api`, `kurahi attach`, `kurahi agent`) |
+| 4    | authentication or authorization failed                                                                     |
 
 Each subcommand's `--help` ends with its exit codes when they differ from the table.
 
@@ -35,18 +35,18 @@ Each subcommand's `--help` ends with its exit codes when they differ from the ta
 
 Subcommands use one verb set. Older synonyms stay as aliases so scripts keep working.
 
-| Verb | Use for | Aliases accepted |
-|---|---|---|
-| `list` | enumerate | `ls` |
-| `show` | one item in detail | `info`, `get` |
-| `add` | create | `create` where the noun is created, not attached |
-| `remove` | delete | `rm`, `delete` |
-| `test` | probe without changing anything | `check`, `verify` |
-| `set` / `unset` | configuration values | |
-| `install` / `uninstall` / `start` / `stop` / `restart` / `status` / `logs` | the OS service | |
-| `invite` / `approve` / `revoke` | pairing | |
+| Verb                                                                       | Use for                         | Aliases accepted                                 |
+| -------------------------------------------------------------------------- | ------------------------------- | ------------------------------------------------ |
+| `list`                                                                     | enumerate                       | `ls`                                             |
+| `show`                                                                     | one item in detail              | `info`, `get`                                    |
+| `add`                                                                      | create                          | `create` where the noun is created, not attached |
+| `remove`                                                                   | delete                          | `rm`, `delete`                                   |
+| `test`                                                                     | probe without changing anything | `check`, `verify`                                |
+| `set` / `unset`                                                            | configuration values            |                                                  |
+| `install` / `uninstall` / `start` / `stop` / `restart` / `status` / `logs` | the OS service                  |                                                  |
+| `invite` / `approve` / `revoke`                                            | pairing                         |                                                  |
 
-Nouns are singular for the group (`kolo pair`, `kolo secret`?) only where that is already the established name; do not rename existing groups for this rule.
+Nouns are singular for the group (`kurahi pair`, `kurahi secret`?) only where that is already the established name; do not rename existing groups for this rule.
 
 ## Help text
 
@@ -63,4 +63,4 @@ Nouns are singular for the group (`kolo pair`, `kolo secret`?) only where that i
 
 ## First run
 
-`kolo init` is the only command a new user must know. It creates the state directory, the config and the gateway token, runs the doctor report and prints the next three commands. Everything it writes is idempotent and merge-safe.
+`kurahi init` is the only command a new user must know. It creates the state directory, the config and the gateway token, runs the doctor report and prints the next three commands. Everything it writes is idempotent and merge-safe.

@@ -58,12 +58,11 @@ async function requireRiskAcknowledgement(params: {
     [
       "Security warning — please read.",
       "",
-      "KoLo is a hobby project and still in beta. Expect sharp edges.",
-      "This bot can read files and run actions if tools are enabled.",
-      "A bad prompt can trick it into doing unsafe things.",
+      "Kurahi agents can read files and run actions when tools are enabled.",
+      "A crafted prompt can try to trick an agent into unsafe actions; the policy is what stops it.",
       "",
-      "If you’re not comfortable with basic security and access control, don’t run KoLo.",
-      "Ask someone experienced to help before enabling tools or exposing it to the internet.",
+      "Start with a signed policy (kurahi policy init), keep the gateway on loopback,",
+      "and ask your security team before exposing it to a network.",
       "",
       "Recommended baseline:",
       "- Pairing/allowlists + mention gating.",
@@ -72,8 +71,8 @@ async function requireRiskAcknowledgement(params: {
       "- Use the strongest available model for any bot with tools or untrusted inboxes.",
       "",
       "Run regularly:",
-      "kolo security audit --deep",
-      "kolo security audit --fix",
+      "kurahi security audit --deep",
+      "kurahi security audit --fix",
       "",
       `Must read: ${DOCS_URL}/gateway/security`,
     ].join("\n"),
@@ -95,7 +94,7 @@ export async function runOnboardingWizard(
   prompter: WizardPrompter,
 ) {
   printWizardHeader(runtime);
-  await prompter.intro("kolo onboarding");
+  await prompter.intro("kurahi onboarding");
   await requireRiskAcknowledgement({ opts, prompter });
 
   const snapshot = await readConfigFileSnapshot();
@@ -114,13 +113,13 @@ export async function runOnboardingWizard(
       );
     }
     await prompter.outro(
-      `Config invalid. Run \`${formatCliCommand("kolo doctor")}\` to repair it, then re-run onboarding.`,
+      `Config invalid. Run \`${formatCliCommand("kurahi doctor")}\` to repair it, then re-run onboarding.`,
     );
     runtime.exit(1);
     return;
   }
 
-  const quickstartHint = `Configure details later via ${formatCliCommand("kolo configure")}.`;
+  const quickstartHint = `Configure details later via ${formatCliCommand("kurahi configure")}.`;
   const manualHint = "Configure port, network, Tailscale, and auth options.";
   const explicitFlowRaw = opts.flow?.trim();
   const normalizedExplicitFlow = explicitFlowRaw === "manual" ? "advanced" : explicitFlowRaw;

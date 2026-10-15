@@ -43,5 +43,5 @@ choice (`--bin-dir`, default `~/.local/bin`).
 
 When the gateway runs as a service, the service unit records the absolute path of the runtime it was
 installed with. A version manager that swaps the active Node.js later does not affect the service;
-re-run `kolo service install --id <id>` after changing the runtime you want it to use.
-`kolo doctor` warns when the service runs on a version-managed Node.js path.
+re-run `kurahi service install --id <id>` after changing the runtime you want it to use.
+`kurahi doctor` warns when the service runs on a version-managed Node.js path.

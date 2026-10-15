@@ -1,5 +1,5 @@
 ---
-summary: "Use OpenCode Zen (curated models) with KoLo"
+summary: "Use OpenCode Zen (curated models) with Kurahi"
 read_when:
   - You want OpenCode Zen for model access
   - You want a curated list of coding-friendly models
@@ -15,9 +15,9 @@ Zen is currently in beta.
 ## CLI setup
 
 ```bash
-KoLo onboard --auth-choice opencode-zen
+Kurahi onboard --auth-choice opencode-zen
 # or non-interactive
-KoLo onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
+Kurahi onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet

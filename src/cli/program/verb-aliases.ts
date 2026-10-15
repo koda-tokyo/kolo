@@ -1,6 +1,6 @@
 // One verb set across every subcommand (docs/CLI_STYLE.md): list / show / add / remove / test.
 // Commands registered under older synonyms keep working and gain the canonical verb as an
-// alias, so `kolo pair show <id>` and `kolo pair info <id>` are the same command and help
+// alias, so `kurahi pair show <id>` and `kurahi pair info <id>` are the same command and help
 // prints both. Applied once, after all subcommands (including lazily registered ones) exist.
 
 import type { Command } from "commander";

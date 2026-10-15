@@ -1,12 +1,12 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * NewsData.io plugin for KoLo.
+ * NewsData.io plugin for Kurahi.
  *
  * Provides `news_search` tool for structured news from 200K+ sources.
  * Free tier: 200 requests/day.
  * Config: `apiKey` in plugin config or `NEWSDATA_API_KEY` env var.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 interface NewsArticle {
   title: string;
@@ -61,22 +61,34 @@ const newsdataPlugin = {
           'Examples: "AI regulations", "Japan business", "oil and gas Nigeria".',
         parameters: Type.Object({
           query: Type.String({ description: "News search query" }),
-          country: Type.Optional(Type.String({ description: 'Country code: "us", "jp", "ng", "ae", "gb"' })),
-          category: Type.Optional(Type.String({ description: 'Category: "business", "technology", "science", "politics", "world"' })),
-          language: Type.Optional(Type.String({ description: 'Language code (default "en"). Use "ja" for Japanese, "pt" for Portuguese.' })),
+          country: Type.Optional(
+            Type.String({ description: 'Country code: "us", "jp", "ng", "ae", "gb"' }),
+          ),
+          category: Type.Optional(
+            Type.String({
+              description: 'Category: "business", "technology", "science", "politics", "world"',
+            }),
+          ),
+          language: Type.Optional(
+            Type.String({
+              description:
+                'Language code (default "en"). Use "ja" for Japanese, "pt" for Portuguese.',
+            }),
+          ),
         }),
 
         async execute(_toolId: string, params: Record<string, unknown>) {
           const apiKey =
-            (api.pluginConfig?.apiKey as string | undefined) ??
-            process.env.NEWSDATA_API_KEY;
+            (api.pluginConfig?.apiKey as string | undefined) ?? process.env.NEWSDATA_API_KEY;
 
           if (!apiKey) {
             return {
-              content: [{
-                type: "text" as const,
-                text: "NewsData not configured. Set apiKey in plugin config or NEWSDATA_API_KEY env var.\nGet a free key at: https://newsdata.io/",
-              }],
+              content: [
+                {
+                  type: "text" as const,
+                  text: "NewsData not configured. Set apiKey in plugin config or NEWSDATA_API_KEY env var.\nGet a free key at: https://newsdata.io/",
+                },
+              ],
             };
           }
 
@@ -91,13 +103,18 @@ const newsdataPlugin = {
             });
 
             if (articles.length === 0) {
-              return { content: [{ type: "text" as const, text: `No news found for: "${query}"` }] };
+              return {
+                content: [{ type: "text" as const, text: `No news found for: "${query}"` }],
+              };
             }
 
-            const text = articles.slice(0, 5).map((a) => {
-              const meta = [a.source_id, a.pubDate?.split(" ")[0]].filter(Boolean).join(" | ");
-              return `**[${a.title}](${a.link})**\n_${meta}_\n${a.description ?? "No description."}`;
-            }).join("\n\n");
+            const text = articles
+              .slice(0, 5)
+              .map((a) => {
+                const meta = [a.source_id, a.pubDate?.split(" ")[0]].filter(Boolean).join(" | ");
+                return `**[${a.title}](${a.link})**\n_${meta}_\n${a.description ?? "No description."}`;
+              })
+              .join("\n\n");
 
             return {
               content: [{ type: "text" as const, text }],
@@ -121,12 +138,21 @@ const newsdataPlugin = {
           .option("--category <cat>", "Category (business, technology, science)")
           .action(async (parts: string[], opts: { country?: string; category?: string }) => {
             const query = parts.join(" ");
-            const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.NEWSDATA_API_KEY;
-            if (!apiKey) { console.error("Set NEWSDATA_API_KEY env var."); process.exitCode = 1; return; }
+            const apiKey =
+              (api.pluginConfig?.apiKey as string | undefined) ?? process.env.NEWSDATA_API_KEY;
+            if (!apiKey) {
+              console.error("Set NEWSDATA_API_KEY env var.");
+              process.exitCode = 1;
+              return;
+            }
             try {
               const articles = await searchNews(query, apiKey, opts);
-              for (const a of articles.slice(0, 5)) console.log(`${a.title}\n  ${a.link}\n  ${a.pubDate ?? ""}\n`);
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+              for (const a of articles.slice(0, 5))
+                console.log(`${a.title}\n  ${a.link}\n  ${a.pubDate ?? ""}\n`);
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["news"] },

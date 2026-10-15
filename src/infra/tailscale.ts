@@ -367,7 +367,7 @@ export async function ensureFunnel(
     runtime.error("Failed to enable Tailscale Funnel. Is it allowed on your tailnet?");
     runtime.error(
       info(
-        `Tip: Funnel is optional for KoLo. You can keep running the web gateway without it: \`${formatCliCommand("kolo gateway")}\``,
+        `Tip: Funnel is optional for Kurahi. You can keep running the web gateway without it: \`${formatCliCommand("kurahi gateway")}\``,
       ),
     );
     if (shouldLogVerbose()) {

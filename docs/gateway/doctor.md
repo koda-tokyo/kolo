@@ -8,44 +8,44 @@ title: "Doctor"
 
 # Doctor
 
-`KoLo doctor` is the repair + migration tool for KoLo. It fixes stale
+`Kurahi doctor` is the repair + migration tool for Kurahi. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
 
 ```bash
-KoLo doctor
+Kurahi doctor
 ```
 
 ### Headless / automation
 
 ```bash
-KoLo doctor --yes
+Kurahi doctor --yes
 ```
 
 Accept defaults without prompting (including restart/service/sandbox repair steps when applicable).
 
 ```bash
-KoLo doctor --repair
+Kurahi doctor --repair
 ```
 
 Apply recommended repairs without prompting (repairs + restarts where safe).
 
 ```bash
-KoLo doctor --repair --force
+Kurahi doctor --repair --force
 ```
 
 Apply aggressive repairs too (overwrites custom supervisor configs).
 
 ```bash
-KoLo doctor --non-interactive
+Kurahi doctor --non-interactive
 ```
 
 Run without prompts and only apply safe migrations (config normalization + on-disk state moves). Skips restart/service/sandbox actions that require human confirmation.
 Legacy state migrations run automatically when detected.
 
 ```bash
-KoLo doctor --deep
+Kurahi doctor --deep
 ```
 
 Scan system services for extra gateway installs (launchd/systemd/schtasks).
@@ -68,7 +68,7 @@ cat ~/.kolo/kolo.json
 - State integrity and permissions checks (sessions, transcripts, state dir).
 - Config file permission checks (chmod 600) when running locally.
 - Model auth health: checks OAuth expiry, can refresh expiring tokens, and reports auth-profile cooldown/disabled states.
-- Extra workspace dir detection (`~/KoLo`).
+- Extra workspace dir detection (`~/Kurahi`).
 - Sandbox image repair when sandboxing is enabled.
 - Legacy service migration and extra gateway detection.
 - Gateway runtime checks (service installed but not running; cached launchd label).
@@ -98,7 +98,7 @@ schema.
 ### 2) Legacy config key migrations
 
 When the config contains deprecated keys, other commands refuse to run and ask
-you to run `KoLo doctor`.
+you to run `Kurahi doctor`.
 
 Doctor will:
 
@@ -149,7 +149,7 @@ These migrations are best-effort and idempotent; doctor will emit warnings when
 it leaves any legacy folders behind as backups. The Gateway/CLI also auto-migrates
 the legacy sessions + agent dir on startup so history/auth/models land in the
 per-agent path without a manual doctor run. WhatsApp auth is intentionally only
-migrated via `KoLo doctor`.
+migrated via `Kurahi doctor`.
 
 ### 4) State integrity checks (session persistence, routing, and safety)
 
@@ -202,9 +202,9 @@ switch to legacy names if the current image is missing.
 ### 8) Gateway service migrations and cleanup hints
 
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the KoLo service using the current gateway
+offers to remove them and install the Kurahi service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named KoLo gateway services are considered first-class and are not
+Profile-named Kurahi gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings
@@ -225,7 +225,7 @@ workspace.
 ### 12) Gateway auth checks (local token)
 
 Doctor warns when `gateway.auth` is missing on a local gateway and offers to
-generate a token. Use `KoLo doctor --generate-gateway-token` to force token
+generate a token. Use `Kurahi doctor --generate-gateway-token` to force token
 creation in automation.
 
 ### 13) Gateway health check + restart
@@ -247,11 +247,11 @@ rewrite the service file/task to the current defaults.
 
 Notes:
 
-- `KoLo doctor` prompts before rewriting supervisor config.
-- `KoLo doctor --yes` accepts the default repair prompts.
-- `KoLo doctor --repair` applies recommended fixes without prompts.
-- `KoLo doctor --repair --force` overwrites custom supervisor configs.
-- You can always force a full rewrite via `KoLo gateway install --force`.
+- `Kurahi doctor` prompts before rewriting supervisor config.
+- `Kurahi doctor --yes` accepts the default repair prompts.
+- `Kurahi doctor --repair` applies recommended fixes without prompts.
+- `Kurahi doctor --repair --force` overwrites custom supervisor configs.
+- You can always force a full rewrite via `Kurahi gateway install --force`.
 
 ### 16) Gateway runtime + port diagnostics
 

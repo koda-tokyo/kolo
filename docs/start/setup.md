@@ -1,5 +1,5 @@
 ---
-summary: "Setup guide: keep your KoLo setup tailored while staying up-to-date"
+summary: "Setup guide: keep your Kurahi setup tailored while staying up-to-date"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -32,16 +32,16 @@ If you want “100% tailored to me” _and_ easy updates, keep your customizatio
 Bootstrap once:
 
 ```bash
-KoLo setup
+Kurahi setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-KoLo setup
+Kurahi setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm KoLo setup`.
+If you don’t have a global install yet, run it via `pnpm Kurahi setup`.
 
 ## Stable workflow (macOS app first)
 
@@ -51,18 +51,18 @@ If you don’t have a global install yet, run it via `pnpm KoLo setup`.
 4. Link surfaces (example: WhatsApp):
 
 ```bash
-KoLo channels login
+Kurahi channels login
 ```
 
 5. Sanity check:
 
 ```bash
-KoLo health
+Kurahi health
 ```
 
 If onboarding is not available in your build:
 
-- Run `KoLo setup`, then `KoLo channels login`, then start the Gateway manually (`KoLo gateway`).
+- Run `Kurahi setup`, then `Kurahi channels login`, then start the Gateway manually (`Kurahi gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -98,7 +98,7 @@ In **KoLo.app**:
 - Or via CLI:
 
 ```bash
-KoLo health
+Kurahi health
 ```
 
 ### Common footguns
@@ -107,7 +107,7 @@ KoLo health
 - **Where state lives:**
   - Credentials: `<KOLO_HOME>/credentials/`
   - Sessions: `~/.kolo/agents/<agentId>/sessions/`
-  - Logs: `/tmp/KoLo/`
+  - Logs: `/tmp/Kurahi/`
 
 ## Credential storage map
 
@@ -124,7 +124,7 @@ Use this when debugging auth or deciding what to back up:
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/.kolo/workspace` and `~/.kolo/` as “your stuff”; don’t put personal prompts/config into the `KoLo` repo.
+- Keep `~/.kolo/workspace` and `~/.kolo/` as “your stuff”; don’t put personal prompts/config into the `Kurahi` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -145,5 +145,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [KoLo assistant setup](/start/KoLo)
+- [Kurahi assistant setup](/start/Kurahi)
 - [macOS app](/platforms/macos) (gateway lifecycle)

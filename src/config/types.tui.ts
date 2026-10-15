@@ -10,7 +10,7 @@ export const TUI_THEME_NAMES = [
 ] as const;
 export type TuiThemeName = (typeof TUI_THEME_NAMES)[number];
 
-/** Actions a key can be bound to in `kolo tui` (`tui.keybinds`). Order decides conflict winners. */
+/** Actions a key can be bound to in `kurahi tui` (`tui.keybinds`). Order decides conflict winners. */
 export const TUI_KEYBIND_ACTIONS = [
   "sessions",
   "models",

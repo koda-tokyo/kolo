@@ -1,19 +1,19 @@
 ---
-summary: "Run KoLo Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
+summary: "Run Kurahi Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
 read_when:
-  - You want KoLo running 24/7 on GCP
+  - You want Kurahi running 24/7 on GCP
   - You want a production-grade, always-on Gateway on your own VM
   - You want full control over persistence, binaries, and restart behavior
 title: "GCP"
 ---
 
-# KoLo on GCP Compute Engine (Docker, Production VPS Guide)
+# Kurahi on GCP Compute Engine (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent KoLo Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Kurahi Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want "KoLo 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
+If you want "Kurahi 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
 Pricing varies by machine type and region; pick the smallest VM that fits your workload and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
@@ -21,7 +21,7 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a GCP project and enable billing
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
-- Start the KoLo Gateway in Docker
+- Start the Kurahi Gateway in Docker
 - Persist `~/.kolo` + `~/.kolo/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
@@ -42,7 +42,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 2. Create Compute Engine VM (e2-small, Debian 12, 20GB)
 3. SSH into the VM
 4. Install Docker
-5. Clone KoLo repository
+5. Clone Kurahi repository
 6. Create persistent host directories
 7. Configure `.env` and `docker-compose.yml`
 8. Bake required binaries, build, and launch
@@ -89,7 +89,7 @@ All steps can be done via the web UI at https://console.cloud.google.com
 **CLI:**
 
 ```bash
-gcloud projects create my-kolo-project --name="KoLo Gateway"
+gcloud projects create my-kolo-project --name="Kurahi Gateway"
 gcloud config set project my-kolo-project
 ```
 
@@ -187,11 +187,11 @@ docker compose version
 
 ---
 
-## 6) Clone the KoLo repository
+## 6) Clone the Kurahi repository
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -215,7 +215,7 @@ mkdir -p ~/.kolo/workspace
 Create `.env` in the repository root.
 
 ```bash
-KOLO_IMAGE=KoLo:latest
+KOLO_IMAGE=Kurahi:latest
 KOLO_GATEWAY_TOKEN=change-me-now
 KOLO_GATEWAY_BIND=lan
 KOLO_GATEWAY_PORT=18789
@@ -404,30 +404,30 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-KoLo runs in Docker, but Docker is not the source of truth.
+Kurahi runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
-| Component           | Location                          | Persistence mechanism  | Notes                            |
-| ------------------- | --------------------------------- | ---------------------- | -------------------------------- |
-| Gateway config      | `/home/node/.kolo/`           | Host volume mount      | Includes `kolo.json`, tokens |
-| Model auth profiles | `/home/node/.kolo/`           | Host volume mount      | OAuth tokens, API keys           |
-| Skill configs       | `/home/node/.kolo/skills/`    | Host volume mount      | Skill-level state                |
-| Agent workspace     | `/home/node/.kolo/workspace/` | Host volume mount      | Code and agent artifacts         |
-| WhatsApp session    | `/home/node/.kolo/`           | Host volume mount      | Preserves QR login               |
-| Gmail keyring       | `/home/node/.kolo/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
-| External binaries   | `/usr/local/bin/`                 | Docker image           | Must be baked at build time      |
-| Node runtime        | Container filesystem              | Docker image           | Rebuilt every image build        |
-| OS packages         | Container filesystem              | Docker image           | Do not install at runtime        |
-| Docker container    | Ephemeral                         | Restartable            | Safe to destroy                  |
+| Component           | Location                      | Persistence mechanism  | Notes                           |
+| ------------------- | ----------------------------- | ---------------------- | ------------------------------- |
+| Gateway config      | `/home/node/.kolo/`           | Host volume mount      | Includes `kolo.json`, tokens    |
+| Model auth profiles | `/home/node/.kolo/`           | Host volume mount      | OAuth tokens, API keys          |
+| Skill configs       | `/home/node/.kolo/skills/`    | Host volume mount      | Skill-level state               |
+| Agent workspace     | `/home/node/.kolo/workspace/` | Host volume mount      | Code and agent artifacts        |
+| WhatsApp session    | `/home/node/.kolo/`           | Host volume mount      | Preserves QR login              |
+| Gmail keyring       | `/home/node/.kolo/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
+| External binaries   | `/usr/local/bin/`             | Docker image           | Must be baked at build time     |
+| Node runtime        | Container filesystem          | Docker image           | Rebuilt every image build       |
+| OS packages         | Container filesystem          | Docker image           | Do not install at runtime       |
+| Docker container    | Ephemeral                     | Restartable            | Safe to destroy                 |
 
 ---
 
 ## Updates
 
-To update KoLo on the VM:
+To update Kurahi on the VM:
 
 ```bash
-cd ~/KoLo
+cd ~/Kurahi
 git pull
 docker compose build
 docker compose up -d
@@ -480,7 +480,7 @@ For automation or CI/CD pipelines, create a dedicated service account with minim
 
    ```bash
    gcloud iam service-accounts create kolo-deploy \
-     --display-name="KoLo Deployment"
+     --display-name="Kurahi Deployment"
    ```
 
 2. Grant Compute Instance Admin role (or narrower custom role):

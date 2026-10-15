@@ -13,7 +13,7 @@ A **node** is a companion device (macOS/iOS/Android/headless) that connects to t
 
 Legacy transport: [Bridge protocol](/gateway/bridge-protocol) (TCP JSONL; deprecated/removed for current nodes).
 
-macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `KoLo nodes …` works against this Mac).
+macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `Kurahi nodes …` works against this Mac).
 
 Notes:
 
@@ -28,17 +28,17 @@ creates a device pairing request for `role: node`. Approve via the devices CLI (
 Quick CLI:
 
 ```bash
-KoLo devices list
-KoLo devices approve <requestId>
-KoLo devices reject <requestId>
-KoLo nodes status
-KoLo nodes describe --node <idOrNameOrIp>
+Kurahi devices list
+Kurahi devices approve <requestId>
+Kurahi devices reject <requestId>
+Kurahi nodes status
+Kurahi nodes describe --node <idOrNameOrIp>
 ```
 
 Notes:
 
 - `nodes status` marks a node as **paired** when its device pairing role includes `node`.
-- `node.pair.*` (CLI: `KoLo nodes pending/approve/reject`) is a separate gateway-owned
+- `node.pair.*` (CLI: `Kurahi nodes pending/approve/reject`) is a separate gateway-owned
   node pairing store; it does **not** gate the WS `connect` handshake.
 
 ## Remote node host (system.run)
@@ -58,7 +58,7 @@ forwards `exec` calls to the **node host** when `host=node` is selected.
 On the node machine:
 
 ```bash
-KoLo node run --host <gateway-host> --port 18789 --display-name "Build Node"
+Kurahi node run --host <gateway-host> --port 18789 --display-name "Build Node"
 ```
 
 ### Remote gateway via SSH tunnel (loopback bind)
@@ -75,19 +75,19 @@ ssh -N -L 18790:127.0.0.1:18789 user@gateway-host
 
 # Terminal B: export the gateway token and connect through the tunnel
 export KOLO_GATEWAY_TOKEN="<gateway-token>"
-KoLo node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
+Kurahi node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
 ```
 
 Notes:
 
 - The token is `gateway.auth.token` from the gateway config (`~/.kolo/kolo.json` on the gateway host).
-- `KoLo node run` reads `KOLO_GATEWAY_TOKEN` for auth.
+- `Kurahi node run` reads `KOLO_GATEWAY_TOKEN` for auth.
 
 ### Start a node host (service)
 
 ```bash
-KoLo node install --host <gateway-host> --port 18789 --display-name "Build Node"
-KoLo node restart
+Kurahi node install --host <gateway-host> --port 18789 --display-name "Build Node"
+Kurahi node restart
 ```
 
 ### Pair + name
@@ -95,23 +95,23 @@ KoLo node restart
 On the gateway host:
 
 ```bash
-KoLo nodes pending
-KoLo nodes approve <requestId>
-KoLo nodes list
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
+Kurahi nodes list
 ```
 
 Naming options:
 
-- `--display-name` on `KoLo node run` / `KoLo node install` (persists in `~/.kolo/node.json` on the node).
-- `KoLo nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
+- `--display-name` on `Kurahi node run` / `Kurahi node install` (persists in `~/.kolo/node.json` on the node).
+- `Kurahi nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
 
 ### Allowlist the commands
 
 Exec approvals are **per node host**. Add allowlist entries from the gateway:
 
 ```bash
-KoLo approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
-KoLo approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
+Kurahi approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
+Kurahi approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
 ```
 
 Approvals live on the node host at `~/.kolo/exec-approvals.json`.
@@ -121,9 +121,9 @@ Approvals live on the node host at `~/.kolo/exec-approvals.json`.
 Configure defaults (gateway config):
 
 ```bash
-KoLo config set tools.exec.host node
-KoLo config set tools.exec.security allowlist
-KoLo config set tools.exec.node "<id-or-name>"
+Kurahi config set tools.exec.host node
+Kurahi config set tools.exec.security allowlist
+Kurahi config set tools.exec.node "<id-or-name>"
 ```
 
 Or per session:
@@ -146,7 +146,7 @@ Related:
 Low-level (raw RPC):
 
 ```bash
-KoLo nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
+Kurahi nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
 ```
 
 Higher-level helpers exist for the common “give the agent a MEDIA attachment” workflows.
@@ -158,17 +158,17 @@ If the node is showing the Canvas (WebView), `canvas.snapshot` returns `{ format
 CLI helper (writes to a temp file and prints `MEDIA:<path>`):
 
 ```bash
-KoLo nodes canvas snapshot --node <idOrNameOrIp> --format png
-KoLo nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
+Kurahi nodes canvas snapshot --node <idOrNameOrIp> --format png
+Kurahi nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
 ```
 
 ### Canvas controls
 
 ```bash
-KoLo nodes canvas present --node <idOrNameOrIp> --target https://example.com
-KoLo nodes canvas hide --node <idOrNameOrIp>
-KoLo nodes canvas navigate https://example.com --node <idOrNameOrIp>
-KoLo nodes canvas eval --node <idOrNameOrIp> --js "document.title"
+Kurahi nodes canvas present --node <idOrNameOrIp> --target https://example.com
+Kurahi nodes canvas hide --node <idOrNameOrIp>
+Kurahi nodes canvas navigate https://example.com --node <idOrNameOrIp>
+Kurahi nodes canvas eval --node <idOrNameOrIp> --js "document.title"
 ```
 
 Notes:
@@ -179,9 +179,9 @@ Notes:
 ### A2UI (Canvas)
 
 ```bash
-KoLo nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
-KoLo nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
-KoLo nodes canvas a2ui reset --node <idOrNameOrIp>
+Kurahi nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
+Kurahi nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
+Kurahi nodes canvas a2ui reset --node <idOrNameOrIp>
 ```
 
 Notes:
@@ -193,16 +193,16 @@ Notes:
 Photos (`jpg`):
 
 ```bash
-KoLo nodes camera list --node <idOrNameOrIp>
-KoLo nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
-KoLo nodes camera snap --node <idOrNameOrIp> --facing front
+Kurahi nodes camera list --node <idOrNameOrIp>
+Kurahi nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
+Kurahi nodes camera snap --node <idOrNameOrIp> --facing front
 ```
 
 Video clips (`mp4`):
 
 ```bash
-KoLo nodes camera clip --node <idOrNameOrIp> --duration 10s
-KoLo nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
+Kurahi nodes camera clip --node <idOrNameOrIp> --duration 10s
+Kurahi nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
 ```
 
 Notes:
@@ -216,8 +216,8 @@ Notes:
 Nodes expose `screen.record` (mp4). Example:
 
 ```bash
-KoLo nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
-KoLo nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
+Kurahi nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
+Kurahi nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
 ```
 
 Notes:
@@ -235,8 +235,8 @@ Nodes expose `location.get` when Location is enabled in settings.
 CLI helper:
 
 ```bash
-KoLo nodes location get --node <idOrNameOrIp>
-KoLo nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
+Kurahi nodes location get --node <idOrNameOrIp>
+Kurahi nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
 ```
 
 Notes:
@@ -252,7 +252,7 @@ Android nodes can expose `sms.send` when the user grants **SMS** permission and 
 Low-level invoke:
 
 ```bash
-KoLo nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from KoLo"}'
+Kurahi nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from Kurahi"}'
 ```
 
 Notes:
@@ -268,8 +268,8 @@ The headless node host exposes `system.run`, `system.which`, and `system.execApp
 Examples:
 
 ```bash
-KoLo nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
-KoLo nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
+Kurahi nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
+Kurahi nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
 ```
 
 Notes:
@@ -291,21 +291,21 @@ This sets the default node for `exec host=node` (and can be overridden per agent
 Global default:
 
 ```bash
-KoLo config set tools.exec.node "node-id-or-name"
+Kurahi config set tools.exec.node "node-id-or-name"
 ```
 
 Per-agent override:
 
 ```bash
-KoLo config get agents.list
-KoLo config set agents.list[0].tools.exec.node "node-id-or-name"
+Kurahi config get agents.list
+Kurahi config set agents.list[0].tools.exec.node "node-id-or-name"
 ```
 
 Unset to allow any node:
 
 ```bash
-KoLo config unset tools.exec.node
-KoLo config unset agents.list[0].tools.exec.node
+Kurahi config unset tools.exec.node
+Kurahi config unset agents.list[0].tools.exec.node
 ```
 
 ## Permissions map
@@ -314,14 +314,14 @@ Nodes may include a `permissions` map in `node.list` / `node.describe`, keyed by
 
 ## Headless node host (cross-platform)
 
-KoLo can run a **headless node host** (no UI) that connects to the Gateway
+Kurahi can run a **headless node host** (no UI) that connects to the Gateway
 WebSocket and exposes `system.run` / `system.which`. This is useful on Linux/Windows
 or for running a minimal node alongside a server.
 
 Start it:
 
 ```bash
-KoLo node run --host <gateway-host> --port 18789
+Kurahi node run --host <gateway-host> --port 18789
 ```
 
 Notes:
@@ -337,5 +337,5 @@ Notes:
 
 ## Mac node mode
 
-- The macOS menubar app connects to the Gateway WS server as a node (so `KoLo nodes …` works against this Mac).
+- The macOS menubar app connects to the Gateway WS server as a node (so `Kurahi nodes …` works against this Mac).
 - In remote mode, the app opens an SSH tunnel for the Gateway port and connects to `localhost`.

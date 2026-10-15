@@ -53,7 +53,7 @@ describe("createKoLoCodingTools", () => {
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "kolo-read-"));
     try {
       const textPath = path.join(tmpDir, "sample.txt");
-      const contents = "Hello from KoLo read tool.";
+      const contents = "Hello from Kurahi read tool.";
       await fs.writeFile(textPath, contents, "utf8");
 
       const result = await readTool?.execute("tool-2", {

@@ -167,7 +167,7 @@ function formatPayloadForLog(payload: {
 export const AGENT_EXIT = { ok: 0, error: 1, usage: 2, unreachable: 3 } as const;
 
 /**
- * Where `kolo agent` connects (M3b). Routing follows KOLO_HOME / KOLO_STATE_DIR: the config
+ * Where `kurahi agent` connects (M3b). Routing follows KOLO_HOME / KOLO_STATE_DIR: the config
  * (and so the port and the token file) is the one under that state root, so a sibling is
  * addressed through its own gateway by pointing the env at its home. When the running
  * gateway's lease (`<home>/run/gateway.lock`) names a port, it wins over the config value.
@@ -218,7 +218,7 @@ export async function agentViaGatewayCommand(opts: AgentCliOpts, runtime: Runtim
     // register). Accept them from the declared set; they get inbox delivery only.
     if (!knownAgents.includes(agentId) && !EXTERNAL_RUNTIME_AGENTS.has(agentId)) {
       throw new Error(
-        `Unknown agent id "${agentIdRaw}". Use "${formatCliCommand("kolo agents list")}" to see configured agents.`,
+        `Unknown agent id "${agentIdRaw}". Use "${formatCliCommand("kurahi agents list")}" to see configured agents.`,
       );
     }
     // Polymorphic delivery: external-runtime → inbox + ack, skip gateway call.
@@ -325,7 +325,7 @@ export async function agentCliCommand(opts: AgentCliOpts, runtime: RuntimeEnv, d
     const cfg = loadConfig();
     const target = describeAgentGatewayTarget(cfg);
     runtime.error(
-      `kolo agent: --local runs the embedded agent in this process; the gateway at ${target.display} is bypassed (audited as agent.local_run).`,
+      `kurahi agent: --local runs the embedded agent in this process; the gateway at ${target.display} is bypassed (audited as agent.local_run).`,
     );
     recordAuditEvent({
       action: "agent.local_run",
@@ -353,8 +353,8 @@ export async function agentCliCommand(opts: AgentCliOpts, runtime: RuntimeEnv, d
       const cfg = loadConfig();
       const target = describeAgentGatewayTarget(cfg);
       runtime.error(
-        `kolo agent: gateway unreachable at ${target.display} (state dir ${target.home}, port ${target.port}, from ${target.source}): ${String(err instanceof Error ? err.message : err).split("\n")[0]}\n` +
-          `Start it with ${formatCliCommand("kolo gateway")} or ${formatCliCommand("kolo service start")}, or pass --local to run the embedded agent in this process (audited).`,
+        `kurahi agent: gateway unreachable at ${target.display} (state dir ${target.home}, port ${target.port}, from ${target.source}): ${String(err instanceof Error ? err.message : err).split("\n")[0]}\n` +
+          `Start it with ${formatCliCommand("kurahi gateway")} or ${formatCliCommand("kurahi service start")}, or pass --local to run the embedded agent in this process (audited).`,
       );
       runtime.exit(AGENT_EXIT.unreachable);
       return undefined;

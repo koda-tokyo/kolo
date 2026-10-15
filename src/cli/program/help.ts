@@ -9,17 +9,17 @@ import { replaceCliName, resolveCliName } from "../cli-name.js";
 const CLI_NAME = resolveCliName();
 
 const EXAMPLES = [
-  ["kolo init", "help.ex.init"],
-  ["kolo service install", "help.ex.service"],
-  ["kolo health", "help.ex.health"],
-  ["kolo pair invite --scope attach", "help.ex.pair"],
-  ["kolo attach --list", "help.ex.attach"],
-  ["kolo tui", "help.ex.tui"],
+  ["kurahi init", "help.ex.init"],
+  ["kurahi service install", "help.ex.service"],
+  ["kurahi health", "help.ex.health"],
+  ["kurahi pair invite --scope attach", "help.ex.pair"],
+  ["kurahi attach --list", "help.ex.attach"],
+  ["kurahi tui", "help.ex.tui"],
   [
-    'kolo message send --channel telegram --target @ops-channel --message "Deploy done"',
+    'kurahi message send --channel telegram --target @ops-channel --message "Deploy done"',
     "help.ex.message",
   ],
-  ["kolo api health --raw", "help.ex.api"],
+  ["kurahi api health --raw", "help.ex.api"],
 ] as const;
 
 export function configureProgramHelp(program: Command, ctx: ProgramContext) {

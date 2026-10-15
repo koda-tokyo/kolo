@@ -11,11 +11,11 @@ import { summariseForSystem, type ContinuitySnapshot } from "../covenant/summary
 /**
  * Build the covenant section for the system prompt.
  *
- * This produces a string that can be appended to the base KoLo system prompt,
+ * This produces a string that can be appended to the base Kurahi system prompt,
  * containing:
  * - Relationship mode and tone guidance
  * - User values (what matters to them)
- * - Boundaries (what KoLo must not do)
+ * - Boundaries (what Kurahi must not do)
  * - Continuity highlights (what we remember)
  *
  * @param covenant - The user's covenant (null/undefined = skip section)
@@ -82,7 +82,7 @@ export function buildSecurityBoundarySection(): string {
 }
 
 /**
- * Helper to build KoLo system messages array.
+ * Helper to build Kurahi system messages array.
  *
  * Use this when you need to construct the full message array for the LLM,
  * combining the base system prompt with covenant/continuity.
@@ -102,7 +102,7 @@ export function buildKoLoSystemMessages(options: {
   const { baseSystemPrompt, covenant, continuityState } = options;
   const messages: KoLoMessage[] = [];
 
-  // 1) Base KoLo role/tier prompt
+  // 1) Base Kurahi role/tier prompt
   messages.push({
     role: "system",
     content: baseSystemPrompt,

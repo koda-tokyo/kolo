@@ -216,7 +216,7 @@ function scheduleRefresh(host: PairLinkHost, origin: string, credential: PairCre
         .catch((err: unknown) => {
           savePairCredential(null);
           host.notify(
-            `${err instanceof Error ? err.message : String(err)}. Ask for a new link with kolo connect web.`,
+            `${err instanceof Error ? err.message : String(err)}. Ask for a new link with kurahi connect web.`,
           );
         });
     },
@@ -241,7 +241,7 @@ export async function handlePairLink(host: PairLinkHost): Promise<boolean> {
     );
     if (!isSecurePage()) {
       host.notify(
-        "This page is plain HTTP, so the browser cannot keep a device key. Enable gateway.tls on the gateway and scan a new code from kolo connect web.",
+        "This page is plain HTTP, so the browser cannot keep a device key. Enable gateway.tls on the gateway and scan a new code from kurahi connect web.",
       );
       return false;
     }
@@ -257,7 +257,7 @@ export async function handlePairLink(host: PairLinkHost): Promise<boolean> {
       return true;
     } catch (err) {
       host.notify(
-        `${err instanceof Error ? err.message : String(err)}. Ask for a new link with kolo connect web.`,
+        `${err instanceof Error ? err.message : String(err)}. Ask for a new link with kurahi connect web.`,
       );
       return false;
     }

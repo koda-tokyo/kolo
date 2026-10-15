@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates the typed @kodasoken/kolo-client sources from openapi/kolo-gateway.openapi.json (M4b).
+// Generates the typed @kodasoken/kurahi-client sources from openapi/kolo-gateway.openapi.json (M4b).
 //   node scripts/client-gen.mjs            write packages/client/src/generated/*
 //   node scripts/client-gen.mjs --check    fail when the committed files differ (drift check)
 //
@@ -417,7 +417,8 @@ function renderClient(_spec, ops) {
   let out = HEADER;
   out += 'import { KoloClientBase, type RequestOptions } from "../base.js";\n';
   out += 'import type * as T from "./types.js";\n\n';
-  out += "/** Typed client for the KoLo gateway HTTP API: one method per OpenAPI operationId. */\n";
+  out +=
+    "/** Typed client for the Kurahi gateway HTTP API: one method per OpenAPI operationId. */\n";
   out += "export class KoloClient extends KoloClientBase {\n";
   let first = true;
   for (const { method, path: p, op } of ops) {

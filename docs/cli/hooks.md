@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo hooks` (agent hooks)"
+summary: "CLI reference for `Kurahi hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 title: "hooks"
 ---
 
-# `KoLo hooks`
+# `Kurahi hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -18,7 +18,7 @@ Related:
 ## List All Hooks
 
 ```bash
-KoLo hooks list
+Kurahi hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -44,7 +44,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-KoLo hooks list --verbose
+Kurahi hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -52,7 +52,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-KoLo hooks list --json
+Kurahi hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -60,7 +60,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-KoLo hooks info <name>
+Kurahi hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -76,7 +76,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-KoLo hooks info session-memory
+Kurahi hooks info session-memory
 ```
 
 **Output:**
@@ -88,8 +88,8 @@ Save session context to memory when /new command is issued
 
 Details:
   Source: kolo-bundled
-  Path: /path/to/KoLo/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/KoLo/hooks/bundled/session-memory/handler.ts
+  Path: /path/to/Kurahi/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/Kurahi/hooks/bundled/session-memory/handler.ts
   Homepage: https://kodasoken.com/kolo/hooks#session-memory
   Events: command:new
 
@@ -100,7 +100,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-KoLo hooks check
+Kurahi hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -122,12 +122,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-KoLo hooks enable <name>
+Kurahi hooks enable <name>
 ```
 
 Enable a specific hook by adding it to your config (`~/.kolo/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `KoLo hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `Kurahi hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -137,7 +137,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-KoLo hooks enable session-memory
+Kurahi hooks enable session-memory
 ```
 
 **Output:**
@@ -159,7 +159,7 @@ KoLo hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-KoLo hooks disable <name>
+Kurahi hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -171,7 +171,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-KoLo hooks disable command-logger
+Kurahi hooks disable command-logger
 ```
 
 **Output:**
@@ -187,7 +187,7 @@ KoLo hooks disable command-logger
 ## Install Hooks
 
 ```bash
-KoLo hooks install <path-or-spec>
+Kurahi hooks install <path-or-spec>
 ```
 
 Install a hook pack from a local folder/archive or npm.
@@ -208,23 +208,23 @@ Install a hook pack from a local folder/archive or npm.
 
 ```bash
 # Local directory
-KoLo hooks install ./my-hook-pack
+Kurahi hooks install ./my-hook-pack
 
 # Local archive
-KoLo hooks install ./my-hook-pack.zip
+Kurahi hooks install ./my-hook-pack.zip
 
 # NPM package
-KoLo hooks install @KoLo/my-hook-pack
+Kurahi hooks install @Kurahi/my-hook-pack
 
 # Link a local directory without copying
-KoLo hooks install -l ./my-hook-pack
+Kurahi hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-KoLo hooks update <id>
-KoLo hooks update --all
+Kurahi hooks update <id>
+Kurahi hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -243,7 +243,7 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-KoLo hooks enable session-memory
+Kurahi hooks enable session-memory
 ```
 
 **Output:** `~/.kolo/workspace/memory/YYYY-MM-DD-slug.md`
@@ -257,7 +257,7 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-KoLo hooks enable command-logger
+Kurahi hooks enable command-logger
 ```
 
 **Output:** `~/.kolo/logs/commands.log`
@@ -284,7 +284,7 @@ Swaps injected `SOUL.md` content with `SOUL_EVIL.md` during a purge window or by
 **Enable:**
 
 ```bash
-KoLo hooks enable soul-evil
+Kurahi hooks enable soul-evil
 ```
 
 **See:** [SOUL Evil Hook](/hooks/soul-evil)
@@ -298,7 +298,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-KoLo hooks enable boot-md
+Kurahi hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/hooks#boot-md)

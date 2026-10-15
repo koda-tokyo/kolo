@@ -9,7 +9,7 @@ import {
 export type { TuiKeybindAction };
 
 /**
- * Key bindings for `kolo tui` (KoLo 2.0, M9a; leader chords in M10). Every action has a direct
+ * Key bindings for `kurahi tui` (KoLo 2.0, M9a; leader chords in M10). Every action has a direct
  * key and a leader chord: press the leader (`tui.keybinds.leader`, default `ctrl+x`) and then one
  * key. Configuration values are a key id, a chord (`leader+<key>`), or an array of both.
  */

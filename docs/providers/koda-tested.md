@@ -2,7 +2,7 @@
 summary: "KODA tested: how models are scored as residents (tool use, policy, continuity, coding, Japanese, Portuguese, efficiency), how to reproduce a score, and what the scores do not say"
 read_when:
   - You are choosing a model for a resident and want evidence rather than a leaderboard
-  - You want to reproduce or extend a score with `kolo models bench`
+  - You want to reproduce or extend a score with `kurahi models bench`
   - You need to know where a model processes data before you pick it
 title: "KODA tested models"
 ---
@@ -18,12 +18,12 @@ can verify.
 The results ship as `src/providers/koda-tested.json` and are printed by:
 
 ```bash
-kolo models tested
-kolo models tested --residency jp
-kolo models tested --min-score 70 --json
+kurahi models tested
+kurahi models tested --residency jp
+kurahi models tested --min-score 70 --json
 ```
 
-`kolo init --provider koda-tested [--residency jp]` picks the highest-scoring tested model you can run:
+`kurahi init --provider koda-tested [--residency jp]` picks the highest-scoring tested model you can run:
 one whose provider key is already stored or set in the provider's environment variable, or that is
 pulled on your local model server.
 
@@ -47,7 +47,7 @@ when the reply says why, 0.75 otherwise; trying once, being refused and reportin
 
 The overall score is the weighted mean of the axes that have a score, with the weights renormalised.
 Coverage (tasks that ran out of 51) is published next to it; a score from the quick subset is marked
-`*` in `kolo models tested`.
+`*` in `kurahi models tested`.
 
 ## How a task runs
 
@@ -56,9 +56,9 @@ identity file with a per-run marker, a soul file, a memory index and memory fact
 rules. The system prompt carries those files and a plain statement of the task's policy. It is
 compact on purpose, because tokens are budgeted; it is not the full production prompt.
 
-- File tools are KoLo's own sandboxed read, write and edit tools.
+- File tools are Kurahi's own sandboxed read, write and edit tools.
 - Memory search is the continuity suite's keyword recall over the workspace memory files.
-- MCP tools go through KoLo's MCP agent-tool adapter against an in-process server.
+- MCP tools go through Kurahi's MCP agent-tool adapter against an in-process server.
 - Code Mode is the real `code_mode_run` tool over the task's other tools.
 - Every call, including calls made inside Code Mode scripts, passes the policy decision layer with the
   task's policy document first. Deny and ask refuse the call the way the gateway guard does.
@@ -82,7 +82,7 @@ whole run is the fleet, and the breach action is stop. The default cap is 300,00
 
 Each model run is recorded as an [evidence](/evidence) job: model turns, tool calls and results, and
 every policy refusal. The job is exported as a signed bundle under `evidence/<model>/` next to the
-report, so `kolo evidence verify` can check it offline.
+report, so `kurahi evidence verify` can check it offline.
 
 The run writes `bench-report.json` and `bench-report.md`. The report body is hashed (SHA-256 of its
 canonical JSON) and the hash is signed with the gateway's Ed25519 continuity key. The catalogue
@@ -94,18 +94,18 @@ it finished.
 
 ```bash
 # Full suite, one hosted model (key from the auth store or the provider's environment variable)
-kolo models bench --model sakura/gpt-oss-120b
+kurahi models bench --model sakura/gpt-oss-120b
 
 # Quick subset (18 tasks) for a slow local model, with a long per-turn timeout
-kolo models bench --quick-model ollama/qwen2.5:7b --timeout 600000 --max-tokens 100000
+kurahi models bench --quick-model ollama/qwen2.5:7b --timeout 600000 --max-tokens 100000
 
 # A few tasks at a time, then one signed report
-kolo models bench --quick-model ollama/qwen2.5:7b --only tool.,policy. --out runs/a
-kolo models bench --quick-model ollama/qwen2.5:7b --only continuity.,coding. --out runs/b
-kolo models bench-merge runs/a/bench-report.json runs/b/bench-report.json --out runs/merged
+kurahi models bench --quick-model ollama/qwen2.5:7b --only tool.,policy. --out runs/a
+kurahi models bench --quick-model ollama/qwen2.5:7b --only continuity.,coding. --out runs/b
+kurahi models bench-merge runs/a/bench-report.json runs/b/bench-report.json --out runs/merged
 
 # Fold a report into a catalogue file
-kolo models bench-merge runs/a/bench-report.json --out runs/merged --update-catalogue koda-tested.json
+kurahi models bench-merge runs/a/bench-report.json --out runs/merged --update-catalogue koda-tested.json
 ```
 
 `bench-merge` verifies every input report first. Per model and task the latest result that ran

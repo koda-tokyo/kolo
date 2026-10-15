@@ -8,7 +8,7 @@
 //
 // registry.json = curated entries (registry.curated.json, in order, winning on id) followed by
 // generated entries from the public catalogue, sorted by id. Only providers with an https API
-// base URL and an adapter KoLo speaks are generated. Nothing here is product copy: display names
+// base URL and an adapter Kurahi speaks are generated. Nothing here is product copy: display names
 // are data, and the CLI's own sentences say "provider".
 import fs from "node:fs";
 import path from "node:path";

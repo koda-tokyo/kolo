@@ -2,19 +2,19 @@
 
 ## Overview
 
-Architecture documentation at KoLo captures the "why" behind technical decisions, not just the "what." We use Architecture Decision Records (ADRs) as our primary tool, integrated with the architecture-governance skill for compliance, and the C4 model for system visualization.
+Architecture documentation at Kurahi captures the "why" behind technical decisions, not just the "what." We use Architecture Decision Records (ADRs) as our primary tool, integrated with the architecture-governance skill for compliance, and the C4 model for system visualization.
 
 ## Architecture Decision Records (ADR)
 
 ### ADR Format
 
-Every architectural decision that affects system structure, technology choice, or significant design pattern gets an ADR. Our format extends Michael Nygard's standard with KoLo-specific compliance fields:
+Every architectural decision that affects system structure, technology choice, or significant design pattern gets an ADR. Our format extends Michael Nygard's standard with Kurahi-specific compliance fields:
 
 ```markdown
 ---
 adr: 42
 title: "Use PostgreSQL as Primary Data Store for Agent State"
-status: accepted  # proposed | accepted | deprecated | superseded
+status: accepted # proposed | accepted | deprecated | superseded
 date: 2026-05-20
 deciders: ["CTO", "Systems", "Platform"]
 supersedes: []
@@ -56,34 +56,39 @@ data store for all agent state and memory.
 
 ## Alternatives Considered
 
-| Option | Pros | Cons | Why Rejected |
-|--------|------|------|-------------|
-| MongoDB | Flexible schema, horizontal scale | Eventual consistency, no native JOINs | ACID requirement for agent state transitions |
-| Redis + file snapshots | Extremely fast, current pattern | Data loss window, operational complexity | Unacceptable durability for memory state |
-| CockroachDB | Multi-region, PostgreSQL-compatible | Operational complexity, newer ecosystem | Overkill for current single-region deployment |
+| Option                 | Pros                                | Cons                                     | Why Rejected                                  |
+| ---------------------- | ----------------------------------- | ---------------------------------------- | --------------------------------------------- |
+| MongoDB                | Flexible schema, horizontal scale   | Eventual consistency, no native JOINs    | ACID requirement for agent state transitions  |
+| Redis + file snapshots | Extremely fast, current pattern     | Data loss window, operational complexity | Unacceptable durability for memory state      |
+| CockroachDB            | Multi-region, PostgreSQL-compatible | Operational complexity, newer ecosystem  | Overkill for current single-region deployment |
 
 ## Consequences
 
 ### Positive
+
 - Single data store reduces operational surface area
 - ACID transactions simplify agent state management
 - pgvector enables new semantic search capabilities
 
 ### Negative
+
 - PostgreSQL is not horizontally scalable by default; need to plan for sharding if agent count exceeds ~10,000
 - Migration from file-based snapshots requires a one-time downtime window
 
 ### Mitigations
+
 - Implement connection pooling (PgBouncer) from day one
 - Design schema with future partitioning in mind
 - Schedule migration during planned maintenance window
 
 ## Compliance Notes
+
 - Not MHLW applicable (agent infrastructure, not clinical data)
 - No PII storage in agent state tables (stored in separate encrypted store)
 - Japan cloud-only: PostgreSQL hosted on Sakura Cloud Tokyo region
 
 ## Related
+
 - ADR-0038: Vector Search Strategy
 - ADR-0040: Agent Memory Model v2
 - Architecture principle P004: Data Sovereignty
@@ -106,12 +111,14 @@ proposed → accepted → (deprecated | superseded)
 ### When to Write an ADR
 
 Write an ADR for decisions that are:
+
 - **Structural**: Changes to system architecture, data models, or API boundaries
 - **Costly to reverse**: Technology choices, protocol decisions, schema designs
 - **Cross-team**: Affecting multiple components or teams
 - **Compliance-relevant**: Decisions with MHLW, GDPR, or security implications
 
 Don't write ADRs for:
+
 - Routine code patterns within a module
 - Bug fixes or minor refactors
 - Decisions reversible in < 1 day of work
@@ -120,12 +127,12 @@ Don't write ADRs for:
 
 ### C4 Levels We Use
 
-| Level | Name | Audience | Purpose |
-|-------|------|----------|---------|
-| **L1** | System Context | Everyone | One diagram: KoLo in the world. Users, external systems, data flows. |
-| **L2** | Container Diagram | Technical team | KoLo's runtime containers (API, Gateway, Agent Runtime, Data Store) |
-| **L3** | Component Diagram | Development team | Inside each container: modules, services, key abstractions |
-| **L4** | Code Diagram | Team within a module | Class/resource diagrams for complex internals |
+| Level  | Name              | Audience             | Purpose                                                                |
+| ------ | ----------------- | -------------------- | ---------------------------------------------------------------------- |
+| **L1** | System Context    | Everyone             | One diagram: Kurahi in the world. Users, external systems, data flows. |
+| **L2** | Container Diagram | Technical team       | Kurahi's runtime containers (API, Gateway, Agent Runtime, Data Store)  |
+| **L3** | Component Diagram | Development team     | Inside each container: modules, services, key abstractions             |
+| **L4** | Code Diagram      | Team within a module | Class/resource diagrams for complex internals                          |
 
 ### Diagram Tooling
 
@@ -137,11 +144,11 @@ Don't write ADRs for:
 
 ```mermaid
 C4Context
-  Person(user, "Developer", "Uses KoLo CLI or SDK")
+  Person(user, "Developer", "Uses Kurahi CLI or SDK")
   Person(patient, "Patient", "Uses KODA KENKŌ app")
-  System_Boundary(kolo, "KoLo Platform") {
+  System_Boundary(kolo, "Kurahi Platform") {
     Container(api, "API Gateway", "Kong", "Routes and authenticates all API traffic")
-    Container(agent_runtime, "Agent Runtime", "KoLo Core", "Spawns and manages AI agents")
+    Container(agent_runtime, "Agent Runtime", "Kurahi Core", "Spawns and manages AI agents")
     Container(memory_store, "Memory Store", "PostgreSQL+pgvector", "Agent state and semantic memory")
     Container(docs, "Documentation", "Docusaurus", "API ref, guides, ADRs")
   }
@@ -169,7 +176,7 @@ Every repository must have a README.md that answers:
 
 ### README Template
 
-```markdown
+````markdown
 # Project Name
 
 > One-line description of what this project does.
@@ -186,6 +193,7 @@ cd project
 make setup
 make run
 ```
+````
 
 Open http://localhost:3000
 
@@ -205,7 +213,8 @@ Open http://localhost:3000
 
 ![MHLW Approved](https://img.shields.io/badge/MHLW-approved-green)
 ![Data: Japan Only](https://img.shields.io/badge/data-Japan%20only-red)
-```
+
+````
 
 ## Onboarding Documentation
 
@@ -216,7 +225,7 @@ New developer onboarding docs must cover:
 3. **Key ADRs** — the 10 most important decisions, why they matter
 4. **Development workflow** — branch strategy, PR process, CI/CD
 5. **First task** — pre-scoped, well-documented, completable in 1 day
-6. **Glossary** — internal terminology, acronyms, KoLo-specific concepts
+6. **Glossary** — internal terminology, acronyms, Kurahi-specific concepts
 
 ## Decision History (ADR Index)
 
@@ -232,7 +241,7 @@ Maintain an ADR index file that stays current:
 | 40 | Agent Memory Model v2 | accepted | 2026-05-10 | agent-runtime |
 | 39 | MHLW Audit Data Export Format | accepted | 2026-05-01 | compliance |
 | 38 | Vector Search Strategy | superseded by 42 | 2026-04-20 | data-storage |
-```
+````
 
 ## Technical Specifications
 

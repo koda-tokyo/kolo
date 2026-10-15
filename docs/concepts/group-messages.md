@@ -40,7 +40,7 @@ Add a `groupChat` block to `~/.kolo/kolo.json` so display-name pings work even w
         id: "main",
         groupChat: {
           historyLimit: 50,
-          mentionPatterns: ["@?KoLo", "\\+?15555550123"],
+          mentionPatterns: ["@?Kurahi", "\\+?15555550123"],
         },
       },
     ],
@@ -50,7 +50,7 @@ Add a `groupChat` block to `~/.kolo/kolo.json` so display-name pings work even w
 
 Notes:
 
-- The regexes are case-insensitive; they cover a display-name ping like `@KoLo` and the raw number with or without `+`/spaces.
+- The regexes are case-insensitive; they cover a display-name ping like `@Kurahi` and the raw number with or without `+`/spaces.
 - WhatsApp still sends canonical mentions via `mentionedJids` when someone taps the contact, so the number fallback is rarely needed but is a useful safety net.
 
 ### Activation command (owner-only)
@@ -64,15 +64,15 @@ Only the owner number (from `channels.whatsapp.allowFrom`, or the bot’s own E.
 
 ## How to use
 
-1. Add your WhatsApp account (the one running KoLo) to the group.
-2. Say `@KoLo …` (or include the number). Only allowlisted senders can trigger it unless you set `groupPolicy: "open"`.
+1. Add your WhatsApp account (the one running Kurahi) to the group.
+2. Say `@Kurahi …` (or include the number). Only allowlisted senders can trigger it unless you set `groupPolicy: "open"`.
 3. The agent prompt will include recent group context plus the trailing `[from: …]` marker so it can address the right person.
 4. Session-level directives (`/verbose on`, `/think high`, `/new` or `/reset`, `/compact`) apply only to that group’s session; send them as standalone messages so they register. Your personal DM session remains independent.
 
 ## Testing / verification
 
 - Manual smoke:
-  - Send an `@KoLo` ping in the group and confirm a reply that references the sender name.
+  - Send an `@Kurahi` ping in the group and confirm a reply that references the sender name.
   - Send a second ping and verify the history block is included then cleared on the next turn.
 - Check gateway logs (run with `--verbose`) to see `inbound web message` entries showing `from: <groupJid>` and the `[from: …]` suffix.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INSTALL_URL="${KOLO_INSTALL_URL:-${CLAWDBOT_INSTALL_URL:-https://kodasoken.com/kolo/install.sh}}"
+INSTALL_URL="${KOLO_INSTALL_URL:-${CLAWDBOT_INSTALL_URL:-https://kodasoken.com/kurahi/install.sh}}"
 MODELS_MODE="${KOLO_E2E_MODELS:-${CLAWDBOT_E2E_MODELS:-both}}" # both|openai|anthropic
 INSTALL_TAG="${KOLO_INSTALL_TAG:-${CLAWDBOT_INSTALL_TAG:-latest}}"
 E2E_PREVIOUS_VERSION="${KOLO_INSTALL_E2E_PREVIOUS:-${CLAWDBOT_INSTALL_E2E_PREVIOUS:-}}"

@@ -1,14 +1,14 @@
 {
   "name": "@KoLo/zalo",
   "version": "2.0.0",
-  "description": "KoLo Zalo channel plugin",
+  "description": "Kurahi Zalo channel plugin",
   "type": "module",
   "dependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*",
+    "kolo": "workspace:kurahi@*",
     "undici": "7.20.0"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

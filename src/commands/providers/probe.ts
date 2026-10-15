@@ -1,5 +1,5 @@
-// One tiny request against a provider (KoLo 2.0, M9c): `kolo providers test` and
-// `kolo models list --live`. Never logs the key; reports latency and the models seen.
+// One tiny request against a provider (KoLo 2.0, M9c): `kurahi providers test` and
+// `kurahi models list --live`. Never logs the key; reports latency and the models seen.
 import { fetchJson } from "../../infra/provider-usage.fetch.shared.js";
 import {
   type ProviderRegistryEntry,

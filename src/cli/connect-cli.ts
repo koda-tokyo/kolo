@@ -1,8 +1,8 @@
-// `kolo connect <channel>` — connect a phone to the resident (KoLo 2.0, M16).
+// `kurahi connect <channel>` — connect a phone to the resident (KoLo 2.0, M16).
 //
-//   kolo connect whatsapp|telegram|line|web [--account <id>] [--stdin] [--wait|--no-wait] [--json]
-//   kolo connect --unbind <channel> [--account <id>]
-//   kolo connect --list [--json]
+//   kurahi connect whatsapp|telegram|line|web [--account <id>] [--stdin] [--wait|--no-wait] [--json]
+//   kurahi connect --unbind <channel> [--account <id>]
+//   kurahi connect --list [--json]
 import type { Command } from "commander";
 import type { ConnectDeps } from "../commands/connect/types.js";
 import {
@@ -57,11 +57,11 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
       [
         "",
         "Examples:",
-        "  kolo connect telegram",
-        "  kolo connect whatsapp",
-        '  printf \'%s\\n%s\\n\' "$SECRET" "$TOKEN" | kolo connect line --stdin --no-wait',
-        "  kolo connect web",
-        "  kolo connect --unbind telegram",
+        "  kurahi connect telegram",
+        "  kurahi connect whatsapp",
+        '  printf \'%s\\n%s\\n\' "$SECRET" "$TOKEN" | kurahi connect line --stdin --no-wait',
+        "  kurahi connect web",
+        "  kurahi connect --unbind telegram",
         "",
         "Exit codes: 0 ok, 1 failed, 2 usage, 3 gateway unreachable (web invitation).",
         `${theme.muted("Docs:")} ${formatDocsLink("/start/phone")}`,
@@ -82,7 +82,7 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
           return;
         }
         if (rows.length === 0) {
-          runtime.log("No owner bindings. Connect a phone with: kolo connect telegram");
+          runtime.log("No owner bindings. Connect a phone with: kurahi connect telegram");
           return;
         }
         runtime.log(
@@ -102,7 +102,7 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
       if (typeof opts.unbind === "string") {
         if (!isPhoneChannel(opts.unbind)) {
           runtime.error(
-            `kolo connect: --unbind ${opts.unbind}: expected ${PHONE_CHANNELS.join(", ")}`,
+            `kurahi connect: --unbind ${opts.unbind}: expected ${PHONE_CHANNELS.join(", ")}`,
           );
           runtime.exit(2);
           return;
@@ -113,7 +113,7 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
         } else if (res.ok) {
           runtime.log(res.message);
         } else {
-          runtime.error(`kolo connect: ${res.message}`);
+          runtime.error(`kurahi connect: ${res.message}`);
         }
         if (!res.ok) {
           runtime.exit(res.exitCode);
@@ -122,7 +122,7 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
       }
       if (!isPhoneChannel(channelArg)) {
         runtime.error(
-          `kolo connect: ${channelArg ? `unknown channel '${channelArg}'` : "channel required"} (expected ${PHONE_CHANNELS.join(", ")})`,
+          `kurahi connect: ${channelArg ? `unknown channel '${channelArg}'` : "channel required"} (expected ${PHONE_CHANNELS.join(", ")})`,
         );
         runtime.exit(2);
         return;
@@ -138,7 +138,7 @@ export function registerConnectCli(program: Command, cliDeps: ConnectCliDeps = {
       if (opts.json) {
         runtime.log(JSON.stringify(result, null, 2));
       } else if (!result.ok) {
-        runtime.error(`kolo connect ${channelArg}: ${result.message}`);
+        runtime.error(`kurahi connect ${channelArg}: ${result.message}`);
       }
       if (!result.ok) {
         runtime.exit(result.exitCode);

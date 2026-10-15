@@ -1,9 +1,9 @@
 ---
 name: voice-call
-description: Start voice calls via the KoLo voice-call plugin.
+description: Start voice calls via the Kurahi voice-call plugin.
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "📞",
         "skillKey": "voice-call",
@@ -19,8 +19,8 @@ Use the voice-call plugin to start or inspect calls (Twilio, Telnyx, Plivo, or m
 ## CLI
 
 ```bash
-KoLo voicecall call --to "+15555550123" --message "Hello from KoLo"
-KoLo voicecall status --call-id <id>
+Kurahi voicecall call --to "+15555550123" --message "Hello from Kurahi"
+Kurahi voicecall status --call-id <id>
 ```
 
 ## Tool

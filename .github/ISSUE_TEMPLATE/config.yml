@@ -1,10 +1,10 @@
 blank_issues_enabled: false
 contact_links:
   - name: Questions and ideas
-    url: https://github.com/koda-tokyo/kolo/discussions
+    url: https://github.com/koda-tokyo/kurahi/discussions
     about: Ask how to do something or propose a direction before writing code.
   - name: Security report
-    url: https://github.com/koda-tokyo/kolo/blob/main/SECURITY.md
+    url: https://github.com/koda-tokyo/kurahi/blob/main/SECURITY.md
     about: Never file a vulnerability as a public issue. SECURITY.md has the private address and the response targets.
   - name: Documentation
     url: https://kodasoken.com/kolo

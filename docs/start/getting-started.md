@@ -10,11 +10,11 @@ title: "Getting Started"
 
 Goal: go from **zero** → **first working chat** (with sane defaults) as quickly as possible.
 
-Fastest chat: open the Control UI (no channel setup needed). Run `KoLo dashboard`
+Fastest chat: open the Control UI (no channel setup needed). Run `Kurahi dashboard`
 and chat in the browser, or open `http://127.0.0.1:18789/` on the gateway host.
 Docs: [Dashboard](/web/dashboard) and [Control UI](/web/control-ui).
 
-Recommended path: use the **CLI onboarding wizard** (`KoLo onboard`). It sets up:
+Recommended path: use the **CLI onboarding wizard** (`Kurahi onboard`). It sets up:
 
 - model/auth (OAuth recommended)
 - gateway settings
@@ -47,7 +47,7 @@ run on host, set an explicit per-agent override:
 - Node `>=22`
 - `pnpm` (optional; recommended if you build from source)
 - **Recommended:** Brave Search API key for web search. Easiest path:
-  `KoLo configure --section web` (stores `tools.web.search.apiKey`).
+  `Kurahi configure --section web` (stores `tools.web.search.apiKey`).
   See [Web tools](/tools/web).
 
 macOS: if you plan to build the apps, install Xcode / CLT. For the CLI + gateway only, Node is enough.
@@ -56,7 +56,7 @@ Windows: use **WSL2** (Ubuntu recommended). WSL2 is strongly recommended; native
 ## 1) Install the CLI (recommended)
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
 Installer options (install method, non-interactive, from GitHub): [Install](/install).
@@ -64,23 +64,23 @@ Installer options (install method, non-interactive, from GitHub): [Install](/ins
 Windows (PowerShell):
 
 ```powershell
-iwr -useb https://kodasoken.com/kolo/install.ps1 | iex
+iwr -useb https://kodasoken.com/kurahi/install.ps1 | iex
 ```
 
 Alternative (global install):
 
 ```bash
-npm install -g @kodasoken/kolo@latest
+npm install -g kurahi@latest
 ```
 
 ```bash
-pnpm add -g @kodasoken/kolo@latest
+pnpm add -g kurahi@latest
 ```
 
 ## 2) Run the onboarding wizard (and install the service)
 
 ```bash
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
 What you’ll choose:
@@ -108,13 +108,13 @@ Headless/server tip: do OAuth on a normal machine first, then copy `oauth.json` 
 If you installed the service during onboarding, the Gateway should already be running:
 
 ```bash
-KoLo gateway status
+Kurahi gateway status
 ```
 
 Manual run (foreground):
 
 ```bash
-KoLo gateway --port 18789 --verbose
+Kurahi gateway --port 18789 --verbose
 ```
 
 Dashboard (local loopback): `http://127.0.0.1:18789/`
@@ -123,9 +123,9 @@ If a token is configured, paste it into the Control UI settings (stored as `conn
 ## 3.5) Quick verify (2 min)
 
 ```bash
-KoLo status
-KoLo health
-KoLo security audit --deep
+Kurahi status
+Kurahi health
+Kurahi security audit --deep
 ```
 
 ## 4) Pair + connect your first chat surface
@@ -133,7 +133,7 @@ KoLo security audit --deep
 ### WhatsApp (QR login)
 
 ```bash
-KoLo channels login
+Kurahi channels login
 ```
 
 Scan via WhatsApp → Settings → Linked Devices.
@@ -156,26 +156,26 @@ Default posture: unknown DMs get a short code and messages are not processed unt
 If your first DM gets no reply, approve the pairing:
 
 ```bash
-KoLo pairing list whatsapp
-KoLo pairing approve whatsapp <code>
+Kurahi pairing list whatsapp
+Kurahi pairing approve whatsapp <code>
 ```
 
 Pairing doc: [Pairing](/start/pairing)
 
 ## From source (development)
 
-If you’re hacking on KoLo itself, run from source:
+If you’re hacking on Kurahi itself, run from source:
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
-If you don’t have a global install yet, run the onboarding step via `pnpm KoLo ...` from the repo.
+If you don’t have a global install yet, run the onboarding step via `pnpm Kurahi ...` from the repo.
 `pnpm build` also bundles A2UI assets; if you need to run just that step, use `pnpm canvas:a2ui:bundle`.
 
 Gateway (from this repo):
@@ -189,13 +189,13 @@ node kolo.mjs gateway --port 18789 --verbose
 In a new terminal, send a test message:
 
 ```bash
-KoLo message send --target +15555550123 --message "Hello from KoLo"
+Kurahi message send --target +15555550123 --message "Hello from Kurahi"
 ```
 
-If `KoLo health` shows “no auth configured”, go back to the wizard and set OAuth/key auth — the agent won’t be able to respond without it.
+If `Kurahi health` shows “no auth configured”, go back to the wizard and set OAuth/key auth — the agent won’t be able to respond without it.
 
-Tip: `KoLo status --all` is the best pasteable, read-only debug report.
-Health probes: `KoLo health` (or `KoLo status --deep`) asks the running gateway for a health snapshot.
+Tip: `Kurahi status --all` is the best pasteable, read-only debug report.
+Health probes: `Kurahi health` (or `Kurahi status --deep`) asks the running gateway for a health snapshot.
 
 ## Next steps (optional, but great)
 

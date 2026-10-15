@@ -9,22 +9,22 @@ title: "jobs"
 # Jobs
 
 Every agent run is a job: an embedded runner turn, a cron lane task, or a turn started by another
-agent. Jobs are exposed by the gateway API and reached with [`kolo api`](/cli/api); there is no
-separate `kolo jobs` command.
+agent. Jobs are exposed by the gateway API and reached with [`kurahi api`](/cli/api); there is no
+separate `kurahi jobs` command.
 
 ```bash
-kolo api listJobs                          # newest first
-kolo api listJobs -p agent=alice -p status=running -p limit=20
-kolo api getJob -p id=<job id>
-kolo api cancelJob -p id=<job id>
+kurahi api listJobs                          # newest first
+kurahi api listJobs -p agent=alice -p status=running -p limit=20
+kurahi api getJob -p id=<job id>
+kurahi api cancelJob -p id=<job id>
 ```
 
 ## Operations
 
-| Operation | Route | Auth |
-|---|---|---|
-| `listJobs` | `GET /api/jobs` | gateway token or session admin |
-| `getJob` | `GET /api/jobs/{id}` | gateway token or session admin |
+| Operation   | Route                        | Auth                           |
+| ----------- | ---------------------------- | ------------------------------ |
+| `listJobs`  | `GET /api/jobs`              | gateway token or session admin |
+| `getJob`    | `GET /api/jobs/{id}`         | gateway token or session admin |
 | `cancelJob` | `POST /api/jobs/{id}/cancel` | gateway token or session admin |
 
 `listJobs` filters: `agent` (agent id), `status`, `limit`.

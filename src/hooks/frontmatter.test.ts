@@ -149,7 +149,7 @@ description: 'single-quoted'
 });
 
 describe("resolveKoLoMetadata", () => {
-  it("extracts KoLo metadata from parsed frontmatter", () => {
+  it("extracts Kurahi metadata from parsed frontmatter", () => {
     const frontmatter = {
       name: "test-hook",
       metadata: JSON.stringify({
@@ -178,7 +178,7 @@ describe("resolveKoLoMetadata", () => {
     expect(result).toBeUndefined();
   });
 
-  it("returns undefined when KoLo key is missing", () => {
+  it("returns undefined when Kurahi key is missing", () => {
     const frontmatter = {
       metadata: JSON.stringify({ other: "data" }),
     };
@@ -233,7 +233,7 @@ describe("resolveKoLoMetadata", () => {
     const content = `---
 name: session-memory
 description: "Save session context to memory when /new command is issued"
-homepage: https://kodasoken.com/kolo/hooks#session-memory
+homepage: https://kurahi.kodasoken.com/docs/hooks#session-memory
 metadata:
   {
     "KoLo":

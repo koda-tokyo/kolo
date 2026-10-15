@@ -1,4 +1,4 @@
-// A tiny message table for the first-run path: `kolo init`, `kolo doctor`, `kolo health`, the
+// A tiny message table for the first-run path: `kurahi init`, `kurahi doctor`, `kurahi health`, the
 // top-level `--help` and error texts. English is the source; Japanese is the first translation.
 // Language: `--lang ja` on the command line, else KOLO_LANG, else the OS locale (LANG,
 // LC_ALL, LC_MESSAGES, or Intl). Keys are stable identifiers; call sites never carry prose
@@ -52,8 +52,8 @@ const MESSAGES: Table = {
     ja: "使い方: kolo [オプション] [コマンド]",
   },
   "error.seeHelp": {
-    en: "Run 'kolo --help' for the list of commands.",
-    ja: "コマンド一覧は 'kolo --help' で表示できます。",
+    en: "Run 'kurahi --help' for the list of commands.",
+    ja: "コマンド一覧は 'kurahi --help' で表示できます。",
   },
   "health.ok": { en: "gateway ok", ja: "ゲートウェイ 正常" },
   "health.agents": { en: "{n} agent(s)", ja: "エージェント {n}" },
@@ -64,10 +64,10 @@ const MESSAGES: Table = {
   "health.noChannels": { en: "no channels", ja: "チャネルなし" },
   "health.sessions": { en: "{n} session(s)", ja: "セッション {n}" },
   "health.notRunning": {
-    en: "kolo health: gateway not running (start it with: kolo service install, or kolo gateway)",
-    ja: "kolo health: ゲートウェイが起動していません (起動: kolo service install、または kolo gateway)",
+    en: "kurahi health: gateway not running (start it with: kurahi service install, or kurahi gateway)",
+    ja: "kurahi health: ゲートウェイが起動していません (起動: kurahi service install、または kurahi gateway)",
   },
-  "health.failed": { en: "kolo health: {reason}", ja: "kolo health: {reason}" },
+  "health.failed": { en: "kurahi health: {reason}", ja: "kurahi health: {reason}" },
   "init.cancelled": { en: "init cancelled", ja: "init を中止しました" },
   "init.q.name": {
     en: "Identity name (used for the service id and the agent)",
@@ -115,8 +115,8 @@ const MESSAGES: Table = {
   "init.doctor.ok": { en: "ok", ja: "正常" },
   "init.doctor.issues": { en: "issues", ja: "要確認" },
   "init.doctor.notes": {
-    en: "{n} notes; kolo doctor --json for detail",
-    ja: "注記 {n} 件。詳細は kolo doctor --json",
+    en: "{n} notes; kurahi doctor --json for detail",
+    ja: "注記 {n} 件。詳細は kurahi doctor --json",
   },
   "init.exportHint": {
     en: "this run used KOLO_HOME={home}; export it so later commands find the same state:",
@@ -143,7 +143,7 @@ const MESSAGES: Table = {
   "init.next.tui": { en: "talk to the agent", ja: "エージェントと対話する" },
   "init.docs": { en: "docs", ja: "ドキュメント" },
   "init.ready": { en: "ready", ja: "準備完了" },
-  "doctor.intro": { en: "kolo doctor", ja: "kolo doctor (診断)" },
+  "doctor.intro": { en: "kurahi doctor", ja: "kurahi doctor (診断)" },
   "support.wrote": {
     en: "diagnostics bundle written to {path}",
     ja: "診断バンドルを書き出しました: {path}",

@@ -1,11 +1,11 @@
 // Owner binding (KoLo 2.0, M16 "five minutes to your phone").
 //
-// `kolo connect <channel>` issues a one-time code (10 minutes, single use, stored as a hash). The
+// `kurahi connect <channel>` issues a one-time code (10 minutes, single use, stored as a hash). The
 // first message on that channel that carries the code binds its sender as the channel's owner:
 // `channels.<id>.identities[<sender>] = "owner"` (M14 identities), the sender is added to the
 // channel's pairing allowlist so the DM gate admits them, and the binding is audited
 // (`channel.owner_bound`). WhatsApp binds the linked account's own number at login instead (the
-// QR scan is the proof of possession). `kolo connect --unbind <channel>` removes exactly what a
+// QR scan is the proof of possession). `kurahi connect --unbind <channel>` removes exactly what a
 // binding added and audits `channel.owner_unbound`.
 //
 // State: `<KOLO_HOME>/channels/owner-codes.json` and `<KOLO_HOME>/channels/owners.json`, 0600.
@@ -243,7 +243,7 @@ async function defaultReadConfig(): Promise<KoLoConfig> {
   const snapshot = await readConfigFileSnapshot();
   if (snapshot.exists && !snapshot.valid) {
     throw new Error(
-      `config is invalid (${snapshot.issues[0]?.path || "<root>"}: ${snapshot.issues[0]?.message ?? "invalid"}); run kolo doctor`,
+      `config is invalid (${snapshot.issues[0]?.path || "<root>"}: ${snapshot.issues[0]?.message ?? "invalid"}); run kurahi doctor`,
     );
   }
   return snapshot.config;

@@ -1,6 +1,6 @@
-# @KoLo/voice-call
+# @Kurahi/voice-call
 
-Official Voice Call plugin for **KoLo**.
+Official Voice Call plugin for **Kurahi**.
 
 Providers:
 
@@ -14,10 +14,10 @@ Plugin system: `https://docs.kodasoken.com/plugin`
 
 ## Install (local dev)
 
-### Option A: install via KoLo (recommended)
+### Option A: install via Kurahi (recommended)
 
 ```bash
-KoLo plugins install @KoLo/voice-call
+Kurahi plugins install @Kurahi/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -103,13 +103,13 @@ Notes:
 ## CLI
 
 ```bash
-KoLo voicecall call --to "+15555550123" --message "Hello from KoLo"
-KoLo voicecall continue --call-id <id> --message "Any questions?"
-KoLo voicecall speak --call-id <id> --message "One moment"
-KoLo voicecall end --call-id <id>
-KoLo voicecall status --call-id <id>
-KoLo voicecall tail
-KoLo voicecall expose --mode funnel
+Kurahi voicecall call --to "+15555550123" --message "Hello from Kurahi"
+Kurahi voicecall continue --call-id <id> --message "Any questions?"
+Kurahi voicecall speak --call-id <id> --message "One moment"
+Kurahi voicecall end --call-id <id>
+Kurahi voicecall status --call-id <id>
+Kurahi voicecall tail
+Kurahi voicecall expose --mode funnel
 ```
 
 ## Tool

@@ -122,7 +122,7 @@ function setAt(obj: unknown, path: PathSeg[], value: unknown) {
 /**
  * Before writing a config back to disk: every path that was a `$secret` ref in the on-disk file
  * becomes a ref again. A changed value is written to the store first (so edits through
- * `kolo config set` keep working), never to kolo.json.
+ * `kurahi config set` keep working), never to kolo.json.
  */
 export function restoreSecretRefs<T>(
   cfg: T,

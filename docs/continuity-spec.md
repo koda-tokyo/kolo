@@ -8,11 +8,11 @@ title: "Continuity specification"
 
 # Continuity specification
 
-This page is normative for `kolo continuity`. Each invariant is a testable statement over two
+This page is normative for `kurahi continuity`. Each invariant is a testable statement over two
 observations of one resident, **B** (before a disruption) and **A** (after it), where an
 observation is a signed continuity manifest plus a probe snapshot taken through the public
 gateway API. The scorer in `src/continuity-suite/scorer.ts` implements exactly these rules and
-`kolo continuity verify` re-runs it on a saved report.
+`kurahi continuity verify` re-runs it on a saved report.
 
 ## Terms
 
@@ -49,16 +49,16 @@ _pass_ iff the disruption's "applied" condition above holds. Otherwise _fail_. (
 C1–C9 would compare a resident with itself.)
 
 **C1 — Identity files unchanged.**
-Let I_B and I_A be the `identity` entries. _skip_ if I_B is empty. _pass_ iff I_B and I_A have the
-same names and every pair is equal. _fail_ if any identity file changed, disappeared or appeared.
+Let I*B and I_A be the `identity` entries. \_skip* if I*B is empty. \_pass* iff I*B and I_A have the
+same names and every pair is equal. \_fail* if any identity file changed, disappeared or appeared.
 
 **C2 — Memory retained and recalled.**
-Let M_B, M_A be the `memory` entries and r_B, r_A the fraction of recall probes whose expected
+Let M*B, M_A be the `memory` entries and r_B, r_A the fraction of recall probes whose expected
 text appeared in a returned line, with threshold t (default 0.8).
-_fail_ if any memory entry in M_B changed or is missing in M_A.
-Else, if there were no recall probes: _pass_ when M_B is non-empty (hashes only; the detail says
-recall was not measured), _skip_ when there is nothing at all.
-Else _skip_ if r_B < t (nothing to preserve), _fail_ if r_A < t, otherwise _pass_.
+\_fail* if any memory entry in M*B changed or is missing in M_A.
+Else, if there were no recall probes: \_pass* when M*B is non-empty (hashes only; the detail says
+recall was not measured), \_skip* when there is nothing at all.
+Else _skip_ if r*B < t (nothing to preserve), \_fail* if r*A < t, otherwise \_pass*.
 
 **C3 — Role and permissions unchanged.**
 _fail_ if the `role` entry (agent configuration without `model`, agent defaults without `model`,
@@ -76,10 +76,10 @@ interrupting disruption j is `failed` with a reason (the gateway marks any job f
 terminal status on its own.
 
 **C5 — Audit chain continuous.**
-Let (s_B, h_B) be the last seq and entry hash of the audit chain before, s_A the last seq after,
+Let (s*B, h_B) be the last seq and entry hash of the audit chain before, s_A the last seq after,
 and anchor the entry at seq s_B read after the disruption (`GET /api/audit/chain?seq=s_B`).
-_fail_ if the chain does not verify after; or if s_A < s_B; or if s_B > 0 and anchor.hash ≠ h_B.
-Otherwise _pass_. (The wrong-token probe in each snapshot is itself audited, so s_B ≥ 1 in every
+\_fail* if the chain does not verify after; or if s*A < s_B; or if s_B > 0 and anchor.hash ≠ h_B.
+Otherwise \_pass*. (The wrong-token probe in each snapshot is itself audited, so s_B ≥ 1 in every
 run.)
 
 **C6 — No secret leaves the state dir.**
@@ -93,30 +93,30 @@ _fail_ if either manifest fails verification (chain, root, keyId = sha256(public
 or if the two `signer.keyId` values differ. Otherwise _pass_.
 
 **C8 — Sessions and transcripts retained.**
-Let S_B, S_A be `session` entries keyed by session key, T_B, T_A `transcript` entries keyed by
+Let S*B, S_A be `session` entries keyed by session key, T_B, T_A `transcript` entries keyed by
 file name, and owner(t) the session whose `sessionId` names transcript t in B.
-_fail_ if any key of S_B is missing in S_A; or if any transcript of T_B is missing in T_A; or if a
+\_fail* if any key of S*B is missing in S_A; or if any transcript of T_B is missing in T_A; or if a
 transcript of T_B changed and owner(t) is not a driven session; or, for `close`, if the closed
 session's entry did not change (same session id); or if any session entry changed whose key is not
-driven. Otherwise _pass_. Added sessions and transcripts are allowed.
+driven. Otherwise \_pass*. Added sessions and transcripts are allowed.
 
 **C9 — Resident answers as itself.**
-Let c_B, c_A be the chat probe results. _skip_ if either probe was not run.
-_fail_ if c_A is not ok; or if an expected identity marker is known (throwaway mode) and c_A's
+Let c*B, c_A be the chat probe results. \_skip* if either probe was not run.
+_fail_ if c*A is not ok; or if an expected identity marker is known (throwaway mode) and c_A's
 marker differs from it; or if no expected marker is known and c_B carried a marker that c_A does
 not repeat; or, for `model-swap`, if c_A's model is not the profile swapped to, or equals c_B's
-model. Otherwise _pass_.
+model. Otherwise \_pass*.
 
 ## Verdict and badge
 
 The verdict of a report is `PASS` iff no invariant of any run is `fail`. The badge is
 `continuity <verdict> | resident=<id> | <disruptions> | pass=<n> fail=<n> skip=<n> | <root_B8>><root_A8> … | <createdAt>`.
-`kolo continuity verify` recomputes all of the above from the report alone and fails on the first
-mismatch; `kolo continuity badge` appends `UNVERIFIED` to a badge whose report does not recompute.
+`kurahi continuity verify` recomputes all of the above from the report alone and fails on the first
+mismatch; `kurahi continuity badge` appends `UNVERIFIED` to a badge whose report does not recompute.
 
 ## Conformance
 
-A gateway conforms to this specification when `kolo continuity run --throwaway --disruption all`
+A gateway conforms to this specification when `kurahi continuity run --throwaway --disruption all`
 produces a `PASS` verdict and the report verifies. The repository enforces this on every push
 (`pnpm continuity:check`). A resident on an operator's gateway is _continuity-proven_ for a set of
 disruptions when an attached run over that set produces `PASS` and the report verifies.

@@ -1,16 +1,19 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * Alpha Vantage financial data plugin for KoLo.
+ * Alpha Vantage financial data plugin for Kurahi.
  *
  * Provides `finance_query` tool for stocks, forex, crypto, commodities.
  * Free tier: 25 requests/day.
  * Config: `apiKey` in plugin config or `ALPHA_VANTAGE_API_KEY` env var.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 const BASE = "https://www.alphavantage.co/query";
 
-async function fetchAV(params: Record<string, string>, apiKey: string): Promise<Record<string, unknown>> {
+async function fetchAV(
+  params: Record<string, string>,
+  apiKey: string,
+): Promise<Record<string, unknown>> {
   const qs = new URLSearchParams({ ...params, apikey: apiKey }).toString();
   const res = await fetch(`${BASE}?${qs}`, { signal: AbortSignal.timeout(12_000) });
   if (!res.ok) throw new Error(`Alpha Vantage error: ${res.status}`);
@@ -32,11 +35,14 @@ async function getStockQuote(symbol: string, apiKey: string): Promise<string> {
 }
 
 async function getForexRate(from: string, to: string, apiKey: string): Promise<string> {
-  const data = await fetchAV({
-    function: "CURRENCY_EXCHANGE_RATE",
-    from_currency: from.toUpperCase(),
-    to_currency: to.toUpperCase(),
-  }, apiKey);
+  const data = await fetchAV(
+    {
+      function: "CURRENCY_EXCHANGE_RATE",
+      from_currency: from.toUpperCase(),
+      to_currency: to.toUpperCase(),
+    },
+    apiKey,
+  );
 
   const r = data["Realtime Currency Exchange Rate"] as Record<string, string> | undefined;
   if (!r) return `No exchange rate found for ${from}→${to}`;
@@ -49,11 +55,14 @@ async function getForexRate(from: string, to: string, apiKey: string): Promise<s
 }
 
 async function getCryptoRate(symbol: string, market: string, apiKey: string): Promise<string> {
-  const data = await fetchAV({
-    function: "CURRENCY_EXCHANGE_RATE",
-    from_currency: symbol.toUpperCase(),
-    to_currency: market.toUpperCase(),
-  }, apiKey);
+  const data = await fetchAV(
+    {
+      function: "CURRENCY_EXCHANGE_RATE",
+      from_currency: symbol.toUpperCase(),
+      to_currency: market.toUpperCase(),
+    },
+    apiKey,
+  );
 
   const r = data["Realtime Currency Exchange Rate"] as Record<string, string> | undefined;
   if (!r) return `No crypto data found for ${symbol}`;
@@ -85,36 +94,39 @@ const alphaVantagePlugin = {
           "Get stock quotes, forex exchange rates, or crypto prices. " +
           'Examples: "stock AAPL", "forex USD/JPY", "crypto BTC".',
         parameters: Type.Object({
-          type: Type.Union([
-            Type.Literal("stock"),
-            Type.Literal("forex"),
-            Type.Literal("crypto"),
-          ], { description: 'Query type: "stock", "forex", or "crypto"' }),
-          symbol: Type.String({ description: "Stock ticker (AAPL), currency pair (USD/JPY), or crypto symbol (BTC)" }),
+          type: Type.Union([Type.Literal("stock"), Type.Literal("forex"), Type.Literal("crypto")], {
+            description: 'Query type: "stock", "forex", or "crypto"',
+          }),
+          symbol: Type.String({
+            description: "Stock ticker (AAPL), currency pair (USD/JPY), or crypto symbol (BTC)",
+          }),
         }),
 
         async execute(_toolId: string, params: Record<string, unknown>) {
           const apiKey =
-            (api.pluginConfig?.apiKey as string | undefined) ??
-            process.env.ALPHA_VANTAGE_API_KEY;
+            (api.pluginConfig?.apiKey as string | undefined) ?? process.env.ALPHA_VANTAGE_API_KEY;
 
           if (!apiKey) {
             return {
-              content: [{
-                type: "text" as const,
-                text: "Alpha Vantage not configured. Set apiKey in plugin config or ALPHA_VANTAGE_API_KEY env var.\nGet a free key at: https://www.alphavantage.co/support/#api-key",
-              }],
+              content: [
+                {
+                  type: "text" as const,
+                  text: "Alpha Vantage not configured. Set apiKey in plugin config or ALPHA_VANTAGE_API_KEY env var.\nGet a free key at: https://www.alphavantage.co/support/#api-key",
+                },
+              ],
             };
           }
 
           const type = params.type as string;
-          const symbol = (params.symbol as string || "").trim().toUpperCase();
+          const symbol = ((params.symbol as string) || "").trim().toUpperCase();
           if (!symbol) return { content: [{ type: "text" as const, text: "No symbol provided." }] };
 
           try {
             let result: string;
             if (type === "forex") {
-              const [from, to] = symbol.includes("/") ? symbol.split("/") : [symbol.slice(0, 3), symbol.slice(3) || "USD"];
+              const [from, to] = symbol.includes("/")
+                ? symbol.split("/")
+                : [symbol.slice(0, 3), symbol.slice(3) || "USD"];
               result = await getForexRate(from, to, apiKey);
             } else if (type === "crypto") {
               result = await getCryptoRate(symbol, "USD", apiKey);
@@ -141,13 +153,20 @@ const alphaVantagePlugin = {
           .command("finance <type> <symbol>")
           .description("Get financial data (stock AAPL, forex USD/JPY, crypto BTC)")
           .action(async (type: string, symbol: string) => {
-            const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.ALPHA_VANTAGE_API_KEY;
-            if (!apiKey) { console.error("Set ALPHA_VANTAGE_API_KEY env var."); process.exitCode = 1; return; }
+            const apiKey =
+              (api.pluginConfig?.apiKey as string | undefined) ?? process.env.ALPHA_VANTAGE_API_KEY;
+            if (!apiKey) {
+              console.error("Set ALPHA_VANTAGE_API_KEY env var.");
+              process.exitCode = 1;
+              return;
+            }
             try {
               let result: string;
               const sym = symbol.toUpperCase();
               if (type === "forex") {
-                const [from, to] = sym.includes("/") ? sym.split("/") : [sym.slice(0, 3), sym.slice(3) || "USD"];
+                const [from, to] = sym.includes("/")
+                  ? sym.split("/")
+                  : [sym.slice(0, 3), sym.slice(3) || "USD"];
                 result = await getForexRate(from, to, apiKey);
               } else if (type === "crypto") {
                 result = await getCryptoRate(sym, "USD", apiKey);
@@ -155,7 +174,10 @@ const alphaVantagePlugin = {
                 result = await getStockQuote(sym, apiKey);
               }
               console.log(result);
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["finance"] },

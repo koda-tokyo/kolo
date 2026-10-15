@@ -8,7 +8,7 @@ title: "acp"
 
 # acp
 
-Run the ACP (Agent Client Protocol) bridge that talks to a KoLo Gateway.
+Run the ACP (Agent Client Protocol) bridge that talks to a Kurahi Gateway.
 
 This command speaks ACP over stdio for IDEs and forwards prompts to the Gateway
 over WebSocket. It keeps ACP sessions mapped to Gateway session keys.
@@ -16,19 +16,19 @@ over WebSocket. It keeps ACP sessions mapped to Gateway session keys.
 ## Usage
 
 ```bash
-KoLo acp
+Kurahi acp
 
 # Remote Gateway
-KoLo acp --url wss://gateway-host:18789 --token <token>
+Kurahi acp --url wss://gateway-host:18789 --token <token>
 
 # Attach to an existing session key
-KoLo acp --session agent:main:main
+Kurahi acp --session agent:main:main
 
 # Attach by label (must already exist)
-KoLo acp --session-label "support inbox"
+Kurahi acp --session-label "support inbox"
 
 # Reset the session key before the first prompt
-KoLo acp --session agent:main:main --reset-session
+Kurahi acp --session agent:main:main --reset-session
 ```
 
 ## ACP client (debug)
@@ -37,35 +37,35 @@ Use the built-in ACP client to sanity-check the bridge without an IDE.
 It spawns the ACP bridge and lets you type prompts interactively.
 
 ```bash
-KoLo acp client
+Kurahi acp client
 
 # Point the spawned bridge at a remote Gateway
-KoLo acp client --server-args --url wss://gateway-host:18789 --token <token>
+Kurahi acp client --server-args --url wss://gateway-host:18789 --token <token>
 
-# Override the server command (default: KoLo)
-KoLo acp client --server "node" --server-args kolo.mjs acp --url ws://127.0.0.1:19001
+# Override the server command (default: Kurahi)
+Kurahi acp client --server "node" --server-args kolo.mjs acp --url ws://127.0.0.1:19001
 ```
 
 ## How to use this
 
 Use ACP when an IDE (or other client) speaks Agent Client Protocol and you want
-it to drive a KoLo Gateway session.
+it to drive a Kurahi Gateway session.
 
 1. Ensure the Gateway is running (local or remote).
 2. Configure the Gateway target (config or flags).
-3. Point your IDE to run `KoLo acp` over stdio.
+3. Point your IDE to run `Kurahi acp` over stdio.
 
 Example config (persisted):
 
 ```bash
-KoLo config set gateway.remote.url wss://gateway-host:18789
-KoLo config set gateway.remote.token <token>
+Kurahi config set gateway.remote.url wss://gateway-host:18789
+Kurahi config set gateway.remote.token <token>
 ```
 
 Example direct run (no config write):
 
 ```bash
-KoLo acp --url wss://gateway-host:18789 --token <token>
+Kurahi acp --url wss://gateway-host:18789 --token <token>
 ```
 
 ## Selecting agents
@@ -75,9 +75,9 @@ ACP does not pick agents directly. It routes by the Gateway session key.
 Use agent-scoped session keys to target a specific agent:
 
 ```bash
-KoLo acp --session agent:main:main
-KoLo acp --session agent:design:main
-KoLo acp --session agent:qa:bug-123
+Kurahi acp --session agent:main:main
+Kurahi acp --session agent:design:main
+Kurahi acp --session agent:qa:bug-123
 ```
 
 Each ACP session maps to a single Gateway session key. One agent can have many
@@ -91,9 +91,9 @@ Add a custom ACP agent in `~/.config/zed/settings.json` (or use Zed’s Settings
 ```json
 {
   "agent_servers": {
-    "KoLo ACP": {
+    "Kurahi ACP": {
       "type": "custom",
-      "command": "KoLo",
+      "command": "Kurahi",
       "args": ["acp"],
       "env": {}
     }
@@ -106,9 +106,9 @@ To target a specific Gateway or agent:
 ```json
 {
   "agent_servers": {
-    "KoLo ACP": {
+    "Kurahi ACP": {
       "type": "custom",
-      "command": "KoLo",
+      "command": "Kurahi",
       "args": [
         "acp",
         "--url",
@@ -124,7 +124,7 @@ To target a specific Gateway or agent:
 }
 ```
 
-In Zed, open the Agent panel and select “KoLo ACP” to start a thread.
+In Zed, open the Agent panel and select “Kurahi ACP” to start a thread.
 
 ## Session mapping
 
@@ -164,7 +164,7 @@ Learn more about session keys at [/concepts/session](/concepts/session).
 ### `acp client` options
 
 - `--cwd <dir>`: working directory for the ACP session.
-- `--server <command>`: ACP server command (default: `KoLo`).
+- `--server <command>`: ACP server command (default: `Kurahi`).
 - `--server-args <args...>`: extra arguments passed to the ACP server.
 - `--server-verbose`: enable verbose logging on the ACP server.
 - `--verbose, -v`: verbose client logging.

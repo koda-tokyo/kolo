@@ -22,7 +22,7 @@ resolved by the **ask fallback** (default: deny).
 
 Exec approvals are enforced locally on the execution host:
 
-- **gateway host** → `KoLo` process on the gateway machine
+- **gateway host** → `Kurahi` process on the gateway machine
 - **node host** → node runner (macOS companion app or headless node host)
 
 macOS split:
@@ -143,7 +143,7 @@ must advertise `system.execApprovals.get/set` (macOS app or headless node host).
 If a node does not advertise exec approvals yet, edit its local
 `~/.kolo/exec-approvals.json` directly.
 
-CLI: `KoLo approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
+CLI: `Kurahi approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
 
 ## Approval flow
 

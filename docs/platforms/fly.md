@@ -1,11 +1,11 @@
 ---
 title: Fly.io
-description: Deploy KoLo on Fly.io
+description: Deploy Kurahi on Fly.io
 ---
 
 # Fly.io Deployment
 
-**Goal:** KoLo Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
+**Goal:** Kurahi Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
 
 ## What you need
 
@@ -25,8 +25,8 @@ description: Deploy KoLo on Fly.io
 
 ```bash
 # Clone the repo
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 
 # Create a new Fly app (pick your own name)
 fly apps create my-KoLo
@@ -78,13 +78,13 @@ primary_region = "iad"
 
 **Key settings:**
 
-| Setting                        | Why                                                                         |
-| ------------------------------ | --------------------------------------------------------------------------- |
-| `--bind lan`                   | Binds to `0.0.0.0` so Fly's proxy can reach the gateway                     |
-| `--allow-unconfigured`         | Starts without a config file (you'll create one after)                      |
-| `internal_port = 3000`         | Must match `--port 3000` (or `KOLO_GATEWAY_PORT`) for Fly health checks |
-| `memory = "2048mb"`            | 512MB is too small; 2GB recommended                                         |
-| `KOLO_STATE_DIR = "/data"` | Persists state on the volume                                                |
+| Setting                    | Why                                                                     |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `--bind lan`               | Binds to `0.0.0.0` so Fly's proxy can reach the gateway                 |
+| `--allow-unconfigured`     | Starts without a config file (you'll create one after)                  |
+| `internal_port = 3000`     | Must match `--port 3000` (or `KOLO_GATEWAY_PORT`) for Fly health checks |
+| `memory = "2048mb"`        | 512MB is too small; 2GB recommended                                     |
+| `KOLO_STATE_DIR = "/data"` | Persists state on the volume                                            |
 
 ## 3) Set secrets
 

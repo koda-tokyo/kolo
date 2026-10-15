@@ -1,7 +1,7 @@
 {
   "name": "@KoLo/matrix",
   "version": "2.0.0",
-  "description": "KoLo Matrix channel plugin",
+  "description": "Kurahi Matrix channel plugin",
   "type": "module",
   "dependencies": {
     "@matrix-org/matrix-sdk-crypto-nodejs": "^0.4.0",
@@ -11,7 +11,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

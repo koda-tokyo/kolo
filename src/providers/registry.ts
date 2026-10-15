@@ -1,6 +1,6 @@
 // Built-in provider registry (KoLo 2.0, M9c).
 //
-// `registry.json` lists the providers `kolo providers` and `kolo onboard` know how to wire:
+// `registry.json` lists the providers `kurahi providers` and `kurahi onboard` know how to wire:
 // a configuration identifier, an API style, a base URL, how the key travels and whether the
 // provider can list its models. Nothing here is product copy; the CLI prints display names as
 // data and its own sentences say "provider". Nothing runs at import time beyond parsing the JSON.
@@ -39,9 +39,9 @@ export type ProviderRegistryEntry = {
   envVar?: string;
   /** The base URL must be given on `add` (generic endpoints, per-resource hosts). */
   requiresBaseUrl?: boolean;
-  /** Offered first by `kolo onboard`. */
+  /** Offered first by `kurahi onboard`. */
   recommended?: boolean;
-  /** The provider's own documentation (data for `kolo providers show`). */
+  /** The provider's own documentation (data for `kurahi providers show`). */
   docUrl?: string;
   /** Published list prices per model (data for cost estimates; curated entries only). */
   pricing?: ProviderPricing;
@@ -219,7 +219,7 @@ export function getModelPrice(
   };
 }
 
-/** The KoLo model adapter for a registry API style. */
+/** The Kurahi model adapter for a registry API style. */
 export function registryApiToModelApi(style: ProviderApiStyle): ModelApi {
   switch (style) {
     case "anthropic-messages":
@@ -233,7 +233,7 @@ export function registryApiToModelApi(style: ProviderApiStyle): ModelApi {
 }
 
 /**
- * The base URL KoLo stores in `models.providers.<id>.baseUrl`. Ollama exposes its
+ * The base URL Kurahi stores in `models.providers.<id>.baseUrl`. Ollama exposes its
  * OpenAI-compatible surface under `/v1`; the registry keeps the host root because the
  * models endpoint (`/api/tags`) lives beside it.
  */

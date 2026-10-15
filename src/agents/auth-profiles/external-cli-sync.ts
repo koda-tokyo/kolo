@@ -107,7 +107,7 @@ function syncExternalCliCredentialsForProvider(
   return false;
 }
 
-// Importing credentials from other programs' files is opt-in (`kolo doctor --verbose`, or
+// Importing credentials from other programs' files is opt-in (`kurahi doctor --verbose`, or
 // KOLO_EXTERNAL_CLI_SYNC=1 for the gateway); a buyer reads an unannounced import as harvesting.
 // The readers themselves are not part of the product tree: the `oauth-sources` operator overlay
 // (private/overlay/oauth-sources.cjs) lists them, and a clean checkout has none to sync.

@@ -1,14 +1,14 @@
 ---
 summary: "Zalo Personal plugin: QR login + messaging via zca-cli (plugin install + channel config + CLI + tool)"
 read_when:
-  - You want Zalo Personal (unofficial) support in KoLo
+  - You want Zalo Personal (unofficial) support in Kurahi
   - You are configuring or developing the zalouser plugin
 title: "Zalo Personal Plugin"
 ---
 
 # Zalo Personal (plugin)
 
-Zalo Personal support for KoLo via a plugin, using `zca-cli` to automate a normal Zalo user account.
+Zalo Personal support for Kurahi via a plugin, using `zca-cli` to automate a normal Zalo user account.
 
 > **Warning:** Unofficial automation may lead to account suspension/ban. Use at your own risk.
 
@@ -27,7 +27,7 @@ If you use a remote Gateway, install/configure it on the **machine running the G
 ### Option A: install from npm
 
 ```bash
-kolo plugins install @KoLo/zalouser
+kurahi plugins install @Kurahi/zalouser
 ```
 
 Restart the Gateway afterwards.
@@ -35,7 +35,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev)
 
 ```bash
-kolo plugins install ./extensions/zalouser
+kurahi plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -67,11 +67,11 @@ Channel config lives under `channels.zalouser` (not `plugins.entries.*`):
 ## CLI
 
 ```bash
-KoLo channels login --channel zalouser
-KoLo channels logout --channel zalouser
-KoLo channels status --probe
-KoLo message send --channel zalouser --target <threadId> --message "Hello from KoLo"
-KoLo directory peers list --channel zalouser --query "name"
+Kurahi channels login --channel zalouser
+Kurahi channels logout --channel zalouser
+Kurahi channels status --probe
+Kurahi message send --channel zalouser --target <threadId> --message "Hello from Kurahi"
+Kurahi directory peers list --channel zalouser --query "name"
 ```
 
 ## Agent tool

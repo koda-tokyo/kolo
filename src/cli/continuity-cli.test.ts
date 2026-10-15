@@ -119,7 +119,7 @@ function runtime(): RuntimeEnv & { out: string[]; err: string[]; codes: number[]
   } as unknown as RuntimeEnv & { out: string[]; err: string[]; codes: number[] };
 }
 
-describe("kolo continuity run", () => {
+describe("kurahi continuity run", () => {
   let dir = "";
   const savedToken = process.env.KOLO_GATEWAY_TOKEN;
 

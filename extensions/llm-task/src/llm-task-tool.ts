@@ -3,8 +3,8 @@ import Ajv from "ajv";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-// NOTE: This extension is intended to be bundled with KoLo.
-// When running from source (tests/dev), KoLo internals live under src/.
+// NOTE: This extension is intended to be bundled with Kurahi.
+// When running from source (tests/dev), Kurahi internals live under src/.
 // When running from a built install, internals live under dist/ (no src/ tree).
 // So we resolve internal imports dynamically with src-first, dist-fallback.
 import type { KoLoPluginApi } from "../../../src/plugins/types.js";

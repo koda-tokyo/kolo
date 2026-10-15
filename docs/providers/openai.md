@@ -1,7 +1,7 @@
 ---
-summary: "Use OpenAI via API keys or Codex subscription in KoLo"
+summary: "Use OpenAI via API keys or Codex subscription in Kurahi"
 read_when:
-  - You want to use OpenAI models in KoLo
+  - You want to use OpenAI models in Kurahi
   - You want Codex subscription auth instead of API keys
 title: "OpenAI"
 ---
@@ -19,9 +19,9 @@ Get your API key from the OpenAI dashboard.
 ### CLI setup
 
 ```bash
-KoLo onboard --auth-choice openai-api-key
+Kurahi onboard --auth-choice openai-api-key
 # or non-interactive
-KoLo onboard --openai-api-key "$OPENAI_API_KEY"
+Kurahi onboard --openai-api-key "$OPENAI_API_KEY"
 ```
 
 ### Config snippet
@@ -42,10 +42,10 @@ Codex cloud requires ChatGPT sign-in, while the Codex CLI supports ChatGPT or AP
 
 ```bash
 # Run Codex OAuth in the wizard
-KoLo onboard --auth-choice openai-codex
+Kurahi onboard --auth-choice openai-codex
 
 # Or run OAuth directly
-KoLo models auth login --provider openai-codex
+Kurahi models auth login --provider openai-codex
 ```
 
 ### Config snippet

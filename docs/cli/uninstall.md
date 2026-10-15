@@ -1,17 +1,17 @@
 ---
-summary: "CLI reference for `KoLo uninstall` (remove gateway service + local data)"
+summary: "CLI reference for `Kurahi uninstall` (remove gateway service + local data)"
 read_when:
   - You want to remove the gateway service and/or local state
   - You want a dry-run first
 title: "uninstall"
 ---
 
-# `KoLo uninstall`
+# `Kurahi uninstall`
 
 Uninstall the gateway service + local data (CLI remains).
 
 ```bash
-KoLo uninstall
-KoLo uninstall --all --yes
-KoLo uninstall --dry-run
+Kurahi uninstall
+Kurahi uninstall --all --yes
+Kurahi uninstall --dry-run
 ```

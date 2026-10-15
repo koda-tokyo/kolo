@@ -1,12 +1,12 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * LocationIQ plugin for KoLo.
+ * LocationIQ plugin for Kurahi.
  *
  * Provides `geocode` tool — forward/reverse geocoding.
  * Free tier: 5,000 requests/day (~150K/month).
  * Config: `apiKey` in plugin config or `LOCATIONIQ_API_KEY` env var.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 interface GeoLocation {
   lat: string;
@@ -66,20 +66,23 @@ const locationiqPlugin = {
           "Convert addresses to coordinates (forward) or coordinates to addresses (reverse). " +
           '5,000 free requests/day. Examples: "Banyan Tree Dubai JLT", "25.0657,55.1713".',
         parameters: Type.Object({
-          query: Type.String({ description: "Address/place name for forward geocoding, or 'lat,lon' for reverse" }),
+          query: Type.String({
+            description: "Address/place name for forward geocoding, or 'lat,lon' for reverse",
+          }),
         }),
 
         async execute(_toolId: string, params: Record<string, unknown>) {
           const apiKey =
-            (api.pluginConfig?.apiKey as string | undefined) ??
-            process.env.LOCATIONIQ_API_KEY;
+            (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LOCATIONIQ_API_KEY;
 
           if (!apiKey) {
             return {
-              content: [{
-                type: "text" as const,
-                text: "LocationIQ not configured. Set apiKey in plugin config or LOCATIONIQ_API_KEY env var.\nGet a free key at: https://locationiq.com/",
-              }],
+              content: [
+                {
+                  type: "text" as const,
+                  text: "LocationIQ not configured. Set apiKey in plugin config or LOCATIONIQ_API_KEY env var.\nGet a free key at: https://locationiq.com/",
+                },
+              ],
             };
           }
 
@@ -90,7 +93,11 @@ const locationiqPlugin = {
             // Detect reverse geocoding (lat,lon format)
             const coordMatch = query.match(/^(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)$/);
             if (coordMatch) {
-              const loc = await reverseGeocode(Number(coordMatch[1]), Number(coordMatch[2]), apiKey);
+              const loc = await reverseGeocode(
+                Number(coordMatch[1]),
+                Number(coordMatch[2]),
+                apiKey,
+              );
               return {
                 content: [{ type: "text" as const, text: formatLocation(loc) }],
                 details: { type: "reverse", lat: loc.lat, lon: loc.lon, source: "locationiq" },
@@ -123,12 +130,20 @@ const locationiqPlugin = {
           .description("Geocode an address or reverse-geocode coordinates")
           .action(async (parts: string[]) => {
             const query = parts.join(" ");
-            const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LOCATIONIQ_API_KEY;
-            if (!apiKey) { console.error("Set LOCATIONIQ_API_KEY env var."); process.exitCode = 1; return; }
+            const apiKey =
+              (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LOCATIONIQ_API_KEY;
+            if (!apiKey) {
+              console.error("Set LOCATIONIQ_API_KEY env var.");
+              process.exitCode = 1;
+              return;
+            }
             try {
               const results = await forwardGeocode(query, apiKey);
               for (const r of results) console.log(formatLocation(r) + "\n");
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["geocode"] },

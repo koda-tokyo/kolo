@@ -614,7 +614,7 @@ export async function getHealthSnapshot(params?: {
   return summary;
 }
 
-/** `kolo health` default output: one line a person can read and a script can grep. */
+/** `kurahi health` default output: one line a person can read and a script can grep. */
 export function formatHealthStatusLine(summary: HealthSummary): string {
   const channels = Object.entries(summary.channels ?? {});
   const linked = channels.filter(([, c]) => c.linked === true).length;

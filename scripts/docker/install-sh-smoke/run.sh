@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INSTALL_URL="${KOLO_INSTALL_URL:-https://kodasoken.com/kolo/install.sh}"
+INSTALL_URL="${KOLO_INSTALL_URL:-https://kodasoken.com/kurahi/install.sh}"
 SMOKE_PREVIOUS_VERSION="${KOLO_INSTALL_SMOKE_PREVIOUS:-}"
 SKIP_PREVIOUS="${KOLO_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
 DEFAULT_PACKAGE="KoLo"

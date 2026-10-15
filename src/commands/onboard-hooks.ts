@@ -75,9 +75,9 @@ export async function setupInternalHooks(
       `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
       "",
       "You can manage hooks later with:",
-      `  ${formatCliCommand("kolo hooks list")}`,
-      `  ${formatCliCommand("kolo hooks enable <name>")}`,
-      `  ${formatCliCommand("kolo hooks disable <name>")}`,
+      `  ${formatCliCommand("kurahi hooks list")}`,
+      `  ${formatCliCommand("kurahi hooks enable <name>")}`,
+      `  ${formatCliCommand("kurahi hooks disable <name>")}`,
     ].join("\n"),
     "Hooks Configured",
   );

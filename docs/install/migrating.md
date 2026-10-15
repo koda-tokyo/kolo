@@ -1,14 +1,14 @@
 ---
-summary: "Move (migrate) a KoLo install from one machine to another"
+summary: "Move (migrate) a Kurahi install from one machine to another"
 read_when:
-  - You are moving KoLo to a new laptop/server
+  - You are moving Kurahi to a new laptop/server
   - You want to preserve sessions, auth, and channel logins (WhatsApp, etc.)
 title: "Migration Guide"
 ---
 
-# Migrating KoLo to a new machine
+# Migrating Kurahi to a new machine
 
-This guide migrates a KoLo Gateway from one machine to another **without redoing onboarding**.
+This guide migrates a Kurahi Gateway from one machine to another **without redoing onboarding**.
 
 The migration is simple conceptually:
 
@@ -33,7 +33,7 @@ But it may be different if you use:
 If you’re not sure, run on the **old** machine:
 
 ```bash
-KoLo status
+Kurahi status
 ```
 
 Look for mentions of `KOLO_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
@@ -72,7 +72,7 @@ Those live under `$KOLO_STATE_DIR`.
 On the **old** machine, stop the gateway first so files aren’t changing mid-copy:
 
 ```bash
-KoLo gateway stop
+Kurahi gateway stop
 ```
 
 (Optional but recommended) archive the state dir and workspace:
@@ -87,7 +87,7 @@ tar -czf kolo-workspace.tgz .kolo/workspace
 
 If you have multiple profiles/state dirs (e.g. `~/.kolo-main`, `~/.kolo-work`), archive each.
 
-### Step 1 — Install KoLo on the new machine
+### Step 1 — Install Kurahi on the new machine
 
 On the **new** machine, install the CLI (and Node if needed):
 
@@ -118,7 +118,7 @@ After copying, ensure:
 On the **new** machine:
 
 ```bash
-KoLo doctor
+Kurahi doctor
 ```
 
 Doctor is the “safe boring” command. It repairs services, applies config migrations, and warns about mismatches.
@@ -126,8 +126,8 @@ Doctor is the “safe boring” command. It repairs services, applies config mig
 Then:
 
 ```bash
-KoLo gateway restart
-KoLo status
+Kurahi gateway restart
+Kurahi status
 ```
 
 ## Common footguns (and how to avoid them)
@@ -143,7 +143,7 @@ If you ran the old gateway with a profile (or `KOLO_STATE_DIR`), and the new gat
 Fix: run the gateway/service using the **same** profile/state dir you migrated, then rerun:
 
 ```bash
-KoLo doctor
+Kurahi doctor
 ```
 
 ### Footgun: copying only `kolo.json`
@@ -180,7 +180,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 On the new machine, confirm:
 
-- `KoLo status` shows the gateway running
+- `Kurahi status` shows the gateway running
 - Your channels are still connected (e.g. WhatsApp doesn’t require re-pair)
 - The dashboard opens and shows existing sessions
 - Your workspace files (memory, configs) are present
@@ -189,4 +189,4 @@ On the new machine, confirm:
 
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
-- [Where does KoLo store its data?](/help/faq#where-does-kolo-store-its-data)
+- [Where does Kurahi store its data?](/help/faq#where-does-kolo-store-its-data)

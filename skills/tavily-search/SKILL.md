@@ -4,7 +4,7 @@ description: "Search the web in real-time using Tavily — built for AI agents. 
 homepage: https://tavily.com
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "🔍",
         "requires": { "bins": ["python3"], "env": ["TAVILY_API_KEY"] },
@@ -34,6 +34,7 @@ python3 {baseDir}/scripts/search.py "query" --json
 ## API Key
 
 Set `TAVILY_API_KEY` or configure in `~/.kolo/kolo.json`:
+
 ```json
 { "skills": { "tavily-search": { "apiKey": "tvly-..." } } }
 ```

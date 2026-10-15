@@ -1,4 +1,4 @@
-// Helpers shared by the `kolo connect` flows: secret intake, channel config, waiting for the
+// Helpers shared by the `kurahi connect` flows: secret intake, channel config, waiting for the
 // owner's first message, and output that respects --json.
 import type { KoLoConfig } from "../../config/config.js";
 import type { ConnectDeps, ConnectOptions, ConnectResult, PhoneChannel } from "./types.js";
@@ -87,13 +87,13 @@ export async function collectSecrets(
       continue;
     }
     return {
-      error: `${spec.label} missing: pipe it with --stdin${spec.envVar ? `, set ${spec.envVar},` : ""} or store it with kolo secrets set ${spec.name}`,
+      error: `${spec.label} missing: pipe it with --stdin${spec.envVar ? `, set ${spec.envVar},` : ""} or store it with kurahi secrets set ${spec.name}`,
     };
   }
   return { values };
 }
 
-/** Store name for a channel secret, following `kolo secrets migrate` naming. */
+/** Store name for a channel secret, following `kurahi secrets migrate` naming. */
 export function channelSecretName(channel: string, accountId: string | undefined, key: string) {
   return accountId && accountId !== "default"
     ? `channel.${channel}.accounts.${accountId}.${key}`

@@ -121,7 +121,7 @@ describe("runGatewayUpdate", () => {
       "pnpm build": { stdout: "" },
       "pnpm ui:build": { stdout: "" },
       [`git -C ${tempDir} checkout -- dist/control-ui/`]: { stdout: "" },
-      "pnpm kolo doctor --non-interactive": { stdout: "" },
+      "pnpm kurahi doctor --non-interactive": { stdout: "" },
     });
 
     const result = await runGatewayUpdate({
@@ -357,7 +357,7 @@ describe("runGatewayUpdate", () => {
     }
   });
 
-  it("rejects git roots that are not a KoLo checkout", async () => {
+  it("rejects git roots that are not a Kurahi checkout", async () => {
     await fs.mkdir(path.join(tempDir, ".git"));
     const cwdSpy = vi.spyOn(process, "cwd").mockReturnValue(tempDir);
     const { runner, calls } = createRunner({

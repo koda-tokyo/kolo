@@ -1,6 +1,6 @@
 # Governance
 
-This page says who decides what in the KoLo project and how a decision is made. It is deliberately short; the rules that keep the product shippable are in `AGENTS.md`, the licensing map in `LICENSING.md`, the contribution process in `CONTRIBUTING.md`.
+This page says who decides what in the Kurahi project and how a decision is made. It is deliberately short; the rules that keep the product shippable are in `AGENTS.md`, the licensing map in `LICENSING.md`, the contribution process in `CONTRIBUTING.md`.
 
 ## Roles
 

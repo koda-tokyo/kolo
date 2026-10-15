@@ -1,10 +1,13 @@
 # Professional Communication — Board Papers, Investor Updates, Proposals & Japanese Business Writing
 
 ## Purpose
-Consistent, high-quality professional communication across all formats: board papers, investor updates, client proposals, pitch decks, Japanese business correspondence (ビジネス文書), internal memos, and executive summaries. Not templates — frameworks for clarity, persuasion, and professionalism that adapt to context while maintaining quality. Built for KodaSōken, KODA KENKŌ, and KoLo external communications.
+
+Consistent, high-quality professional communication across all formats: board papers, investor updates, client proposals, pitch decks, Japanese business correspondence (ビジネス文書), internal memos, and executive summaries. Not templates — frameworks for clarity, persuasion, and professionalism that adapt to context while maintaining quality. Built for KodaSōken, KODA KENKŌ, and Kurahi external communications.
 
 ## Triggers
+
 Use this skill for:
+
 - Writing board papers, board decks, or director communications
 - Investor updates, fundraising materials, pitch narratives
 - Client proposals, SOWs (Scope of Work), project charters
@@ -52,24 +55,29 @@ Paragraph 3: NOW WHAT — The decision needed, the question, the next step.
 **Decision Required:** [Approve | Note | Discuss | Endorse]
 
 ## Executive Summary (≤200 words)
+
 [WHAT / SO WHAT / NOW WHAT]
 
 ## Situation (≤500 words)
+
 - Background (2-3 sentences — what got us here)
 - Current state (facts, numbers, timeline)
 - Key stakeholders and their positions
 
 ## Analysis (≤750 words)
+
 - Options considered (2-4 alternatives with pros/cons)
 - Recommendation and rationale
 - Risks and mitigations
 - Financial implications (if applicable)
 
 ## Next Steps
+
 - [ ] Decision point: [exactly what the board is being asked to do]
 - [ ] If approved: immediate next action, timeline, accountable person
 
 ## Appendices (if needed)
+
 - Supporting data, detailed financials, reference documents
 ```
 
@@ -137,6 +145,7 @@ Total: 7-9 pages. Never more than 12.
 #### ビジネスメール (Business Email)
 
 **Structure:**
+
 ```
 件名: 【[会社名/案件名]】[簡潔な内容]
 
@@ -160,6 +169,7 @@ Total: 7-9 pages. Never more than 12.
 ```
 
 **Key conventions:**
+
 - 様 for external, 殿 is archaic/internal (almost never use)
 - 拝啓...敬具 for formal letters (not email)
 - CC: 皆様 instead of CC: さん (CC is public — use respectful neutral)
@@ -199,24 +209,28 @@ Pages 2-6 (if needed):
 ### Writing Quality Standards
 
 #### Clarity over Cleverness
+
 ```
 ❌ "We leverage a multi-modal architecture to facilitate longitudinal patient outcomes optimization"
 ✅ "Our system helps doctors track whether patients get better over time"
 ```
 
 #### Facts over Adjectives
+
 ```
 ❌ "Industry-leading, cutting-edge, revolutionary platform"
 ✅ "Processes 10,000 documents per day. Deployed in 3 hospitals. 94% accuracy in clinical audit."
 ```
 
 #### Active over Passive
+
 ```
 ❌ "A decision was made to proceed with the deployment"
 ✅ "The team decided to deploy on August 12"
 ```
 
 #### Specific over Vague
+
 ```
 ❌ "Significant improvement in performance"
 ✅ "Response time decreased from 3.2s to 0.8s (75% faster)"
@@ -224,16 +238,16 @@ Pages 2-6 (if needed):
 
 ### Tone Calibration
 
-| Context | Tone | Formality | Example Opening |
-|---------|------|-----------|-----------------|
-| Board paper | Direct, understated confidence | High | "The Board is asked to approve..." |
-| Investor update | Warm but data-driven | Medium | "Here's what happened this month." |
-| Client proposal | Confident but not arrogant | Medium-High | "Based on our understanding of your needs..." |
-| Internal memo | Clear, peer-to-peer | Low-Medium | "Here's where we are and what's next." |
-| Japanese external email | Deferential, precise | High | "平素より大変お世話になっております。" |
-| Japanese internal (同僚) | Warm, professional | Medium | "お疲れ様です。" |
-| Press release | Factual, newsworthy | Medium-High | "[City, Date] — [Company] today announced..." |
-| Crisis communication | Direct, taking responsibility | High | "We want to inform you of an incident..." |
+| Context                  | Tone                           | Formality   | Example Opening                               |
+| ------------------------ | ------------------------------ | ----------- | --------------------------------------------- |
+| Board paper              | Direct, understated confidence | High        | "The Board is asked to approve..."            |
+| Investor update          | Warm but data-driven           | Medium      | "Here's what happened this month."            |
+| Client proposal          | Confident but not arrogant     | Medium-High | "Based on our understanding of your needs..." |
+| Internal memo            | Clear, peer-to-peer            | Low-Medium  | "Here's where we are and what's next."        |
+| Japanese external email  | Deferential, precise           | High        | "平素より大変お世話になっております。"        |
+| Japanese internal (同僚) | Warm, professional             | Medium      | "お疲れ様です。"                              |
+| Press release            | Factual, newsworthy            | Medium-High | "[City, Date] — [Company] today announced..." |
+| Crisis communication     | Direct, taking responsibility  | High        | "We want to inform you of an incident..."     |
 
 ### The 24-Hour Rule
 
@@ -268,4 +282,3 @@ Before sending anything to an external reader:
 - ❌ More than 3 asks in one communication (the reader does 0)
 
 ---
-

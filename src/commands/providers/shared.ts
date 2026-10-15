@@ -1,4 +1,4 @@
-// Shared pieces of `kolo providers` (KoLo 2.0, M9c).
+// Shared pieces of `kurahi providers` (KoLo 2.0, M9c).
 //
 // Keys never travel on argv or into kolo.json: they go to the auth profile store
 // (`<id>:default`, file mode 0600 under the agent directory), which is where every other

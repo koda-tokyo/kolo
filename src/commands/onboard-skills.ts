@@ -96,7 +96,7 @@ export async function setupSkills(
       await prompter.note(
         [
           "Run:",
-          // Displayed instruction only (Homebrew's official installer); never executed by KoLo.
+          // Displayed instruction only (Homebrew's official installer); never executed by Kurahi.
           '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
         ].join("\n"),
         "Homebrew install",
@@ -169,7 +169,7 @@ export async function setupSkills(
           runtime.log(result.stdout.trim());
         }
         runtime.log(
-          `Tip: run \`${formatCliCommand("kolo doctor")}\` to review skills + requirements.`,
+          `Tip: run \`${formatCliCommand("kurahi doctor")}\` to review skills + requirements.`,
         );
         runtime.log(`Docs: ${DOCS_URL}/skills`);
       }

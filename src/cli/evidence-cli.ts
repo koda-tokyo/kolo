@@ -1,12 +1,12 @@
-// `kolo evidence …` — evidence bundles and replay (KoLo 2.0, M12).
+// `kurahi evidence …` — evidence bundles and replay (KoLo 2.0, M12).
 //
-//   kolo evidence list [--json]                       jobs with evidence under KOLO_HOME
-//   kolo evidence show <jobId> [--json]               summary of one job's evidence
-//   kolo evidence export <jobId> --out <dir|zip>      signed bundle: manifest, events, snapshots,
+//   kurahi evidence list [--json]                       jobs with evidence under KOLO_HOME
+//   kurahi evidence show <jobId> [--json]               summary of one job's evidence
+//   kurahi evidence export <jobId> --out <dir|zip>      signed bundle: manifest, events, snapshots,
 //                                                     audit slice, REPORT.md
-//   kolo evidence verify <bundle> [--json]            recompute every hash and signature offline
-//   kolo evidence replay <bundle|jobId> [--step N]    walk the events with a stepper
-//   kolo evidence prune [--days N] [--dry-run]        apply retention
+//   kurahi evidence verify <bundle> [--json]            recompute every hash and signature offline
+//   kurahi evidence replay <bundle|jobId> [--step N]    walk the events with a stepper
+//   kurahi evidence prune [--days N] [--dry-run]        apply retention
 //
 // Nothing here talks to a gateway: the store and the signing key live under KOLO_HOME, and a
 // bundle verifies from its own files. Exit codes: 0 ok, 1 a check failed, 2 usage.
@@ -145,13 +145,13 @@ export function runEvidenceShow(
   const runtime = deps.runtime ?? defaultRuntime;
   const id = jobId?.trim() ?? "";
   if (!id || !isSafeJobId(id)) {
-    runtime.error("kolo evidence show: a job id is required");
+    runtime.error("kurahi evidence show: a job id is required");
     return EVIDENCE_EXIT.usage;
   }
   const events = readJobEvents(id, deps.env);
   if (events.length === 0) {
     runtime.error(
-      `kolo evidence show: no evidence for job ${id}. List jobs with: kolo evidence list`,
+      `kurahi evidence show: no evidence for job ${id}. List jobs with: kurahi evidence list`,
     );
     return EVIDENCE_EXIT.failed;
   }
@@ -178,7 +178,7 @@ export async function runEvidenceExport(
   const runtime = deps.runtime ?? defaultRuntime;
   const id = jobId?.trim() ?? "";
   if (!id || !isSafeJobId(id)) {
-    runtime.error("kolo evidence export: a job id is required");
+    runtime.error("kurahi evidence export: a job id is required");
     return EVIDENCE_EXIT.usage;
   }
   const out = opts.out?.trim() || path.join("evidence-out", id);
@@ -208,13 +208,13 @@ export async function runEvidenceExport(
           `events       ${result.manifest.events.count}`,
           `root         ${result.manifest.events.root}`,
           `key          ${result.manifest.signer.keyId}`,
-          `verify with  ${formatCliCommand(`kolo evidence verify ${result.path}`)}`,
+          `verify with  ${formatCliCommand(`kurahi evidence verify ${result.path}`)}`,
         ].join("\n"),
       );
     }
     return EVIDENCE_EXIT.ok;
   } catch (err) {
-    runtime.error(`kolo evidence export: ${err instanceof Error ? err.message : String(err)}`);
+    runtime.error(`kurahi evidence export: ${err instanceof Error ? err.message : String(err)}`);
     return EVIDENCE_EXIT.failed;
   }
 }
@@ -227,7 +227,7 @@ export async function runEvidenceVerify(
   const runtime = deps.runtime ?? defaultRuntime;
   const bundle = target?.trim() ?? "";
   if (!bundle) {
-    runtime.error("kolo evidence verify: a bundle directory or zip is required");
+    runtime.error("kurahi evidence verify: a bundle directory or zip is required");
     return EVIDENCE_EXIT.usage;
   }
   let result: BundleVerification;
@@ -235,7 +235,7 @@ export async function runEvidenceVerify(
     result = await verifyEvidenceBundle(bundle);
   } catch (err) {
     runtime.error(
-      `kolo evidence verify: cannot read ${bundle} (${err instanceof Error ? err.message : String(err)})`,
+      `kurahi evidence verify: cannot read ${bundle} (${err instanceof Error ? err.message : String(err)})`,
     );
     return EVIDENCE_EXIT.failed;
   }
@@ -257,7 +257,7 @@ export function runEvidencePrune(
     days = Number.parseInt(opts.days, 10);
     if (!Number.isInteger(days) || days < 0) {
       runtime.error(
-        `kolo evidence prune: --days must be a non-negative integer; got "${opts.days}"`,
+        `kurahi evidence prune: --days must be a non-negative integer; got "${opts.days}"`,
       );
       return EVIDENCE_EXIT.usage;
     }
@@ -293,10 +293,10 @@ export function registerEvidenceCli(program: Command, deps: EvidenceCliDeps = {}
       [
         "",
         theme.muted("Examples:"),
-        `  ${formatCliCommand("kolo evidence list")}`,
-        `  ${formatCliCommand("kolo evidence export 3f1c... --out ./evidence-out/3f1c.zip")}`,
-        `  ${formatCliCommand("kolo evidence verify ./evidence-out/3f1c.zip")}`,
-        `  ${formatCliCommand("kolo evidence replay ./evidence-out/3f1c.zip --step 4")}`,
+        `  ${formatCliCommand("kurahi evidence list")}`,
+        `  ${formatCliCommand("kurahi evidence export 3f1c... --out ./evidence-out/3f1c.zip")}`,
+        `  ${formatCliCommand("kurahi evidence verify ./evidence-out/3f1c.zip")}`,
+        `  ${formatCliCommand("kurahi evidence replay ./evidence-out/3f1c.zip --step 4")}`,
         "",
         "Exit codes: 0 ok, 1 a check failed or the job has no evidence, 2 usage.",
         `Docs: ${formatDocsLink("/evidence")}`,

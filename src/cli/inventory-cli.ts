@@ -1,8 +1,8 @@
-// `kolo inventory …` — the AI inventory (AI bill of materials) of this runtime.
+// `kurahi inventory …` — the AI inventory (AI bill of materials) of this runtime.
 //
-//   kolo inventory [--json|--csv] [--host]         print it (table by default)
-//   kolo inventory export [-o file] [--csv] [--no-sign] [--host]
-//   kolo inventory verify <file>                    check digest and signature (exit 1 if bad)
+//   kurahi inventory [--json|--csv] [--host]         print it (table by default)
+//   kurahi inventory export [-o file] [--csv] [--no-sign] [--host]
+//   kurahi inventory verify <file>                    check digest and signature (exit 1 if bad)
 //
 // Exit codes: 0 ok, 1 verification failed, 2 usage.
 import type { Command } from "commander";
@@ -93,7 +93,7 @@ export async function runInventoryShow(
 ) {
   const ctx = ctxOf(deps);
   if (opts.json && opts.csv) {
-    ctx.runtime.error("kolo inventory: pass --json or --csv, not both");
+    ctx.runtime.error("kurahi inventory: pass --json or --csv, not both");
     ctx.runtime.exit(INVENTORY_EXIT.usage);
     return;
   }
@@ -144,7 +144,7 @@ export async function runInventoryVerify(
   try {
     inv = JSON.parse(fs.readFileSync(file, "utf8")) as Inventory;
   } catch (err) {
-    runtime.error(`kolo inventory verify: cannot read ${file} (${String(err)})`);
+    runtime.error(`kurahi inventory verify: cannot read ${file} (${String(err)})`);
     runtime.exit(INVENTORY_EXIT.usage);
     return;
   }
@@ -180,10 +180,10 @@ export function registerInventoryCli(program: Command) {
       [
         "",
         "Examples:",
-        "  kolo inventory",
-        "  kolo inventory export -o inventory.json      # signed with the gateway key",
-        "  kolo inventory export --csv -o inventory.csv",
-        "  kolo inventory verify inventory.json",
+        "  kurahi inventory",
+        "  kurahi inventory export -o inventory.json      # signed with the gateway key",
+        "  kurahi inventory export --csv -o inventory.csv",
+        "  kurahi inventory verify inventory.json",
         "",
         "Never included: secrets, environment values, headers, command arguments, prompts, memory.",
         `Docs: ${formatDocsLink("/inventory")}`,

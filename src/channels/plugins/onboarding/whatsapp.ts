@@ -59,7 +59,7 @@ async function promptWhatsAppAllowFrom(
 
   if (options?.forceAllowlist) {
     await prompter.note(
-      "We need the sender/owner number so KoLo can allowlist you.",
+      "We need the sender/owner number so Kurahi can allowlist you.",
       "WhatsApp number",
     );
     const entry = await prompter.text({
@@ -121,7 +121,7 @@ async function promptWhatsAppAllowFrom(
 
   if (phoneMode === "personal") {
     await prompter.note(
-      "We need the sender/owner number so KoLo can allowlist you.",
+      "We need the sender/owner number so Kurahi can allowlist you.",
       "WhatsApp number",
     );
     const entry = await prompter.text({
@@ -341,7 +341,7 @@ export const whatsappOnboardingAdapter: ChannelOnboardingAdapter = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("kolo channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("kurahi channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

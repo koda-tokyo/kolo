@@ -1,7 +1,7 @@
 ---
-summary: "Use Venice AI privacy-focused models in KoLo"
+summary: "Use Venice AI privacy-focused models in Kurahi"
 read_when:
-  - You want privacy-focused inference in KoLo
+  - You want privacy-focused inference in Kurahi
   - You want Venice AI setup guidance
 title: "Venice AI"
 ---
@@ -12,7 +12,7 @@ title: "Venice AI"
 
 Venice AI provides privacy-focused AI inference with support for uncensored models and access to major proprietary models through their anonymized proxy. All inference is private by default—no training on your data, no logging.
 
-## Why Venice in KoLo
+## Why Venice in Kurahi
 
 - **Private inference** for open-source models (no logging).
 - **Uncensored models** when you need them.
@@ -47,7 +47,7 @@ Venice offers two privacy levels — understanding this is key to choosing your 
 2. Go to **Settings → API Keys → Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure KoLo
+### 2. Configure Kurahi
 
 **Option A: Environment Variable**
 
@@ -58,7 +58,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **Option B: Interactive Setup (Recommended)**
 
 ```bash
-KoLo onboard --auth-choice venice-api-key
+Kurahi onboard --auth-choice venice-api-key
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 **Option C: Non-interactive**
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --auth-choice venice-api-key \
   --venice-api-key "vapi_xxxxxxxxxxxx"
 ```
@@ -79,12 +79,12 @@ KoLo onboard --non-interactive \
 ### 3. Verify Setup
 
 ```bash
-KoLo chat --model venice/llama-3.3-70b "Hello, are you working?"
+Kurahi chat --model venice/llama-3.3-70b "Hello, are you working?"
 ```
 
 ## Model Selection
 
-After setup, KoLo shows all available Venice models. Pick based on your needs:
+After setup, Kurahi shows all available Venice models. Pick based on your needs:
 
 - **Default (our pick)**: `venice/llama-3.3-70b` for private, balanced performance.
 - **Best overall quality**: `venice/claude-opus-45` for hard jobs (Opus remains the strongest).
@@ -94,19 +94,19 @@ After setup, KoLo shows all available Venice models. Pick based on your needs:
 Change your default model anytime:
 
 ```bash
-KoLo models set venice/claude-opus-45
-KoLo models set venice/llama-3.3-70b
+Kurahi models set venice/claude-opus-45
+Kurahi models set venice/llama-3.3-70b
 ```
 
 List all available models:
 
 ```bash
-KoLo models list | grep venice
+Kurahi models list | grep venice
 ```
 
-## Configure via `KoLo configure`
+## Configure via `Kurahi configure`
 
-1. Run `KoLo configure`
+1. Run `Kurahi configure`
 2. Select **Model/auth**
 3. Choose **Venice AI**
 
@@ -162,7 +162,7 @@ KoLo models list | grep venice
 
 ## Model Discovery
 
-KoLo automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+Kurahi automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 
@@ -195,19 +195,19 @@ Venice uses a credit-based system. Check [venice.ai/pricing](https://venice.ai/p
 
 ```bash
 # Use default private model
-KoLo chat --model venice/llama-3.3-70b
+Kurahi chat --model venice/llama-3.3-70b
 
 # Use Claude via Venice (anonymized)
-KoLo chat --model venice/claude-opus-45
+Kurahi chat --model venice/claude-opus-45
 
 # Use uncensored model
-KoLo chat --model venice/venice-uncensored
+Kurahi chat --model venice/venice-uncensored
 
 # Use vision model with image
-KoLo chat --model venice/qwen3-vl-235b-a22b
+Kurahi chat --model venice/qwen3-vl-235b-a22b
 
 # Use coding model
-KoLo chat --model venice/qwen3-coder-480b-a35b-instruct
+Kurahi chat --model venice/qwen3-coder-480b-a35b-instruct
 ```
 
 ## Troubleshooting
@@ -216,14 +216,14 @@ KoLo chat --model venice/qwen3-coder-480b-a35b-instruct
 
 ```bash
 echo $VENICE_API_KEY
-KoLo models list | grep venice
+Kurahi models list | grep venice
 ```
 
 Ensure the key starts with `vapi_`.
 
 ### Model not available
 
-The Venice model catalog updates dynamically. Run `KoLo models list` to see currently available models. Some models may be temporarily offline.
+The Venice model catalog updates dynamically. Run `Kurahi models list` to see currently available models. Some models may be temporarily offline.
 
 ### Connection issues
 

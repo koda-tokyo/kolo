@@ -1,7 +1,7 @@
 {
   "name": "@KoLo/memory-lancedb",
   "version": "2.0.0",
-  "description": "KoLo LanceDB-backed long-term memory plugin with auto-recall/capture",
+  "description": "Kurahi LanceDB-backed long-term memory plugin with auto-recall/capture",
   "type": "module",
   "dependencies": {
     "@lancedb/lancedb": "^0.23.0",
@@ -9,7 +9,7 @@
     "openai": "^6.17.0"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

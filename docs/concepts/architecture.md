@@ -118,7 +118,7 @@ Details: [Gateway protocol](/gateway/protocol), [Pairing](/start/pairing),
 
 ## Operations snapshot
 
-- Start: `KoLo gateway` (foreground, logs to stdout).
+- Start: `Kurahi gateway` (foreground, logs to stdout).
 - Health: `health` over WS (also included in `hello-ok`).
 - Supervision: launchd/systemd for auto‑restart.
 

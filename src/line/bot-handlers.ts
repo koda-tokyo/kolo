@@ -197,7 +197,7 @@ async function shouldProcessLineEvent(
     return false;
   }
 
-  // M16: a message carrying the code from `kolo connect line` binds the owner. Checked before
+  // M16: a message carrying the code from `kurahi connect line` binds the owner. Checked before
   // the allowlist because the person claiming is not on it yet.
   if (senderId && event.type === "message" && event.message.type === "text") {
     const replyToken = event.replyToken;

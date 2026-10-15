@@ -80,7 +80,7 @@ export async function createAcpClient(opts: AcpClientOptions = {}): Promise<AcpC
   const log = verbose ? (msg: string) => console.error(`[acp-client] ${msg}`) : () => {};
 
   ensureKoLoCliOnPath({ cwd });
-  const serverCommand = opts.serverCommand ?? "KoLo";
+  const serverCommand = opts.serverCommand ?? "kurahi";
   const serverArgs = buildServerArgs(opts);
 
   log(`spawning: ${serverCommand} ${serverArgs.join(" ")}`);

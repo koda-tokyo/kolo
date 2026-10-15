@@ -1,4 +1,4 @@
-# Copilot Proxy (KoLo plugin)
+# Copilot Proxy (Kurahi plugin)
 
 Provider plugin for the **Copilot Proxy** VS Code extension.
 
@@ -7,7 +7,7 @@ Provider plugin for the **Copilot Proxy** VS Code extension.
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-KoLo plugins enable copilot-proxy
+Kurahi plugins enable copilot-proxy
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-KoLo models auth login --provider copilot-proxy --set-default
+Kurahi models auth login --provider copilot-proxy --set-default
 ```
 
 ## Notes

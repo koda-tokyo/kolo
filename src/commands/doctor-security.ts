@@ -10,7 +10,7 @@ import { note } from "../terminal/note.js";
 
 export async function noteSecurityWarnings(cfg: KoLoConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("kolo security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("kurahi security audit --deep")}`;
 
   // ===========================================
   // GATEWAY NETWORK EXPOSURE CHECK
@@ -48,19 +48,19 @@ export async function noteSecurityWarnings(cfg: KoLoConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("kolo configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("kolo config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("kurahi configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("kurahi config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("kolo doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("kurahi doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "kolo config set gateway.auth.mode token",
+                "kurahi config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("kolo config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("kurahi config set gateway.bind loopback")}`,
         ...authFixLines,
       );
     } else {

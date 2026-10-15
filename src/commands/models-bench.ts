@@ -1,4 +1,4 @@
-// `kolo models bench` and `kolo models tested` (KoLo 2.0, KODA tested catalogue).
+// `kurahi models bench` and `kurahi models tested` (KoLo 2.0, KODA tested catalogue).
 //
 // bench: runs the resident task suite against provider/model refs, under token caps, and writes
 // a signed report plus evidence bundles. Keys come from the auth profile store or the provider's
@@ -146,7 +146,7 @@ export async function modelsBenchCommand(
     const key = resolveProviderKey({ entry, cfg, store, env });
     if (!key.configured) {
       throw new BenchCommandError(
-        `provider "${entry.id}" has no key. Add one with: kolo providers add ${entry.id} --api-key-stdin`,
+        `provider "${entry.id}" has no key. Add one with: kurahi providers add ${entry.id} --api-key-stdin`,
         BENCH_EXIT.auth,
       );
     }
@@ -237,7 +237,7 @@ export function updateCatalogueFile(fileArg: string, report: BenchReport): void 
 
 export type ModelsBenchMergeOptions = { out: string; updateCatalogue?: string; json?: boolean };
 
-/** `kolo models bench-merge <report.json...> --out <dir>`: one signed report from chunked runs. */
+/** `kurahi models bench-merge <report.json...> --out <dir>`: one signed report from chunked runs. */
 export function modelsBenchMergeCommand(
   files: string[],
   opts: ModelsBenchMergeOptions,
@@ -370,6 +370,6 @@ export function modelsTestedCommand(
     runtime.log("* quick subset: scored on fewer tasks; see the coverage in --json.");
   }
   runtime.log(
-    `Suite ${catalogue.suite}, updated ${catalogue.updatedAt}. Reproduce with: kolo models bench`,
+    `Suite ${catalogue.suite}, updated ${catalogue.updatedAt}. Reproduce with: kurahi models bench`,
   );
 }

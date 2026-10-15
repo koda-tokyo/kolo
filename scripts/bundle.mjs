@@ -313,7 +313,7 @@ function writeLaunchers(stage, target) {
   if (target.os === "win32") {
     const cmd = [
       "@echo off",
-      "rem KoLo launcher: bundled runtime, no system Node required.",
+      "rem Kurahi launcher: bundled runtime, no system Node required.",
       "setlocal",
       'set "KOLO_BUNDLE_ROOT=%~dp0.."',
       'if exist "%~dp0..\\.update\\pending.json" call "%~dp0..\\.update\\apply.cmd"',
@@ -321,6 +321,8 @@ function writeLaunchers(stage, target) {
       "endlocal & exit /b %ERRORLEVEL%",
       "",
     ].join("\r\n");
+    // `kurahi` is the command; `kolo` stays as an alias for existing scripts and kits.
+    fs.writeFileSync(path.join(bin, "kurahi.cmd"), cmd);
     fs.writeFileSync(path.join(bin, "kolo.cmd"), cmd);
     return;
   }
@@ -328,7 +330,7 @@ function writeLaunchers(stage, target) {
   // launchers are resolved when readlink exists, which it does on every real PATH.
   const sh = [
     "#!/bin/sh",
-    "# KoLo launcher: bundled runtime, no system Node required.",
+    "# Kurahi launcher: bundled runtime, no system Node required.",
     'self="$0"',
     "if command -v readlink >/dev/null 2>&1; then",
     '  while [ -L "$self" ]; do',
@@ -344,9 +346,11 @@ function writeLaunchers(stage, target) {
     'exec "$root/node/bin/node" "$root/lib/kolo.mjs" "$@"',
     "",
   ].join("\n");
-  const file = path.join(bin, "kolo");
-  fs.writeFileSync(file, sh);
-  fs.chmodSync(file, 0o755);
+  for (const name of ["kurahi", "kolo"]) {
+    const file = path.join(bin, name);
+    fs.writeFileSync(file, sh);
+    fs.chmodSync(file, 0o755);
+  }
 }
 
 async function createArchive(stage, archivePath, target) {
@@ -533,7 +537,7 @@ async function main() {
       e.name === ".modules.yaml" ||
       e.name.startsWith(".pnpm-workspace-state"),
   });
-  // Workspace package @kodasoken/kolo-client is a symlink in the deps tree: ship the built package.
+  // Workspace package @kodasoken/kurahi-client is a symlink in the deps tree: ship the built package.
   const clientDst = path.join(dstNm, "@kodasoken", "kolo-client");
   fs.rmSync(clientDst, { recursive: true, force: true });
   fs.mkdirSync(clientDst, { recursive: true });
@@ -553,7 +557,7 @@ async function main() {
     if (fs.existsSync(extNm)) {
       copyTree(extNm, path.join(lib, "extensions", name, "node_modules"), {
         skippedLinks,
-        skip: (rel, e) => e.name === ".bin" || e.name === "kolo",
+        skip: (rel, e) => e.name === ".bin" || e.name === "kolo" || e.name === "kurahi",
       });
     }
   }

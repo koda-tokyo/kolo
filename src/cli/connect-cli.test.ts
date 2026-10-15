@@ -28,7 +28,7 @@ function harness() {
   return { program, out, err, exits };
 }
 
-describe("kolo connect (CLI)", () => {
+describe("kurahi connect (CLI)", () => {
   test("unknown or missing channel is a usage error (exit 2)", async () => {
     const h = harness();
     await h.program.parseAsync(["node", "kolo", "connect", "pager"]);
@@ -39,14 +39,14 @@ describe("kolo connect (CLI)", () => {
     expect(m.exits).toEqual([2]);
   });
 
-  test("--unbind validates the channel; web points at kolo pair revoke", async () => {
+  test("--unbind validates the channel; web points at kurahi pair revoke", async () => {
     const h = harness();
     await h.program.parseAsync(["node", "kolo", "connect", "--unbind", "pager"]);
     expect(h.exits).toEqual([2]);
     const w = harness();
     await w.program.parseAsync(["node", "kolo", "connect", "--unbind", "web"]);
     expect(w.exits).toEqual([2]);
-    expect(w.err.join("\n")).toContain("kolo pair revoke");
+    expect(w.err.join("\n")).toContain("kurahi pair revoke");
   });
 
   test("--list with no bindings says how to start", async () => {

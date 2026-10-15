@@ -1,5 +1,5 @@
 ---
-summary: "Quick troubleshooting guide for common KoLo failures"
+summary: "Quick troubleshooting guide for common Kurahi failures"
 read_when:
   - Investigating runtime issues or failures
 title: "Troubleshooting"
@@ -7,7 +7,7 @@ title: "Troubleshooting"
 
 # Troubleshooting 🔧
 
-When KoLo misbehaves, here's how to fix it.
+When Kurahi misbehaves, here's how to fix it.
 
 Start with the FAQ’s [First 60 seconds](/help/faq#first-60-seconds-if-somethings-broken) if you just want a quick triage recipe. This page goes deeper on runtime failures and diagnostics.
 
@@ -17,17 +17,17 @@ Provider-specific shortcuts: [/channels/troubleshooting](/channels/troubleshooti
 
 Quick triage commands (in order):
 
-| Command                            | What it tells you                                                                                      | When to use it                                    |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
-| `KoLo status`                  | Local summary: OS + update, gateway reachability/mode, service, agents/sessions, provider config state | First check, quick overview                       |
-| `KoLo status --all`            | Full local diagnosis (read-only, pasteable, safe-ish) incl. log tail                                   | When you need to share a debug report             |
-| `KoLo status --deep`           | Runs gateway health checks (incl. provider probes; requires reachable gateway)                         | When “configured” doesn’t mean “working”          |
-| `KoLo gateway probe`           | Gateway discovery + reachability (local + remote targets)                                              | When you suspect you’re probing the wrong gateway |
-| `KoLo channels status --probe` | Asks the running gateway for channel status (and optionally probes)                                    | When gateway is reachable but channels misbehave  |
-| `KoLo gateway status`          | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error                      | When the service “looks loaded” but nothing runs  |
-| `KoLo logs --follow`           | Live logs (best signal for runtime issues)                                                             | When you need the actual failure reason           |
+| Command                          | What it tells you                                                                                      | When to use it                                    |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| `Kurahi status`                  | Local summary: OS + update, gateway reachability/mode, service, agents/sessions, provider config state | First check, quick overview                       |
+| `Kurahi status --all`            | Full local diagnosis (read-only, pasteable, safe-ish) incl. log tail                                   | When you need to share a debug report             |
+| `Kurahi status --deep`           | Runs gateway health checks (incl. provider probes; requires reachable gateway)                         | When “configured” doesn’t mean “working”          |
+| `Kurahi gateway probe`           | Gateway discovery + reachability (local + remote targets)                                              | When you suspect you’re probing the wrong gateway |
+| `Kurahi channels status --probe` | Asks the running gateway for channel status (and optionally probes)                                    | When gateway is reachable but channels misbehave  |
+| `Kurahi gateway status`          | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error                      | When the service “looks loaded” but nothing runs  |
+| `Kurahi logs --follow`           | Live logs (best signal for runtime issues)                                                             | When you need the actual failure reason           |
 
-**Sharing output:** prefer `KoLo status --all` (it redacts tokens). If you paste `KoLo status`, consider setting `KOLO_SHOW_SECRETS=0` first (token previews).
+**Sharing output:** prefer `Kurahi status --all` (it redacts tokens). If you paste `Kurahi status`, consider setting `KOLO_SHOW_SECRETS=0` first (token previews).
 
 See also: [Health checks](/gateway/health) and [Logging](/logging).
 
@@ -43,14 +43,14 @@ Fix options:
 - Re-run onboarding and choose **Anthropic** for that agent.
 - Or paste a setup-token on the **gateway host**:
   ```bash
-  KoLo models auth setup-token --provider anthropic
+  Kurahi models auth setup-token --provider anthropic
   ```
 - Or copy `auth-profiles.json` from the main agent dir to the new agent dir.
 
 Verify:
 
 ```bash
-KoLo models status
+Kurahi models status
 ```
 
 ### OAuth token refresh failed (Anthropic Claude subscription)
@@ -63,15 +63,15 @@ switch to a **Claude Code setup-token** and paste it on the **gateway host**.
 
 ```bash
 # Run on the gateway host (paste the setup-token)
-KoLo models auth setup-token --provider anthropic
-KoLo models status
+Kurahi models auth setup-token --provider anthropic
+Kurahi models status
 ```
 
 If you generated the token elsewhere:
 
 ```bash
-KoLo models auth paste-token --provider anthropic
-KoLo models status
+Kurahi models auth paste-token --provider anthropic
+Kurahi models status
 ```
 
 More detail: [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
@@ -103,19 +103,19 @@ can appear “loaded” while nothing is running.
 **Check:**
 
 ```bash
-KoLo gateway status
-KoLo doctor
+Kurahi gateway status
+Kurahi doctor
 ```
 
 Doctor/service will show runtime state (PID/last exit) and log hints.
 
 **Logs:**
 
-- Preferred: `KoLo logs --follow`
+- Preferred: `Kurahi logs --follow`
 - File logs (always): `/tmp/kolo/kolo-YYYY-MM-DD.log` (or your configured `logging.file`)
 - macOS LaunchAgent (if installed): `$KOLO_STATE_DIR/logs/gateway.log` and `gateway.err.log`
 - Linux systemd (if installed): `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST`
 
 **Enable more logging:**
 
@@ -140,25 +140,25 @@ Gateway refuses to start.
 
 - Run the wizard and set the Gateway run mode to **Local**:
   ```bash
-  KoLo configure
+  Kurahi configure
   ```
 - Or set it directly:
   ```bash
-  KoLo config set gateway.mode local
+  Kurahi config set gateway.mode local
   ```
 
 **If you meant to run a remote Gateway instead:**
 
 - Set a remote URL and keep `gateway.mode=remote`:
   ```bash
-  KoLo config set gateway.mode remote
-  KoLo config set gateway.remote.url "wss://gateway.example.com"
+  Kurahi config set gateway.mode remote
+  Kurahi config set gateway.remote.url "wss://gateway.example.com"
   ```
 
 **Ad-hoc/dev only:** pass `--allow-unconfigured` to start the gateway without
 `gateway.mode=local`.
 
-**No config file yet?** Run `KoLo setup` to create a starter config, then rerun
+**No config file yet?** Run `Kurahi setup` to create a starter config, then rerun
 the gateway.
 
 ### Service Environment (PATH + runtime)
@@ -177,7 +177,7 @@ so missing tools usually mean your shell init isn’t exporting them (or set
 `tools.exec.pathPrepend`). See [/tools/exec](/tools/exec).
 
 If your
-service was installed with a version-managed Node path, run `kolo doctor`
+service was installed with a version-managed Node path, run `kurahi doctor`
 to migrate to a system Node install.
 
 ### Skill missing API key in sandbox
@@ -190,7 +190,7 @@ to migrate to a system Node install.
 
 - set `agents.defaults.sandbox.docker.env` (or per-agent `agents.list[].sandbox.docker.env`)
 - or bake the key into your custom sandbox image
-- then run `KoLo sandbox recreate --agent <id>` (or `--all`)
+- then run `Kurahi sandbox recreate --agent <id>` (or `--all`)
 
 ### Service Running but Port Not Listening
 
@@ -205,31 +205,31 @@ the Gateway likely refused to bind.
 
 **Check:**
 
-- `gateway.mode` must be `local` for `KoLo gateway` and the service.
-- If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `KoLo gateway status` to see the service’s resolved port + probe target (or pass `--url`).
-- `KoLo gateway status` and `KoLo doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
+- `gateway.mode` must be `local` for `Kurahi gateway` and the service.
+- If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `Kurahi gateway status` to see the service’s resolved port + probe target (or pass `--url`).
+- `Kurahi gateway status` and `Kurahi doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
 - Non-loopback binds (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) require auth:
   `gateway.auth.token` (or `KOLO_GATEWAY_TOKEN`).
 - `gateway.remote.token` is for remote CLI calls only; it does **not** enable local auth.
 - `gateway.token` is ignored; use `gateway.auth.token`.
 
-**If `KoLo gateway status` shows a config mismatch**
+**If `Kurahi gateway status` shows a config mismatch**
 
 - `Config (cli): ...` and `Config (service): ...` should normally match.
 - If they don’t, you’re almost certainly editing one config while the service is running another.
-- Fix: rerun `KoLo gateway install --force` from the same `--profile` / `KOLO_STATE_DIR` you want the service to use.
+- Fix: rerun `Kurahi gateway install --force` from the same `--profile` / `KOLO_STATE_DIR` you want the service to use.
 
-**If `KoLo gateway status` reports service config issues**
+**If `Kurahi gateway status` reports service config issues**
 
 - The supervisor config (launchd/systemd/schtasks) is missing current defaults.
-- Fix: run `KoLo doctor` to update it (or `KoLo gateway install --force` for a full rewrite).
+- Fix: run `Kurahi doctor` to update it (or `Kurahi gateway install --force` for a full rewrite).
 
 **If `Last gateway error:` mentions “refusing to bind … without auth”**
 
 - You set `gateway.bind` to a non-loopback mode (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) but didn’t configure auth.
 - Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `KOLO_GATEWAY_TOKEN`) and restart the service.
 
-**If `KoLo gateway status` says `bind=tailnet` but no tailnet interface was found**
+**If `Kurahi gateway status` says `bind=tailnet` but no tailnet interface was found**
 
 - The gateway tried to bind to a Tailscale IP (100.64.0.0/10) but none were detected on the host.
 - Fix: bring up Tailscale on that machine (or change `gateway.bind` to `loopback`/`lan`).
@@ -246,7 +246,7 @@ This means something is already listening on the gateway port.
 **Check:**
 
 ```bash
-KoLo gateway status
+Kurahi gateway status
 ```
 
 It will show the listener(s) and likely causes (gateway already running, SSH tunnel).
@@ -254,7 +254,7 @@ If needed, stop the service or pick a different port.
 
 ### Extra Workspace Folders Detected
 
-If you upgraded from older installs, you might still have `~/KoLo` on disk.
+If you upgraded from older installs, you might still have `~/Kurahi` on disk.
 Multiple workspace directories can cause confusing auth or state drift because
 only one workspace is active.
 
@@ -289,15 +289,15 @@ The agent was interrupted mid-response.
 
 ### "Agent failed before reply: Unknown model: anthropic/claude-haiku-3-5"
 
-KoLo intentionally rejects **older/insecure models** (especially those more
+Kurahi intentionally rejects **older/insecure models** (especially those more
 vulnerable to prompt injection). If you see this error, the model name is no
 longer supported.
 
 **Fix:**
 
 - Pick a **latest** model for the provider and update your config or model alias.
-- If you’re unsure which models are available, run `KoLo models list` or
-  `KoLo models scan` and choose a supported one.
+- If you’re unsure which models are available, run `Kurahi models list` or
+  `Kurahi models scan` and choose a supported one.
 - Check gateway logs for the detailed failure reason.
 
 See also: [Models CLI](/cli/models) and [Model providers](/concepts/model-providers).
@@ -307,7 +307,7 @@ See also: [Models CLI](/cli/models) and [Model providers](/concepts/model-provid
 **Check 1:** Is the sender allowlisted?
 
 ```bash
-KoLo status
+Kurahi status
 ```
 
 Look for `AllowFrom: ...` in the output.
@@ -324,7 +324,7 @@ grep -n "agents\\|groupChat\\|mentionPatterns\\|channels\\.whatsapp\\.groups\\|c
 **Check 3:** Check the logs
 
 ```bash
-KoLo logs --follow
+Kurahi logs --follow
 # or if you want quick filters:
 tail -f "$(ls -t /tmp/kolo/kolo-*.log | head -1)" | grep "blocked\\|skip\\|unauthorized"
 ```
@@ -336,7 +336,7 @@ If `dmPolicy` is `pairing`, unknown senders should receive a code and their mess
 **Check 1:** Is a pending request already waiting?
 
 ```bash
-KoLo pairing list <channel>
+Kurahi pairing list <channel>
 ```
 
 Pending DM pairing requests are capped at **3 per channel** by default. If the list is full, new requests won’t generate a code until one is approved or expires.
@@ -344,7 +344,7 @@ Pending DM pairing requests are capped at **3 per channel** by default. If the l
 **Check 2:** Did the request get created but no reply was sent?
 
 ```bash
-KoLo logs --follow | grep "pairing request"
+Kurahi logs --follow | grep "pairing request"
 ```
 
 **Check 3:** Confirm `dmPolicy` isn’t `open`/`allowlist` for that channel.
@@ -355,8 +355,8 @@ Known issue: When you send an image with ONLY a mention (no other text), WhatsAp
 
 **Workaround:** Add some text with the mention:
 
-- ❌ `@KoLo` + image
-- ✅ `@KoLo check this` + image
+- ❌ `@Kurahi` + image
+- ✅ `@Kurahi check this` + image
 
 ### Session Not Resuming
 
@@ -400,26 +400,26 @@ Or use the `process` tool to background long commands.
 
 ```bash
 # Check local status (creds, sessions, queued events)
-KoLo status
+Kurahi status
 # Probe the running gateway + channels (WA connect + Telegram + Discord APIs)
-KoLo status --deep
+Kurahi status --deep
 
 # View recent connection events
-KoLo logs --limit 200 | grep "connection\\|disconnect\\|logout"
+Kurahi logs --limit 200 | grep "connection\\|disconnect\\|logout"
 ```
 
 **Fix:** Usually reconnects automatically once the Gateway is running. If you’re stuck, restart the Gateway process (however you supervise it), or run it manually with verbose output:
 
 ```bash
-KoLo gateway --verbose
+Kurahi gateway --verbose
 ```
 
 If you’re logged out / unlinked:
 
 ```bash
-KoLo channels logout
+Kurahi channels logout
 trash "${KOLO_STATE_DIR:-$HOME/.kolo}/credentials" # if logout can't cleanly remove everything
-KoLo channels login --verbose       # re-scan QR
+Kurahi channels login --verbose       # re-scan QR
 ```
 
 ### Media Send Failing
@@ -444,7 +444,7 @@ grep "media\\|fetch\\|download" "$(ls -t /tmp/kolo/kolo-*.log | head -1)" | tail
 
 ### High Memory Usage
 
-KoLo keeps conversation history in memory.
+Kurahi keeps conversation history in memory.
 
 **Fix:** Restart periodically or set session limits:
 
@@ -460,28 +460,28 @@ KoLo keeps conversation history in memory.
 
 ### “Gateway won’t start — configuration invalid”
 
-KoLo now refuses to start when the config contains unknown keys, malformed values, or invalid types.
+Kurahi now refuses to start when the config contains unknown keys, malformed values, or invalid types.
 This is intentional for safety.
 
 Fix it with Doctor:
 
 ```bash
-KoLo doctor
-KoLo doctor --fix
+Kurahi doctor
+Kurahi doctor --fix
 ```
 
 Notes:
 
-- `KoLo doctor` reports every invalid entry.
-- `KoLo doctor --fix` applies migrations/repairs and rewrites the config.
-- Diagnostic commands like `KoLo logs`, `KoLo health`, `KoLo status`, `KoLo gateway status`, and `KoLo gateway probe` still run even if the config is invalid.
+- `Kurahi doctor` reports every invalid entry.
+- `Kurahi doctor --fix` applies migrations/repairs and rewrites the config.
+- Diagnostic commands like `Kurahi logs`, `Kurahi health`, `Kurahi status`, `Kurahi gateway status`, and `Kurahi gateway probe` still run even if the config is invalid.
 
 ### “All models failed” — what should I check first?
 
 - **Credentials** present for the provider(s) being tried (auth profiles + env vars).
 - **Model routing**: confirm `agents.defaults.model.primary` and fallbacks are models you can access.
-- **Gateway logs** in `/tmp/KoLo/…` for the exact provider error.
-- **Model status**: use `/model status` (chat) or `KoLo models status` (CLI).
+- **Gateway logs** in `/tmp/Kurahi/…` for the exact provider error.
+- **Model status**: use `/model status` (chat) or `Kurahi models status` (CLI).
 
 ### I’m running on my personal WhatsApp number — why is self-chat weird?
 
@@ -506,13 +506,13 @@ See [WhatsApp setup](/channels/whatsapp).
 Run the login command again and scan the QR code:
 
 ```bash
-KoLo channels login
+Kurahi channels login
 ```
 
 ### Build errors on `main` — what’s the standard fix path?
 
 1. `git pull origin main && pnpm install`
-2. `KoLo doctor`
+2. `Kurahi doctor`
 3. Check GitHub issues or Discord
 4. Temporary workaround: check out an older commit
 
@@ -527,8 +527,8 @@ Typical recovery:
 git status   # ensure you’re in the repo root
 pnpm install
 pnpm build
-KoLo doctor
-KoLo gateway restart
+Kurahi doctor
+Kurahi gateway restart
 ```
 
 Why: pnpm is the configured package manager for this repo.
@@ -541,13 +541,13 @@ upgrades in place and rewrites the gateway service to point at the new install.
 Switch **to git install**:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --install-method git --no-onboard
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --install-method git --no-onboard
 ```
 
 Switch **to npm global**:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
 Notes:
@@ -555,8 +555,8 @@ Notes:
 - The git flow only rebases if the repo is clean. Commit or stash changes first.
 - After switching, run:
   ```bash
-  KoLo doctor
-  KoLo gateway restart
+  Kurahi doctor
+  Kurahi gateway restart
   ```
 
 ### Telegram block streaming isn’t splitting text between tool calls. Why?
@@ -591,20 +591,20 @@ Fix checklist:
 3. Put `requireMention: false` **under** `channels.discord.guilds` (global or per‑channel).
    Top‑level `channels.discord.requireMention` is not a supported key.
 4. Ensure the bot has **Message Content Intent** and channel permissions.
-5. Run `KoLo channels status --probe` for audit hints.
+5. Run `Kurahi channels status --probe` for audit hints.
 
 Docs: [Discord](/channels/discord), [Channels troubleshooting](/channels/troubleshooting).
 
 ### Cloud Code Assist API error: invalid tool schema (400). What now?
 
 This is almost always a **tool schema compatibility** issue. The Cloud Code Assist
-endpoint accepts a strict subset of JSON Schema. KoLo scrubs/normalizes tool
+endpoint accepts a strict subset of JSON Schema. Kurahi scrubs/normalizes tool
 schemas in current `main`, but the fix is not in the last release yet (as of
 January 13, 2026).
 
 Fix checklist:
 
-1. **Update KoLo**:
+1. **Update Kurahi**:
    - If you can run from source, pull `main` and restart the gateway.
    - Otherwise, wait for the next release that includes the schema scrubber.
 2. Avoid unsupported keywords like `anyOf/oneOf/allOf`, `patternProperties`,
@@ -627,7 +627,7 @@ tccutil reset All com.kodasoken.kolo.mac.debug
 ```
 
 **Fix 2: Force New Bundle ID**
-If resetting doesn't work, change the `BUNDLE_ID` in [`scripts/package-mac-app.sh`](https://github.com/koda-tokyo/kolo/blob/main/scripts/package-mac-app.sh) (e.g., add a `.test` suffix) and rebuild. This forces macOS to treat it as a new app.
+If resetting doesn't work, change the `BUNDLE_ID` in [`scripts/package-mac-app.sh`](https://github.com/koda-tokyo/kurahi/blob/main/scripts/package-mac-app.sh) (e.g., add a `.test` suffix) and rebuild. This forces macOS to treat it as a new app.
 
 ### Gateway stuck on "Starting..."
 
@@ -637,8 +637,8 @@ The app connects to a local gateway on port `18789`. If it stays stuck:
 If the gateway is supervised by launchd, killing the PID will just respawn it. Stop the supervisor first:
 
 ```bash
-KoLo gateway status
-KoLo gateway stop
+Kurahi gateway status
+Kurahi gateway stop
 # Or: launchctl bootout gui/$UID/com.kodasoken.kolo.default (replace with com.kodasoken.kolo.<id>; legacy com.kolo.* still works)
 ```
 
@@ -657,11 +657,11 @@ kill -9 <PID> # last resort
 ```
 
 **Fix 3: Check the CLI install**
-Ensure the global `KoLo` CLI is installed and matches the app version:
+Ensure the global `Kurahi` CLI is installed and matches the app version:
 
 ```bash
-KoLo --version
-npm install -g @kodasoken/kolo@<version>
+Kurahi --version
+npm install -g kurahi@<version>
 ```
 
 ## Debug Mode
@@ -673,38 +673,38 @@ Get verbose logging:
 #   ${KOLO_CONFIG_PATH:-$HOME/.kolo/kolo.json} -> { logging: { level: "trace" } }
 #
 # Then run verbose commands to mirror debug output to stdout:
-KoLo gateway --verbose
-KoLo channels login --verbose
+Kurahi gateway --verbose
+Kurahi channels login --verbose
 ```
 
 ## Log Locations
 
-| Log                               | Location                                                                                                                                                                                                                                                                                                                    |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Gateway file logs (structured)    | `/tmp/kolo/kolo-YYYY-MM-DD.log` (or `logging.file`)                                                                                                                                                                                                                                                                 |
-| Gateway service logs (supervisor) | macOS: `$KOLO_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)<br />Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST` |
-| Session files                     | `$KOLO_STATE_DIR/agents/<agentId>/sessions/`                                                                                                                                                                                                                                                                            |
-| Media cache                       | `$KOLO_STATE_DIR/media/`                                                                                                                                                                                                                                                                                                |
-| Credentials                       | `$KOLO_STATE_DIR/credentials/`                                                                                                                                                                                                                                                                                          |
+| Log                               | Location                                                                                                                                                                                                                                                                                                  |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gateway file logs (structured)    | `/tmp/kolo/kolo-YYYY-MM-DD.log` (or `logging.file`)                                                                                                                                                                                                                                                       |
+| Gateway service logs (supervisor) | macOS: `$KOLO_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)<br />Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST` |
+| Session files                     | `$KOLO_STATE_DIR/agents/<agentId>/sessions/`                                                                                                                                                                                                                                                              |
+| Media cache                       | `$KOLO_STATE_DIR/media/`                                                                                                                                                                                                                                                                                  |
+| Credentials                       | `$KOLO_STATE_DIR/credentials/`                                                                                                                                                                                                                                                                            |
 
 ## Health Check
 
 ```bash
 # Supervisor + probe target + config paths
-KoLo gateway status
+Kurahi gateway status
 # Include system-level scans (legacy/extra services, port listeners)
-KoLo gateway status --deep
+Kurahi gateway status --deep
 
 # Is the gateway reachable?
-KoLo health --json
+Kurahi health --json
 # If it fails, rerun with connection details:
-KoLo health --verbose
+Kurahi health --verbose
 
 # Is something listening on the default port?
 lsof -nP -iTCP:18789 -sTCP:LISTEN
 
 # Recent activity (RPC log tail)
-KoLo logs --follow
+Kurahi logs --follow
 # Fallback if RPC is down
 tail -20 /tmp/kolo/kolo-*.log
 ```
@@ -714,23 +714,23 @@ tail -20 /tmp/kolo/kolo-*.log
 Nuclear option:
 
 ```bash
-KoLo gateway stop
+Kurahi gateway stop
 # If you installed a service and want a clean install:
-# KoLo gateway uninstall
+# Kurahi gateway uninstall
 
 trash "${KOLO_STATE_DIR:-$HOME/.kolo}"
-KoLo channels login         # re-pair WhatsApp
-KoLo gateway restart           # or: KoLo gateway
+Kurahi channels login         # re-pair WhatsApp
+Kurahi gateway restart           # or: Kurahi gateway
 ```
 
 ⚠️ This loses all sessions and requires re-pairing WhatsApp.
 
 ## Getting Help
 
-1. Check logs first: `/tmp/KoLo/` (default: `kolo-YYYY-MM-DD.log`, or your configured `logging.file`)
+1. Check logs first: `/tmp/Kurahi/` (default: `kolo-YYYY-MM-DD.log`, or your configured `logging.file`)
 2. Search existing issues on GitHub
 3. Open a new issue with:
-   - KoLo version
+   - Kurahi version
    - Relevant log snippets
    - Steps to reproduce
    - Your config (redact secrets!)

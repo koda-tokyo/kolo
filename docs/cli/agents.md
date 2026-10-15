@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `KoLo agents` (list/add/delete/set identity)"
+summary: "CLI reference for `Kurahi agents` (list/add/delete/set identity)"
 read_when:
   - You want multiple isolated agents (workspaces + routing + auth)
 title: "agents"
 ---
 
-# `KoLo agents`
+# `Kurahi agents`
 
 Manage isolated agents (workspaces + auth + routing).
 
@@ -17,11 +17,11 @@ Related:
 ## Examples
 
 ```bash
-KoLo agents list
-KoLo agents add work --workspace ~/.kolo/workspace-work
-KoLo agents set-identity --workspace ~/.kolo/workspace --from-identity
-KoLo agents set-identity --agent main --avatar avatars/KoLo.png
-KoLo agents delete work
+Kurahi agents list
+Kurahi agents add work --workspace ~/.kolo/workspace-work
+Kurahi agents set-identity --workspace ~/.kolo/workspace --from-identity
+Kurahi agents set-identity --agent main --avatar avatars/KoLo.png
+Kurahi agents delete work
 ```
 
 ## Identity files
@@ -45,13 +45,13 @@ Avatar paths resolve relative to the workspace root.
 Load from `IDENTITY.md`:
 
 ```bash
-KoLo agents set-identity --workspace ~/.kolo/workspace --from-identity
+Kurahi agents set-identity --workspace ~/.kolo/workspace --from-identity
 ```
 
 Override fields explicitly:
 
 ```bash
-KoLo agents set-identity --agent main --name "KoLo" --emoji "🦞" --avatar avatars/KoLo.png
+Kurahi agents set-identity --agent main --name "Kurahi" --emoji "🦞" --avatar avatars/KoLo.png
 ```
 
 Config sample:
@@ -63,7 +63,7 @@ Config sample:
       {
         id: "main",
         identity: {
-          name: "KoLo",
+          name: "Kurahi",
           theme: "space lobster",
           emoji: "🦞",
           avatar: "avatars/KoLo.png",

@@ -1,5 +1,5 @@
 ---
-summary: "Automated, hardened KoLo installation with Ansible, Tailscale VPN, and firewall isolation"
+summary: "Automated, hardened Kurahi installation with Ansible, Tailscale VPN, and firewall isolation"
 read_when:
   - You want automated server deployment with security hardening
   - You need firewall-isolated setup with VPN access
@@ -9,7 +9,7 @@ title: "Ansible"
 
 # Ansible Installation
 
-The recommended way to deploy KoLo to production servers is via **[kolo-ansible](https://github.com/koda-tokyo/kolo-ansible)** — an automated installer with security-first architecture.
+The recommended way to deploy Kurahi to production servers is via **[kolo-ansible](https://github.com/koda-tokyo/kolo-ansible)** — an automated installer with security-first architecture.
 
 ## Quick Start
 
@@ -47,22 +47,22 @@ The Ansible playbook installs and configures:
 2. **UFW firewall** (SSH + Tailscale ports only)
 3. **Docker CE + Compose V2** (for agent sandboxes)
 4. **Node.js 22.x + pnpm** (runtime dependencies)
-5. **KoLo** (host-based, not containerized)
+5. **Kurahi** (host-based, not containerized)
 6. **Systemd service** (auto-start with security hardening)
 
 Note: The gateway runs **directly on the host** (not in Docker), but agent sandboxes use Docker for isolation. See [Sandboxing](/gateway/sandboxing) for details.
 
 ## Post-Install Setup
 
-After installation completes, switch to the KoLo user:
+After installation completes, switch to the Kurahi user:
 
 ```bash
-sudo -i -u KoLo
+sudo -i -u Kurahi
 ```
 
 The post-install script will guide you through:
 
-1. **Onboarding wizard**: Configure KoLo settings
+1. **Onboarding wizard**: Configure Kurahi settings
 2. **Provider login**: Connect WhatsApp/Telegram/Discord/Signal
 3. **Gateway testing**: Verify the installation
 4. **Tailscale setup**: Connect to your VPN mesh
@@ -71,17 +71,17 @@ The post-install script will guide you through:
 
 ```bash
 # Check service status
-sudo systemctl status KoLo
+sudo systemctl status Kurahi
 
 # View live logs
-sudo journalctl -u KoLo -f
+sudo journalctl -u Kurahi -f
 
 # Restart gateway
-sudo systemctl restart KoLo
+sudo systemctl restart Kurahi
 
-# Provider login (run as KoLo user)
-sudo -i -u KoLo
-KoLo channels login
+# Provider login (run as Kurahi user)
+sudo -i -u Kurahi
+Kurahi channels login
 ```
 
 ## Security Architecture
@@ -131,9 +131,9 @@ ansible-galaxy collection install -r requirements.yml
 # ansible-playbook playbook.yml --ask-become-pass
 ```
 
-## Updating KoLo
+## Updating Kurahi
 
-The Ansible installer sets up KoLo for manual updates. See [Updating](/install/updating) for the standard update flow.
+The Ansible installer sets up Kurahi for manual updates. See [Updating](/install/updating) for the standard update flow.
 
 To re-run the Ansible playbook (e.g., for configuration changes):
 
@@ -158,14 +158,14 @@ If you're locked out:
 
 ```bash
 # Check logs
-sudo journalctl -u KoLo -n 100
+sudo journalctl -u Kurahi -n 100
 
 # Verify permissions
-sudo ls -la /opt/KoLo
+sudo ls -la /opt/Kurahi
 
 # Test manual start
-sudo -i -u KoLo
-cd ~/KoLo
+sudo -i -u Kurahi
+cd ~/Kurahi
 pnpm start
 ```
 
@@ -180,16 +180,16 @@ sudo docker images | grep kolo-sandbox
 
 # Build sandbox image if missing
 cd /opt/kolo
-sudo -u KoLo ./scripts/sandbox-setup.sh
+sudo -u Kurahi ./scripts/sandbox-setup.sh
 ```
 
 ### Provider login fails
 
-Make sure you're running as the `KoLo` user:
+Make sure you're running as the `Kurahi` user:
 
 ```bash
-sudo -i -u KoLo
-KoLo channels login
+sudo -i -u Kurahi
+Kurahi channels login
 ```
 
 ## Advanced Configuration

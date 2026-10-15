@@ -10,16 +10,16 @@ title: "Gateway on macOS"
 # Gateway on macOS (external launchd)
 
 KoLo.app no longer bundles the gateway runtime. The macOS app
-expects an **external** `KoLo` CLI install, does not spawn the Gateway as a
+expects an **external** `Kurahi` CLI install, does not spawn the Gateway as a
 child process, and manages a per‑user launchd service to keep the Gateway
 running (or attaches to an existing local Gateway if one is already running).
 
 ## Install the CLI (required for local mode)
 
-You need Node 22+ on the Mac, then install `KoLo` globally:
+You need Node 22+ on the Mac, then install `Kurahi` globally:
 
 ```bash
-npm install -g @kodasoken/kolo@<version>
+npm install -g kurahi@<version>
 ```
 
 The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun not recommended for Gateway runtime).
@@ -38,11 +38,11 @@ Plist location (per‑user):
 Manager:
 
 - The macOS app owns LaunchAgent install/update in Local mode.
-- The CLI can also install it: `KoLo gateway install`.
+- The CLI can also install it: `Kurahi gateway install`.
 
 Behavior:
 
-- “KoLo Active” enables/disables the LaunchAgent.
+- “Kurahi Active” enables/disables the LaunchAgent.
 - App quit does **not** stop the gateway (launchd keeps it alive).
 - If a Gateway is already running on the configured port, the app attaches to
   it instead of starting a new one.
@@ -59,15 +59,15 @@ incompatible, update the global CLI to match the app version.
 ## Smoke check
 
 ```bash
-KoLo --version
+Kurahi --version
 
 KOLO_SKIP_CHANNELS=1 \
 KOLO_SKIP_CANVAS_HOST=1 \
-KoLo gateway --port 18999 --bind loopback
+Kurahi gateway --port 18999 --bind loopback
 ```
 
 Then:
 
 ```bash
-KoLo gateway call health --url ws://127.0.0.1:18999 --timeout 3000
+Kurahi gateway call health --url ws://127.0.0.1:18999 --timeout 3000
 ```

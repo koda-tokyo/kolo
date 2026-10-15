@@ -8,7 +8,7 @@ import { runCommandWithRuntime } from "./cli-utils.js";
 export function registerDocsCli(program: Command) {
   program
     .command("docs")
-    .description("Search the live KoLo docs")
+    .description("Search the live Kurahi docs")
     .argument("[query...]", "Search query")
     .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/docs")}\n`)
     .action(async (queryParts: string[]) => {

@@ -9,9 +9,11 @@ Michael Stonebraker (UC Berkeley, MIT) has been instrumental in: Ingres (1970s),
 ## Storage Engines — The Foundation
 
 ### B-Tree (Bayer & McCreight, 1971; Comer, 1979)
+
 The workhorse of OLTP databases (PostgreSQL, MySQL/InnoDB, SQLite).
 
 **Structure:**
+
 ```
         [Root: keys ≤ K1 | K1 < keys ≤ K2 | keys > K2]
         /                    |                    \
@@ -21,6 +23,7 @@ The workhorse of OLTP databases (PostgreSQL, MySQL/InnoDB, SQLite).
 ```
 
 **Properties:**
+
 - Balanced: O(log n) for all operations, even in worst case
 - Node size: typically match disk page size (4KB-16KB)
 - Fill factor: internal nodes ~50-70%, leaf nodes ~60-80%
@@ -33,9 +36,11 @@ The workhorse of OLTP databases (PostgreSQL, MySQL/InnoDB, SQLite).
 **Concurrency:** Blink-tree (Lehman & Yao, 1981) — B-tree with sibling links for lock-free traversal. InnoDB uses gap locks to prevent phantom reads.
 
 ### LSM-Tree (O'Neil, Cheng, Gawlick, O'Neil, 1996)
+
 The engine behind RocksDB, LevelDB, Cassandra, ScyllaDB, ClickHouse (MergeTree).
 
 **Architecture:**
+
 ```
 Write → MemTable (in-memory, sorted) → WAL (durable, sequential)
 When MemTable full → flush to SSTable (Sorted String Table) on disk
@@ -54,6 +59,7 @@ Read: check MemTable → check SSTables (newest first)
 **The LSM trilemma:** Write amplification ↔ Read amplification ↔ Space amplification. You can optimize any two at the expense of the third. Default RocksDB configuration optimizes for write and space at some read cost.
 
 ### Bε-Tree (Brodal & Fagerberg, 2003; Betree in TokuDB, now PerconaFT)
+
 B-tree with buffers in internal nodes. Inserts accumulate in buffers, flush down in batches.
 **Advantage:** Inserts are amortized nearly free. Write-optimized.
 **Disadvantage:** Point reads must search all buffers on the path. Slightly higher read cost.
@@ -65,15 +71,18 @@ B-tree with buffers in internal nodes. Inserts accumulate in buffers, flush down
 The cost-based optimizer (CBO) architecture used by PostgreSQL, MySQL, Oracle, SQL Server.
 
 ### The Process
+
 1. **Parse:** SQL → parse tree
 2. **Rewrite:** View expansion, constant folding, subquery unnesting
 3. **Optimize:** Generate plan alternatives → estimate cost for each → pick cheapest
 4. **Execute:** Run the plan
 
 ### Join Order Optimization
+
 For N tables: N! join orders. Even with dynamic programming (Selinger), this is expensive.
 
 **Dynamic programming approach (System R):**
+
 ```
 For each subset of tables, compute best join plan.
 Start with single-table plans.
@@ -83,13 +92,16 @@ Time: O(3^N) in theory, but N is typically ≤ 12-15 (above which genetic algori
 ```
 
 ### Join Algorithms
+
 **Nested Loop:** For each row in outer, scan inner. O(N×M). Worst but works for any join condition.
 **Hash Join:** Build hash table on inner, probe with outer. O(N+M). Best for equijoin, no indexes.
 **Merge Join:** Both sides sorted on join key, merge. O(N+M) but requires sort or index scan.
 **Index Nested Loop:** For each outer row, index lookup on inner. O(N × log M). Good when outer is small, inner has index.
 
 ### Statistics and Cardinality Estimation
+
 The optimizer estimates row counts using table statistics (ANALYZE):
+
 - n_distinct: number of distinct values
 - most_common_vals / most_common_freqs: histogram of common values
 - histogram_bounds: equi-depth histogram
@@ -103,32 +115,37 @@ The optimizer estimates row counts using table statistics (ANALYZE):
 ## Transaction Isolation (ANSI SQL Standard)
 
 ### Read Phenomena
-| Phenomenon | Description |
-|-----------|-------------|
-| Dirty Read | Transaction reads uncommitted data from another transaction |
-| Non-Repeatable Read | Same query returns different row data (row was UPDATE/DELETE'd) |
-| Phantom Read | Same query returns different rows (new rows INSERTed matching predicate) |
-| Serialization Anomaly | Result not equivalent to any serial execution |
+
+| Phenomenon            | Description                                                              |
+| --------------------- | ------------------------------------------------------------------------ |
+| Dirty Read            | Transaction reads uncommitted data from another transaction              |
+| Non-Repeatable Read   | Same query returns different row data (row was UPDATE/DELETE'd)          |
+| Phantom Read          | Same query returns different rows (new rows INSERTed matching predicate) |
+| Serialization Anomaly | Result not equivalent to any serial execution                            |
 
 ### Isolation Levels (SQL Standard)
-| Level | Dirty Read | Non-Repeatable | Phantom | Serialization |
-|-------|-----------|---------------|---------|---------------|
-| Read Uncommitted | Possible | Possible | Possible | Possible |
-| Read Committed | No | Possible | Possible | Possible |
-| Repeatable Read | No | No | Possible | Possible |
-| Serializable | No | No | No | No |
+
+| Level            | Dirty Read | Non-Repeatable | Phantom  | Serialization |
+| ---------------- | ---------- | -------------- | -------- | ------------- |
+| Read Uncommitted | Possible   | Possible       | Possible | Possible      |
+| Read Committed   | No         | Possible       | Possible | Possible      |
+| Repeatable Read  | No         | No             | Possible | Possible      |
+| Serializable     | No         | No             | No       | No            |
 
 **The gap:** The SQL standard definition of Serializable is insufficient. True serializability requires preventing serialization anomalies that the standard doesn't capture (write skew, read-only transaction anomalies).
 
 ### MVCC (Multi-Version Concurrency Control)
+
 Every transaction sees a consistent snapshot of the database at a point in time.
 
 **PostgreSQL implementation:**
+
 - Every tuple has xmin (creating transaction) and xmax (deleting transaction)
 - Transaction sees: tuples where xmin is committed before snapshot AND xmax is not committed before snapshot OR xmax is the current transaction
 - Old versions accumulate. VACUUM reclaims them.
 
 **MySQL/InnoDB implementation:**
+
 - Undo log: stores old versions
 - Read view: transaction's snapshot → which transactions were active at start
 - Purge thread removes old versions no longer visible to any active transaction
@@ -140,24 +157,31 @@ Every transaction sees a consistent snapshot of the database at a point in time.
 ## Indexing Strategies Beyond B-Tree
 
 ### Partial Index
+
 ```sql
 CREATE INDEX ON orders (created_at) WHERE status = 'active';
 ```
+
 Index only contains rows matching WHERE. Smaller = faster scans, less write overhead.
 
 ### Covering Index (Index-Only Scan)
+
 ```sql
 CREATE INDEX ON users (last_name) INCLUDE (first_name, email);
 ```
+
 If query only needs columns in the index, no need to read the table. PostgreSQL: must VACUUM for visibility map to support index-only scans.
 
 ### BRIN (Block Range Index) — PostgreSQL
+
 Index physical page ranges, not individual rows. Tiny index for huge tables where data is physically correlated with the indexed column (time-series, append-only logs).
 
 ### GIN (Generalized Inverted Index) — PostgreSQL
+
 For composite values: arrays, JSONB, full-text search. Maps each element value to all rows containing it.
 
 ### GiST (Generalized Search Tree) — PostgreSQL
+
 Framework for building custom indexes: geometric data (PostGIS), full-text search, trigram similarity.
 
 ---
@@ -165,20 +189,25 @@ Framework for building custom indexes: geometric data (PostGIS), full-text searc
 ## Sharding and Distributed SQL
 
 ### Application-Level Sharding
+
 ```
 shard = hash(user_id) % num_shards
 ```
+
 Application routes to correct database. No coordination between shards.
 **Problems:** Resharding is painful. Cross-shard queries are application-level scatter-gather. No cross-shard transactions. This is why distributed SQL databases exist.
 
 ### Distributed SQL (CockroachDB, Spanner, YugabyteDB)
+
 **Architecture:**
+
 - Raft for replication within shard
 - 2PC for cross-shard transactions
 - GPS/atomic clocks for global ordering (Spanner: TrueTime API)
 - SQL layer on top of distributed KV store
 
 **Spanner's TrueTime (Google):**
+
 ```
 TT.now() returns [earliest, latest] — an interval guaranteed to contain absolute time
 Commit wait: delay until TT.now().earliest > transaction timestamp
@@ -192,9 +221,11 @@ Commit wait: delay until TT.now().earliest > transaction timestamp
 ## Connection Pooling
 
 ### The Problem
+
 PostgreSQL forks a process per connection. Memory: ~10MB per idle connection. Too many connections → OOM or context switching thrashing.
 
 ### PgBouncer (Transaction Pooling)
+
 ```
 Mode: transaction pooling
 Connections are assigned to clients only for duration of a transaction.
@@ -204,10 +235,12 @@ Max 500 application connections → 50 database connections
 ```
 
 ### Server-Side Pooling (HikariCP, pgpool)
+
 **HikariCP rules:**
+
 - Pool size = ((core_count × 2) + effective_spindle_count)
 - For SSDs: effective_spindle_count = 1
 - Typical: 10-20 connections for PostgreSQL on modern hardware
 - More connections ≠ more throughput (diminishing returns after optimal)
 
-**For us (KoLo):** Use PgBouncer between our services and PostgreSQL. Pool size tuned per service based on workload profile.
+**For us (Kurahi):** Use PgBouncer between our services and PostgreSQL. Pool size tuned per service based on workload profile.

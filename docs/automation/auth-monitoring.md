@@ -8,13 +8,13 @@ title: "Auth Monitoring"
 
 # Auth monitoring
 
-KoLo exposes OAuth expiry health via `kolo models status`. Use that for
+Kurahi exposes OAuth expiry health via `kurahi models status`. Use that for
 automation and alerting.
 
 ## Preferred: CLI check (portable)
 
 ```bash
-kolo models status --check
+kurahi models status --check
 ```
 
 Exit codes:

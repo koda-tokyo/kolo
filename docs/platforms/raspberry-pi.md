@@ -1,17 +1,17 @@
 ---
-summary: "KoLo on Raspberry Pi (budget self-hosted setup)"
+summary: "Kurahi on Raspberry Pi (budget self-hosted setup)"
 read_when:
-  - Setting up KoLo on a Raspberry Pi
-  - Running KoLo on ARM devices
+  - Setting up Kurahi on a Raspberry Pi
+  - Running Kurahi on ARM devices
   - Building a cheap always-on personal AI
 title: "Raspberry Pi"
 ---
 
-# KoLo on Raspberry Pi
+# Kurahi on Raspberry Pi
 
 ## Goal
 
-Run a persistent, always-on KoLo Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
+Run a persistent, always-on Kurahi Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
 
 Perfect for:
 
@@ -107,19 +107,19 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) Install KoLo
+## 6) Install Kurahi
 
 ### Option A: Standard Install (Recommended)
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
 ### Option B: Hackable Install (For tinkering)
 
 ```bash
-git clone https://github.com/koda-tokyo/kolo.git
-cd KoLo
+git clone https://github.com/koda-tokyo/kurahi.git
+cd Kurahi
 npm install
 npm run build
 npm link
@@ -130,7 +130,7 @@ The hackable install gives you direct access to logs and code — useful for deb
 ## 7) Run Onboarding
 
 ```bash
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -144,13 +144,13 @@ Follow the wizard:
 
 ```bash
 # Check status
-KoLo status
+Kurahi status
 
 # Check service
-sudo systemctl status KoLo
+sudo systemctl status Kurahi
 
 # View logs
-journalctl -u KoLo -f
+journalctl -u Kurahi -f
 ```
 
 ## 9) Access the Dashboard
@@ -173,8 +173,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # Update config
-KoLo config set gateway.bind tailnet
-sudo systemctl restart KoLo
+Kurahi config set gateway.bind tailnet
+sudo systemctl restart Kurahi
 ```
 
 ---
@@ -221,7 +221,7 @@ htop
 
 ### Binary Compatibility
 
-Most KoLo features work on ARM64, but some external binaries may need ARM builds:
+Most Kurahi features work on ARM64, but some external binaries may need ARM builds:
 
 | Tool               | ARM64 Status | Notes                               |
 | ------------------ | ------------ | ----------------------------------- |
@@ -271,13 +271,13 @@ The onboarding wizard sets this up, but to verify:
 
 ```bash
 # Check service is enabled
-sudo systemctl is-enabled KoLo
+sudo systemctl is-enabled Kurahi
 
 # Enable if not
-sudo systemctl enable KoLo
+sudo systemctl enable Kurahi
 
 # Start on boot
-sudo systemctl start KoLo
+sudo systemctl start Kurahi
 ```
 
 ---
@@ -304,12 +304,12 @@ free -h
 
 ```bash
 # Check logs
-journalctl -u KoLo --no-pager -n 100
+journalctl -u Kurahi --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/KoLo  # if using hackable install
+cd ~/Kurahi  # if using hackable install
 npm run build
-sudo systemctl restart KoLo
+sudo systemctl restart Kurahi
 ```
 
 ### ARM Binary Issues

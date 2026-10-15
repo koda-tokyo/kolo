@@ -5,7 +5,7 @@ read_when:
   - Updating the default dev agent identity
 ---
 
-# AGENTS.md - KoLo Workspace
+# AGENTS.md - Kurahi Workspace
 
 This folder is the assistant's working directory.
 

@@ -272,6 +272,8 @@ describe("buildGatewayInstallPlan", () => {
 describe("gatewayInstallErrorHint", () => {
   it("returns platform-specific hints", () => {
     expect(gatewayInstallErrorHint("win32")).toContain("Run as administrator");
-    expect(gatewayInstallErrorHint("linux")).toMatch(/kolo( --profile isolated)? gateway install/);
+    expect(gatewayInstallErrorHint("linux")).toMatch(
+      /kurahi( --profile isolated)? gateway install/,
+    );
   });
 });

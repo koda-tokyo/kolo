@@ -281,7 +281,7 @@ export function alertGatewayShutdown(reason: string): Promise<void> {
   return fireAlert(
     "gateway_shutdown",
     "CRITICAL",
-    `KoLo gateway shut down unexpectedly: ${reason}`,
+    `Kurahi gateway shut down unexpectedly: ${reason}`,
     { details: { pid: process.pid, uptime: process.uptime() } },
   );
 }
@@ -330,7 +330,7 @@ export function alertGatewayRecovered(uptimeMs: number): Promise<void> {
   return fireAlert(
     "gateway_recovered",
     "INFO",
-    `KoLo gateway recovered and is serving (uptime: ${Math.round(uptimeMs / 1000)}s)`,
+    `Kurahi gateway recovered and is serving (uptime: ${Math.round(uptimeMs / 1000)}s)`,
     { kind: "recovery", details: { pid: process.pid } },
   );
 }

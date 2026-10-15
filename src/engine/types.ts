@@ -4,7 +4,7 @@
  * KoLo Engine Profile System
  *
  * Defines the metadata and compliance flags for LLM engines
- * that KoLo can use. Supports multi-engine architecture with
+ * that Kurahi can use. Supports multi-engine architecture with
  * compliance controls for Japanese enterprise/medical use.
  *
  */

@@ -1,10 +1,10 @@
-// `kolo providers …` — provider wiring driven by the built-in registry (KoLo 2.0, M9c).
+// `kurahi providers …` — provider wiring driven by the built-in registry (KoLo 2.0, M9c).
 //
-//   kolo providers list [--json] [--all] [--search <text>]
-//   kolo providers add <id> [--base-url <url>] [--api-key-stdin | --api-key-file <path>] [--model <id>]
-//   kolo providers test <id> [--model <id>] [--timeout <ms>] [--json]
-//   kolo providers remove <id> [--yes]
-//   kolo providers default <id> [--model <id>]
+//   kurahi providers list [--json] [--all] [--search <text>]
+//   kurahi providers add <id> [--base-url <url>] [--api-key-stdin | --api-key-file <path>] [--model <id>]
+//   kurahi providers test <id> [--model <id>] [--timeout <ms>] [--json]
+//   kurahi providers remove <id> [--yes]
+//   kurahi providers default <id> [--model <id>]
 //
 // Keys are never read from argv: they come from stdin, a file, a prompt, or the environment
 // variable the registry names. They are stored in the auth profile store (never in kolo.json).
@@ -48,7 +48,7 @@ function run(runtime: RuntimeEnv, json: boolean | undefined, action: () => Promi
     if (json) {
       runtime.log(JSON.stringify({ ok: false, error: message, exitCode }, null, 2));
     } else {
-      runtime.error(theme.error(`kolo providers: ${message}`));
+      runtime.error(theme.error(`kurahi providers: ${message}`));
     }
     runtime.exit(exitCode);
   });
@@ -81,10 +81,10 @@ export function registerProvidersCli(program: Command, deps: ProvidersCliDeps = 
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Examples:")}\n  ${formatCliCommand("kolo providers list")}\n  ${formatCliCommand(
-          "kolo providers add sakura --api-key-stdin < key.txt",
-        )}\n  ${formatCliCommand("kolo providers test sakura")}\n  ${formatCliCommand(
-          "kolo providers default sakura",
+        `\n${theme.muted("Examples:")}\n  ${formatCliCommand("kurahi providers list")}\n  ${formatCliCommand(
+          "kurahi providers add sakura --api-key-stdin < key.txt",
+        )}\n  ${formatCliCommand("kurahi providers test sakura")}\n  ${formatCliCommand(
+          "kurahi providers default sakura",
         )}\n${theme.muted("Exit codes:")} 0 ok, 1 failed, 2 usage, 3 provider unreachable, 4 key rejected\n${theme.muted("Docs:")} ${formatDocsLink("/providers")}\n`,
     );
 

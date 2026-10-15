@@ -5,7 +5,7 @@
 // it needs the card's autoMerge policy AND the merge permission (exec:kip_engine_task:merge held
 // by the owner resident, or an owner/admin caller who asked for it).
 //
-// Each run is a job (kind "factory") in the jobs registry, so `kolo api cancelJob` and the
+// Each run is a job (kind "factory") in the jobs registry, so `kurahi api cancelJob` and the
 // evidence routes work for it like for any agent run.
 import type { KoLoConfig } from "../config/config.js";
 import type { CommandRunner } from "./pull-request.js";

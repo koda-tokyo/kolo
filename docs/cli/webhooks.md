@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo webhooks` (webhook helpers + Gmail Pub/Sub)"
+summary: "CLI reference for `Kurahi webhooks` (webhook helpers + Gmail Pub/Sub)"
 read_when:
-  - You want to wire Gmail Pub/Sub events into KoLo
+  - You want to wire Gmail Pub/Sub events into Kurahi
   - You want webhook helper commands
 title: "webhooks"
 ---
 
-# `KoLo webhooks`
+# `Kurahi webhooks`
 
 Webhook helpers and integrations (Gmail Pub/Sub, webhook helpers).
 
@@ -18,8 +18,8 @@ Related:
 ## Gmail
 
 ```bash
-KoLo webhooks gmail setup --account you@example.com
-KoLo webhooks gmail run
+Kurahi webhooks gmail setup --account you@example.com
+Kurahi webhooks gmail run
 ```
 
 See [Gmail Pub/Sub documentation](/automation/gmail-pubsub) for details.

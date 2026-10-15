@@ -161,7 +161,7 @@ async function findChainTip(dir: string): Promise<{ line: string; seq: number } 
       try {
         seq = Number((JSON.parse(line) as { seq?: unknown }).seq) || 0;
       } catch {
-        // A corrupt tip still anchors the chain; `kolo audit verify` reports it.
+        // A corrupt tip still anchors the chain; `kurahi audit verify` reports it.
       }
       return { line, seq };
     }

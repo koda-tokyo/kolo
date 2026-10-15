@@ -5,7 +5,7 @@ Adds the `lobster` agent tool as an **optional** plugin tool.
 ## What this is
 
 - Lobster is a standalone workflow shell (typed JSON-first pipelines + approvals/resume).
-- This plugin integrates Lobster with KoLo _without core changes_.
+- This plugin integrates Lobster with Kurahi _without core changes_.
 
 ## Enable
 
@@ -30,15 +30,15 @@ Enable it in an agent allowlist:
 }
 ```
 
-## Using `KoLo.invoke` (Lobster → KoLo tools)
+## Using `KoLo.invoke` (Lobster → Kurahi tools)
 
-Some Lobster pipelines may include a `KoLo.invoke` step to call back into KoLo tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
+Some Lobster pipelines may include a `KoLo.invoke` step to call back into Kurahi tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
 
-For this to work, the KoLo Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
+For this to work, the Kurahi Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
 
-- KoLo provides an HTTP endpoint: `POST /tools/invoke`.
+- Kurahi provides an HTTP endpoint: `POST /tools/invoke`.
 - The request is gated by **gateway auth** (e.g. `Authorization: Bearer …` when token auth is enabled).
-- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, KoLo returns `404 Tool not available`.
+- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, Kurahi returns `404 Tool not available`.
 
 ### Allowlisting recommended
 

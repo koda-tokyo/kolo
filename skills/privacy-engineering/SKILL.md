@@ -1,10 +1,13 @@
 # Privacy Engineering — Data Protection, Consent, Anonymization & Audit
 
 ## Purpose
-Engineering privacy into systems from architecture, not bolted on after. Covers Japanese data protection law (APPI), healthcare privacy (next-gen medical infrastructure act), GDPR cross-relevance, consent management, data minimization, anonymization, pseudonymization, audit trail architecture, and privacy-by-design methodology. Built for KODA KENKŌ (medical data), Mnemosyne (bio→digital continuity), and all KoLo data handling.
+
+Engineering privacy into systems from architecture, not bolted on after. Covers Japanese data protection law (APPI), healthcare privacy (next-gen medical infrastructure act), GDPR cross-relevance, consent management, data minimization, anonymization, pseudonymization, audit trail architecture, and privacy-by-design methodology. Built for KODA KENKŌ (medical data), Mnemosyne (bio→digital continuity), and all Kurahi data handling.
 
 ## Triggers
+
 Use this skill for:
+
 - Handling personal data, medical data, PHI (Protected Health Information)
 - Designing consent flows or data subject rights mechanisms
 - Anonymization or pseudonymization of datasets
@@ -24,6 +27,7 @@ Use this skill for:
 **Special Care-Required Personal Information (要配慮個人情報):** Medical history, race, creed, criminal record, disability, genetic data. Higher protection standard. Explicit opt-in consent required for acquisition and transfer.
 
 **Key Obligations:**
+
 1. **Purpose specification (利用目的の特定):** Must specify and disclose the purpose of use. Cannot use data beyond the specified purpose.
 2. **Consent for transfers (第三者提供の同意):** Opt-in consent required for third-party data transfers. Opt-out system (opt-out notification to PPC) is possible but limited.
 3. **Security measures (安全管理措置):** Must take "necessary and appropriate" measures — organizational, human, physical, technical.
@@ -34,6 +38,7 @@ Use this skill for:
 ### Next-Gen Medical Infrastructure Act (次世代医療基盤法)
 
 For KODA KENKŌ specifically:
+
 - Enables use of anonymized medical data for research and AI development
 - Requires certification as an authorized anonymization processor (認定匿名加工医療情報作成事業者)
 - Opt-out model: patients can refuse inclusion
@@ -52,13 +57,13 @@ Tier 0: PUBLIC         — Intended for public release. No protection needed.
 
 ### De-Identification Techniques (from weakest to strongest)
 
-| Technique | Re-identification Risk | Data Utility | Use Case |
-|-----------|----------------------|--------------|----------|
-| Direct identifier removal | High | Full | Internal pseudonymized datasets |
-| k-anonymity (k≥5) | Medium | Good | Research datasets |
-| l-diversity on sensitive attributes | Low | Reduced | Published datasets |
-| t-closeness | Very Low | Significantly reduced | Public datasets |
-| Differential privacy (ε=1) | Mathematical guarantee | Limited | Aggregate statistics, public APIs |
+| Technique                           | Re-identification Risk | Data Utility          | Use Case                          |
+| ----------------------------------- | ---------------------- | --------------------- | --------------------------------- |
+| Direct identifier removal           | High                   | Full                  | Internal pseudonymized datasets   |
+| k-anonymity (k≥5)                   | Medium                 | Good                  | Research datasets                 |
+| l-diversity on sensitive attributes | Low                    | Reduced               | Published datasets                |
+| t-closeness                         | Very Low               | Significantly reduced | Public datasets                   |
+| Differential privacy (ε=1)          | Mathematical guarantee | Limited               | Aggregate statistics, public APIs |
 
 ### Privacy Impact Assessment (PIA) — Minimum Template
 
@@ -68,27 +73,32 @@ For any new system or feature handling personal data:
 # Privacy Impact Assessment: [Project Name]
 
 ## 1. Data Inventory
+
 - What personal data is collected? (list every field)
 - Is it Special Care-Required? (Y/N for each field)
 - How is it collected? (user input, API, device, inference, third party)
 
 ## 2. Purpose & Lawful Basis
+
 - What is the specific purpose of processing?
 - Legal basis under APPI: [Consent | Contract | Legal obligation | Legitimate interests]
 - If consent: how is it obtained? Can it be withdrawn?
 
 ## 3. Data Flow
+
 - Where is data stored? (country, infrastructure)
 - Who has access? (roles, not names)
 - Is data transferred to third parties? To which countries?
 - How long is data retained? Deletion mechanism?
 
 ## 4. Risk Assessment
+
 - What's the worst-case scenario if this data is breached?
 - Likelihood: [Low | Medium | High]
 - Impact: [Low | Medium | High | Critical]
 
 ## 5. Mitigations
+
 - Encryption at rest: [Yes/No — algorithm]
 - Encryption in transit: [Yes/No — protocol]
 - Access controls: [RBAC model, audit logging]
@@ -96,10 +106,12 @@ For any new system or feature handling personal data:
 - Data minimization: what fields could we NOT collect?
 
 ## 6. Data Subject Rights
+
 - How can a data subject request disclosure? deletion? correction?
 - Response time commitment: [X business days — APPI requires "without delay"]
 
 ## 7. Sign-off
+
 - Privacy review by: [Name/Role]
 - Date: [YYYY-MM-DD]
 - Review cycle: [Quarterly | Bi-annual | Annual]
@@ -137,22 +149,22 @@ Every access, modification, or export of personal data must leave a trail:
     "authorization": "consent_id|study_protocol_id|legal_obligation_ref"
   },
   "result": "success|denied|error",
-  "fields_accessed": ["diagnosis", "medication"],  // or null for full record
-  "export_destination": null  // populated if data left the system
+  "fields_accessed": ["diagnosis", "medication"], // or null for full record
+  "export_destination": null // populated if data left the system
 }
 ```
 
 ### Retention & Deletion
 
-| Data Type | Minimum Retention | Maximum Retention | Deletion Trigger |
-|-----------|------------------|-------------------|-----------------|
-| Clinical records | 5 years (Japan Medical Care Act) | Per institution policy | Retention period expiry |
-| Research data | Per study protocol | Per consent agreement | Consent withdrawal, study completion |
-| Consent records | Duration of data use + 3 years | N/A | Data deletion confirmed |
-| Audit logs | 3 years | Per risk assessment | Retention period expiry |
-| ML training data | Per consent | Per consent | Consent withdrawal, model retirement |
-| Identifiers mapping (pseudonym key) | Duration of pseudonym use | Must be deleted when data is deleted | Data deletion |
-| De-identified/anonymized data | N/A | May be retained indefinitely (if truly anonymous) | N/A |
+| Data Type                           | Minimum Retention                | Maximum Retention                                 | Deletion Trigger                     |
+| ----------------------------------- | -------------------------------- | ------------------------------------------------- | ------------------------------------ |
+| Clinical records                    | 5 years (Japan Medical Care Act) | Per institution policy                            | Retention period expiry              |
+| Research data                       | Per study protocol               | Per consent agreement                             | Consent withdrawal, study completion |
+| Consent records                     | Duration of data use + 3 years   | N/A                                               | Data deletion confirmed              |
+| Audit logs                          | 3 years                          | Per risk assessment                               | Retention period expiry              |
+| ML training data                    | Per consent                      | Per consent                                       | Consent withdrawal, model retirement |
+| Identifiers mapping (pseudonym key) | Duration of pseudonym use        | Must be deleted when data is deleted              | Data deletion                        |
+| De-identified/anonymized data       | N/A                              | May be retained indefinitely (if truly anonymous) | N/A                                  |
 
 ### Data Security Minimum Standards
 
@@ -176,22 +188,22 @@ Vulnerability scanning:     Continuous, with SLA for critical findings (24h)
 ```
 Hour 0: Detect & Confirm
   - Is this a confirmed breach? What data? How many subjects?
-  
+
 Hour 1: Contain
   - Revoke compromised credentials
   - Isolate affected systems
   - Stop the exfiltration
-  
+
 Hour 2: Assess
   - Scope: which records, which fields, how many subjects?
   - Sensitivity: Special Care-Required data involved?
   - Root cause: exploited vulnerability? misconfiguration? insider?
-  
+
 Hour 3: Notify (if required)
   - PPC notification within statutory timeframe
   - Data subject notification if risk of harm (identity theft, discrimination)
   - Legal counsel engaged
-  
+
 Hour 4: Document
   - Timeline of events (keep updating)
   - Evidence preservation (logs, system images)
@@ -224,6 +236,7 @@ Before deploying any healthcare AI system:
 ### Cross-Border Data Transfer — Japan Specifics
 
 Under APPI, transfers to countries without "equivalent" protection require:
+
 1. **Data subject consent** (specific, informed, opt-in) to the transfer to a country without equivalent protection, OR
 2. **Contract** establishing equivalent protection between transferor and transferee
 
@@ -236,6 +249,7 @@ For all other countries (including US): either explicit consent or binding contr
 ### Data Minimization — The Best Privacy Tool
 
 Before collecting any data field, ask:
+
 1. Do we absolutely need this for the stated purpose?
 2. Could we achieve the same result with less data? Coarser data? Older data?
 3. What would break if we didn't collect this?
@@ -253,4 +267,3 @@ Every field you don't collect is a field that can't be breached.
 - ❌ Treating privacy as a compliance checkbox, not an architectural principle
 
 ---
-

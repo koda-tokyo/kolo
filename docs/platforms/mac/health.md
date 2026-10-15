@@ -26,9 +26,9 @@ How to see whether the linked channel is healthy from the menu bar app.
 
 ## How the probe works
 
-- App runs `KoLo health --json` via `ShellExecutor` every ~60s and on demand. The probe loads creds and reports status without sending messages.
+- App runs `Kurahi health --json` via `ShellExecutor` every ~60s and on demand. The probe loads creds and reports status without sending messages.
 - Cache the last good snapshot and the last error separately to avoid flicker; show the timestamp of each.
 
 ## When in doubt
 
-- You can still use the CLI flow in [Gateway health](/gateway/health) (`KoLo status`, `KoLo status --deep`, `KoLo health --json`) and tail `/tmp/kolo/kolo-*.log` for `web-heartbeat` / `web-reconnect`.
+- You can still use the CLI flow in [Gateway health](/gateway/health) (`Kurahi status`, `Kurahi status --deep`, `Kurahi health --json`) and tail `/tmp/kolo/kolo-*.log` for `web-heartbeat` / `web-reconnect`.

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo node` (headless node host)"
+summary: "CLI reference for `Kurahi node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `KoLo node`
+# `Kurahi node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-KoLo node run --host <gateway-host> --port 18789
+Kurahi node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -63,7 +63,7 @@ Options:
 Install a headless node host as a user service.
 
 ```bash
-KoLo node install --host <gateway-host> --port 18789
+Kurahi node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -80,13 +80,13 @@ Options:
 Manage the service:
 
 ```bash
-KoLo node status
-KoLo node stop
-KoLo node restart
-KoLo node uninstall
+Kurahi node status
+Kurahi node stop
+Kurahi node restart
+Kurahi node uninstall
 ```
 
-Use `KoLo node run` for a foreground node host (no service).
+Use `Kurahi node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -96,8 +96,8 @@ The first connection creates a pending node pair request on the Gateway.
 Approve it via:
 
 ```bash
-KoLo nodes pending
-KoLo nodes approve <requestId>
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
@@ -109,4 +109,4 @@ The node host stores its node id, token, display name, and gateway connection in
 
 - `~/.kolo/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `KoLo approvals --node <id|name|ip>` (edit from the Gateway)
+- `Kurahi approvals --node <id|name|ip>` (edit from the Gateway)

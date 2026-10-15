@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `KoLo docs` (search the live docs index)"
+summary: "CLI reference for `Kurahi docs` (search the live docs index)"
 read_when:
-  - You want to search the live KoLo docs from the terminal
+  - You want to search the live Kurahi docs from the terminal
 title: "docs"
 ---
 
-# `KoLo docs`
+# `Kurahi docs`
 
 Search the live docs index.
 
 ```bash
-KoLo docs browser extension
-KoLo docs sandbox allowHostControl
+Kurahi docs browser extension
+Kurahi docs sandbox allowHostControl
 ```

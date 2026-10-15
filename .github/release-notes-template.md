@@ -6,7 +6,7 @@ One or two sentences: what this release is for and who should upgrade.
 
 ### Upgrade notes
 
-- Breaking changes, config migrations (`kolo doctor --fix` handles: …), new minimum versions.
+- Breaking changes, config migrations (`kurahi doctor --fix` handles: …), new minimum versions.
 - Exit code or output changes that scripts may depend on.
 
 ### Added

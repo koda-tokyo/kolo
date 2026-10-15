@@ -31,7 +31,7 @@ export function rewriteUpdateFlagArgv(argv: string[]): string[] {
 
 const VERSION_FLAGS = new Set(["--version", "-V", "-v"]);
 
-/** `kolo --version` (any position, no subcommand) prints the version and nothing else. */
+/** `kurahi --version` (any position, no subcommand) prints the version and nothing else. */
 export function isVersionOnlyInvocation(argv: string[]): boolean {
   const args = argv.slice(2);
   return args.length > 0 && args.every((arg) => VERSION_FLAGS.has(arg));

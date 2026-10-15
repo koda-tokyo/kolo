@@ -3,13 +3,13 @@ summary: "Pairing overview: approve who can DM you + which nodes can join"
 read_when:
   - Setting up DM access control
   - Pairing a new iOS/Android node
-  - Reviewing KoLo security posture
+  - Reviewing Kurahi security posture
 title: "Pairing"
 ---
 
 # Pairing
 
-“Pairing” is KoLo’s explicit **owner approval** step.
+“Pairing” is Kurahi’s explicit **owner approval** step.
 It is used in two places:
 
 1. **DM pairing** (who is allowed to talk to the bot)
@@ -32,8 +32,8 @@ Pairing codes:
 ### Approve a sender
 
 ```bash
-KoLo pairing list telegram
-KoLo pairing approve telegram <CODE>
+Kurahi pairing list telegram
+Kurahi pairing approve telegram <CODE>
 ```
 
 Supported channels: `telegram`, `whatsapp`, `signal`, `imessage`, `discord`, `slack`.
@@ -55,9 +55,9 @@ creates a device pairing request that must be approved.
 ### Approve a node device
 
 ```bash
-KoLo devices list
-KoLo devices approve <requestId>
-KoLo devices reject <requestId>
+Kurahi devices list
+Kurahi devices approve <requestId>
+Kurahi devices reject <requestId>
 ```
 
 ### Where the state lives
@@ -69,7 +69,7 @@ Stored under `~/.kolo/devices/`:
 
 ### Notes
 
-- The legacy `node.pair.*` API (CLI: `KoLo nodes pending/approve`) is a
+- The legacy `node.pair.*` API (CLI: `Kurahi nodes pending/approve`) is a
   separate gateway-owned pairing store. WS nodes still require device pairing.
 
 ## Related docs

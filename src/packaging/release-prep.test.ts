@@ -116,7 +116,7 @@ function makeRepo(version: string, changelog: string): string {
   fs.mkdirSync(path.join(root, "packages", "client"), { recursive: true });
   fs.writeFileSync(
     path.join(root, "packages", "client", "package.json"),
-    `${JSON.stringify({ name: "@kodasoken/kolo-client", version }, null, 2)}\n`,
+    `${JSON.stringify({ name: "@kodasoken/kurahi-client", version }, null, 2)}\n`,
   );
   fs.mkdirSync(path.join(root, "extensions", "telegram"), { recursive: true });
   fs.writeFileSync(

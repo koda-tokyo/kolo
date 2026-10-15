@@ -1,6 +1,6 @@
 ---
 name: bluebubbles
-description: Build or update the BlueBubbles external channel plugin for KoLo (extension package, REST send/probe, webhook inbound).
+description: Build or update the BlueBubbles external channel plugin for Kurahi (extension package, REST send/probe, webhook inbound).
 ---
 
 # BlueBubbles plugin

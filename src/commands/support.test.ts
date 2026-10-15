@@ -4,7 +4,7 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { resolveSupportServiceId } from "./support.js";
 
-describe("kolo support service identity", () => {
+describe("kurahi support service identity", () => {
   let home: string;
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe("kolo support service identity", () => {
     );
   });
 
-  it("uses the id recorded by kolo service install under KOLO_HOME", () => {
+  it("uses the id recorded by kurahi service install under KOLO_HOME", () => {
     fs.mkdirSync(path.join(home, "service"), { recursive: true });
     fs.writeFileSync(
       path.join(home, "service", "service.json"),
@@ -43,7 +43,7 @@ describe("kolo support service identity", () => {
     ).toEqual({ id: "beta", source: "service.json" });
   });
 
-  it("falls back to the default agent written by kolo init", () => {
+  it("falls back to the default agent written by kurahi init", () => {
     expect(
       resolveSupportServiceId({
         home,

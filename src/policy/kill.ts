@@ -1,6 +1,6 @@
 // Runtime kill switch state (KoLo 2.0, M13c). The policy document can stop agents
 // declaratively (`kill.fleet`, `kill.agents`); this file holds the switch an owner or admin
-// flips at runtime (`kolo policy kill`, `policy.kill`, POST /api/policy/kill). It is written
+// flips at runtime (`kurahi policy kill`, `policy.kill`, POST /api/policy/kill). It is written
 // synchronously so the effect survives a restart, and read by the engine on load.
 import fs from "node:fs";
 import path from "node:path";

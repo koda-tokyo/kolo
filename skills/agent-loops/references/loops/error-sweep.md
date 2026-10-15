@@ -1,9 +1,11 @@
 # Production Error Sweep Loop
 
 ## Purpose
+
 Find, classify, fix, and verify actionable errors in production — autonomously.
 
 ## Trigger
+
 - Scheduled: Daily (low-traffic window)
 - Event-driven: Error rate spike alert
 - On-demand: Post-deployment verification
@@ -28,35 +30,41 @@ Find, classify, fix, and verify actionable errors in production — autonomously
 ```
 
 ## Verification
+
 - Fixed errors: no longer appear in logs under same conditions
 - Fix verified in staging before PR merge
 - PR includes reproduction evidence
 
 ## Stop Conditions
+
 - ✅ No actionable errors remain
 - ✅ All remaining errors classified (known/noise/non-actionable)
 - ⚠️ After classifying all errors twice with no new actionable: stop and report
 
 ## Parameters
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `lookback_hours` | 24 | Hours of logs to scan |
-| `noise_threshold` | 3 | Occurrences before classifying as noise |
-| `max_fixes_per_sweep` | 5 | Prevent overwhelming PR volume |
-| `timeout_per_fix` | 60 min | Max time per individual fix |
+
+| Parameter             | Default | Description                             |
+| --------------------- | ------- | --------------------------------------- |
+| `lookback_hours`      | 24      | Hours of logs to scan                   |
+| `noise_threshold`     | 3       | Occurrences before classifying as noise |
+| `max_fixes_per_sweep` | 5       | Prevent overwhelming PR volume          |
+| `timeout_per_fix`     | 60 min  | Max time per individual fix             |
 
 ## Output
+
 - Sweep report: errors found → classified → fixed → escalated
 - PR list: one per actionable error fixed
 - Noise pattern update: alerts that should be debounced
 
 ## Anti-Patterns
+
 - Fixing noise (wastes time, creates churn)
 - Fixing symptoms without root cause (error will return)
 - Over-fixing: changing more than needed for the error
 - Skipping classification: not all errors need fixing
 
-## Example (KoLo House)
+## Example (Kurahi House)
+
 ```
 Trigger: Daily sweep, 03:00 JST
 Scanned: 847 log lines, 32 error-class lines

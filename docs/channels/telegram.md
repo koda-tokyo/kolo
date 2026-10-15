@@ -112,7 +112,7 @@ group messages, so use admin if you need full visibility.
 
 ## Draft streaming
 
-KoLo can stream partial replies in Telegram DMs using `sendMessageDraft`.
+Kurahi can stream partial replies in Telegram DMs using `sendMessageDraft`.
 
 Requirements:
 
@@ -127,11 +127,11 @@ Draft streaming is DM-only; Telegram does not support it in groups or channels.
 - Outbound Telegram text uses `parse_mode: "HTML"` (Telegram’s supported tag subset).
 - Markdown-ish input is rendered into **Telegram-safe HTML** (bold/italic/strike/code/links); block elements are flattened to text with newlines/bullets.
 - Raw HTML from models is escaped to avoid Telegram parse errors.
-- If Telegram rejects the HTML payload, KoLo retries the same message as plain text.
+- If Telegram rejects the HTML payload, Kurahi retries the same message as plain text.
 
 ## Commands (native + custom)
 
-KoLo registers native commands (like `/status`, `/reset`, `/model`) with Telegram’s bot menu on startup.
+Kurahi registers native commands (like `/status`, `/reset`, `/model`) with Telegram’s bot menu on startup.
 You can add custom commands to the menu via config:
 
 ```json5
@@ -156,7 +156,7 @@ More help: [Channel troubleshooting](/channels/troubleshooting).
 
 Notes:
 
-- Custom commands are **menu entries only**; KoLo does not implement them unless you handle them elsewhere.
+- Custom commands are **menu entries only**; Kurahi does not implement them unless you handle them elsewhere.
 - Command names are normalized (leading `/` stripped, lowercased) and must match `a-z`, `0-9`, `_` (1–32 chars).
 - Custom commands **cannot override native commands**. Conflicts are ignored and logged.
 - If `commands.native` is disabled, only custom commands are registered (or cleared if none).
@@ -234,7 +234,7 @@ Forward any message from the group to `@userinfobot` or `@getidsbot` on Telegram
 
 **Tip:** For your own user ID, DM the bot and it will reply with your user ID (pairing message), or use `/whoami` once commands are enabled.
 
-**Privacy note:** `@userinfobot` is a third-party bot. If you prefer, add the bot to the group, send a message, and use `KoLo logs --follow` to read `chat.id`, or use the Bot API `getUpdates`.
+**Privacy note:** `@userinfobot` is a third-party bot. If you prefer, add the bot to the group, send a message, and use `Kurahi logs --follow` to read `chat.id`, or use the Bot API `getUpdates`.
 
 ## Config writes
 
@@ -242,7 +242,7 @@ By default, Telegram is allowed to write config updates triggered by channel eve
 
 This happens when:
 
-- A group is upgraded to a supergroup and Telegram emits `migrate_to_chat_id` (chat ID changes). KoLo can migrate `channels.telegram.groups` automatically.
+- A group is upgraded to a supergroup and Telegram emits `migrate_to_chat_id` (chat ID changes). Kurahi can migrate `channels.telegram.groups` automatically.
 - You run `/config set` or `/config unset` in a Telegram chat (requires `commands.config: true`).
 
 Disable with:
@@ -255,7 +255,7 @@ Disable with:
 
 ## Topics (forum supergroups)
 
-Telegram forum topics include a `message_thread_id` per message. KoLo:
+Telegram forum topics include a `message_thread_id` per message. Kurahi:
 
 - Appends `:topic:<threadId>` to the Telegram group session key so each topic is isolated.
 - Sends typing indicators and replies with `message_thread_id` so responses stay in the topic.
@@ -264,7 +264,7 @@ Telegram forum topics include a `message_thread_id` per message. KoLo:
 - Topic-specific configuration is available under `channels.telegram.groups.<chatId>.topics.<threadId>` (skills, allowlists, auto-reply, system prompts, disable).
 - Topic configs inherit group settings (requireMention, allowlists, skills, prompts, enabled) unless overridden per topic.
 
-Private chats can include `message_thread_id` in some edge cases. KoLo keeps the DM session key unchanged, but still uses the thread id for replies/draft streaming when it is present.
+Private chats can include `message_thread_id` in some edge cases. Kurahi keeps the DM session key unchanged, but still uses the thread id for replies/draft streaming when it is present.
 
 ## Inline Buttons
 
@@ -349,8 +349,8 @@ Use the global setting when all Telegram bots/accounts should behave the same. U
 
 - Default: `channels.telegram.dmPolicy = "pairing"`. Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `KoLo pairing list telegram`
-  - `KoLo pairing approve telegram <CODE>`
+  - `Kurahi pairing list telegram`
+  - `Kurahi pairing approve telegram <CODE>`
 - Pairing is the default token exchange used for Telegram DMs. Details: [Pairing](/start/pairing)
 - `channels.telegram.allowFrom` accepts numeric user IDs (recommended) or `@username` entries. It is **not** the bot username; use the human sender’s ID. The wizard accepts `@username` and resolves it to the numeric ID when possible.
 
@@ -359,7 +359,7 @@ Use the global setting when all Telegram bots/accounts should behave the same. U
 Safer (no third-party bot):
 
 1. Start the gateway and DM your bot.
-2. Run `KoLo logs --follow` and look for `from.id`.
+2. Run `Kurahi logs --follow` and look for `from.id`.
 
 Alternate (official Bot API):
 
@@ -413,7 +413,7 @@ Controlled by `channels.telegram.replyToMode`:
 ## Audio messages (voice vs file)
 
 Telegram distinguishes **voice notes** (round bubble) from **audio files** (metadata card).
-KoLo defaults to audio files for backward compatibility.
+Kurahi defaults to audio files for backward compatibility.
 
 To force a voice note bubble in agent replies, include this tag anywhere in the reply:
 
@@ -436,11 +436,11 @@ For message tool sends, set `asVoice: true` with a voice-compatible audio `media
 
 ## Stickers
 
-KoLo supports receiving and sending Telegram stickers with intelligent caching.
+Kurahi supports receiving and sending Telegram stickers with intelligent caching.
 
 ### Receiving stickers
 
-When a user sends a sticker, KoLo handles it based on the sticker type:
+When a user sends a sticker, Kurahi handles it based on the sticker type:
 
 - **Static stickers (WEBP):** Downloaded and processed through vision. The sticker appears as a `<media:sticker>` placeholder in the message content.
 - **Animated stickers (TGS):** Skipped (Lottie format not supported for processing).
@@ -457,7 +457,7 @@ Template context field available when receiving stickers:
 
 ### Sticker cache
 
-Stickers are processed through the AI's vision capabilities to generate descriptions. Since the same stickers are often sent repeatedly, KoLo caches these descriptions to avoid redundant API calls.
+Stickers are processed through the AI's vision capabilities to generate descriptions. Since the same stickers are often sent repeatedly, Kurahi caches these descriptions to avoid redundant API calls.
 
 **How it works:**
 
@@ -569,7 +569,7 @@ The search uses fuzzy matching across description text, emoji characters, and se
 ## Streaming (drafts)
 
 Telegram can stream **draft bubbles** while the agent is generating a response.
-KoLo uses Bot API `sendMessageDraft` (not real messages) and then sends the
+Kurahi uses Bot API `sendMessageDraft` (not real messages) and then sends the
 final reply as a normal message.
 
 Requirements (Telegram Bot API 9.3+):
@@ -614,7 +614,7 @@ Outbound Telegram API calls retry on transient network/429 errors with exponenti
 ## Reaction notifications
 
 **How reactions work:**
-Telegram reactions arrive as **separate `message_reaction` events**, not as properties in message payloads. When a user adds a reaction, KoLo:
+Telegram reactions arrive as **separate `message_reaction` events**, not as properties in message payloads. When a user adds a reaction, Kurahi:
 
 1. Receives the `message_reaction` update from Telegram API
 2. Converts it to a **system event** with format: `"Telegram reaction added: {emoji} by {user} on msg {id}"`
@@ -653,14 +653,14 @@ The agent sees reactions as **system notifications** in the conversation history
 
 **Requirements:**
 
-- Telegram bots must explicitly request `message_reaction` in `allowed_updates` (configured automatically by KoLo)
+- Telegram bots must explicitly request `message_reaction` in `allowed_updates` (configured automatically by Kurahi)
 - For webhook mode, reactions are included in the webhook `allowed_updates`
 - For polling mode, reactions are included in the `getUpdates` `allowed_updates`
 
 ## Delivery targets (CLI/cron)
 
 - Use a chat id (`123456789`) or a username (`@name`) as the target.
-- Example: `KoLo message send --channel telegram --target 123456789 --message "hi"`.
+- Example: `Kurahi message send --channel telegram --target 123456789 --message "hi"`.
 
 ## Troubleshooting
 
@@ -668,8 +668,8 @@ The agent sees reactions as **system notifications** in the conversation history
 
 - If you set `channels.telegram.groups.*.requireMention=false`, Telegram’s Bot API **privacy mode** must be disabled.
   - BotFather: `/setprivacy` → **Disable** (then remove + re-add the bot to the group)
-- `KoLo channels status` shows a warning when config expects unmentioned group messages.
-- `KoLo channels status --probe` can additionally check membership for explicit numeric group IDs (it can’t audit wildcard `"*"` rules).
+- `Kurahi channels status` shows a warning when config expects unmentioned group messages.
+- `Kurahi channels status --probe` can additionally check membership for explicit numeric group IDs (it can’t audit wildcard `"*"` rules).
 - Quick test: `/activation always` (session-only; use config for persistence)
 
 **Bot not seeing group messages at all:**
@@ -677,7 +677,7 @@ The agent sees reactions as **system notifications** in the conversation history
 - If `channels.telegram.groups` is set, the group must be listed or use `"*"`
 - Check Privacy Settings in @BotFather → "Group Privacy" should be **OFF**
 - Verify bot is actually a member (not just an admin with no read access)
-- Check gateway logs: `KoLo logs --follow` (look for "skipping group message")
+- Check gateway logs: `Kurahi logs --follow` (look for "skipping group message")
 
 **Bot responds to mentions but not `/activation always`:**
 
@@ -692,7 +692,7 @@ The agent sees reactions as **system notifications** in the conversation history
 **Long-polling aborts immediately on Node 22+ (often with proxies/custom fetch):**
 
 - Node 22+ is stricter about `AbortSignal` instances; foreign signals can abort `fetch` calls right away.
-- Upgrade to a KoLo build that normalizes abort signals, or run the gateway on Node 20 until you can upgrade.
+- Upgrade to a Kurahi build that normalizes abort signals, or run the gateway on Node 20 until you can upgrade.
 
 **Bot starts, then silently stops responding (or logs `HttpError: Network request ... failed`):**
 

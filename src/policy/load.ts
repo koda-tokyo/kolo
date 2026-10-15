@@ -103,7 +103,7 @@ export function acceptPolicy(result: PolicyLoadResult, mode: PolicyMode): Policy
   }
   return {
     accepted: false,
-    reason: `policy attestation ${detail}; sign it with \`kolo policy sign\` or run with KOLO_POLICY_MODE=audit`,
+    reason: `policy attestation ${detail}; sign it with \`kurahi policy sign\` or run with KOLO_POLICY_MODE=audit`,
     warnings,
   };
 }

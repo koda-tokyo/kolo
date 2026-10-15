@@ -34,7 +34,7 @@ import type { TuiConfig } from "./types.tui.js";
 
 export type KoLoConfig = {
   meta?: {
-    /** Last KoLo version that wrote this config. */
+    /** Last Kurahi version that wrote this config. */
     lastTouchedVersion?: string;
     /** ISO timestamp when this config was last written. */
     lastTouchedAt?: string;
@@ -73,7 +73,7 @@ export type KoLoConfig = {
   };
   browser?: BrowserConfig;
   ui?: {
-    /** Accent color for KoLo UI chrome (hex). */
+    /** Accent color for Kurahi UI chrome (hex). */
     seamColor?: string;
     assistant?: {
       /** Assistant display name for UI surfaces. */
@@ -84,7 +84,7 @@ export type KoLoConfig = {
   };
   skills?: SkillsConfig;
   /**
-   * Terminal UI (`kolo tui`) preferences (KoLo 2.0, M9a). `theme` is one of the built-in names
+   * Terminal UI (`kurahi tui`) preferences (KoLo 2.0, M9a). `theme` is one of the built-in names
    * (`dark`, `light`, `high-contrast`); `keybinds` maps an action to a key id
    * (`ctrl+p`, `alt+enter`, ...). Unknown actions are ignored.
    */
@@ -128,7 +128,7 @@ export type KoLoConfig = {
   /** MCP servers this gateway connects to as a client (KoLo 2.0, M6). */
   mcp?: McpConfig;
   /**
-   * Boot integrity gate (KoLo 2.0, M2b). `paths` are the constitution globs `kolo integrity init`
+   * Boot integrity gate (KoLo 2.0, M2b). `paths` are the constitution globs `kurahi integrity init`
    * registers (relative to KOLO_HOME or absolute). The registry itself is the source of truth.
    */
   integrity?: {

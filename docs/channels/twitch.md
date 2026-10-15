@@ -1,13 +1,13 @@
 ---
 summary: "Twitch chat bot configuration and setup"
 read_when:
-  - Setting up Twitch chat integration for KoLo
+  - Setting up Twitch chat integration for Kurahi
 title: "Twitch"
 ---
 
 # Twitch (plugin)
 
-Twitch chat support via IRC connection. KoLo connects as a Twitch user (bot account) to receive and send messages in channels.
+Twitch chat support via IRC connection. Kurahi connects as a Twitch user (bot account) to receive and send messages in channels.
 
 ## Plugin required
 
@@ -16,13 +16,13 @@ Twitch ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-kolo plugins install @KoLo/twitch
+kurahi plugins install @Kurahi/twitch
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-kolo plugins install ./extensions/twitch
+kurahi plugins install ./extensions/twitch
 ```
 
 Details: [Plugins](/plugin)
@@ -50,7 +50,7 @@ Minimal config:
   channels: {
     twitch: {
       enabled: true,
-      username: "KoLo", // Bot's Twitch account
+      username: "Kurahi", // Bot's Twitch account
       accessToken: "oauth:abc123...", // OAuth Access Token (or use KOLO_TWITCH_ACCESS_TOKEN env var)
       clientId: "xyz789...", // Client ID from Token Generator
       channel: "vevisk", // Which Twitch channel's chat to join (required)
@@ -94,7 +94,7 @@ KOLO_TWITCH_ACCESS_TOKEN=oauth:abc123...
   channels: {
     twitch: {
       enabled: true,
-      username: "KoLo",
+      username: "Kurahi",
       accessToken: "oauth:abc123...",
       clientId: "xyz789...",
       channel: "vevisk",
@@ -156,13 +156,13 @@ Example (one bot account in two channels):
     twitch: {
       accounts: {
         channel1: {
-          username: "KoLo",
+          username: "Kurahi",
           accessToken: "oauth:abc123...",
           clientId: "xyz789...",
           channel: "vevisk",
         },
         channel2: {
-          username: "KoLo",
+          username: "Kurahi",
           accessToken: "oauth:def456...",
           clientId: "uvw012...",
           channel: "secondchannel",
@@ -251,8 +251,8 @@ By default, `requireMention` is `true`. To disable and respond to all messages:
 First, run diagnostic commands:
 
 ```bash
-KoLo doctor
-KoLo channels status --probe
+Kurahi doctor
+Kurahi channels status --probe
 ```
 
 ### Bot doesn't respond to messages
@@ -317,7 +317,7 @@ Full example:
   channels: {
     twitch: {
       enabled: true,
-      username: "KoLo",
+      username: "Kurahi",
       accessToken: "oauth:abc123...",
       clientId: "xyz789...",
       channel: "vevisk",

@@ -8,7 +8,7 @@ title: "Policy examples"
 # Policy examples
 
 Copy one to `<KOLO_HOME>/policy/policy.yaml`, edit the agent ids, hosts and channels, then
-`kolo policy validate && kolo policy sign`. The raw files are in `docs/policy/examples/`.
+`kurahi policy validate && kurahi policy sign`. The raw files are in `docs/policy/examples/`.
 See [Policy](/policy) for every field.
 
 ## Hospital-safe

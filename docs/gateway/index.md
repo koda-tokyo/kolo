@@ -12,17 +12,17 @@ Last updated: 2025-12-09
 ## What it is
 
 - The always-on process that owns the single Baileys/Telegram connection and the control/event plane.
-- Replaces the legacy `gateway` command. CLI entry point: `KoLo gateway`.
+- Replaces the legacy `gateway` command. CLI entry point: `Kurahi gateway`.
 - Runs until stopped; exits non-zero on fatal errors so the supervisor restarts it.
 
 ## How to run (local)
 
 ```bash
-KoLo gateway --port 18789
+Kurahi gateway --port 18789
 # for full debug/trace logs in stdio:
-KoLo gateway --port 18789 --verbose
+Kurahi gateway --port 18789 --verbose
 # if the port is busy, terminate listeners then start:
-KoLo gateway --force
+Kurahi gateway --force
 # dev loop (auto-reload on TS changes):
 pnpm gateway:watch
 ```
@@ -65,11 +65,11 @@ Service names are profile-aware:
 
 - macOS: `com.kodasoken.kolo.<id>` (legacy `com.kolo.*` may still exist)
 - Linux: `kolo-gateway-<profile>.service`
-- Windows: `KoLo Gateway (<profile>)`
+- Windows: `Kurahi Gateway (<profile>)`
 
 Install metadata is embedded in the service config:
 
-- `KOLO_SERVICE_MARKER=KoLo`
+- `KOLO_SERVICE_MARKER=Kurahi`
 - `KOLO_SERVICE_KIND=gateway`
 - `KOLO_SERVICE_VERSION=<version>`
 
@@ -80,11 +80,11 @@ Rescue-Bot Pattern: keep a second Gateway isolated with its own profile, state d
 Fast path: run a fully-isolated dev instance (config/state/workspace) without touching your primary setup.
 
 ```bash
-KoLo --dev setup
-KoLo --dev gateway --allow-unconfigured
+Kurahi --dev setup
+Kurahi --dev gateway --allow-unconfigured
 # then target the dev instance:
-KoLo --dev status
-KoLo --dev health
+Kurahi --dev status
+Kurahi --dev health
 ```
 
 Defaults (can be overridden via env/flags/config):
@@ -114,15 +114,15 @@ Checklist per instance:
 Service install per profile:
 
 ```bash
-KoLo --profile main gateway install
-KoLo --profile rescue gateway install
+Kurahi --profile main gateway install
+Kurahi --profile rescue gateway install
 ```
 
 Example:
 
 ```bash
-KOLO_CONFIG_PATH=~/.kolo/a.json KOLO_STATE_DIR=~/.kolo-a KoLo gateway --port 19001
-KOLO_CONFIG_PATH=~/.kolo/b.json KOLO_STATE_DIR=~/.kolo-b KoLo gateway --port 19002
+KOLO_CONFIG_PATH=~/.kolo/a.json KOLO_STATE_DIR=~/.kolo-a Kurahi gateway --port 19001
+KOLO_CONFIG_PATH=~/.kolo/b.json KOLO_STATE_DIR=~/.kolo-b Kurahi gateway --port 19002
 ```
 
 ## Protocol (operator view)
@@ -138,7 +138,7 @@ KOLO_CONFIG_PATH=~/.kolo/b.json KOLO_STATE_DIR=~/.kolo-b KoLo gateway --port 190
 
 ## Methods (initial set)
 
-- `health` — full health snapshot (same shape as `KoLo health --json`).
+- `health` — full health snapshot (same shape as `Kurahi health --json`).
 - `status` — short summary.
 - `system-presence` — current presence list.
 - `system-event` — post a presence/system note (structured).
@@ -198,26 +198,26 @@ See also: [Presence](/concepts/presence) for how presence is produced/deduped an
 ## Supervision (macOS example)
 
 - Use launchd to keep the service alive:
-  - Program: path to `KoLo`
+  - Program: path to `Kurahi`
   - Arguments: `gateway`
   - KeepAlive: true
   - StandardOut/Err: file paths or `syslog`
 - On failure, launchd restarts; fatal misconfig should keep exiting so the operator notices.
 - LaunchAgents are per-user and require a logged-in session; for headless setups use a custom LaunchDaemon (not shipped).
-  - `KoLo gateway install` writes `~/Library/LaunchAgents/com.kodasoken.kolo.default.plist`
+  - `Kurahi gateway install` writes `~/Library/LaunchAgents/com.kodasoken.kolo.default.plist`
     (or `com.kodasoken.kolo.<id>.plist`; legacy `com.kolo.*` is cleaned up).
-  - `KoLo doctor` audits the LaunchAgent config and can update it to current defaults.
+  - `Kurahi doctor` audits the LaunchAgent config and can update it to current defaults.
 
 ## Gateway service management (CLI)
 
 Use the Gateway CLI for install/start/stop/restart/status:
 
 ```bash
-KoLo gateway status
-KoLo gateway install
-KoLo gateway stop
-KoLo gateway restart
-KoLo logs --follow
+Kurahi gateway status
+Kurahi gateway install
+Kurahi gateway stop
+Kurahi gateway restart
+Kurahi logs --follow
 ```
 
 Notes:
@@ -230,40 +230,40 @@ Notes:
 - `gateway status` prints config path + probe target to avoid “localhost vs LAN bind” confusion and profile mismatches.
 - `gateway status` includes the last gateway error line when the service looks running but the port is closed.
 - `logs` tails the Gateway file log via RPC (no manual `tail`/`grep` needed).
-- If other gateway-like services are detected, the CLI warns unless they are KoLo profile services.
+- If other gateway-like services are detected, the CLI warns unless they are Kurahi profile services.
   We still recommend **one gateway per machine** for most setups; use isolated profiles/ports for redundancy or a rescue bot. See [Multiple gateways](/gateway/multiple-gateways).
-  - Cleanup: `KoLo gateway uninstall` (current service) and `KoLo doctor` (legacy migrations).
-- `gateway install` is a no-op when already installed; use `KoLo gateway install --force` to reinstall (profile/env/path changes).
+  - Cleanup: `Kurahi gateway uninstall` (current service) and `Kurahi doctor` (legacy migrations).
+- `gateway install` is a no-op when already installed; use `Kurahi gateway install --force` to reinstall (profile/env/path changes).
 
 Bundled mac app:
 
 - KoLo.app can bundle a Node-based gateway relay and install a per-user LaunchAgent labeled
   `com.kodasoken.kolo.default` (or `com.kodasoken.kolo.<id>`; legacy `com.kolo.*` labels still unload cleanly).
-- To stop it cleanly, use `KoLo gateway stop` (or `launchctl bootout gui/$UID/com.kodasoken.kolo.default`).
-- To restart, use `KoLo gateway restart` (or `launchctl kickstart -k gui/$UID/com.kodasoken.kolo.default`).
-  - `launchctl` only works if the LaunchAgent is installed; otherwise use `KoLo gateway install` first.
+- To stop it cleanly, use `Kurahi gateway stop` (or `launchctl bootout gui/$UID/com.kodasoken.kolo.default`).
+- To restart, use `Kurahi gateway restart` (or `launchctl kickstart -k gui/$UID/com.kodasoken.kolo.default`).
+  - `launchctl` only works if the LaunchAgent is installed; otherwise use `Kurahi gateway install` first.
   - Replace the label with `com.kodasoken.kolo.<id>` when running a named profile.
 
 ## Supervision (systemd user unit)
 
-KoLo installs a **systemd user service** by default on Linux/WSL2. We
+Kurahi installs a **systemd user service** by default on Linux/WSL2. We
 recommend user services for single-user machines (simpler env, per-user config).
 Use a **system service** for multi-user or always-on servers (no lingering
 required, shared supervision).
 
-`KoLo gateway install` writes the user unit. `KoLo doctor` audits the
+`Kurahi gateway install` writes the user unit. `Kurahi doctor` audits the
 unit and can update it to match the current recommended defaults.
 
 Create `~/.config/systemd/user/kolo-gateway[-<profile>].service`:
 
 ```
 [Unit]
-Description=KoLo Gateway (profile: <profile>, v<version>)
+Description=Kurahi Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/KoLo gateway --port 18789
+ExecStart=/usr/local/bin/Kurahi gateway --port 18789
 Restart=always
 RestartSec=5
 Environment=KOLO_GATEWAY_TOKEN=
@@ -315,14 +315,14 @@ Windows installs should use **WSL2** and follow the Linux systemd section above.
 
 ## CLI helpers
 
-- `KoLo gateway health|status` — request health/status over the Gateway WS.
-- `KoLo message send --target <num> --message "hi" [--media ...]` — send via Gateway (idempotent for WhatsApp).
-- `KoLo agent --message "hi" --to <num>` — run an agent turn (waits for final by default).
-- `KoLo gateway call <method> --params '{"k":"v"}'` — raw method invoker for debugging.
-- `KoLo gateway stop|restart` — stop/restart the supervised gateway service (launchd/systemd).
+- `Kurahi gateway health|status` — request health/status over the Gateway WS.
+- `Kurahi message send --target <num> --message "hi" [--media ...]` — send via Gateway (idempotent for WhatsApp).
+- `Kurahi agent --message "hi" --to <num>` — run an agent turn (waits for final by default).
+- `Kurahi gateway call <method> --params '{"k":"v"}'` — raw method invoker for debugging.
+- `Kurahi gateway stop|restart` — stop/restart the supervised gateway service (launchd/systemd).
 - Gateway helper subcommands assume a running gateway on `--url`; they no longer auto-spawn one.
 
 ## Migration guidance
 
-- Retire uses of `KoLo gateway` and the legacy TCP control port.
+- Retire uses of `Kurahi gateway` and the legacy TCP control port.
 - Update clients to speak the WS protocol with mandatory connect and structured presence.

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo tui` (terminal UI connected to the Gateway)"
+summary: "CLI reference for `Kurahi tui` (terminal UI connected to the Gateway)"
 read_when:
   - You want a terminal UI for the Gateway (remote-friendly)
   - You want to pass url/token/session from scripts
 title: "tui"
 ---
 
-# `KoLo tui`
+# `Kurahi tui`
 
 Open the terminal UI connected to the Gateway.
 
@@ -17,12 +17,12 @@ Related:
 ## Examples
 
 ```bash
-KoLo tui
-KoLo tui --url ws://127.0.0.1:18789 --token <token>
-KoLo tui --session main --deliver
-KoLo tui themes list
-KoLo tui themes export ocean --out ./ocean.json
-KoLo tui themes check ./ocean.json
+Kurahi tui
+Kurahi tui --url ws://127.0.0.1:18789 --token <token>
+Kurahi tui --session main --deliver
+Kurahi tui themes list
+Kurahi tui themes export ocean --out ./ocean.json
+Kurahi tui themes check ./ocean.json
 ```
 
 ## Subcommands

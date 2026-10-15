@@ -215,7 +215,7 @@ export function tailAudit(dir: string, n = 50): AuditEntry[] {
         const e = JSON.parse(lines[j]) as AuditEntry;
         out.push({ ...e, detail: redactAuditValue(e.detail) });
       } catch {
-        // Unparseable lines show up in `kolo audit verify`, not here.
+        // Unparseable lines show up in `kurahi audit verify`, not here.
       }
     }
   }

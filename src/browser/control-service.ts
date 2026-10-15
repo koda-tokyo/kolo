@@ -73,7 +73,7 @@ export async function stopBrowserControlService(): Promise<void> {
       }
     }
   } catch (err) {
-    logService.warn(`kolo browser stop failed: ${String(err)}`);
+    logService.warn(`kurahi browser stop failed: ${String(err)}`);
   }
 
   state = null;

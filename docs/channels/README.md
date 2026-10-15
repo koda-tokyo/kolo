@@ -10,29 +10,29 @@ title: "Channel residents"
 # Channel residents
 
 A resident is the agent that lives in your gateway. Channels are its front doors: the same
-session the engineer sees in `kolo attach` or `kolo tui` is the one you talk to from LINE,
+session the engineer sees in `kurahi attach` or `kurahi tui` is the one you talk to from LINE,
 WhatsApp, Slack, Telegram, Discord or any other connected channel. This page describes the
 model that every channel shares. Per-channel pages cover credentials and platform quirks.
 
 ## Concepts
 
-| Term | Meaning |
-|---|---|
-| channel | A transport (`line`, `slack`, `webhook`, …) with one or more accounts |
-| conversation | A direct message thread or a group/room on one channel |
-| session | The resident's conversation state (`agent:<id>:…`); what `kolo attach` lists |
-| identity | A sender id on a channel mapped to a role: `owner`, `admin` or `attach` |
-| inbox | `<KOLO_HOME>/inbox/<channel>/<day>/` where attachments are copied for tools |
-| outbound queue | The per-channel delivery pipe with retry, dedupe and dead letters |
+| Term           | Meaning                                                                        |
+| -------------- | ------------------------------------------------------------------------------ |
+| channel        | A transport (`line`, `slack`, `webhook`, …) with one or more accounts          |
+| conversation   | A direct message thread or a group/room on one channel                         |
+| session        | The resident's conversation state (`agent:<id>:…`); what `kurahi attach` lists |
+| identity       | A sender id on a channel mapped to a role: `owner`, `admin` or `attach`        |
+| inbox          | `<KOLO_HOME>/inbox/<channel>/<day>/` where attachments are copied for tools    |
+| outbound queue | The per-channel delivery pipe with retry, dedupe and dead letters              |
 
 ## Session model
 
 `channels.sessionMode` decides where a conversation lands:
 
-| Mode | Direct messages | Groups and rooms |
-|---|---|---|
+| Mode               | Direct messages                  | Groups and rooms                    |
+| ------------------ | -------------------------------- | ----------------------------------- |
 | `per-conversation` | `agent:<id>:<channel>:dm:<peer>` | `agent:<id>:<channel>:group:<room>` |
-| `shared` | `agent:<id>:main` | `agent:<id>:main` |
+| `shared`           | `agent:<id>:main`                | `agent:<id>:main`                   |
 
 - `per-conversation` keeps every chat separate: one session per conversation per channel.
   Use it when several people talk to the resident.
@@ -51,7 +51,7 @@ model that every channel shares. Per-channel pages cover credentials and platfor
 ```
 
 Every inbound message appears in attached terminals as it arrives, with the channel and the
-sender: `kolo attach <session>` prints `[line Alice] text`, the TUI shows it as a user line, and
+sender: `kurahi attach <session>` prints `[line Alice] text`, the TUI shows it as a user line, and
 `--json` emits a `channel.inbound` event with `channel`, `sender`, `conversation`, `messageId`
 and `attachments`. Replies go back through the same channel. Long replies are split to the
 channel's limit (`channels.<id>.textChunkLimit`; LINE 5000, Slack 4000, WhatsApp 4000, Discord
@@ -79,7 +79,7 @@ Each channel maps sender ids to roles. Roles are ordered `owner` > `admin` > `at
 {
   channels: {
     line: {
-      identities: { "U1234567890abcdef": "owner", "Uabcdef1234567890": "attach" },
+      identities: { U1234567890abcdef: "owner", Uabcdef1234567890: "attach" },
       locale: "ja",
     },
     slack: {
@@ -101,16 +101,16 @@ Each channel maps sender ids to roles. Roles are ordered `owner` > `admin` > `at
 
 Commands work on every channel. Reading commands need `attach`; acting commands need `admin`.
 
-| Command | Role | Reply |
-|---|---|---|
-| `/help` | attach | the command list and your role |
-| `/status` | attach | resident, session, paused or active, running and queued jobs, last job |
-| `/jobs` | attach | the last eight jobs of the resident |
-| `/cancel <id>` | admin | stops a running or queued job (id or unique prefix) |
-| `/evidence <jobId>` | attach | the REPORT.md summary of a job: status, duration, turns, tools, files, final text |
-| `/pause` | admin | stop answering in this conversation; commands still work |
-| `/resume` | admin | answer again |
-| `approve <id>` / `deny <id>` | admin or listed | answer a pending approval (`/approve <id> allow-always` is accepted) |
+| Command                      | Role            | Reply                                                                             |
+| ---------------------------- | --------------- | --------------------------------------------------------------------------------- |
+| `/help`                      | attach          | the command list and your role                                                    |
+| `/status`                    | attach          | resident, session, paused or active, running and queued jobs, last job            |
+| `/jobs`                      | attach          | the last eight jobs of the resident                                               |
+| `/cancel <id>`               | admin           | stops a running or queued job (id or unique prefix)                               |
+| `/evidence <jobId>`          | attach          | the REPORT.md summary of a job: status, duration, turns, tools, files, final text |
+| `/pause`                     | admin           | stop answering in this conversation; commands still work                          |
+| `/resume`                    | admin           | answer again                                                                      |
+| `approve <id>` / `deny <id>` | admin or listed | answer a pending approval (`/approve <id> allow-always` is accepted)              |
 
 `/pause` is per conversation and survives a gateway restart (`<KOLO_HOME>/run/channel-pause.json`).
 The first dropped message gets a one-time notice; later ones are dropped silently and audited.
@@ -160,7 +160,13 @@ Every reply and every approval ask goes through a per-channel outbound queue:
 ```json5
 {
   channels: {
-    delivery: { maxRetries: 4, backoffMs: 1000, maxBackoffMs: 60000, dedupeTtlMs: 600000, policy: "human-triggered" },
+    delivery: {
+      maxRetries: 4,
+      backoffMs: 1000,
+      maxBackoffMs: 60000,
+      dedupeTtlMs: 600000,
+      policy: "human-triggered",
+    },
   },
 }
 ```
@@ -180,11 +186,11 @@ a channel whose adapter sends several chunks per payload may repeat chunks after
 
 **Policy.** `channels.delivery.policy` decides proactive sends only:
 
-| Policy | Proactive sends delivered |
-|---|---|
+| Policy                      | Proactive sends delivered                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------- |
 | `human-triggered` (default) | terminal or CLI sends and human-initiated approval asks; anything marked automated is refused |
-| `allow-automated` | all, including daemons and cron lanes |
-| `replies-only` | none |
+| `allow-automated`           | all, including daemons and cron lanes                                                         |
+| `replies-only`              | none                                                                                          |
 
 A refused send is written to the dead-letter file with reason `policy` and intent `proactive`,
 and audited (`channel.outbound.policy_denied`). Set `allow-automated` only where an operator has
@@ -202,18 +208,18 @@ switch) applies on top of this in the delivery path: a paused or stopped agent s
 ## Operations
 
 ```bash
-kolo channels status          # accounts, then a Delivery section per channel
-kolo api getChannelsDeliveryStatus
+kurahi channels status          # accounts, then a Delivery section per channel
+kurahi api getChannelsDeliveryStatus
 ```
 
 The Delivery section prints `queued`, `sent`, `retried`, `dead-letter`, `duplicates`,
 `policy-denied`, the age of the last send and the last error, plus every dead-letter file with
-its record count. Inspect a dead letter with `jq` and resend with `kolo message send` once the
+its record count. Inspect a dead letter with `jq` and resend with `kurahi message send` once the
 cause is fixed.
 
 Audit actions written by this layer: `channel.inbound`, `channel.inbound.duplicate`,
 `channel.inbound.paused`, `channel.command`, `channel.approval.*`, `channel.outbound.*`.
-They sit in the hash-chained audit log like every other action (`kolo audit`).
+They sit in the hash-chained audit log like every other action (`kurahi audit`).
 
 ## The generic webhook channel
 

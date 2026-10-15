@@ -1,19 +1,19 @@
 ---
-summary: "CLI reference for `KoLo configure` (interactive configuration prompts)"
+summary: "CLI reference for `Kurahi configure` (interactive configuration prompts)"
 read_when:
   - You want to tweak credentials, devices, or agent defaults interactively
 title: "configure"
 ---
 
-# `KoLo configure`
+# `Kurahi configure`
 
 Interactive prompt to set up credentials, devices, and agent defaults.
 
 Note: The **Model** section now includes a multi-select for the
 `agents.defaults.models` allowlist (what shows up in `/model` and the model picker).
 
-Tip: `KoLo config` without a subcommand opens the same wizard. Use
-`KoLo config get|set|unset` for non-interactive edits.
+Tip: `Kurahi config` without a subcommand opens the same wizard. Use
+`Kurahi config get|set|unset` for non-interactive edits.
 
 Related:
 
@@ -28,6 +28,6 @@ Notes:
 ## Examples
 
 ```bash
-KoLo configure
-KoLo configure --section models --section channels
+Kurahi configure
+Kurahi configure --section models --section channels
 ```

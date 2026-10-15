@@ -65,7 +65,7 @@ describe("evaluateWritePolicy", () => {
     expect(decide("exec", { command: "sed -i 's/a/b/' SOUL.md" })).toBe(true);
     expect(decide("exec", { command: `rm -f ${soul}` })).toBe(true);
     expect(decide("exec", { command: `rm -rf ${path.join(home, "integrity")}` })).toBe(true);
-    expect(decide("exec", { command: "kolo integrity update SOUL.md --yes" })).toBe(true);
+    expect(decide("exec", { command: "kurahi integrity update SOUL.md --yes" })).toBe(true);
     expect(decide("exec", { command: "cat SOUL.md 2>&1 | head -c 400" })).toBe(false);
     expect(decide("exec", { command: "sha256sum SOUL.md" })).toBe(false);
     expect(decide("exec", { command: "echo hi > notes.md" })).toBe(false);
@@ -80,7 +80,7 @@ describe("core before_tool_call policy (global hook runner)", () => {
       params: { path: soul, content: "pwned" },
     });
     expect(blocked).toMatchObject({ blocked: true });
-    expect((blocked as { reason: string }).reason).toMatch(/kolo integrity update/);
+    expect((blocked as { reason: string }).reason).toMatch(/kurahi integrity update/);
     const registry = await runBeforeToolCallHook({
       toolName: "write",
       params: { path: path.join(home, "integrity", "registry.json"), content: "{}" },

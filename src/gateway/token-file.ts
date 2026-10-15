@@ -4,7 +4,7 @@
 // (mode 0600) instead of a `gateway.auth.token` value that every gateway on the host
 // copied from one kolo.json and that clients then passed on argv (visible in `ps`).
 //
-// Clients (`kolo tui`, `kolo agent`, `kolo health`, the gateway client) resolve the same
+// Clients (`kurahi tui`, `kurahi agent`, `kurahi health`, the gateway client) resolve the same
 // file, so a client running with the gateway's KOLO_HOME needs no token argument at all.
 
 import { randomBytes } from "node:crypto";
@@ -208,7 +208,7 @@ export function resolveLocalGatewayToken(
 }
 
 /**
- * Persist an explicitly chosen token (e.g. `kolo gateway install --token`, onboarding) to the
+ * Persist an explicitly chosen token (e.g. `kurahi gateway install --token`, onboarding) to the
  * token file (0600, parent 0700), replacing what is there. Used so service units can carry
  * KOLO_GATEWAY_TOKEN_FILE instead of the token value.
  */

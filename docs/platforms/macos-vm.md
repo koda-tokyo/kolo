@@ -1,14 +1,14 @@
 ---
-summary: "Run KoLo in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
+summary: "Run Kurahi in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
 read_when:
-  - You want KoLo isolated from your main macOS environment
+  - You want Kurahi isolated from your main macOS environment
   - You want iMessage integration (BlueBubbles) in a sandbox
   - You want a resettable macOS environment you can clone
   - You want to compare local vs hosted macOS VM options
 title: "macOS VMs"
 ---
 
-# KoLo on macOS VMs (Sandboxing)
+# Kurahi on macOS VMs (Sandboxing)
 
 ## Recommended default (most users)
 
@@ -22,7 +22,7 @@ Use a macOS VM when you specifically need macOS-only capabilities (iMessage/Blue
 
 ### Local VM on your Apple Silicon Mac (Lume)
 
-Run KoLo in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
+Run Kurahi in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
 
 This gives you:
 
@@ -45,10 +45,10 @@ Once you have SSH access to a macOS VM, continue at step 6 below.
 ## Quick path (Lume, experienced users)
 
 1. Install Lume
-2. `lume create KoLo --os macos --ipsw latest`
+2. `lume create Kurahi --os macos --ipsw latest`
 3. Complete Setup Assistant, enable Remote Login (SSH)
-4. `lume run KoLo --no-display`
-5. SSH in, install KoLo, configure channels
+4. `lume run Kurahi --no-display`
+5. SSH in, install Kurahi, configure channels
 6. Done
 
 ---
@@ -87,7 +87,7 @@ Docs: [Lume Installation](https://cua.ai/docs/lume/guide/getting-started/install
 ## 2) Create the macOS VM
 
 ```bash
-lume create KoLo --os macos --ipsw latest
+lume create Kurahi --os macos --ipsw latest
 ```
 
 This downloads macOS and creates the VM. A VNC window opens automatically.
@@ -115,7 +115,7 @@ After setup completes, enable SSH:
 ## 4) Get the VM's IP address
 
 ```bash
-lume get KoLo
+lume get Kurahi
 ```
 
 Look for the IP address (usually `192.168.64.x`).
@@ -132,13 +132,13 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 
 ---
 
-## 6) Install KoLo
+## 6) Install Kurahi
 
 Inside the VM:
 
 ```bash
-npm install -g @kodasoken/kolo@latest
-KoLo onboard --install-daemon
+npm install -g kurahi@latest
+Kurahi onboard --install-daemon
 ```
 
 Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, etc.).
@@ -172,7 +172,7 @@ Add your channels:
 Then login to WhatsApp (scan QR):
 
 ```bash
-KoLo channels login
+Kurahi channels login
 ```
 
 ---
@@ -182,23 +182,23 @@ KoLo channels login
 Stop the VM and restart without display:
 
 ```bash
-lume stop KoLo
-lume run KoLo --no-display
+lume stop Kurahi
+lume run Kurahi --no-display
 ```
 
-The VM runs in the background. KoLo's daemon keeps the gateway running.
+The VM runs in the background. Kurahi's daemon keeps the gateway running.
 
 To check status:
 
 ```bash
-ssh youruser@192.168.64.X "KoLo status"
+ssh youruser@192.168.64.X "Kurahi status"
 ```
 
 ---
 
 ## Bonus: iMessage integration
 
-This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to KoLo.
+This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Kurahi.
 
 Inside the VM:
 
@@ -207,7 +207,7 @@ Inside the VM:
 3. Enable the Web API and set a password
 4. Point BlueBubbles webhooks at your gateway (example: `https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`)
 
-Add to your KoLo config:
+Add to your Kurahi config:
 
 ```json
 {
@@ -232,16 +232,16 @@ Full setup details: [BlueBubbles channel](/channels/bluebubbles)
 Before customizing further, snapshot your clean state:
 
 ```bash
-lume stop KoLo
-lume clone KoLo kolo-golden
+lume stop Kurahi
+lume clone Kurahi kolo-golden
 ```
 
 Reset anytime:
 
 ```bash
-lume stop KoLo && lume delete KoLo
-lume clone kolo-golden KoLo
-lume run KoLo --no-display
+lume stop Kurahi && lume delete Kurahi
+lume clone kolo-golden Kurahi
+lume run Kurahi --no-display
 ```
 
 ---
@@ -260,12 +260,12 @@ For true always-on, consider a dedicated Mac mini or a small VPS. See [VPS hosti
 
 ## Troubleshooting
 
-| Problem                  | Solution                                                                           |
-| ------------------------ | ---------------------------------------------------------------------------------- |
-| Can't SSH into VM        | Check "Remote Login" is enabled in VM's System Settings                            |
-| VM IP not showing        | Wait for VM to fully boot, run `lume get KoLo` again                           |
-| Lume command not found   | Add `~/.local/bin` to your PATH                                                    |
-| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `KoLo channels login` |
+| Problem                  | Solution                                                                         |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| Can't SSH into VM        | Check "Remote Login" is enabled in VM's System Settings                          |
+| VM IP not showing        | Wait for VM to fully boot, run `lume get Kurahi` again                           |
+| Lume command not found   | Add `~/.local/bin` to your PATH                                                  |
+| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `Kurahi channels login` |
 
 ---
 

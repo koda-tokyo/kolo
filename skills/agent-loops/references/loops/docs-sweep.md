@@ -1,9 +1,11 @@
 # Docs Sweep Loop
 
 ## Purpose
+
 Keep all documentation aligned with the current codebase. Every documented behavior matches current implementation.
 
 ## Trigger
+
 - Scheduled: Weekly (or nightly for fast-moving projects)
 - Event-driven: After significant PR merge, API change, or feature ship
 - On-demand: Before release, before investor demo
@@ -28,29 +30,34 @@ Keep all documentation aligned with the current codebase. Every documented behav
 ```
 
 ## Verification
+
 - Every documented API endpoint → tested against live/compiled code
 - Every documented behavior → traceable to source
 - Every code example → runs without error
 
 ## Stop Conditions
+
 - ✅ No stale documentation found
 - ✅ All mismatches resolved (doc updated OR code fix PR'd)
 - ⚠️ After full sweep with no changes: stop, report "docs aligned"
 
 ## Parameters
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `doc_surfaces` | all | Which doc surfaces to sweep |
-| `max_fixes_per_sweep` | 10 | Cap PR size |
+
+| Parameter             | Default | Description                 |
+| --------------------- | ------- | --------------------------- |
+| `doc_surfaces`        | all     | Which doc surfaces to sweep |
+| `max_fixes_per_sweep` | 10      | Cap PR size                 |
 
 ## Output
+
 - Staleness report: surfaces checked, mismatches found, fixed
 - PR: all doc updates in one reviewable PR
 
-## Example (KoLo House)
+## Example (Kurahi House)
+
 ```
 Trigger: Post-Svitla demo, docs need alignment check
-Surfaces swept: KoLo-docs (46 files), kodasoken.com/research, READMEs
+Surfaces swept: Kurahi-docs (46 files), kodasoken.com/research, READMEs
 Findings:
   - C4 cold-restart claim: doc says "unverified frontier" ✅ aligned
   - Daemon V2 modules: doc says "13/13 pass" — actual: 13/13 ✅

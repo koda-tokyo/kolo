@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/mattermost",
   "version": "2.0.0",
-  "description": "KoLo Mattermost channel plugin",
+  "description": "Kurahi Mattermost channel plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

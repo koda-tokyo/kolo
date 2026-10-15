@@ -1,10 +1,10 @@
-// `kolo continuity …` — proven continuity of a resident (KoLo 2.0, M11c).
+// `kurahi continuity …` — proven continuity of a resident (KoLo 2.0, M11c).
 //
-//   kolo continuity run --resident <id> [--disruption model-swap|restart|move|close|all] --out <dir>
+//   kurahi continuity run --resident <id> [--disruption model-swap|restart|move|close|all] --out <dir>
 //        [--throwaway [--home <dir>] [--port N]]      own a fresh gateway with the fake provider (CI)
 //        [--gateway <url>] [--swap-to <provider/model>] [--facts <file>] [--chat]
-//   kolo continuity verify <report.json>              recompute hashes, signatures and scores
-//   kolo continuity badge [<report.json>]             print the one-line badge
+//   kurahi continuity verify <report.json>              recompute hashes, signatures and scores
+//   kurahi continuity badge [<report.json>]             print the one-line badge
 //
 // The owner credential is discovered like every other client (KOLO_HOME lock + token file, or
 // KOLO_GATEWAY_TOKEN); it is never taken from argv. Exit codes: 0 pass, 1 an invariant failed or
@@ -65,7 +65,7 @@ export function readFactsFile(file: string): FactProbe[] {
 }
 
 async function defaultDiscover() {
-  const { discover } = await import("@kodasoken/kolo-client");
+  const { discover } = await import("@kodasoken/kurahi-client");
   const found = await discover();
   return { baseUrl: found.baseUrl, token: found.token, tokenSource: found.tokenSource };
 }
@@ -209,7 +209,7 @@ export async function runContinuityRun(
     return report.summary.verdict === "PASS" ? CONTINUITY_EXIT.ok : CONTINUITY_EXIT.failed;
   } catch (err) {
     const { code, message } = classifyError(err);
-    runtime.error(`kolo continuity run: ${message}`);
+    runtime.error(`kurahi continuity run: ${message}`);
     return code;
   }
 }
@@ -225,7 +225,7 @@ export function runContinuityVerify(
   try {
     report = readReport(target);
   } catch (err) {
-    runtime.error(`kolo continuity verify: ${err instanceof Error ? err.message : String(err)}`);
+    runtime.error(`kurahi continuity verify: ${err instanceof Error ? err.message : String(err)}`);
     return CONTINUITY_EXIT.usage;
   }
   const result = verifyReport(report);
@@ -267,11 +267,11 @@ export function runContinuityBadge(file: string | undefined, deps: ContinuityCli
     const code = (err as NodeJS.ErrnoException | undefined)?.code;
     if (code === "ENOENT") {
       runtime.error(
-        `kolo continuity badge: no report at ${target}. Run: kolo continuity run --out <dir>, then: kolo continuity badge <dir>/continuity-report.json`,
+        `kurahi continuity badge: no report at ${target}. Run: kurahi continuity run --out <dir>, then: kurahi continuity badge <dir>/continuity-report.json`,
       );
       return CONTINUITY_EXIT.usage;
     }
-    runtime.error(`kolo continuity badge: ${err instanceof Error ? err.message : String(err)}`);
+    runtime.error(`kurahi continuity badge: ${err instanceof Error ? err.message : String(err)}`);
     return CONTINUITY_EXIT.usage;
   }
 }
@@ -287,9 +287,9 @@ export function registerContinuityCli(program: Command, deps: ContinuityCliDeps 
       [
         "",
         theme.muted("Examples:"),
-        `  ${formatCliCommand("kolo continuity run --throwaway --disruption all --out ./continuity-out")}`,
-        `  ${formatCliCommand("kolo continuity run --resident alice --disruption restart,close --out ./continuity-out")}`,
-        `  ${formatCliCommand("kolo continuity verify ./continuity-out/continuity-report.json")}`,
+        `  ${formatCliCommand("kurahi continuity run --throwaway --disruption all --out ./continuity-out")}`,
+        `  ${formatCliCommand("kurahi continuity run --resident alice --disruption restart,close --out ./continuity-out")}`,
+        `  ${formatCliCommand("kurahi continuity verify ./continuity-out/continuity-report.json")}`,
         "",
         "Exit codes: 0 pass, 1 an invariant failed or the report does not verify, 2 usage, 3 gateway unreachable, 4 authentication failed.",
         `Docs: ${formatDocsLink("/continuity")}`,

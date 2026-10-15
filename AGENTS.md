@@ -6,7 +6,7 @@ This file is read by people and by coding agents. It describes how the repositor
 
 - `src/` — TypeScript (ESM). CLI wiring in `src/cli`, commands in `src/commands`, gateway in `src/gateway`, agents in `src/agents`, config in `src/config`, infrastructure in `src/infra`, channels in `src/channels` and per-channel directories.
 - Tests are colocated as `*.test.ts`; end-to-end tests as `*.e2e.test.ts`.
-- `packages/client` — generated `@kodasoken/kolo-client`. Regenerate with `pnpm client:gen`; `pnpm client:check` fails CI on drift.
+- `packages/client` — generated `@kodasoken/kurahi-client`. Regenerate with `pnpm client:gen`; `pnpm client:check` fails CI on drift.
 - `openapi/` — committed OpenAPI document generated from `src/gateway/http-routes.ts`; `pnpm openapi:check` fails CI on drift.
 - `extensions/*` — workspace packages (channels, providers). Plugin-only dependencies belong in the extension's `package.json`, never in the root. Avoid `workspace:*` in a plugin's `dependencies`.
 - `docs/` — documentation source (Mintlify), published at the docs URL in `src/config/product-urls.ts`. Internal links are root-relative without `.md`.

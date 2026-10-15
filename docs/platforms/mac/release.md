@@ -1,12 +1,12 @@
 ---
-summary: "KoLo macOS release checklist (Sparkle feed, packaging, signing)"
+summary: "Kurahi macOS release checklist (Sparkle feed, packaging, signing)"
 read_when:
-  - Cutting or validating a KoLo macOS release
+  - Cutting or validating a Kurahi macOS release
   - Updating the Sparkle appcast or feed assets
 title: "macOS Release"
 ---
 
-# KoLo macOS release (Sparkle)
+# Kurahi macOS release (Sparkle)
 
 This app now ships Sparkle auto-updates. Release builds must be Developer ID–signed, zipped, and published with a signed appcast entry.
 
@@ -67,18 +67,18 @@ ditto -c -k --keepParent apps/macos/.build/release/KoLo.app.dSYM dist/kolo-2.0.0
 Use the release note generator so Sparkle renders formatted HTML notes:
 
 ```bash
-SPARKLE_PRIVATE_KEY_FILE=/path/to/ed25519-private-key scripts/make_appcast.sh dist/kolo-2.0.0.zip https://raw.githubusercontent.com/koda-tokyo/kolo/main/appcast.xml
+SPARKLE_PRIVATE_KEY_FILE=/path/to/ed25519-private-key scripts/make_appcast.sh dist/kolo-2.0.0.zip https://raw.githubusercontent.com/koda-tokyo/kurahi/main/appcast.xml
 ```
 
-Generates HTML release notes from `CHANGELOG.md` (via [`scripts/changelog-to-html.sh`](https://github.com/koda-tokyo/kolo/blob/main/scripts/changelog-to-html.sh)) and embeds them in the appcast entry.
+Generates HTML release notes from `CHANGELOG.md` (via [`scripts/changelog-to-html.sh`](https://github.com/koda-tokyo/kurahi/blob/main/scripts/changelog-to-html.sh)) and embeds them in the appcast entry.
 Commit the updated `appcast.xml` alongside the release assets (zip + dSYM) when publishing.
 
 ## Publish & verify
 
 - Upload `kolo-2.0.0.zip` (and `kolo-2.0.0.dSYM.zip`) to the GitHub release for tag `v2.0.0`.
-- Ensure the raw appcast URL matches the baked feed: `https://raw.githubusercontent.com/koda-tokyo/kolo/main/appcast.xml`.
+- Ensure the raw appcast URL matches the baked feed: `https://raw.githubusercontent.com/koda-tokyo/kurahi/main/appcast.xml`.
 - Sanity checks:
-  - `curl -I https://raw.githubusercontent.com/koda-tokyo/kolo/main/appcast.xml` returns 200.
+  - `curl -I https://raw.githubusercontent.com/koda-tokyo/kurahi/main/appcast.xml` returns 200.
   - `curl -I <enclosure url>` returns 200 after assets upload.
   - On a previous public build, run “Check for Updates…” from the About tab and verify Sparkle installs the new build cleanly.
 

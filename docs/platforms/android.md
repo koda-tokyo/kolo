@@ -34,12 +34,12 @@ Android connects directly to the Gateway WebSocket (default `ws://<host>:18789`)
   - Same LAN with mDNS/NSD, **or**
   - Same Tailscale tailnet using Wide-Area Bonjour / unicast DNS-SD (see below), **or**
   - Manual gateway host/port (fallback)
-- You can run the CLI (`KoLo`) on the gateway machine (or via SSH).
+- You can run the CLI (`Kurahi`) on the gateway machine (or via SSH).
 
 ### 1) Start the Gateway
 
 ```bash
-KoLo gateway --port 18789 --verbose
+Kurahi gateway --port 18789 --verbose
 ```
 
 Confirm in logs you see something like:
@@ -89,8 +89,8 @@ After the first successful pairing, Android auto-reconnects on launch:
 On the gateway machine:
 
 ```bash
-KoLo nodes pending
-KoLo nodes approve <requestId>
+Kurahi nodes pending
+Kurahi nodes approve <requestId>
 ```
 
 Pairing details: [Gateway pairing](/gateway/pairing).
@@ -99,11 +99,11 @@ Pairing details: [Gateway pairing](/gateway/pairing).
 
 - Via nodes status:
   ```bash
-  KoLo nodes status
+  Kurahi nodes status
   ```
 - Via Gateway:
   ```bash
-  KoLo gateway call node.list --params "{}"
+  Kurahi gateway call node.list --params "{}"
   ```
 
 ### 6) Chat + history
@@ -127,7 +127,7 @@ Note: nodes use the standalone canvas host on `canvasHost.port` (default `18793`
 2. Navigate the node to it (LAN):
 
 ```bash
-KoLo nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18793/__KOLO__/canvas/"}'
+Kurahi nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18793/__KOLO__/canvas/"}'
 ```
 
 Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18793/__KOLO__/canvas/`.

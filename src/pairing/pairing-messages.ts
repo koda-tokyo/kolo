@@ -15,6 +15,6 @@ export function buildPairingReply(params: {
     `Pairing code: ${code}`,
     "",
     "Ask the bot owner to approve with:",
-    formatCliCommand(`kolo pairing approve ${channel} <code>`),
+    formatCliCommand(`kurahi pairing approve ${channel} <code>`),
   ].join("\n");
 }

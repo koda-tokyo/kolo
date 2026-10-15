@@ -1,8 +1,8 @@
-// Starter policy written by `kolo policy init` (KoLo 2.0, M13d). Documented line by line so a
+// Starter policy written by `kurahi policy init` (KoLo 2.0, M13d). Documented line by line so a
 // security team can read it as the specification it is; every section is optional.
 export const STARTER_POLICY_YAML = `# KoLo policy — one declarative file, signed by an owner, enforced for every resident.
-# Validate: kolo policy validate      Sign: kolo policy sign      Status: kolo policy status
-# Schema:   kolo policy schema        Docs: see docs/policy
+# Validate: kurahi policy validate      Sign: kurahi policy sign      Status: kurahi policy status
+# Schema:   kurahi policy schema        Docs: see docs/policy
 version: 1
 name: starter
 description: Conservative defaults. Agents keep their config permissions; nothing is stopped.
@@ -37,7 +37,7 @@ budgets:
       toolCallsPerHour: 1200
       onBreach: warn
 
-# Kill switch. The runtime switch (kolo policy kill) is separate and survives restarts.
+# Kill switch. The runtime switch (kurahi policy kill) is separate and survives restarts.
 kill:
   fleet: false
   agents: []

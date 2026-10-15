@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { KoloClient } from "@kodasoken/kolo-client";
+import { KoloClient } from "@kodasoken/kurahi-client";
 import fs from "node:fs";
 import path from "node:path";
 import type { KoLoConfig } from "../config/config.js";
@@ -58,7 +58,7 @@ async function fetchLivePlugins(): Promise<LivePlugins | undefined> {
   }
 }
 
-/** Where the self-check plugin leaves its last report (read by `kolo plugins doctor` / `kolo doctor`). */
+/** Where the self-check plugin leaves its last report (read by `kurahi plugins doctor` / `kurahi doctor`). */
 export function selfCheckReportPath(stateDir: string = resolveStateDir()): string {
   return path.join(stateDir, "self-check", "latest.json");
 }
@@ -160,7 +160,7 @@ function logSlotWarnings(warnings: string[]) {
 export function registerPluginsCli(program: Command) {
   const plugins = program
     .command("plugins")
-    .description("Manage KoLo plugins/extensions")
+    .description("Manage Kurahi plugins/extensions")
     .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins")}\n`);
 
   plugins

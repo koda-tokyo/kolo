@@ -1,6 +1,6 @@
-# @KoLo/zalouser
+# @Kurahi/zalouser
 
-KoLo extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
+Kurahi extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
 
 > **Warning:** Using Zalo automation may result in account suspension or ban. Use at your own risk. This is an unofficial integration.
 
@@ -77,7 +77,7 @@ See [zca-cli](https://zca-cli.dev) for manual download (binaries for macOS/Linux
 ### Option 1: Onboarding Wizard (Recommended)
 
 ```bash
-KoLo onboard
+Kurahi onboard
 # Select "Zalo Personal" from channel list
 # Follow QR code login flow
 ```
@@ -85,14 +85,14 @@ KoLo onboard
 ### Option 2: Login (QR, on the Gateway machine)
 
 ```bash
-KoLo channels login --channel zalouser
+Kurahi channels login --channel zalouser
 # Scan QR code with Zalo app
 ```
 
 ### Send a Message
 
 ```bash
-KoLo message send --channel zalouser --target <threadId> --message "Hello from KoLo!"
+Kurahi message send --channel zalouser --target <threadId> --message "Hello from Kurahi!"
 ```
 
 ## Configuration
@@ -127,19 +127,19 @@ channels:
 ### Authentication
 
 ```bash
-KoLo channels login --channel zalouser              # Login via QR
-KoLo channels login --channel zalouser --account work
-KoLo channels status --probe
-KoLo channels logout --channel zalouser
+Kurahi channels login --channel zalouser              # Login via QR
+Kurahi channels login --channel zalouser --account work
+Kurahi channels status --probe
+Kurahi channels logout --channel zalouser
 ```
 
 ### Directory (IDs, contacts, groups)
 
 ```bash
-KoLo directory self --channel zalouser
-KoLo directory peers list --channel zalouser --query "name"
-KoLo directory groups list --channel zalouser --query "work"
-KoLo directory groups members --channel zalouser --group-id <id>
+Kurahi directory self --channel zalouser
+Kurahi directory peers list --channel zalouser --query "name"
+Kurahi directory groups list --channel zalouser --query "work"
+Kurahi directory groups members --channel zalouser --group-id <id>
 ```
 
 ### Account Management
@@ -156,16 +156,16 @@ zca account label <profile> "Work Account"
 
 ```bash
 # Text
-KoLo message send --channel zalouser --target <threadId> --message "message"
+Kurahi message send --channel zalouser --target <threadId> --message "message"
 
 # Media (URL)
-KoLo message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
+Kurahi message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
 ```
 
 ### Listener
 
 The listener runs inside the Gateway when the channel is enabled. For debugging,
-use `KoLo channels logs --channel zalouser` or run `zca listen` directly.
+use `Kurahi channels logs --channel zalouser` or run `zca listen` directly.
 
 ### Data Access
 
@@ -191,8 +191,8 @@ zca me id
 Use `--profile` or `-p` to work with multiple accounts:
 
 ```bash
-KoLo channels login --channel zalouser --account work
-KoLo message send --channel zalouser --account work --target <id> --message "Hello"
+Kurahi channels login --channel zalouser --account work
+Kurahi message send --channel zalouser --account work --target <id> --message "Hello"
 ZCA_PROFILE=work zca listen
 ```
 

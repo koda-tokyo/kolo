@@ -129,9 +129,9 @@ const MESSAGES: Record<string, Entry> = {
     pt: "Conectado. Esta conversa agora chega ao seu residente.",
   },
   "owner.codeExpired": {
-    en: "This code has expired or was already used. Run kolo connect again for a new one.",
-    ja: "このコードは期限切れか使用済みです。kolo connect をもう一度実行して新しいコードを取得してください。",
-    pt: "Este código expirou ou já foi usado. Execute kolo connect de novo para obter outro.",
+    en: "This code has expired or was already used. Run kurahi connect again for a new one.",
+    ja: "このコードは期限切れか使用済みです。kurahi connect をもう一度実行して新しいコードを取得してください。",
+    pt: "Este código expirou ou já foi usado. Execute kurahi connect de novo para obter outro.",
   },
   "paused.notice": {
     en: "This conversation is paused. Send /resume to continue.",

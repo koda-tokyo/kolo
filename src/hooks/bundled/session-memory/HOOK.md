@@ -4,12 +4,12 @@ description: "Save session context to memory when /new command is issued"
 homepage: https://kodasoken.com/kolo/hooks#session-memory
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "💾",
         "events": ["command:new"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with KoLo" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Kurahi" }],
       },
   }
 ---
@@ -91,7 +91,7 @@ The hook automatically:
 To disable this hook:
 
 ```bash
-KoLo hooks disable session-memory
+Kurahi hooks disable session-memory
 ```
 
 Or remove it from your config:

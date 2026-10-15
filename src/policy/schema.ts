@@ -271,12 +271,12 @@ export const PolicyDocumentSchema = Type.Object(
   {
     additionalProperties: false,
     $id: "https://kolo.dev/schemas/policy-v1.json",
-    title: "KoLo policy document",
+    title: "Kurahi policy document",
   },
 );
 export type PolicyDocument = Static<typeof PolicyDocumentSchema>;
 
-/** The JSON Schema `kolo policy schema` prints (and editors can validate against). */
+/** The JSON Schema `kurahi policy schema` prints (and editors can validate against). */
 export function policyJsonSchema(): Record<string, unknown> {
   return {
     $schema: "https://json-schema.org/draft/2020-12/schema",

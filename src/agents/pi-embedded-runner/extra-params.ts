@@ -105,7 +105,7 @@ function createStreamFnWithExtraParams(
 
 /**
  * Create a streamFn wrapper that adds OpenRouter app attribution headers.
- * These headers allow KoLo to appear on OpenRouter's leaderboard.
+ * These headers allow Kurahi to appear on OpenRouter's leaderboard.
  */
 function createOpenRouterHeadersWrapper(baseStreamFn: StreamFn | undefined): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;

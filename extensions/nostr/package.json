@@ -1,15 +1,15 @@
 {
   "name": "@KoLo/nostr",
   "version": "2.0.0",
-  "description": "KoLo Nostr channel plugin for NIP-04 encrypted DMs",
+  "description": "Kurahi Nostr channel plugin for NIP-04 encrypted DMs",
   "type": "module",
   "dependencies": {
+    "kolo": "workspace:kurahi@*",
     "nostr-tools": "^2.22.1",
-    "kolo": "workspace:@kodasoken/kolo@*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

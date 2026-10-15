@@ -11,8 +11,8 @@ title: "Channel Troubleshooting"
 Start with:
 
 ```bash
-KoLo doctor
-KoLo channels status --probe
+Kurahi doctor
+Kurahi channels status --probe
 ```
 
 `channels status --probe` prints warnings when it can detect common channel misconfigurations, and includes small live checks (credentials, some permissions/membership).

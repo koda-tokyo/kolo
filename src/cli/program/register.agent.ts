@@ -51,19 +51,19 @@ export function registerAgentCommands(program: Command, args: { agentChannelOpti
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['kolo agent --to +15555550123 --message "status update"', "Start a new session."],
-  ['kolo agent --agent ops --message "Summarize logs"', "Use a specific agent."],
+  ['kurahi agent --to +15555550123 --message "status update"', "Start a new session."],
+  ['kurahi agent --agent ops --message "Summarize logs"', "Use a specific agent."],
   [
-    'kolo agent --session-id 1234 --message "Summarize inbox" --thinking medium',
+    'kurahi agent --session-id 1234 --message "Summarize inbox" --thinking medium',
     "Target a session with explicit thinking level.",
   ],
   [
-    'kolo agent --to +15555550123 --message "Trace logs" --verbose on --json',
+    'kurahi agent --to +15555550123 --message "Trace logs" --verbose on --json',
     "Enable verbose logging and JSON output.",
   ],
-  ['kolo agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
+  ['kurahi agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
   [
-    'kolo agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
+    'kurahi agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
     "Send reply to a different channel/target.",
   ],
 ])}
@@ -151,14 +151,14 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent")}`,
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['kolo agents set-identity --agent main --name "KoLo" --emoji "🦞"', "Set name + emoji."],
-  ["kolo agents set-identity --agent main --avatar avatars/KoLo.png", "Set avatar path."],
+  ['kurahi agents set-identity --agent main --name "KoLo" --emoji "🦞"', "Set name + emoji."],
+  ["kurahi agents set-identity --agent main --avatar avatars/KoLo.png", "Set avatar path."],
   [
-    "kolo agents set-identity --workspace ~/.kolo/workspace --from-identity",
+    "kurahi agents set-identity --workspace ~/.kolo/workspace --from-identity",
     "Load from IDENTITY.md.",
   ],
   [
-    "kolo agents set-identity --identity-file ~/.kolo/workspace/IDENTITY.md --agent main",
+    "kurahi agents set-identity --identity-file ~/.kolo/workspace/IDENTITY.md --agent main",
     "Use a specific IDENTITY.md.",
   ],
 ])}

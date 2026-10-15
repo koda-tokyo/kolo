@@ -34,7 +34,7 @@ function makeRuntime() {
   return { runtime, logs, errors, exits };
 }
 
-describe("kolo providers cli", () => {
+describe("kurahi providers cli", () => {
   it("wires the five verbs and their aliases", async () => {
     const mod = await import("../commands/providers/index.js");
     const { runtime } = makeRuntime();
@@ -85,7 +85,7 @@ describe("kolo providers cli", () => {
       "exit:4",
     );
     expect(exits).toEqual([4]);
-    expect(errors[0]).toContain('kolo providers: provider "x": HTTP 401');
+    expect(errors[0]).toContain('kurahi providers: provider "x": HTTP 401');
   });
 
   it("rejects a non-numeric timeout with exit 2", async () => {

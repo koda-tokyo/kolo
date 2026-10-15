@@ -148,7 +148,7 @@ export function readSignature(signaturePath: string): PolicySignature | null {
 
 /**
  * Verify `policyBytes` against the detached signature and the pinned owners. Pure apart from
- * reads. `owners` may be injected (tests, `kolo policy verify --owners`).
+ * reads. `owners` may be injected (tests, `kurahi policy verify --owners`).
  */
 export function verifyPolicyAttestation(params: {
   policyBytes: Buffer;

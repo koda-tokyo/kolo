@@ -50,7 +50,7 @@ export function formatIntegrityFailure(result: IntegrityVerifyResult): string {
   return [
     `integrity gate: ${result.problems.length} protected policy file problem(s) (registry ${result.registryPath}):`,
     ...lines,
-    "If the change is intended, the operator re-registers it with `kolo integrity update <path>`.",
+    "If the change is intended, the operator re-registers it with `kurahi integrity update <path>`.",
   ].join("\n");
 }
 
@@ -125,7 +125,7 @@ export async function runBootIntegrityGate(params: {
   state.checkedAtMs = Date.now();
   if (result.state === "unconfigured") {
     params.log.info(
-      "integrity gate: no registry (run `kolo integrity init` to register the protected policy files)",
+      "integrity gate: no registry (run `kurahi integrity init` to register the protected policy files)",
     );
     return result;
   }

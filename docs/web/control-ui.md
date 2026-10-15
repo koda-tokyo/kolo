@@ -11,7 +11,7 @@ title: "Control UI"
 The Control UI is a small **Vite + Lit** single-page app served by the Gateway:
 
 - default: `http://<host>:18789/`
-- optional prefix: set `gateway.controlUi.basePath` (e.g. `/KoLo`)
+- optional prefix: set `gateway.controlUi.basePath` (e.g. `/Kurahi`)
 
 It speaks **directly to the Gateway WebSocket** on the same port.
 
@@ -21,7 +21,7 @@ If the Gateway is running on the same computer, open:
 
 - http://127.0.0.1:18789/ (or http://localhost:18789/)
 
-If the page fails to load, start the Gateway first: `KoLo gateway`.
+If the page fails to load, start the Gateway first: `Kurahi gateway`.
 
 Auth is supplied during the WebSocket handshake via:
 
@@ -43,14 +43,14 @@ unauthorized access.
 
 ```bash
 # List pending requests
-KoLo devices list
+Kurahi devices list
 
 # Approve by request ID
-KoLo devices approve <requestId>
+Kurahi devices approve <requestId>
 ```
 
 Once approved, the device is remembered and won't require re-approval unless
-you revoke it with `KoLo devices revoke --device <id> --role <role>`. See
+you revoke it with `Kurahi devices revoke --device <id> --role <role>`. See
 [Devices CLI](/cli/devices) for token rotation and revocation.
 
 **Notes:**
@@ -96,7 +96,7 @@ you revoke it with `KoLo devices revoke --device <id> --role <role>`. See
 Keep the Gateway on loopback and let Tailscale Serve proxy it with HTTPS:
 
 ```bash
-KoLo gateway --tailscale serve
+Kurahi gateway --tailscale serve
 ```
 
 Open:
@@ -104,7 +104,7 @@ Open:
 - `https://<magicdns>/` (or your configured `gateway.controlUi.basePath`)
 
 By default, Serve requests can authenticate via Tailscale identity headers
-(`tailscale-user-login`) when `gateway.auth.allowTailscale` is `true`. KoLo
+(`tailscale-user-login`) when `gateway.auth.allowTailscale` is `true`. Kurahi
 verifies the identity by resolving the `x-forwarded-for` address with
 `tailscale whois` and matching it to the header, and only accepts these when the
 request hits loopback with Tailscale’s `x-forwarded-*` headers. Set
@@ -114,7 +114,7 @@ if you want to require a token/password even for Serve traffic.
 ### Bind to tailnet + token
 
 ```bash
-KoLo gateway --bind tailnet --token "$(openssl rand -hex 32)"
+Kurahi gateway --bind tailnet --token "$(openssl rand -hex 32)"
 ```
 
 Then open:
@@ -127,7 +127,7 @@ Paste the token into the UI settings (sent as `connect.params.auth.token`).
 
 If you open the dashboard over plain HTTP (`http://<lan-ip>` or `http://<tailscale-ip>`),
 the browser runs in a **non-secure context** and blocks WebCrypto. By default,
-KoLo **blocks** Control UI connections without device identity.
+Kurahi **blocks** Control UI connections without device identity.
 
 **Recommended fix:** use HTTPS (Tailscale Serve) or open the UI locally:
 
@@ -162,7 +162,7 @@ pnpm ui:build # auto-installs UI deps on first run
 Optional absolute base (when you want fixed asset URLs):
 
 ```bash
-KOLO_CONTROL_UI_BASE_PATH=/KoLo/ pnpm ui:build
+KOLO_CONTROL_UI_BASE_PATH=/Kurahi/ pnpm ui:build
 ```
 
 For local development (separate dev server):

@@ -1,21 +1,21 @@
 ---
-summary: "CLI reference for `kolo support` (summary of the installation and a redacted diagnostics bundle)"
+summary: "CLI reference for `kurahi support` (summary of the installation and a redacted diagnostics bundle)"
 read_when:
   - You are opening a support ticket
   - You need to share what is installed without sharing secrets
 title: "support"
 ---
 
-# `kolo support`
+# `kurahi support`
 
 Prints the version, OS, state directory, integrity and service state, and writes a redacted
 diagnostics bundle to attach to a ticket.
 
 ```bash
-kolo support
-kolo support --no-bundle
-kolo support --json
-kolo support --id ops-bot --out ./ops-bot-support.tar.gz
+kurahi support
+kurahi support --no-bundle
+kurahi support --json
+kurahi support --id ops-bot --out ./ops-bot-support.tar.gz
 ```
 
 ## What the bundle contains
@@ -35,15 +35,15 @@ attach it to a ticket.
 - `--out <file>`: bundle path (default shown above).
 - `--id <id>`: service identity to report on. Without it the identity comes from the state root:
   `KOLO_SERVICE_ID` when set by the service environment, else the id recorded by
-  `kolo service install` in `<KOLO_HOME>/service/service.json`, else the default agent written
-  by `kolo init`, else `default`.
+  `kurahi service install` in `<KOLO_HOME>/service/service.json`, else the default agent written
+  by `kurahi init`, else `default`.
 - `--no-bundle`: print the summary only; write nothing.
 - `--lang <code>`: message language, `en` or `ja`.
 
 ## Where to send it
 
 - Support: support@kodasoken.com
-- Issues: https://github.com/koda-tokyo/kolo/issues
+- Issues: https://github.com/koda-tokyo/kurahi/issues
 - Vulnerabilities: security@kodasoken.com, never a public issue.
 
 ## Exit codes

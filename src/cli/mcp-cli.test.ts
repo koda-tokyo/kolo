@@ -1,4 +1,4 @@
-// `kolo mcp` argument handling (M6): server config building, secret-ref headers, and the test
+// `kurahi mcp` argument handling (M6): server config building, secret-ref headers, and the test
 // verb against the fake stdio server.
 import { Command } from "commander";
 import path from "node:path";
@@ -74,7 +74,7 @@ describe("buildServerConfig", () => {
   });
 });
 
-describe("kolo mcp test", () => {
+describe("kurahi mcp test", () => {
   it("connects to the fake server and prints its inventory as JSON", async () => {
     const out: string[] = [];
     const err: string[] = [];

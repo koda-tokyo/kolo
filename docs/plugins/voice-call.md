@@ -1,14 +1,14 @@
 ---
 summary: "Voice Call plugin: outbound + inbound calls via Twilio/Telnyx/Plivo (plugin install + config + CLI)"
 read_when:
-  - You want to place an outbound voice call from KoLo
+  - You want to place an outbound voice call from Kurahi
   - You are configuring or developing the voice-call plugin
 title: "Voice Call Plugin"
 ---
 
 # Voice Call (plugin)
 
-Voice calls for KoLo via a plugin. Supports outbound notifications and
+Voice calls for Kurahi via a plugin. Supports outbound notifications and
 multi-turn conversations with inbound policies.
 
 Current providers:
@@ -23,7 +23,7 @@ Quick mental model:
 - Install plugin
 - Restart Gateway
 - Configure under `plugins.entries.voice-call.config`
-- Use `KoLo voicecall ...` or the `voice_call` tool
+- Use `Kurahi voicecall ...` or the `voice_call` tool
 
 ## Where it runs (local vs remote)
 
@@ -36,7 +36,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-kolo plugins install @KoLo/voice-call
+kurahi plugins install @Kurahi/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -44,7 +44,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-kolo plugins install ./extensions/voice-call
+kurahi plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 
@@ -214,13 +214,13 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-KoLo voicecall call --to "+15555550123" --message "Hello from KoLo"
-KoLo voicecall continue --call-id <id> --message "Any questions?"
-KoLo voicecall speak --call-id <id> --message "One moment"
-KoLo voicecall end --call-id <id>
-KoLo voicecall status --call-id <id>
-KoLo voicecall tail
-KoLo voicecall expose --mode funnel
+Kurahi voicecall call --to "+15555550123" --message "Hello from Kurahi"
+Kurahi voicecall continue --call-id <id> --message "Any questions?"
+Kurahi voicecall speak --call-id <id> --message "One moment"
+Kurahi voicecall end --call-id <id>
+Kurahi voicecall status --call-id <id>
+Kurahi voicecall tail
+Kurahi voicecall expose --mode funnel
 ```
 
 ## Agent tool

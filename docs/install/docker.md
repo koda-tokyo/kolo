@@ -1,5 +1,5 @@
 ---
-summary: "Optional Docker-based setup and onboarding for KoLo"
+summary: "Optional Docker-based setup and onboarding for Kurahi"
 read_when:
   - You want a containerized gateway instead of local installs
   - You are validating the Docker flow
@@ -12,13 +12,13 @@ Docker is **optional**. Use it only if you want a containerized gateway or to va
 
 ## Is Docker right for me?
 
-- **Yes**: you want an isolated, throwaway gateway environment or to run KoLo on a host without local installs.
+- **Yes**: you want an isolated, throwaway gateway environment or to run Kurahi on a host without local installs.
 - **No**: you’re running on your own machine and just want the fastest dev loop. Use the normal install flow instead.
 - **Sandboxing note**: agent sandboxing uses Docker too, but it does **not** require the full gateway to run in Docker. See [Sandboxing](/gateway/sandboxing).
 
 This guide covers:
 
-- Containerized Gateway (full KoLo in Docker)
+- Containerized Gateway (full Kurahi in Docker)
 - Per-session Agent Sandbox (host gateway + Docker-isolated agent tools)
 
 Sandboxing details: [Sandboxing](/gateway/sandboxing)
@@ -68,7 +68,7 @@ Running on a VPS? See [Hetzner (Docker VPS)](/platforms/hetzner).
 ### Manual flow (compose)
 
 ```bash
-docker build -t KoLo:local -f Dockerfile .
+docker build -t Kurahi:local -f Dockerfile .
 docker compose run --rm kolo-cli onboard
 docker compose up -d kolo-gateway
 ```
@@ -354,9 +354,9 @@ If you plan to install packages in `setupCommand`, note:
 - Default `docker.network` is `"none"` (no egress).
 - `readOnlyRoot: true` blocks package installs.
 - `user` must be root for `apt-get` (omit `user` or set `user: "0:0"`).
-  KoLo auto-recreates containers when `setupCommand` (or docker config) changes
+  Kurahi auto-recreates containers when `setupCommand` (or docker config) changes
   unless the container was **recently used** (within ~5 minutes). Hot containers
-  log a warning with the exact `KoLo sandbox recreate ...` command.
+  log a warning with the exact `Kurahi sandbox recreate ...` command.
 
 ```json5
 {
@@ -553,11 +553,11 @@ Example:
 
 ## Troubleshooting
 
-- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/koda-tokyo/kolo/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
+- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/koda-tokyo/kurahi/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
 - Container not running: it will auto-create per session on demand.
 - Permission errors in sandbox: set `docker.user` to a UID:GID that matches your
   mounted workspace ownership (or chown the workspace folder).
-- Custom tools not found: KoLo runs commands with `sh -lc` (login shell), which
+- Custom tools not found: Kurahi runs commands with `sh -lc` (login shell), which
   sources `/etc/profile` and may reset PATH. Set `docker.env.PATH` to prepend your
   custom tool paths (e.g., `/custom/bin:/usr/local/share/npm-global/bin`), or add
   a script under `/etc/profile.d/` in your Dockerfile.

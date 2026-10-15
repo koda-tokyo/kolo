@@ -4,7 +4,7 @@ description: "Search the web in real-time using the Brave Search API. Use for cu
 homepage: https://brave.com/search/api/
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "🔍",
         "requires": { "bins": ["python3"], "env": ["BRAVE_API_KEY"] },

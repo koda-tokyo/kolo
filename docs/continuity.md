@@ -9,7 +9,7 @@ title: "Continuity"
 
 # Continuity
 
-A KoLo resident is an identity (its workspace files), a memory (its memory files), a role (its
+A Kurahi resident is an identity (its workspace files), a memory (its memory files), a role (its
 configuration and permissions) and its unfinished work (jobs, sessions, transcripts). The
 continuity suite proves that all of that is the same resident before and after four disruptions:
 
@@ -24,7 +24,7 @@ For every disruption the suite takes a signed **continuity manifest** and a set 
 results** before and after, then scores ten numbered invariants (C0 to C9, listed in
 [the specification](/continuity-spec)). The output is a JSON report, a Markdown report and a
 one-line badge. Anyone holding the JSON report can recompute every hash, signature and score
-with `kolo continuity verify` without access to the gateway.
+with `kurahi continuity verify` without access to the gateway.
 
 ## What is proven
 
@@ -98,9 +98,9 @@ API key and no real model. The same job runs on every push in `.github/workflows
 Equivalent CLI:
 
 ```bash
-kolo continuity run --throwaway --disruption all --out ./continuity-out
-kolo continuity verify ./continuity-out/continuity-report.json
-kolo continuity badge ./continuity-out/continuity-report.json
+kurahi continuity run --throwaway --disruption all --out ./continuity-out
+kurahi continuity verify ./continuity-out/continuity-report.json
+kurahi continuity badge ./continuity-out/continuity-report.json
 ```
 
 `KOLO_SMOKE_HOME` (must end in `.kolo-test`) and `KOLO_SMOKE_PORT` are honoured the same way the
@@ -114,10 +114,10 @@ gives the port from `run/gateway.lock` and the owner token from `secrets/gateway
 
 ```bash
 # restart and session close, no chat probe
-kolo continuity run --resident alice --disruption restart,close --out ./continuity-out
+kurahi continuity run --resident alice --disruption restart,close --out ./continuity-out
 
 # add a model swap (the gateway restarts itself in-process to apply it) and recall probes
-kolo continuity run --resident alice --disruption model-swap,restart,close \
+kurahi continuity run --resident alice --disruption model-swap,restart,close \
   --swap-to provider/model --facts ./facts.json --chat --out ./continuity-out
 ```
 
@@ -166,17 +166,17 @@ small structured values, never file contents:
 Entries are chained (`hash = sha256(previousHash + canonical entry)`), `root` is the last hash, and
 the root is signed with Ed25519 by the gateway's signing key at
 `<KOLO_HOME>/identity/continuity-signing.json` (0600, created on first use). The raw public key
-and its fingerprint travel inside the manifest, so `kolo continuity verify` needs nothing else.
+and its fingerprint travel inside the manifest, so `kurahi continuity verify` needs nothing else.
 
 ### Verification
 
 ```bash
-kolo continuity verify ./continuity-out/continuity-report.json
+kurahi continuity verify ./continuity-out/continuity-report.json
 ```
 
 recomputes every entry hash, every root, both signatures, re-scores every run from the stored
 evidence and checks the summary and the badge against the result. An edited report, an edited
-manifest or a changed score fails with the first mismatch named. `kolo continuity badge` prints the
+manifest or a changed score fails with the first mismatch named. `kurahi continuity badge` prints the
 badge and appends `UNVERIFIED` when the report does not recompute.
 
 ## Endpoints the suite added

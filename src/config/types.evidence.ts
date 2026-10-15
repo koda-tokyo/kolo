@@ -15,6 +15,6 @@ export type EvidenceConfig = {
   maxEventBytes?: number;
   /** Upper bound on the event log of one job in bytes (default 16 MiB). */
   maxBytesPerJob?: number;
-  /** Days a job's evidence is kept before `kolo evidence prune` removes it (default 30). */
+  /** Days a job's evidence is kept before `kurahi evidence prune` removes it (default 30). */
   retentionDays?: number;
 };

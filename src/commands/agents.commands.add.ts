@@ -178,7 +178,7 @@ export async function agentsAddCommand(
 
   const prompter = createClackPrompter();
   try {
-    await prompter.intro("Add KoLo agent");
+    await prompter.intro("Add Kurahi agent");
     const name =
       nameInput ??
       (await prompter.text({

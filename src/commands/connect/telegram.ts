@@ -1,4 +1,4 @@
-// `kolo connect telegram`: guided bot setup. The bot token goes to the secrets store (never argv
+// `kurahi connect telegram`: guided bot setup. The bot token goes to the secrets store (never argv
 // or logs); the config points at it with a `$secret` ref. A one-time code is printed as a deep
 // link `https://t.me/<bot>?start=<code>` and as a QR; the first /start with that code binds the
 // sender as the channel owner (see channels/resident/owner-binding.ts).
@@ -41,7 +41,7 @@ export async function connectTelegram(
     return fail(
       "telegram",
       EXIT.error,
-      `Telegram rejected the bot token (${probe.error ?? "no bot username"}). Check it with BotFather and run kolo connect telegram again`,
+      `Telegram rejected the bot token (${probe.error ?? "no bot username"}). Check it with BotFather and run kurahi connect telegram again`,
     );
   }
   deps.secrets().set(name, token);
@@ -68,7 +68,7 @@ export async function connectTelegram(
   if (!gatewayUp) {
     say("");
     say("The gateway is not running here. Start it before the code expires so it can receive the");
-    say("first message: kolo service install (or kolo gateway in another terminal).");
+    say("first message: kurahi service install (or kurahi gateway in another terminal).");
   }
   let owner: string | null = null;
   const shouldWait = opts.wait ?? (Boolean(deps.prompter) && gatewayUp);
@@ -80,7 +80,9 @@ export async function connectTelegram(
       owner = bound.senderId;
       say(`owner      telegram user ${bound.senderId} bound. Your resident answers you there.`);
     } else {
-      say("No message arrived before the code expired. Run kolo connect telegram for a new code.");
+      say(
+        "No message arrived before the code expired. Run kurahi connect telegram for a new code.",
+      );
     }
   }
   return {

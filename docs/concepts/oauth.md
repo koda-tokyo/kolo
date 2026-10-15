@@ -1,7 +1,7 @@
 ---
-summary: "OAuth in KoLo: token exchange, storage, and multi-account patterns"
+summary: "OAuth in Kurahi: token exchange, storage, and multi-account patterns"
 read_when:
-  - You want to understand KoLo OAuth end-to-end
+  - You want to understand Kurahi OAuth end-to-end
   - You hit token invalidation / logout issues
   - You want setup-token or OAuth auth flows
   - You want multiple accounts or profile routing
@@ -10,17 +10,17 @@ title: "OAuth"
 
 # OAuth
 
-KoLo supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. This page explains:
+Kurahi supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. This page explains:
 
 - how the OAuth **token exchange** works (PKCE)
 - where tokens are **stored** (and why)
 - how to handle **multiple accounts** (profiles + per-session overrides)
 
-KoLo also supports **provider plugins** that ship their own OAuth or API‑key
+Kurahi also supports **provider plugins** that ship their own OAuth or API‑key
 flows. Run them via:
 
 ```bash
-KoLo models auth login --provider <id>
+Kurahi models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -29,9 +29,9 @@ OAuth providers commonly mint a **new refresh token** during login/refresh flows
 
 Practical symptom:
 
-- you log in via KoLo _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
+- you log in via Kurahi _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
 
-To reduce that, KoLo treats `auth-profiles.json` as a **token sink**:
+To reduce that, Kurahi treats `auth-profiles.json` as a **token sink**:
 
 - the runtime reads credentials from **one place**
 - we can keep multiple profiles and route them deterministically
@@ -51,37 +51,37 @@ All of the above also respect `$KOLO_STATE_DIR` (state dir override). Full refer
 
 ## Anthropic setup-token (subscription auth)
 
-Run `claude setup-token` on any machine, then paste it into KoLo:
+Run `claude setup-token` on any machine, then paste it into Kurahi:
 
 ```bash
-KoLo models auth setup-token --provider anthropic
+Kurahi models auth setup-token --provider anthropic
 ```
 
 If you generated the token elsewhere, paste it manually:
 
 ```bash
-KoLo models auth paste-token --provider anthropic
+Kurahi models auth paste-token --provider anthropic
 ```
 
 Verify:
 
 ```bash
-KoLo models status
+Kurahi models status
 ```
 
 ## OAuth exchange (how login works)
 
-KoLo’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
+Kurahi’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
 
 ### Anthropic (Claude Pro/Max) setup-token
 
 Flow shape:
 
 1. run `claude setup-token`
-2. paste the token into KoLo
+2. paste the token into Kurahi
 3. store as a token auth profile (no refresh)
 
-The wizard path is `KoLo onboard` → auth choice `setup-token` (Anthropic).
+The wizard path is `Kurahi onboard` → auth choice `setup-token` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
@@ -94,7 +94,7 @@ Flow shape (PKCE):
 5. exchange at `https://auth.openai.com/oauth/token`
 6. extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `KoLo onboard` → auth choice `openai-codex`.
+Wizard path is `Kurahi onboard` → auth choice `openai-codex`.
 
 ## Refresh + expiry
 
@@ -116,8 +116,8 @@ Two patterns:
 If you want “personal” and “work” to never interact, use isolated agents (separate sessions + credentials + workspace):
 
 ```bash
-KoLo agents add work
-KoLo agents add personal
+Kurahi agents add work
+Kurahi agents add personal
 ```
 
 Then configure auth per-agent (wizard) and route chats to the right agent.
@@ -137,7 +137,7 @@ Example (session override):
 
 How to see what profile IDs exist:
 
-- `KoLo channels list --json` (shows `auth[]`)
+- `Kurahi channels list --json` (shows `auth[]`)
 
 Related docs:
 

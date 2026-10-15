@@ -9,30 +9,30 @@ Permissions decide what those tools may do once they exist.
 
 ```json5
 {
-  "agents": {
-    "defaults": {
-      "permissions": ["read:**"]            // applies to every agent
+  agents: {
+    defaults: {
+      permissions: ["read:**"], // applies to every agent
     },
-    "list": [
+    list: [
       {
-        "id": "builder",
-        "permissions": [
-          "write:/workspace/**",            // may write anywhere under /workspace
-          "exec:git *"                      // may run git commands only
-        ]
-      }
-    ]
-  }
+        id: "builder",
+        permissions: [
+          "write:/workspace/**", // may write anywhere under /workspace
+          "exec:git *", // may run git commands only
+        ],
+      },
+    ],
+  },
 }
 ```
 
 Rule format: `class:pattern`.
 
-| Class   | Tools covered                          | Target of the glob            |
-| ------- | -------------------------------------- | ----------------------------- |
-| `read`  | `read`                                 | file path                     |
-| `write` | `write`, `edit`, `apply_patch`         | file path(s)                  |
-| `exec`  | `exec`/`bash`, `process`               | full command string           |
+| Class   | Tools covered                  | Target of the glob  |
+| ------- | ------------------------------ | ------------------- |
+| `read`  | `read`                         | file path           |
+| `write` | `write`, `edit`, `apply_patch` | file path(s)        |
+| `exec`  | `exec`/`bash`, `process`       | full command string |
 
 ## Semantics
 
@@ -97,8 +97,8 @@ paths and command strings.
 
 ## CLI note
 
-There is no dedicated CLI subcommand yet; permissions live in the KoLo config
-(`kolo.json5`). Validate changes with `kolo config check` (or restart the gateway in a test
+There is no dedicated CLI subcommand yet; permissions live in the Kurahi config
+(`kolo.json5`). Validate changes with `kurahi config check` (or restart the gateway in a test
 state dir) — malformed rules are skipped with a warning and never fail closed silently:
 a rules list containing only malformed entries still activates the guard, so write/exec
 fall back to deny-by-default.

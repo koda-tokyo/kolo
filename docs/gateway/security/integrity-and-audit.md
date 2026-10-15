@@ -20,27 +20,23 @@ Which files to register comes from config:
 {
   integrity: {
     // Relative to KOLO_HOME, absolute, or ~/...; supports *, **, ?, [..], {a,b} and !exclude
-    paths: [
-      "workspace-*/{SOUL,COVENANT}.md",
-      "/srv/policy/**",
-      "!/srv/policy/drafts/**",
-    ],
+    paths: ["workspace-*/{SOUL,COVENANT}.md", "/srv/policy/**", "!/srv/policy/drafts/**"],
   },
 }
 ```
 
 The registry, not the config, is the source of truth: changing `integrity.paths` changes nothing
-until an operator runs `kolo integrity init --force`.
+until an operator runs `kurahi integrity init --force`.
 
 Operator commands (run in a terminal; agent tools are refused these commands):
 
-| Command                                    | What it does                                                           |
-| ------------------------------------------ | ---------------------------------------------------------------------- |
-| `kolo integrity init --dry-run`            | List the files `integrity.paths` matches                               |
-| `kolo integrity init`                      | Hash them, create the signing key, write the signed registry (audited) |
-| `kolo integrity update <path...>`          | Re-register an intended change or add a file (audited)                 |
-| `kolo integrity update --remove <path...>` | Drop a file from the registry (audited)                                |
-| `kolo integrity status [--unregistered]`   | Verify now; exit 3 on failure                                          |
+| Command                                      | What it does                                                           |
+| -------------------------------------------- | ---------------------------------------------------------------------- |
+| `kurahi integrity init --dry-run`            | List the files `integrity.paths` matches                               |
+| `kurahi integrity init`                      | Hash them, create the signing key, write the signed registry (audited) |
+| `kurahi integrity update <path...>`          | Re-register an intended change or add a file (audited)                 |
+| `kurahi integrity update --remove <path...>` | Drop a file from the registry (audited)                                |
+| `kurahi integrity status [--unregistered]`   | Verify now; exit 3 on failure                                          |
 
 The registry is signed with HMAC-SHA256 under `<KOLO_HOME>/secrets/integrity.key` (mode 0600).
 Set `KOLO_INTEGRITY_KEY_FILE` to keep the key elsewhere. A registry edited without the key, or a
@@ -71,7 +67,7 @@ approvals, rejections and token issue/use/revoke, config file changes, integrity
 failures, blocked writes, and HTTP 401/403 refusals. Secret values are redacted before they are written.
 
 ```bash
-kolo audit verify             # walk the whole chain; reports the first break, exit 1
-kolo audit verify --month 2026-10
-kolo audit tail -n 50         # redacted
+kurahi audit verify             # walk the whole chain; reports the first break, exit 1
+kurahi audit verify --month 2026-10
+kurahi audit tail -n 50         # redacted
 ```

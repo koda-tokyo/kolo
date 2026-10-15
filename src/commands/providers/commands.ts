@@ -1,4 +1,4 @@
-// `kolo providers list|add|test|remove|default` (KoLo 2.0, M9c).
+// `kurahi providers list|add|test|remove|default` (KoLo 2.0, M9c).
 //
 // Pure command functions over a RuntimeEnv so the CLI wiring and the tests share them.
 // Errors carry their exit code (docs/CLI_STYLE.md): 1 failed, 2 usage, 3 unreachable, 4 auth.
@@ -225,9 +225,9 @@ export async function providersAddCommand(
   runtime.log(`base url   ${baseUrl}`);
   runtime.log(`key        ${profileId ? `stored (profile ${profileId})` : "not needed"}`);
   runtime.log(
-    `model      ${modelId ?? "none; add one with: kolo providers default " + entry.id + " --model <id>"}`,
+    `model      ${modelId ?? "none; add one with: kurahi providers default " + entry.id + " --model <id>"}`,
   );
-  runtime.log(`next       kolo providers test ${entry.id}`);
+  runtime.log(`next       kurahi providers test ${entry.id}`);
 }
 
 export async function providersTestCommand(
@@ -248,7 +248,7 @@ export async function providersTestCommand(
   }
   if (!key.configured) {
     throw new ProvidersCommandError(
-      `provider "${entry.id}" has no key. Add one with: kolo providers add ${entry.id} --api-key-stdin`,
+      `provider "${entry.id}" has no key. Add one with: kurahi providers add ${entry.id} --api-key-stdin`,
       PROVIDERS_EXIT.auth,
     );
   }

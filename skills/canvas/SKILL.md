@@ -1,11 +1,11 @@
 ---
 name: Canvas
-description: Display HTML content on connected KoLo nodes (Mac app, iOS, Android). Triggers: canvas, present, display, show on device.
+description: Display HTML content on connected Kurahi nodes (Mac app, iOS, Android). Triggers: canvas, present, display, show on device.
 ---
 
 # Canvas Skill
 
-Display HTML content on connected KoLo nodes (Mac app, iOS, Android).
+Display HTML content on connected Kurahi nodes (Mac app, iOS, Android).
 
 ## Overview
 
@@ -128,7 +128,7 @@ tailscale status --json | jq -r '.Self.DNSName' | sed 's/\.$//'
 ### 3. Find connected nodes
 
 ```bash
-KoLo nodes list
+Kurahi nodes list
 ```
 
 Look for Mac/iOS/Android nodes with canvas capability.
@@ -173,7 +173,7 @@ Always specify `node:<node-id>` parameter.
 
 ### "node not connected" error
 
-Node is offline. Use `KoLo nodes list` to find online nodes.
+Node is offline. Use `Kurahi nodes list` to find online nodes.
 
 ### Content not updating
 

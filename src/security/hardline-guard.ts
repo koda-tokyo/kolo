@@ -97,7 +97,7 @@ function blocked(desc: string, pat: string): HardlineMatch {
     message:
       `BLOCKED (hardline): ${desc}. ` +
       `This command is on the unconditional blocklist and cannot be executed ` +
-      `via KoLo — not even with elevated autonomy or yolo mode. ` +
+      `via Kurahi — not even with elevated autonomy or yolo mode. ` +
       `If you genuinely need to run it, do so directly in a terminal outside the agent.`,
   };
 }
@@ -117,31 +117,31 @@ const KOLO_HARDLINE: HardlinePattern[] = [
   {
     re: /\bpm2\s+(kill|delete\s+kolo-gateway|stop\s+kolo-gateway)\b/i,
     pattern: "pm2-gateway-kill",
-    description: "PM2 kill/stop KoLo gateway",
+    description: "PM2 kill/stop Kurahi gateway",
   },
-  // Delete KoLo home — wipes all memory, vault, identity, config
+  // Delete Kurahi home — wipes all memory, vault, identity, config
   {
     re: /\brm\s+(-[^\s]*[rf][^\s]*\s+)*~\/\.kolo(\/\*?)?(\s|$)/i,
     pattern: "rm-kolo-home",
-    description: "delete KoLo home (~/.kolo) — wipes all memory and identity",
+    description: "delete Kurahi home (~/.kolo) — wipes all memory and identity",
   },
-  // Delete KoLo vault — wipes credentials and secrets
+  // Delete Kurahi vault — wipes credentials and secrets
   {
     re: /\brm\s+(-[^\s]*[rf][^\s]*\s+)*~\/\.kolo\/vault(\/\*?)?(\s|$)/i,
     pattern: "rm-kolo-vault",
-    description: "delete KoLo vault (~/.kolo/vault) — wipes all credentials",
+    description: "delete Kurahi vault (~/.kolo/vault) — wipes all credentials",
   },
-  // Kill KoLo via pgrep/pidof — self-termination attack
+  // Kill Kurahi via pgrep/pidof — self-termination attack
   {
     re: /\bkill\b.*\$\(\s*pgrep\b.*(?:kolo|gateway)/i,
     pattern: "kill-kolo-pgrep",
-    description: "kill KoLo gateway via pgrep (self-termination)",
+    description: "kill Kurahi gateway via pgrep (self-termination)",
   },
-  // Kill KoLo processes by name
+  // Kill Kurahi processes by name
   {
     re: /\b(?:pkill|killall)\b.*\b(?:kolo|kolo-gateway)\b/i,
     pattern: "pkill-kolo",
-    description: "kill KoLo processes by name (self-termination)",
+    description: "kill Kurahi processes by name (self-termination)",
   },
 ];
 

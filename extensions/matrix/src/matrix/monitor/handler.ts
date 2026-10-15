@@ -275,7 +275,7 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
                       `Pairing code: ${code}`,
                       "",
                       "Ask the bot owner to approve with:",
-                      "KoLo pairing approve matrix <code>",
+                      "Kurahi pairing approve matrix <code>",
                     ].join("\n"),
                     { client },
                   );

@@ -1,7 +1,7 @@
 /**
  * KoLo prebuilt bundle: manifest, asset naming and checksum helpers.
  *
- * Shared by `scripts/bundle.mjs` (through `dist/packaging/`), `kolo update` and the tests.
+ * Shared by `scripts/bundle.mjs` (through `dist/packaging/`), `kurahi update` and the tests.
  * A bundle is a directory:
  *
  *   kolo-<version>-<os>-<arch>/

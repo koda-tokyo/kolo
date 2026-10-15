@@ -1,5 +1,5 @@
 ---
-summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for KoLo browser control on Linux"
+summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for Kurahi browser control on Linux"
 read_when: "Browser control fails on Linux, especially with snap Chromium"
 title: "Browser Troubleshooting"
 ---
@@ -8,15 +8,15 @@ title: "Browser Troubleshooting"
 
 ## Problem: "Failed to start Chrome CDP on port 18800"
 
-KoLo's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
+Kurahi's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"KoLo\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"Kurahi\"."}
 ```
 
 ### Root Cause
 
-On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how KoLo spawns and monitors the browser process.
+On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how Kurahi spawns and monitors the browser process.
 
 The `apt install chromium` command installs a stub package that redirects to snap:
 
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your KoLo config (`~/.kolo/kolo.json`):
+Then update your Kurahi config (`~/.kolo/kolo.json`):
 
 ```json
 {
@@ -52,7 +52,7 @@ Then update your KoLo config (`~/.kolo/kolo.json`):
 
 ### Solution 2: Use Snap Chromium with Attach-Only Mode
 
-If you must use snap Chromium, configure KoLo to attach to a manually-started browser:
+If you must use snap Chromium, configure Kurahi to attach to a manually-started browser:
 
 1. Update config:
 
@@ -72,7 +72,7 @@ If you must use snap Chromium, configure KoLo to attach to a manually-started br
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.kolo/browser/KoLo/user-data \
+  --user-data-dir=$HOME/.kolo/browser/Kurahi/user-data \
   about:blank &
 ```
 
@@ -81,11 +81,11 @@ chromium-browser --headless --no-sandbox --disable-gpu \
 ```ini
 # ~/.config/systemd/user/kolo-browser.service
 [Unit]
-Description=KoLo Browser (Chrome CDP)
+Description=Kurahi Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.kolo/browser/KoLo/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.kolo/browser/Kurahi/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -123,17 +123,17 @@ curl -s http://127.0.0.1:18791/tabs
 
 ### Problem: "Chrome extension relay is running, but no tab is connected"
 
-You’re using the `chrome` profile (extension relay). It expects the KoLo
+You’re using the `chrome` profile (extension relay). It expects the Kurahi
 browser extension to be attached to a live tab.
 
 Fix options:
 
-1. **Use the managed browser:** `KoLo browser start --browser-profile KoLo`
-   (or set `browser.defaultProfile: "KoLo"`).
+1. **Use the managed browser:** `Kurahi browser start --browser-profile Kurahi`
+   (or set `browser.defaultProfile: "Kurahi"`).
 2. **Use the extension relay:** install the extension, open a tab, and click the
-   KoLo extension icon to attach it.
+   Kurahi extension icon to attach it.
 
 Notes:
 
 - The `chrome` profile uses your **system default Chromium browser** when possible.
-- Local `KoLo` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `Kurahi` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

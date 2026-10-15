@@ -17,7 +17,7 @@ export interface MemoryInjectParams {
   contextFiles: EmbeddedContextFile[];
   /** User's prompt/message (source for search query) */
   prompt: string;
-  /** Full KoLo config */
+  /** Full Kurahi config */
   config: KoLoConfig;
   /** Agent ID for memory scope */
   agentId: string;

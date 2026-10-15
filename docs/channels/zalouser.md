@@ -1,7 +1,7 @@
 ---
 summary: "Zalo personal account support via zca-cli (QR login), capabilities, and configuration"
 read_when:
-  - Setting up Zalo Personal for KoLo
+  - Setting up Zalo Personal for Kurahi
   - Debugging Zalo Personal login or message flow
 title: "Zalo Personal"
 ---
@@ -16,8 +16,8 @@ Status: experimental. This integration automates a **personal Zalo account** via
 
 Zalo Personal ships as a plugin and is not bundled with the core install.
 
-- Install via CLI: `kolo plugins install @KoLo/zalouser`
-- Or from a source checkout: `kolo plugins install ./extensions/zalouser`
+- Install via CLI: `kurahi plugins install @Kurahi/zalouser`
+- Or from a source checkout: `kurahi plugins install ./extensions/zalouser`
 - Details: [Plugins](/plugin)
 
 ## Prerequisite: zca-cli
@@ -31,7 +31,7 @@ The Gateway machine must have the `zca` binary available in `PATH`.
 
 1. Install the plugin (see above).
 2. Login (QR, on the Gateway machine):
-   - `KoLo channels login --channel zalouser`
+   - `Kurahi channels login --channel zalouser`
    - Scan the QR code in the terminal with the Zalo mobile app.
 3. Enable the channel:
 
@@ -64,9 +64,9 @@ Channel id is `zalouser` to make it explicit this automates a **personal Zalo us
 Use the directory CLI to discover peers/groups and their IDs:
 
 ```bash
-KoLo directory self --channel zalouser
-KoLo directory peers list --channel zalouser --query "name"
-KoLo directory groups list --channel zalouser --query "work"
+Kurahi directory self --channel zalouser
+Kurahi directory peers list --channel zalouser --query "name"
+Kurahi directory groups list --channel zalouser --query "work"
 ```
 
 ## Limits
@@ -81,8 +81,8 @@ KoLo directory groups list --channel zalouser --query "work"
 
 Approve via:
 
-- `KoLo pairing list zalouser`
-- `KoLo pairing approve zalouser <code>`
+- `Kurahi pairing list zalouser`
+- `Kurahi pairing approve zalouser <code>`
 
 ## Group access (optional)
 
@@ -92,7 +92,7 @@ Approve via:
   - `channels.zalouser.groups` (keys are group IDs or names)
 - Block all groups: `channels.zalouser.groupPolicy = "disabled"`.
 - The configure wizard can prompt for group allowlists.
-- On startup, KoLo resolves group/user names in allowlists to IDs and logs the mapping; unresolved entries are kept as typed.
+- On startup, Kurahi resolves group/user names in allowlists to IDs and logs the mapping; unresolved entries are kept as typed.
 
 Example:
 
@@ -136,5 +136,5 @@ Accounts map to zca profiles. Example:
 
 **Login doesn’t stick:**
 
-- `KoLo channels status --probe`
-- Re-login: `KoLo channels logout --channel zalouser && KoLo channels login --channel zalouser`
+- `Kurahi channels status --probe`
+- Re-login: `Kurahi channels logout --channel zalouser && Kurahi channels login --channel zalouser`

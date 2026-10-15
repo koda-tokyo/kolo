@@ -14,11 +14,11 @@ the run is aborted, its state is summarised for the log, and an audit entry is w
 
 ## Rules
 
-| Rule | Default | Fires when |
-|---|---|---|
-| `maxSteps` | 200 | the run has made this many tool steps |
-| `doomLoop.maxIdenticalCalls` | 4 | the same tool is called this many times in a row with the same arguments (arguments are canonicalised, so key order does not matter) |
-| `doomLoop.noProgressSteps` | 12 | this many steps pass with no successful write-class tool call (`write`, `edit`, `apply_patch`, `multi_edit`) and no changed result for a repeated call; errors never count as progress |
+| Rule                         | Default | Fires when                                                                                                                                                                             |
+| ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `maxSteps`                   | 200     | the run has made this many tool steps                                                                                                                                                  |
+| `doomLoop.maxIdenticalCalls` | 4       | the same tool is called this many times in a row with the same arguments (arguments are canonicalised, so key order does not matter)                                                   |
+| `doomLoop.noProgressSteps`   | 12      | this many steps pass with no successful write-class tool call (`write`, `edit`, `apply_patch`, `multi_edit`) and no changed result for a repeated call; errors never count as progress |
 
 ## Configuration
 
@@ -31,13 +31,11 @@ defaults:
     defaults: {
       limits: {
         maxSteps: 200,
-        doomLoop: { maxIdenticalCalls: 4, noProgressSteps: 12 }
-      }
+        doomLoop: { maxIdenticalCalls: 4, noProgressSteps: 12 },
+      },
     },
-    list: [
-      { id: "ops-bot", limits: { maxSteps: 50 } }
-    ]
-  }
+    list: [{ id: "ops-bot", limits: { maxSteps: 50 } }],
+  },
 }
 ```
 
@@ -47,8 +45,8 @@ defaults:
 
 - The gateway log: `embedded run loop stop: runId=... reason=<max_steps|identical_calls|no_progress> steps=N: <summary>`.
 - The audit log: `agent.loop_stopped` with the reason, the summary, the step count, the limits in
-  force, the run id and the session id (`kolo api listAuditEvents -p action=agent.loop_stopped`).
-- The job: `kolo api getJob -p id=<job id>` shows `status: loop_stopped`.
+  force, the run id and the session id (`kurahi api listAuditEvents -p action=agent.loop_stopped`).
+- The job: `kurahi api getJob -p id=<job id>` shows `status: loop_stopped`.
 
 The detector is pure logic over the tool start and end events of one run; it holds no state across
 runs and never reads tool contents beyond a bounded digest of the arguments.

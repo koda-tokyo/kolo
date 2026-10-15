@@ -1,22 +1,22 @@
 ---
-summary: "CLI reference for `kolo mcp` (MCP servers the gateway connects to)"
+summary: "CLI reference for `kurahi mcp` (MCP servers the gateway connects to)"
 read_when:
   - You want the agent to use tools from an MCP server
   - You want to test an MCP server before adding it
 title: "mcp"
 ---
 
-# `kolo mcp`
+# `kurahi mcp`
 
 MCP servers this gateway connects to. Their tools surface to agents as `mcp:<server>:<tool>` and go
 through the same tool policy, capability checks and audit as core tools.
 
 ```bash
-kolo mcp list [--json]
-kolo mcp add <id> --stdio <command> [-- args...] [--env KEY=VALUE] [--cwd <dir>]
-kolo mcp add <id> --url <endpoint> [--header KEY=VALUE]
-kolo mcp remove <id> [--json]
-kolo mcp test <id> [--json]
+kurahi mcp list [--json]
+kurahi mcp add <id> --stdio <command> [-- args...] [--env KEY=VALUE] [--cwd <dir>]
+kurahi mcp add <id> --url <endpoint> [--header KEY=VALUE]
+kurahi mcp remove <id> [--json]
+kurahi mcp test <id> [--json]
 ```
 
 ## Commands
@@ -38,10 +38,10 @@ kolo mcp test <id> [--json]
 ## Examples
 
 ```bash
-kolo mcp add docs --stdio npx -- -y some-docs-server --root ./docs
-kolo mcp add tracker --url https://tracker.example.com/mcp --header "Authorization=$secret:tracker-token"
-kolo mcp test tracker
-kolo mcp list
+kurahi mcp add docs --stdio npx -- -y some-docs-server --root ./docs
+kurahi mcp add tracker --url https://tracker.example.com/mcp --header "Authorization=$secret:tracker-token"
+kurahi mcp test tracker
+kurahi mcp list
 ```
 
 Servers live under `mcp.servers.<id>` in the config. Restrict which agents may call them with the

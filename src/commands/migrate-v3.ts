@@ -6,10 +6,10 @@
  * defaults. This is Gate 2 of the v3.0.0 acceptance criteria (Paper 9).
  *
  * Usage:
- *   pnpm kolo migrate-v3 --dry-run   # Show what would change, write nothing
- *   pnpm kolo migrate-v3 --apply     # Apply changes to kolo.json in place
- *   pnpm kolo migrate-v3 --rollback  # Remove gateway.v3 block (revert to v2)
- *   pnpm kolo migrate-v3 --check     # Exit 0 if v3 already complete, 1 if not
+ *   pnpm kurahi migrate-v3 --dry-run   # Show what would change, write nothing
+ *   pnpm kurahi migrate-v3 --apply     # Apply changes to kolo.json in place
+ *   pnpm kurahi migrate-v3 --rollback  # Remove gateway.v3 block (revert to v2)
+ *   pnpm kurahi migrate-v3 --check     # Exit 0 if v3 already complete, 1 if not
  *
  * Design:
  *   - Non-destructive: only adds missing keys, never removes existing ones
@@ -261,7 +261,7 @@ export async function runMigrateV3(opts: MigrateV3Options = {}): Promise<void> {
 
   console.log(`\n✅ Migration applied to ${configPath}`);
   console.log(`   Added ${result.added.length} key(s): ${result.added.join(", ")}`);
-  console.log(`   Rollback: pnpm kolo migrate-v3 --rollback`);
+  console.log(`   Rollback: pnpm kurahi migrate-v3 --rollback`);
 }
 
 // ── Parse CLI args ────────────────────────────────────────────────────────────
@@ -283,11 +283,11 @@ if (args.length === 0 || args.includes("--help")) {
 migrate-v3 — KoLo Gateway v3 config migration tool
 
 Usage:
-  pnpm kolo migrate-v3 --dry-run     Show what would change (default)
-  pnpm kolo migrate-v3 --apply       Apply changes to kolo.json
-  pnpm kolo migrate-v3 --rollback    Restore kolo.json.pre-v3 backup
-  pnpm kolo migrate-v3 --check       Exit 0=complete, 1=incomplete (for CI)
-  pnpm kolo migrate-v3 --config=PATH Use alternate config path
+  pnpm kurahi migrate-v3 --dry-run     Show what would change (default)
+  pnpm kurahi migrate-v3 --apply       Apply changes to kolo.json
+  pnpm kurahi migrate-v3 --rollback    Restore kolo.json.pre-v3 backup
+  pnpm kurahi migrate-v3 --check       Exit 0=complete, 1=incomplete (for CI)
+  pnpm kurahi migrate-v3 --config=PATH Use alternate config path
 
 Options:
   --help     Show this help

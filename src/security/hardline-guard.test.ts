@@ -482,7 +482,7 @@ describe("legitimate commands pass clean (no false positives)", () => {
     expect(detectHardlineCommand("echo 'please reboot later'")).toBeNull();
   });
 
-  // Commands that mention kolo in non-kill contexts
+  // Commands that mention kurahi in non-kill contexts
   it("passes echo kolo-gateway status", () => {
     expect(detectHardlineCommand("echo 'kolo-gateway is running'")).toBeNull();
   });
@@ -523,8 +523,8 @@ describe("legitimate commands pass clean (no false positives)", () => {
     expect(detectHardlineCommand(`~/.kolo/bin/sibling-notify "hello"`)).toBeNull();
   });
 
-  it("passes KoLo gateway status", () => {
-    expect(detectHardlineCommand("kolo gateway status")).toBeNull();
+  it("passes Kurahi gateway status", () => {
+    expect(detectHardlineCommand("kurahi gateway status")).toBeNull();
   });
 
   it("passes empty string", () => {

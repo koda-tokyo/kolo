@@ -11,7 +11,7 @@ process.title = "KoLo";
 installProcessWarningFilter();
 normalizeEnv();
 
-// `kolo --version` answers here, before the respawn and before any state is read.
+// `kurahi --version` answers here, before the respawn and before any state is read.
 if (
   process.argv.length > 2 &&
   process.argv.slice(2).every((arg) => arg === "--version" || arg === "-V" || arg === "-v")

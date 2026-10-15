@@ -1,17 +1,17 @@
-// `kolo mcp …` — MCP client servers (KoLo 2.0, M6).
+// `kurahi mcp …` — MCP client servers (KoLo 2.0, M6).
 //
-//   kolo mcp list [--json]                         configured servers (+ live state when a gateway answers)
-//   kolo mcp add <id> --stdio <command> [-- args]  add a stdio server
-//   kolo mcp add <id> --url <http(s)://…>          add a streamable-HTTP server
+//   kurahi mcp list [--json]                         configured servers (+ live state when a gateway answers)
+//   kurahi mcp add <id> --stdio <command> [-- args]  add a stdio server
+//   kurahi mcp add <id> --url <http(s)://…>          add a streamable-HTTP server
 //        [--header K=V] [--env K=V] [--cwd dir] [--allow glob] [--timeout ms] [--disabled]
-//   kolo mcp remove <id>
-//   kolo mcp test <id> [--json]                    connect once, list tools/resources/prompts, exit 0/1
+//   kurahi mcp remove <id>
+//   kurahi mcp test <id> [--json]                    connect once, list tools/resources/prompts, exit 0/1
 //
 // `add`/`remove` edit `mcp.servers` in kolo.json through the config writer (secret refs are
 // restored on write). `test` connects in-process: no gateway needed. A header value given as
 // `$secret:<name>` is stored as a `{"$secret": "<name>"}` reference, never the value.
 import type { Command } from "commander";
-import { KoloClient } from "@kodasoken/kolo-client";
+import { KoloClient } from "@kodasoken/kurahi-client";
 import type { McpServerConfig } from "../config/types.mcp.js";
 import type { McpServerStatus } from "../mcp/client/connection.js";
 import { loadConfig, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
@@ -173,7 +173,7 @@ export function registerMcpCli(program: Command, deps: McpCliDeps = {}) {
       "after",
       () =>
         `\n${theme.muted("Example:")} ${formatCliCommand(
-          "kolo mcp add docs --stdio npx -- -y @modelcontextprotocol/server-filesystem ./docs",
+          "kurahi mcp add docs --stdio npx -- -y @modelcontextprotocol/server-filesystem ./docs",
         )}\n${theme.muted("Policy:")} exec-like tools (run, shell, write, delete …) stay hidden unless --allow names them.\n`,
     );
 
@@ -214,7 +214,7 @@ export function registerMcpCli(program: Command, deps: McpCliDeps = {}) {
         }
         if (rows.length === 0) {
           runtime.log(
-            `No MCP servers configured. Add one with ${formatCliCommand("kolo mcp add")}.`,
+            `No MCP servers configured. Add one with ${formatCliCommand("kurahi mcp add")}.`,
           );
           return;
         }
@@ -285,7 +285,7 @@ export function registerMcpCli(program: Command, deps: McpCliDeps = {}) {
           }
           runtime.log(
             `Added MCP server ${theme.accent(id)} (${server.transport}). Restart the gateway to connect; ` +
-              `${formatCliCommand(`kolo mcp test ${id}`)} probes it now.`,
+              `${formatCliCommand(`kurahi mcp test ${id}`)} probes it now.`,
           );
         } catch (err) {
           exitWith(runtime, err, opts.json);

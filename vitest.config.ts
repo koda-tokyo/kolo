@@ -27,7 +27,7 @@ export default defineConfig({
     alias: {
       "KoLo/plugin-sdk": path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       // Tests run against the client sources, so no build is needed before `vitest`.
-      "@kodasoken/kolo-client": path.join(repoRoot, "packages", "client", "src", "index.ts"),
+      "@kodasoken/kurahi-client": path.join(repoRoot, "packages", "client", "src", "index.ts"),
     },
   },
   test: {

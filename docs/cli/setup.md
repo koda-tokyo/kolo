@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo setup` (initialize config + workspace)"
+summary: "CLI reference for `Kurahi setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `KoLo setup`
+# `Kurahi setup`
 
 Initialize `~/.kolo/kolo.json` and the agent workspace.
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-KoLo setup
-KoLo setup --workspace ~/.kolo/workspace
+Kurahi setup
+Kurahi setup --workspace ~/.kolo/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-KoLo setup --wizard
+Kurahi setup --wizard
 ```

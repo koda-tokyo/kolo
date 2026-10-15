@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `KoLo browser` (profiles, tabs, actions, extension relay)"
+summary: "CLI reference for `Kurahi browser` (profiles, tabs, actions, extension relay)"
 read_when:
-  - You use `KoLo browser` and want examples for common tasks
+  - You use `Kurahi browser` and want examples for common tasks
   - You want to control a browser running on another machine via a node host
   - You want to use the Chrome extension relay (attach/detach via toolbar button)
 title: "browser"
 ---
 
-# `KoLo browser`
+# `Kurahi browser`
 
-Manage KoLo’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
+Manage Kurahi’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
 
 Related:
 
@@ -27,38 +27,38 @@ Related:
 ## Quick start (local)
 
 ```bash
-KoLo browser --browser-profile chrome tabs
-KoLo browser --browser-profile KoLo start
-KoLo browser --browser-profile KoLo open https://example.com
-KoLo browser --browser-profile KoLo snapshot
+Kurahi browser --browser-profile chrome tabs
+Kurahi browser --browser-profile Kurahi start
+Kurahi browser --browser-profile Kurahi open https://example.com
+Kurahi browser --browser-profile Kurahi snapshot
 ```
 
 ## Profiles
 
 Profiles are named browser routing configs. In practice:
 
-- `KoLo`: launches/attaches to a dedicated kolo-managed Chrome instance (isolated user data dir).
+- `Kurahi`: launches/attaches to a dedicated kolo-managed Chrome instance (isolated user data dir).
 - `chrome`: controls your existing Chrome tab(s) via the Chrome extension relay.
 
 ```bash
-KoLo browser profiles
-KoLo browser create-profile --name work --color "#FF5A36"
-KoLo browser delete-profile --name work
+Kurahi browser profiles
+Kurahi browser create-profile --name work --color "#FF5A36"
+Kurahi browser delete-profile --name work
 ```
 
 Use a specific profile:
 
 ```bash
-KoLo browser --browser-profile work tabs
+Kurahi browser --browser-profile work tabs
 ```
 
 ## Tabs
 
 ```bash
-KoLo browser tabs
-KoLo browser open https://kodasoken.com/kolo
-KoLo browser focus <targetId>
-KoLo browser close <targetId>
+Kurahi browser tabs
+Kurahi browser open https://kodasoken.com/kolo
+Kurahi browser focus <targetId>
+Kurahi browser close <targetId>
 ```
 
 ## Snapshot / screenshot / actions
@@ -66,21 +66,21 @@ KoLo browser close <targetId>
 Snapshot:
 
 ```bash
-KoLo browser snapshot
+Kurahi browser snapshot
 ```
 
 Screenshot:
 
 ```bash
-KoLo browser screenshot
+Kurahi browser screenshot
 ```
 
 Navigate/click/type (ref-based UI automation):
 
 ```bash
-KoLo browser navigate https://example.com
-KoLo browser click <ref>
-KoLo browser type <ref> "hello"
+Kurahi browser navigate https://example.com
+Kurahi browser click <ref>
+Kurahi browser type <ref> "hello"
 ```
 
 ## Chrome extension relay (attach via toolbar button)
@@ -90,8 +90,8 @@ This mode lets the agent control an existing Chrome tab that you attach manually
 Install the unpacked extension to a stable path:
 
 ```bash
-KoLo browser extension install
-KoLo browser extension path
+Kurahi browser extension install
+Kurahi browser extension path
 ```
 
 Then Chrome → `chrome://extensions` → enable “Developer mode” → “Load unpacked” → select the printed folder.

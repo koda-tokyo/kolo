@@ -1,5 +1,5 @@
 ---
-summary: "First-run onboarding flow for KoLo (macOS app)"
+summary: "First-run onboarding flow for Kurahi (macOS app)"
 read_when:
   - Designing the macOS onboarding assistant
   - Implementing auth or identity setup
@@ -71,7 +71,7 @@ Onboarding requests TCC permissions needed for:
 
 ## 6) CLI (optional)
 
-The app can install the global `KoLo` CLI via npm/pnpm so terminal
+The app can install the global `Kurahi` CLI via npm/pnpm so terminal
 workflows and launchd tasks work out of the box.
 
 ## 7) Onboarding chat (dedicated session)
@@ -82,7 +82,7 @@ from your normal conversation.
 
 ## Agent bootstrap ritual
 
-On the first agent run, KoLo bootstraps a workspace (default `~/.kolo/workspace`):
+On the first agent run, Kurahi bootstraps a workspace (default `~/.kolo/workspace`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`
 - Runs a short Q&A ritual (one question at a time)
@@ -94,7 +94,7 @@ On the first agent run, KoLo bootstraps a workspace (default `~/.kolo/workspace`
 Gmail Pub/Sub setup is currently a manual step. Use:
 
 ```bash
-KoLo webhooks gmail setup --account you@gmail.com
+Kurahi webhooks gmail setup --account you@gmail.com
 ```
 
 See [/automation/gmail-pubsub](/automation/gmail-pubsub) for details.

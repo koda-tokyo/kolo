@@ -31,6 +31,6 @@ Last updated: 2026-10-13
 
 ## Operational notes
 
-- If the port is occupied by _another_ process, the error is the same; free the port or choose another with `KoLo gateway --port <port>`.
-- `kolo gateway --force` only stops the pid named in this state root's lease (verified against `/proc` on Linux); it never matches processes by name.
-- `kolo gateway status` / `kolo doctor` name the holder from the lease; anything else holding the port is reported as an unknown holder (no `lsof`).
+- If the port is occupied by _another_ process, the error is the same; free the port or choose another with `Kurahi gateway --port <port>`.
+- `kurahi gateway --force` only stops the pid named in this state root's lease (verified against `/proc` on Linux); it never matches processes by name.
+- `kurahi gateway status` / `kurahi doctor` name the holder from the lease; anything else holding the port is reported as an unknown holder (no `lsof`).

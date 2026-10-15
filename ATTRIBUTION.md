@@ -1,6 +1,6 @@
 # Attribution
 
-KoLo includes and builds on open-source work. This file lists the upstream projects whose licences require that their copyright notice be retained, together with the design patterns adopted from other projects. The full dependency inventory is in `pnpm-lock.yaml`; each package carries its own licence file under `node_modules`.
+Kurahi includes and builds on open-source work. This file lists the upstream projects whose licences require that their copyright notice be retained, together with the design patterns adopted from other projects. The full dependency inventory is in `pnpm-lock.yaml`; each package carries its own licence file under `node_modules`.
 
 ## Upstream fork
 
@@ -30,7 +30,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-KoLo is not endorsed by or affiliated with the upstream project or its maintainers. KODA's own contributions and the work as a whole are licensed as described in `LICENSING.md`.
+Kurahi is not endorsed by or affiliated with the upstream project or its maintainers. KODA's own contributions and the work as a whole are licensed as described in `LICENSING.md`.
 
 ## Adapted design patterns (no code copied)
 

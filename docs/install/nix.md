@@ -1,5 +1,5 @@
 ---
-summary: "Install KoLo declaratively with Nix"
+summary: "Install Kurahi declaratively with Nix"
 read_when:
   - You want reproducible, rollback-able installs
   - You're already using Nix/NixOS/Home Manager
@@ -9,7 +9,7 @@ title: "Nix"
 
 # Nix Installation
 
-The recommended way to run KoLo with Nix is via **[nix-KoLo](https://github.com/KoLo/nix-KoLo)** — a batteries-included Home Manager module.
+The recommended way to run Kurahi with Nix is via **[nix-KoLo](https://github.com/Kurahi/nix-KoLo)** — a batteries-included Home Manager module.
 
 ## Quick Start
 
@@ -17,7 +17,7 @@ Paste this to your AI agent (Claude, Cursor, etc.):
 
 ```text
 I want to set up nix-KoLo on my Mac.
-Repository: github:KoLo/nix-KoLo
+Repository: github:Kurahi/nix-KoLo
 
 What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
@@ -30,7 +30,7 @@ What I need you to do:
 Reference the nix-KoLo README for module options.
 ```
 
-> **📦 Full guide: [github.com/KoLo/nix-KoLo](https://github.com/KoLo/nix-KoLo)**
+> **📦 Full guide: [github.com/Kurahi/nix-KoLo](https://github.com/Kurahi/nix-KoLo)**
 >
 > The nix-KoLo repo is the source of truth for Nix installation. This page is just a quick overview.
 
@@ -47,7 +47,7 @@ Reference the nix-KoLo README for module options.
 
 When `KOLO_NIX_MODE=1` is set (automatic with nix-KoLo):
 
-KoLo supports a **Nix mode** that makes configuration deterministic and disables auto-install flows.
+Kurahi supports a **Nix mode** that makes configuration deterministic and disables auto-install flows.
 Enable it by exporting:
 
 ```bash
@@ -63,7 +63,7 @@ defaults write com.kodasoken.kolo.mac KoLo.nixMode -bool true
 
 ### Config + state paths
 
-KoLo reads JSON5 config from `KOLO_CONFIG_PATH` and stores mutable data in `KOLO_STATE_DIR`.
+Kurahi reads JSON5 config from `KOLO_CONFIG_PATH` and stores mutable data in `KOLO_STATE_DIR`.
 
 - `KOLO_STATE_DIR` (default: `~/.kolo`)
 - `KOLO_CONFIG_PATH` (default: `$KOLO_STATE_DIR/kolo.json`)
@@ -82,15 +82,15 @@ stay out of the immutable store.
 The macOS packaging flow expects a stable Info.plist template at:
 
 ```
-apps/macos/Sources/KoLo/Resources/Info.plist
+apps/macos/Sources/Kurahi/Resources/Info.plist
 ```
 
-[`scripts/package-mac-app.sh`](https://github.com/koda-tokyo/kolo/blob/main/scripts/package-mac-app.sh) copies this template into the app bundle and patches dynamic fields
+[`scripts/package-mac-app.sh`](https://github.com/koda-tokyo/kurahi/blob/main/scripts/package-mac-app.sh) copies this template into the app bundle and patches dynamic fields
 (bundle ID, version/build, Git SHA, Sparkle keys). This keeps the plist deterministic for SwiftPM
 packaging and Nix builds (which do not rely on a full Xcode toolchain).
 
 ## Related
 
-- [nix-KoLo](https://github.com/KoLo/nix-KoLo) — full setup guide
+- [nix-KoLo](https://github.com/Kurahi/nix-KoLo) — full setup guide
 - [Wizard](/start/wizard) — non-Nix CLI setup
 - [Docker](/install/docker) — containerized setup

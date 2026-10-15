@@ -15,8 +15,8 @@ Native Linux companion apps are planned. Contributions are welcome if you want t
 ## Beginner quick path (VPS)
 
 1. Install Node 22+
-2. `npm i -g @kodasoken/kolo@latest`
-3. `KoLo onboard --install-daemon`
+2. `npm i -g kurahi@latest`
+3. `Kurahi onboard --install-daemon`
 4. From your laptop: `ssh -N -L 18789:127.0.0.1:18789 <user>@<host>`
 5. Open `http://127.0.0.1:18789/` and paste your token
 
@@ -38,19 +38,19 @@ Step-by-step VPS guide: [exe.dev](/platforms/exe-dev)
 Use one of these:
 
 ```
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
 Or:
 
 ```
-KoLo gateway install
+Kurahi gateway install
 ```
 
 Or:
 
 ```
-KoLo configure
+Kurahi configure
 ```
 
 Select **Gateway service** when prompted.
@@ -58,12 +58,12 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-KoLo doctor
+Kurahi doctor
 ```
 
 ## System control (systemd user unit)
 
-KoLo installs a systemd **user** service by default. Use a **system**
+Kurahi installs a systemd **user** service by default. Use a **system**
 service for shared or always-on servers. The full unit example and guidance
 live in the [Gateway runbook](/gateway).
 
@@ -73,12 +73,12 @@ Create `~/.config/systemd/user/kolo-gateway[-<profile>].service`:
 
 ```
 [Unit]
-Description=KoLo Gateway (profile: <profile>, v<version>)
+Description=Kurahi Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/KoLo gateway --port 18789
+ExecStart=/usr/local/bin/Kurahi gateway --port 18789
 Restart=always
 RestartSec=5
 

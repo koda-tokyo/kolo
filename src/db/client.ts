@@ -1,5 +1,5 @@
 // src/db/client.ts
-// PostgreSQL client for KoLo auth + workspace system
+// PostgreSQL client for Kurahi auth + workspace system
 //
 // Uses raw SQL with type-safe wrappers for simplicity and control.
 // No heavy ORM - just clean queries.

@@ -1,56 +1,56 @@
 ---
-summary: "CLI reference for `KoLo devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `Kurahi devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `KoLo devices`
+# `Kurahi devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `KoLo devices list`
+### `Kurahi devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-KoLo devices list
-KoLo devices list --json
+Kurahi devices list
+Kurahi devices list --json
 ```
 
-### `KoLo devices approve <requestId>`
+### `Kurahi devices approve <requestId>`
 
 Approve a pending device pairing request.
 
 ```
-KoLo devices approve <requestId>
+Kurahi devices approve <requestId>
 ```
 
-### `KoLo devices reject <requestId>`
+### `Kurahi devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-KoLo devices reject <requestId>
+Kurahi devices reject <requestId>
 ```
 
-### `KoLo devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `Kurahi devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-KoLo devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+Kurahi devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `KoLo devices revoke --device <id> --role <role>`
+### `Kurahi devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-KoLo devices revoke --device <deviceId> --role node
+Kurahi devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

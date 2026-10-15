@@ -14,7 +14,7 @@ export function resolveChannelDefaultAccountId<ResolvedAccount>(params: {
 }
 
 export function formatPairingApproveHint(channelId: string): string {
-  const listCmd = formatCliCommand(`kolo pairing list ${channelId}`);
-  const approveCmd = formatCliCommand(`kolo pairing approve ${channelId} <code>`);
+  const listCmd = formatCliCommand(`kurahi pairing list ${channelId}`);
+  const approveCmd = formatCliCommand(`kurahi pairing approve ${channelId} <code>`);
   return `Approve via: ${listCmd} / ${approveCmd}`;
 }

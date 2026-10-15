@@ -378,7 +378,7 @@ export async function statusCommand(
     },
   ];
 
-  runtime.log(theme.heading("kolo status"));
+  runtime.log(theme.heading("kurahi status"));
   runtime.log("");
   runtime.log(theme.heading("Overview"));
   runtime.log(
@@ -435,8 +435,8 @@ export async function statusCommand(
       runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("kolo security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("kolo security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("kurahi security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("kurahi security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -609,11 +609,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("kolo status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("kolo logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("kurahi status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("kurahi logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("kolo status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("kurahi status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("kolo gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("kurahi gateway probe")}`);
   }
 }

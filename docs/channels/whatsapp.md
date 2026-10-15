@@ -13,7 +13,7 @@ Status: WhatsApp Web via Baileys only. Gateway owns the session(s).
 
 1. Use a **separate phone number** if possible (recommended).
 2. Configure WhatsApp in `~/.kolo/kolo.json`.
-3. Run `KoLo channels login` to scan the QR code (Linked Devices).
+3. Run `Kurahi channels login` to scan the QR code (Linked Devices).
 4. Start the gateway.
 
 Minimal config:
@@ -55,13 +55,13 @@ Disable with:
 
 ## Getting a phone number (two modes)
 
-WhatsApp requires a real mobile number for verification. VoIP and virtual numbers are usually blocked. There are two supported ways to run KoLo on WhatsApp:
+WhatsApp requires a real mobile number for verification. VoIP and virtual numbers are usually blocked. There are two supported ways to run Kurahi on WhatsApp:
 
 ### Dedicated number (recommended)
 
-Use a **separate phone number** for KoLo. Best UX, clean routing, no self-chat quirks. Ideal setup: **spare/old Android phone + eSIM**. Leave it on Wi‑Fi and power, and link it via QR.
+Use a **separate phone number** for Kurahi. Best UX, clean routing, no self-chat quirks. Ideal setup: **spare/old Android phone + eSIM**. Leave it on Wi‑Fi and power, and link it via QR.
 
-**WhatsApp Business:** You can use WhatsApp Business on the same device with a different number. Great for keeping your personal WhatsApp separate — install WhatsApp Business and register the KoLo number there.
+**WhatsApp Business:** You can use WhatsApp Business on the same device with a different number. Great for keeping your personal WhatsApp separate — install WhatsApp Business and register the Kurahi number there.
 
 **Sample config (dedicated number, single-user allowlist):**
 
@@ -78,11 +78,11 @@ Use a **separate phone number** for KoLo. Best UX, clean routing, no self-chat q
 
 **Pairing mode (optional):**
 If you want pairing instead of allowlist, set `channels.whatsapp.dmPolicy` to `pairing`. Unknown senders get a pairing code; approve with:
-`KoLo pairing approve whatsapp <code>`
+`Kurahi pairing approve whatsapp <code>`
 
 ### Personal number (fallback)
 
-Quick fallback: run KoLo on **your own number**. Message yourself (WhatsApp “Message yourself”) for testing so you don’t spam contacts. Expect to read verification codes on your main phone during setup and experiments. **Must enable self-chat mode.**
+Quick fallback: run Kurahi on **your own number**. Message yourself (WhatsApp “Message yourself”) for testing so you don’t spam contacts. Expect to read verification codes on your main phone during setup and experiments. **Must enable self-chat mode.**
 When the wizard asks for your personal WhatsApp number, enter the phone you will message from (the owner/sender), not the assistant number.
 
 **Sample config (personal number, self-chat):**
@@ -97,7 +97,7 @@ When the wizard asks for your personal WhatsApp number, enter the phone you will
 }
 ```
 
-Self-chat replies default to `[{identity.name}]` when set (otherwise `[KoLo]`)
+Self-chat replies default to `[{identity.name}]` when set (otherwise `[Kurahi]`)
 if `messages.responsePrefix` is unset. Set it explicitly to customize or disable
 the prefix (use `""` to remove it).
 
@@ -114,7 +114,7 @@ the prefix (use `""` to remove it).
 
 ## Why Not Twilio?
 
-- Early KoLo builds supported Twilio’s WhatsApp Business integration.
+- Early Kurahi builds supported Twilio’s WhatsApp Business integration.
 - WhatsApp Business numbers are a poor fit for a personal assistant.
 - Meta enforces a 24‑hour reply window; if you haven’t responded in the last 24 hours, the business number can’t initiate new messages.
 - High-volume or “chatty” usage triggers aggressive blocking, because business accounts aren’t meant to send dozens of personal assistant messages.
@@ -122,13 +122,13 @@ the prefix (use `""` to remove it).
 
 ## Login + credentials
 
-- Login command: `KoLo channels login` (QR via Linked Devices).
-- Multi-account login: `KoLo channels login --account <id>` (`<id>` = `accountId`).
+- Login command: `Kurahi channels login` (QR via Linked Devices).
+- Multi-account login: `Kurahi channels login --account <id>` (`<id>` = `accountId`).
 - Default account (when `--account` is omitted): `default` if present, otherwise the first configured account id (sorted).
 - Credentials stored in `<KOLO_HOME>/credentials/whatsapp/<accountId>/creds.json`.
 - Backup copy at `creds.json.bak` (restored on corruption).
 - Legacy compatibility: older installs stored Baileys files directly in `<KOLO_HOME>/credentials/`.
-- Logout: `KoLo channels logout` (or `--account <id>`) deletes WhatsApp auth state (but keeps shared `oauth.json`).
+- Logout: `Kurahi channels logout` (or `--account <id>`) deletes WhatsApp auth state (but keeps shared `oauth.json`).
 - Logged-out socket => error instructs re-link.
 
 ## Inbound flow (DM + group)
@@ -138,13 +138,13 @@ the prefix (use `""` to remove it).
 - Status/broadcast chats are ignored.
 - Direct chats use E.164; groups use group JID.
 - **DM policy**: `channels.whatsapp.dmPolicy` controls direct chat access (default: `pairing`).
-  - Pairing: unknown senders get a pairing code (approve via `KoLo pairing approve whatsapp <code>`; codes expire after 1 hour).
+  - Pairing: unknown senders get a pairing code (approve via `Kurahi pairing approve whatsapp <code>`; codes expire after 1 hour).
   - Open: requires `channels.whatsapp.allowFrom` to include `"*"`.
   - Your linked WhatsApp number is implicitly trusted, so self messages skip ⁠`channels.whatsapp.dmPolicy` and `channels.whatsapp.allowFrom` checks.
 
 ### Personal-number mode (fallback)
 
-If you run KoLo on your **personal WhatsApp number**, enable `channels.whatsapp.selfChatMode` (see sample above).
+If you run Kurahi on your **personal WhatsApp number**, enable `channels.whatsapp.selfChatMode` (see sample above).
 
 Behavior:
 
@@ -185,17 +185,17 @@ Notes:
 
 ## WhatsApp FAQ: sending messages + pairing
 
-**Will KoLo message random contacts when I link WhatsApp?**  
-No. Default DM policy is **pairing**, so unknown senders only get a pairing code and their message is **not processed**. KoLo only replies to chats it receives, or to sends you explicitly trigger (agent/CLI).
+**Will Kurahi message random contacts when I link WhatsApp?**  
+No. Default DM policy is **pairing**, so unknown senders only get a pairing code and their message is **not processed**. Kurahi only replies to chats it receives, or to sends you explicitly trigger (agent/CLI).
 
 **How does pairing work on WhatsApp?**  
 Pairing is a DM gate for unknown senders:
 
 - First DM from a new sender returns a short code (message is not processed).
-- Approve with: `KoLo pairing approve whatsapp <code>` (list with `KoLo pairing list whatsapp`).
+- Approve with: `Kurahi pairing approve whatsapp <code>` (list with `Kurahi pairing list whatsapp`).
 - Codes expire after 1 hour; pending requests are capped at 3 per channel.
 
-**Can multiple people use different KoLo instances on one WhatsApp number?**  
+**Can multiple people use different Kurahi instances on one WhatsApp number?**  
 Yes, by routing each sender to a different agent via `bindings` (peer `kind: "dm"`, sender E.164 like `+15551234567`). Replies still come from the **same WhatsApp account**, and direct chats collapse to each agent’s main session, so use **one agent per person**. DM access control (`dmPolicy`/`allowFrom`) is global per WhatsApp account. See [Multi-Agent Routing](/concepts/multi-agent).
 
 **Why do you ask for my phone number in the wizard?**  
@@ -316,14 +316,14 @@ WhatsApp can automatically send emoji reactions to incoming messages immediately
   - Caption only on first media item.
   - Media fetch supports HTTP(S) and local paths.
   - Animated GIFs: WhatsApp expects MP4 with `gifPlayback: true` for inline looping.
-    - CLI: `KoLo message send --media <mp4> --gif-playback`
+    - CLI: `Kurahi message send --media <mp4> --gif-playback`
     - Gateway: `send` params include `gifPlayback: true`
 
 ## Voice notes (PTT audio)
 
 WhatsApp sends audio as **voice notes** (PTT bubble).
 
-- Best results: OGG/Opus. KoLo rewrites `audio/ogg` to `audio/ogg; codecs=opus`.
+- Best results: OGG/Opus. Kurahi rewrites `audio/ogg` to `audio/ogg; codecs=opus`.
 - `[[audio_as_voice]]` is ignored for WhatsApp (audio already ships as voice note).
 
 ## Media limits + optimization
@@ -391,12 +391,12 @@ WhatsApp sends audio as **voice notes** (PTT bubble).
 **Not linked / QR login required**
 
 - Symptom: `channels status` shows `linked: false` or warns “Not linked”.
-- Fix: run `KoLo channels login` on the gateway host and scan the QR (WhatsApp → Settings → Linked Devices).
+- Fix: run `Kurahi channels login` on the gateway host and scan the QR (WhatsApp → Settings → Linked Devices).
 
 **Linked but disconnected / reconnect loop**
 
 - Symptom: `channels status` shows `running, disconnected` or warns “Linked but disconnected”.
-- Fix: `KoLo doctor` (or restart the gateway). If it persists, relink via `channels login` and inspect `KoLo logs --follow`.
+- Fix: `Kurahi doctor` (or restart the gateway). If it persists, relink via `channels login` and inspect `Kurahi logs --follow`.
 
 ## Resident session, commands and approvals
 
@@ -419,4 +419,4 @@ WhatsApp follows the shared model described in [Channel residents](/channels/REA
 - Attachments: media is copied to `<KOLO_HOME>/inbox/whatsapp/` within the `channels.inbox`
   caps, in addition to the media store used for understanding.
 - Delivery: replies go through the outbound queue with retry and dead letters;
-  `kolo channels status` shows the WhatsApp queue. A reconnect in progress is a retry, not a loss.
+  `kurahi channels status` shows the WhatsApp queue. A reconnect in progress is a retry, not a loss.

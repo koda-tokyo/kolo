@@ -1,5 +1,6 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * Wolfram Alpha plugin for KoLo.
+ * Wolfram Alpha plugin for Kurahi.
  *
  * Provides a `wolfram_query` tool that all agents can use for:
  * - Mathematical calculations
@@ -12,7 +13,6 @@
  * Free tier: 2,000 queries/month.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 /** Call Wolfram Alpha Short Answers API (fast, simple). */
 async function queryWolframShort(query: string, appId: string): Promise<string> {
@@ -26,10 +26,7 @@ async function queryWolframShort(query: string, appId: string): Promise<string> 
 }
 
 /** Call Wolfram Alpha Full Results API (detailed, structured). */
-async function queryWolframFull(
-  query: string,
-  appId: string,
-): Promise<string> {
+async function queryWolframFull(query: string, appId: string): Promise<string> {
   const url = `https://api.wolframalpha.com/v2/query?input=${encodeURIComponent(query)}&appid=${encodeURIComponent(appId)}&output=json&timeout=8`;
   const res = await fetch(url, { signal: AbortSignal.timeout(12_000) });
   if (!res.ok) throw new Error(`Wolfram Alpha API error: ${res.status}`);
@@ -88,19 +85,16 @@ const wolframAlphaPlugin = {
           query: Type.String({ description: "The question or calculation" }),
           mode: Type.Optional(
             Type.Union([Type.Literal("short"), Type.Literal("full")], {
-              description: 'Response mode: "short" (fast one-liner) or "full" (detailed pods). Default: short.',
+              description:
+                'Response mode: "short" (fast one-liner) or "full" (detailed pods). Default: short.',
             }),
           ),
         }),
 
-        async execute(
-          _toolId: string,
-          params: Record<string, unknown>,
-        ) {
+        async execute(_toolId: string, params: Record<string, unknown>) {
           // Resolve API key: plugin config > env var
           const appId =
-            (api.pluginConfig?.appId as string | undefined) ??
-            process.env.WOLFRAM_APP_ID;
+            (api.pluginConfig?.appId as string | undefined) ?? process.env.WOLFRAM_APP_ID;
 
           if (!appId) {
             return {
@@ -135,9 +129,7 @@ const wolframAlphaPlugin = {
           } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
             return {
-              content: [
-                { type: "text" as const, text: `Wolfram Alpha error: ${message}` },
-              ],
+              content: [{ type: "text" as const, text: `Wolfram Alpha error: ${message}` }],
             };
           }
         },
@@ -145,7 +137,7 @@ const wolframAlphaPlugin = {
       { names: ["wolfram_query"] },
     );
 
-    // CLI command: `KoLo wolfram "what is 2^100"`
+    // CLI command: `Kurahi wolfram "what is 2^100"`
     api.registerCli(
       ({ program }) => {
         program
@@ -155,8 +147,7 @@ const wolframAlphaPlugin = {
           .action(async (queryParts: string[], opts: { full?: boolean }) => {
             const query = queryParts.join(" ");
             const appId =
-              (api.pluginConfig?.appId as string | undefined) ??
-              process.env.WOLFRAM_APP_ID;
+              (api.pluginConfig?.appId as string | undefined) ?? process.env.WOLFRAM_APP_ID;
 
             if (!appId) {
               console.error("Set appId in wolfram-alpha plugin config or WOLFRAM_APP_ID env var.");

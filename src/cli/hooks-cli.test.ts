@@ -16,7 +16,7 @@ const report: HookStatusReport = {
       handlerPath: "/tmp/hooks/session-memory/handler.js",
       hookKey: "session-memory",
       emoji: "💾",
-      homepage: "https://kodasoken.com/kolo/hooks#session-memory",
+      homepage: "https://kurahi.kodasoken.com/docs/hooks#session-memory",
       events: ["command:new"],
       always: false,
       disabled: false,

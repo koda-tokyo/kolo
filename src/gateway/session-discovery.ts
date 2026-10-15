@@ -1,5 +1,5 @@
 // Session discovery (KoLo 2.0, M3b): the view of live sessions that `GET /api/sessions`,
-// `GET /api/sessions/{id}`, WS `sessions.discover` and `kolo attach` share. Rows come from the
+// `GET /api/sessions/{id}`, WS `sessions.discover` and `kurahi attach` share. Rows come from the
 // gateway's combined session store (every agent), enriched with the attach registry (clients)
 // and the embedded runner (state). An attach-scope credential with a session allowlist only
 // sees matching sessions; owner/admin and unrestricted credentials see everything.

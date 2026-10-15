@@ -4,7 +4,7 @@
   "description": "Phase-of-day signal for agents and schedules",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "peerDependencies": {
     "kolo": ">=2026.1.26"

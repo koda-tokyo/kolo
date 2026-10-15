@@ -170,7 +170,7 @@ export function wrapToolWithPolicyGuard(tool: AnyAgentTool, ctx: PolicyGuardCont
       }
       const label = decision.effect === "pause" ? "paused" : "denied";
       throw new PolicyDeniedError(
-        `Policy ${label}: ${decision.reason} (rule ${decision.ruleId}). An owner can change the policy with \`kolo policy\`.`,
+        `Policy ${label}: ${decision.reason} (rule ${decision.ruleId}). An owner can change the policy with \`kurahi policy\`.`,
         [tool.name],
         decision.ruleId,
         decision.effect,

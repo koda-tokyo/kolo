@@ -4,11 +4,11 @@ description: "Log all command events to a centralized audit file"
 homepage: https://kodasoken.com/kolo/hooks#command-logger
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "📝",
         "events": ["command"],
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with KoLo" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Kurahi" }],
       },
   }
 ---
@@ -62,7 +62,7 @@ No configuration needed. The hook automatically:
 To disable this hook:
 
 ```bash
-KoLo hooks disable command-logger
+Kurahi hooks disable command-logger
 ```
 
 Or via config:
@@ -90,7 +90,7 @@ The hook does not automatically rotate logs. To manage log size, you can:
    ```
 
 2. **Use logrotate** (Linux):
-   Create `/etc/logrotate.d/KoLo`:
+   Create `/etc/logrotate.d/Kurahi`:
    ```
    /home/username/.kolo/logs/commands.log {
        weekly

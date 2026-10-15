@@ -1,10 +1,10 @@
-# @KoLo/nostr
+# @Kurahi/nostr
 
-Nostr DM channel plugin for KoLo using NIP-04 encrypted direct messages.
+Nostr DM channel plugin for Kurahi using NIP-04 encrypted direct messages.
 
 ## Overview
 
-This extension adds Nostr as a messaging channel to KoLo. It enables your bot to:
+This extension adds Nostr as a messaging channel to Kurahi. It enables your bot to:
 
 - Receive encrypted DMs from Nostr users
 - Send encrypted responses back
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to KoLo. It enables your bot to
 ## Installation
 
 ```bash
-KoLo plugins install @KoLo/nostr
+Kurahi plugins install @Kurahi/nostr
 ```
 
 ## Quick Setup
@@ -90,7 +90,7 @@ KoLo plugins install @KoLo/nostr
 # Using strfry
 docker run -p 7777:7777 ghcr.io/hoytech/strfry
 
-# Configure KoLo to use local relay
+# Configure Kurahi to use local relay
 "relays": ["ws://localhost:7777"]
 ```
 

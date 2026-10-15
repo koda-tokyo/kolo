@@ -1,5 +1,5 @@
 ---
-summary: "Mattermost bot setup and KoLo config"
+summary: "Mattermost bot setup and Kurahi config"
 read_when:
   - Setting up Mattermost
   - Debugging Mattermost routing
@@ -19,17 +19,17 @@ Mattermost ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-kolo plugins install @KoLo/mattermost
+kurahi plugins install @Kurahi/mattermost
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-kolo plugins install ./extensions/mattermost
+kurahi plugins install ./extensions/mattermost
 ```
 
 If you choose Mattermost during configure/onboarding and a git checkout is detected,
-KoLo will offer the local install path automatically.
+Kurahi will offer the local install path automatically.
 
 Details: [Plugins](/plugin)
 
@@ -38,7 +38,7 @@ Details: [Plugins](/plugin)
 1. Install the Mattermost plugin.
 2. Create a Mattermost bot account and copy the **bot token**.
 3. Copy the Mattermost **base URL** (e.g., `https://chat.example.com`).
-4. Configure KoLo and start the gateway.
+4. Configure Kurahi and start the gateway.
 
 Minimal config:
 
@@ -94,8 +94,8 @@ Notes:
 
 - Default: `channels.mattermost.dmPolicy = "pairing"` (unknown senders get a pairing code).
 - Approve via:
-  - `KoLo pairing list mattermost`
-  - `KoLo pairing approve mattermost <CODE>`
+  - `Kurahi pairing list mattermost`
+  - `Kurahi pairing approve mattermost <CODE>`
 - Public DMs: `channels.mattermost.dmPolicy="open"` plus `channels.mattermost.allowFrom=["*"]`.
 
 ## Channels (groups)
@@ -106,7 +106,7 @@ Notes:
 
 ## Targets for outbound delivery
 
-Use these target formats with `KoLo message send` or cron/webhooks:
+Use these target formats with `Kurahi message send` or cron/webhooks:
 
 - `channel:<id>` for a channel
 - `user:<id>` for a DM

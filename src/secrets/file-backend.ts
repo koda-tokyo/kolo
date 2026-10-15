@@ -95,7 +95,7 @@ export class FileSecretStore implements SecretStore {
     this.keyPath = path.join(opts.dir, ".key");
   }
 
-  /** Where the key material comes from (for `kolo secrets list`). */
+  /** Where the key material comes from (for `kurahi secrets list`). */
   keySource(): "env" | "file" {
     return this.env.KOLO_SECRETS_KEY?.trim() ? "env" : "file";
   }

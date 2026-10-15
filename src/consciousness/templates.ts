@@ -66,7 +66,7 @@ const TEMPLATES_DIR = join(resolveSharedKoloHome(), "templates");
 /**
  * Simple TOML parser for our template format.
  * Handles nested tables, arrays, and basic value types.
- * (Avoids adding a toml dependency to KoLo core.)
+ * (Avoids adding a toml dependency to Kurahi core.)
  */
 function parseSimpleTOML(text: string): Record<string, unknown> {
   const result: Record<string, unknown> = {};

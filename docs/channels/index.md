@@ -1,14 +1,14 @@
 ---
-summary: "Messaging platforms KoLo can connect to"
+summary: "Messaging platforms Kurahi can connect to"
 read_when:
-  - You want to choose a chat channel for KoLo
+  - You want to choose a chat channel for Kurahi
   - You need a quick overview of supported messaging platforms
 title: "Chat Channels"
 ---
 
 # Chat Channels
 
-KoLo can talk to you on any chat app you already use. Each channel connects via the Gateway.
+Kurahi can talk to you on any chat app you already use. Each channel connects via the Gateway.
 Text is supported everywhere; media and reactions vary by channel.
 
 ## How channels and sessions fit together
@@ -41,7 +41,7 @@ then the page of the channel you connect.
 
 ## Notes
 
-- Channels can run simultaneously; configure multiple and KoLo will route per chat.
+- Channels can run simultaneously; configure multiple and Kurahi will route per chat.
 - Fastest setup is usually **Telegram** (simple bot token). WhatsApp requires QR pairing and
   stores more state on disk.
 - Group behavior varies by channel; see [Groups](/concepts/groups).

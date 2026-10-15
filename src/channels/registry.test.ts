@@ -34,6 +34,6 @@ describe("channel registry", () => {
     );
     expect(line).not.toContain("Docs:");
     expect(line).toContain("/channels/telegram");
-    expect(line).toContain("https://kodasoken.com");
+    expect(line).toContain("https://kurahi.kodasoken.com");
   });
 });

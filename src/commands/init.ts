@@ -1,5 +1,5 @@
-// `kolo init`: the first command on a new machine. Creates the state root, the gateway token
-// file and a minimal config that lets `kolo gateway` / `kolo service install` start without
+// `kurahi init`: the first command on a new machine. Creates the state root, the gateway token
+// file and a minimal config that lets `kurahi gateway` / `kurahi service install` start without
 // further flags, runs the doctor report, and prints the next steps. Interactive by default,
 // fully scriptable with --non-interactive.
 
@@ -80,7 +80,7 @@ export const INIT_PROVIDER_PROFILES: Array<{
   {
     value: "koda-tested",
     label: "KODA tested: the best benchmarked model you can run",
-    hint: "uses keys already set on this machine; see kolo models tested",
+    hint: "uses keys already set on this machine; see kurahi models tested",
   },
 ];
 
@@ -120,7 +120,7 @@ function cancelled(): never {
 }
 
 async function askInteractive(defaults: Required<Pick<InitOptions, "name" | "bind">>) {
-  intro("kolo init");
+  intro("kurahi init");
   const name = await text({
     message: t("init.q.name"),
     initialValue: defaults.name,
@@ -144,7 +144,11 @@ async function askInteractive(defaults: Required<Pick<InitOptions, "name" | "bin
     message: t("init.q.provider"),
     options: [
       ...INIT_PROVIDER_PROFILES.map((p) => ({ value: p.value, label: p.label, hint: p.hint })),
-      { value: "later", label: t("init.q.provider.later"), hint: "kolo onboard / kolo secrets" },
+      {
+        value: "later",
+        label: t("init.q.provider.later"),
+        hint: "kurahi onboard / kurahi secrets",
+      },
     ],
     initialValue: "sakura",
   });
@@ -244,7 +248,7 @@ async function applyInitProvider(
   _home: string,
 ): Promise<{ config: KoLoConfig; summary: string }> {
   if (!a.provider) {
-    return { config: cfg, summary: "not chosen (kolo onboard, or kolo secrets)" };
+    return { config: cfg, summary: "not chosen (kurahi onboard, or kurahi secrets)" };
   }
   if (a.provider === "koda-tested") {
     const store = ensureAuthProfileStore(undefined, { allowKeychainPrompt: false });
@@ -262,7 +266,7 @@ async function applyInitProvider(
     });
     return {
       config: next,
-      summary: `sakura (${SAKURA_DEFAULT_MODEL_REF}); token ${a.providerKey ? "stored" : "missing: set SAKURA_API_KEY and run kolo init --provider sakura again"}`,
+      summary: `sakura (${SAKURA_DEFAULT_MODEL_REF}); token ${a.providerKey ? "stored" : "missing: set SAKURA_API_KEY and run kurahi init --provider sakura again"}`,
     };
   }
   if (a.provider === "openai-compatible") {
@@ -513,13 +517,13 @@ export async function initCommand(
     lines.push("", t("init.exportHint", { home }), `  export KOLO_HOME="${home}"`);
   }
   const nextSteps: Array<[string, string]> = [
-    [`kolo service install --id ${answers.name}`, t("init.next.service")],
-    ["kolo health", t("init.next.health")],
+    [`kurahi service install --id ${answers.name}`, t("init.next.service")],
+    ["kurahi health", t("init.next.health")],
     answers.provider
-      ? ["kolo models list", t("init.next.models")]
-      : ["kolo onboard", t("init.next.onboard")],
-    ["kolo pair invite --scope attach", t("init.next.pair")],
-    ["kolo tui", t("init.next.tui")],
+      ? ["kurahi models list", t("init.next.models")]
+      : ["kurahi onboard", t("init.next.onboard")],
+    ["kurahi pair invite --scope attach", t("init.next.pair")],
+    ["kurahi tui", t("init.next.tui")],
   ];
   const width = Math.max(...nextSteps.map(([cmd]) => cmd.length)) + 2;
   lines.push(

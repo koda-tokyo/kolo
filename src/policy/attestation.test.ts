@@ -117,7 +117,7 @@ describe("policy acceptance by mode", () => {
     expect(enforce.accepted).toBe(false);
     if (!enforce.accepted) {
       expect(enforce.reason).toMatch(/unsigned/);
-      expect(enforce.reason).toMatch(/kolo policy sign/);
+      expect(enforce.reason).toMatch(/kurahi policy sign/);
     }
     const audit = acceptPolicy(loaded, "audit");
     expect(audit.accepted).toBe(true);

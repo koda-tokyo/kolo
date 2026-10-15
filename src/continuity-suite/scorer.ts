@@ -7,7 +7,7 @@ import type {
 } from "./types.js";
 // Invariant scorer (KoLo 2.0, M11b). Pure: given the two manifests, the two probe snapshots, the
 // disruption outcome and the leak scan, it decides pass/fail/skip per invariant. The ids match
-// docs/continuity-spec.md; `kolo continuity verify` re-runs this on a saved report and expects
+// docs/continuity-spec.md; `kurahi continuity verify` re-runs this on a saved report and expects
 // the same statuses, so nothing here may depend on the clock or the environment.
 import { diffKind, entriesByKind, verifyManifest } from "./manifest.js";
 import { JOB_SESSION_SUFFIX, PROBE_SESSION_SUFFIX } from "./probes.js";

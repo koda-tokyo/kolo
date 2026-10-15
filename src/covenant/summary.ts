@@ -80,9 +80,9 @@ function describePriority(priority: ValuePriority): string {
 
 /**
  * Build a single system-message string that describes:
- * - how KoLo should relate to this user
+ * - how Kurahi should relate to this user
  * - what the user values
- * - what KoLo must not do (boundaries)
+ * - what Kurahi must not do (boundaries)
  * - any relevant continuity highlights
  *
  * This string is meant to be used as a system prompt fragment,

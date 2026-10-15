@@ -133,7 +133,7 @@ function buildMessagingSection(params: {
     "## Messaging",
     "- Reply in current session → automatically routes to the source channel (Signal, Telegram, etc.)",
     "- Cross-session messaging → use sessions_send(sessionKey, message)",
-    "- Never use exec/curl for provider messaging; KoLo handles all routing internally.",
+    "- Never use exec/curl for provider messaging; Kurahi handles all routing internally.",
     params.availableTools.has("message")
       ? [
           "",
@@ -174,13 +174,13 @@ function buildDocsSection(params: { docsPath?: string; isMinimal: boolean; readT
   }
   return [
     "## Documentation",
-    `kolo docs: ${docsPath}`,
+    `kurahi docs: ${docsPath}`,
     `Mirror: ${DOCS_URL}`,
-    "Source: https://github.com/koda-tokyo/kolo",
+    "Source: https://github.com/koda-tokyo/kurahi",
     "Community: https://discord.com/invite/clawd",
     "Find new skills: https://clawhub.com",
-    "For KoLo behavior, commands, config, or architecture: consult local docs first.",
-    "When diagnosing issues, run `kolo status` yourself when possible; only ask the user if you lack access (e.g., sandboxed).",
+    "For Kurahi behavior, commands, config, or architecture: consult local docs first.",
+    "When diagnosing issues, run `kurahi status` yourself when possible; only ask the user if you lack access (e.g., sandboxed).",
     "",
   ];
 }
@@ -258,7 +258,7 @@ export function buildAgentSystemPrompt(params: {
     nodes: "List/describe/notify/camera/screen on paired nodes",
     cron: "Manage cron jobs and wake events (use for reminders; when scheduling a reminder, write the systemEvent text as something that will read like a reminder when it fires, and mention that it is a reminder depending on the time gap between setting and firing; include recent context in reminder text if appropriate)",
     message: "Send messages and channel actions",
-    gateway: "Restart, apply config, or run updates on the running KoLo process",
+    gateway: "Restart, apply config, or run updates on the running Kurahi process",
     agents_list: "List agent ids allowed for sessions_spawn",
     sessions_list: "List other sessions (incl. sub-agents) with filters/last",
     sessions_history: "Fetch history for another session/sub-agent",
@@ -387,11 +387,11 @@ export function buildAgentSystemPrompt(params: {
 
   // For "none" mode, return just the basic identity line
   if (promptMode === "none") {
-    return "You are a personal assistant running inside KoLo.";
+    return "You are a personal assistant running inside Kurahi.";
   }
 
   const lines = [
-    "You are a personal assistant running inside KoLo.",
+    "You are a personal assistant running inside Kurahi.",
     "",
     "## Tooling",
     "Tool availability (filtered by policy):",
@@ -429,13 +429,13 @@ export function buildAgentSystemPrompt(params: {
       isMinimal,
     }),
     "## KoLo CLI Quick Reference",
-    "KoLo is controlled via subcommands. Do not invent commands.",
+    "Kurahi is controlled via subcommands. Do not invent commands.",
     "To manage the Gateway daemon service (start/stop/restart):",
-    "- kolo gateway status",
-    "- kolo gateway start",
-    "- kolo gateway stop",
-    "- kolo gateway restart",
-    "If unsure, ask the user to run `kolo help` (or `kolo gateway --help`) and paste the output.",
+    "- kurahi gateway status",
+    "- kurahi gateway start",
+    "- kurahi gateway stop",
+    "- kurahi gateway restart",
+    "If unsure, ask the user to run `kurahi help` (or `kurahi gateway --help`) and paste the output.",
     "",
     ...skillsSection,
     ...memorySection,
@@ -446,7 +446,7 @@ export function buildAgentSystemPrompt(params: {
           "Get Updates (self-update) is ONLY allowed when the user explicitly asks for it.",
           "Do not run config.apply or update.run unless the user explicitly requests an update or config change; if it's not explicit, ask first.",
           "Actions: config.get, config.schema, config.apply (validate + write full config, then restart), update.run (update deps or git, then restart).",
-          "After restart, KoLo pings the last active session automatically.",
+          "After restart, Kurahi pings the last active session automatically.",
         ].join("\n")
       : "",
     hasGateway && !isMinimal ? "" : "",
@@ -515,7 +515,7 @@ export function buildAgentSystemPrompt(params: {
       userTimezone,
     }),
     "## Workspace Files (injected)",
-    "These user-editable files are loaded by KoLo and included below in Project Context.",
+    "These user-editable files are loaded by Kurahi and included below in Project Context.",
     "",
     ...buildReplyTagsSection(isMinimal),
     ...buildMessagingSection({
@@ -606,7 +606,7 @@ export function buildAgentSystemPrompt(params: {
       heartbeatPromptLine,
       "If you receive a heartbeat poll (a user message matching the heartbeat prompt above), and there is nothing that needs attention, reply exactly:",
       "HEARTBEAT_OK",
-      'KoLo treats a leading/trailing "HEARTBEAT_OK" as a heartbeat ack (and may discard it).',
+      'Kurahi treats a leading/trailing "HEARTBEAT_OK" as a heartbeat ack (and may discard it).',
       'If something needs attention, do NOT include "HEARTBEAT_OK"; reply with the alert text instead.',
       "",
     );

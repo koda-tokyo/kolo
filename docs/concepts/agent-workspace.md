@@ -36,7 +36,7 @@ inside a sandbox workspace under `~/.kolo/sandboxes`, not your host workspace.
 }
 ```
 
-`KoLo onboard`, `KoLo configure`, or `KoLo setup` will create the
+`Kurahi onboard`, `Kurahi configure`, or `Kurahi setup` will create the
 workspace and seed the bootstrap files if they are missing.
 
 If you already manage the workspace files yourself, you can disable bootstrap
@@ -48,20 +48,20 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/KoLo`. Keeping multiple workspace
+Older installs may have created `~/Kurahi`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/KoLo`).
+extra folders, archive or move them to Trash (for example `trash ~/Kurahi`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`KoLo doctor` warns when it detects extra workspace directories.
+`Kurahi doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
-These are the standard files KoLo expects inside the workspace:
+These are the standard files Kurahi expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -114,10 +114,10 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, KoLo injects a "missing file" marker into
+If any bootstrap file is missing, Kurahi injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust the limit with `agents.defaults.bootstrapMaxChars` (default: 20000).
-`KoLo setup` can recreate missing defaults without overwriting existing
+`Kurahi setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
@@ -221,7 +221,7 @@ Suggested `.gitignore` starter:
 
 1. Clone the repo to the desired path (default `~/.kolo/workspace`).
 2. Set `agents.defaults.workspace` to that path in `~/.kolo/kolo.json`.
-3. Run `KoLo setup --workspace <path>` to seed any missing files.
+3. Run `Kurahi setup --workspace <path>` to seed any missing files.
 4. If you need sessions, copy `~/.kolo/agents/<agentId>/sessions/` from the
    old machine separately.
 

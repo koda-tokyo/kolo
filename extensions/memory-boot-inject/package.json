@@ -4,7 +4,7 @@
   "description": "Inject configured memory files into the agent bootstrap context after a gateway start",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "peerDependencies": {
     "kolo": ">=2026.1.26"

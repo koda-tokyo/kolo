@@ -1,10 +1,13 @@
 # AI/ML Engineering — Model Training, Fine-Tuning, Evaluation & MLOps
 
 ## Purpose
-Enterprise-grade AI/ML engineering for training, fine-tuning, evaluating, and deploying models — from LoRA adapters to clinical validation pipelines. Covers the full ML lifecycle: data preparation, model selection, training methodology, hyperparameter optimization, evaluation, deployment, monitoring, and continuous improvement. Built for KODA KENKŌ (healthcare AI), KoLo (agent infrastructure), and KODA FLOW (identity adapters).
+
+Enterprise-grade AI/ML engineering for training, fine-tuning, evaluating, and deploying models — from LoRA adapters to clinical validation pipelines. Covers the full ML lifecycle: data preparation, model selection, training methodology, hyperparameter optimization, evaluation, deployment, monitoring, and continuous improvement. Built for KODA KENKŌ (healthcare AI), Kurahi (agent infrastructure), and KODA FLOW (identity adapters).
 
 ## Triggers
+
 Use this skill when the task involves:
+
 - Training or fine-tuning a model (LoRA, QLoRA, full fine-tune, RLHF, DPO)
 - Evaluating model quality (benchmarks, human eval, automated metrics)
 - Setting up ML pipelines (data processing, training, validation, deployment)
@@ -29,13 +32,13 @@ When choosing a base model, evaluate across five dimensions:
 
 ### Fine-Tuning Methods (ranked by resource cost)
 
-| Method | GPU Requirement | Data Needed | Use Case |
-|--------|----------------|-------------|----------|
-| **LoRA** | 1× consumer GPU (24GB) | 100-10K examples | Domain adaptation, identity, style |
-| **QLoRA** | 1× consumer GPU (16GB) | 100-10K examples | Same as LoRA, lower memory |
-| **Full fine-tune** | 8× A100 (80GB) | 10K-1M examples | Fundamental capability changes |
-| **RLHF / DPO** | 8× A100 | 1K-100K preference pairs | Alignment, safety, preference |
-| **RAG** | CPU (no training) | External knowledge base | Factual grounding, knowledge |
+| Method             | GPU Requirement        | Data Needed              | Use Case                           |
+| ------------------ | ---------------------- | ------------------------ | ---------------------------------- |
+| **LoRA**           | 1× consumer GPU (24GB) | 100-10K examples         | Domain adaptation, identity, style |
+| **QLoRA**          | 1× consumer GPU (16GB) | 100-10K examples         | Same as LoRA, lower memory         |
+| **Full fine-tune** | 8× A100 (80GB)         | 10K-1M examples          | Fundamental capability changes     |
+| **RLHF / DPO**     | 8× A100                | 1K-100K preference pairs | Alignment, safety, preference      |
+| **RAG**            | CPU (no training)      | External knowledge base  | Factual grounding, knowledge       |
 
 ### LoRA Configuration Guidelines
 
@@ -54,7 +57,7 @@ lora_config = {
 lora_config_aggressive = {
     "r": 64,
     "lora_alpha": 128,
-    "target_modules": ["q_proj", "v_proj", "k_proj", "o_proj", 
+    "target_modules": ["q_proj", "v_proj", "k_proj", "o_proj",
                        "gate_proj", "up_proj", "down_proj"],  # attention + MLP
     "lora_dropout": 0.1,
 }
@@ -62,18 +65,19 @@ lora_config_aggressive = {
 
 ### Loss Curve Diagnosis
 
-| Pattern | Problem | Action |
-|---------|---------|--------|
-| Loss not decreasing | Learning rate too low | Increase LR by 2-5× |
-| Loss spikes then crashes | LR too high | Reduce LR, add gradient clipping |
-| Loss decreases then plateaus | Model capacity reached | Increase rank `r`, add more data |
-| Training loss ↓ but eval loss ↑ | Overfitting | Increase dropout, reduce `r`, fewer epochs |
-| Loss oscillating | Batch size too small | Increase batch size or use gradient accumulation |
-| Loss NaN | Numerical instability | Check for NaN in data, reduce LR, add gradient clipping |
+| Pattern                         | Problem                | Action                                                  |
+| ------------------------------- | ---------------------- | ------------------------------------------------------- |
+| Loss not decreasing             | Learning rate too low  | Increase LR by 2-5×                                     |
+| Loss spikes then crashes        | LR too high            | Reduce LR, add gradient clipping                        |
+| Loss decreases then plateaus    | Model capacity reached | Increase rank `r`, add more data                        |
+| Training loss ↓ but eval loss ↑ | Overfitting            | Increase dropout, reduce `r`, fewer epochs              |
+| Loss oscillating                | Batch size too small   | Increase batch size or use gradient accumulation        |
+| Loss NaN                        | Numerical instability  | Check for NaN in data, reduce LR, add gradient clipping |
 
 ### Evaluation Framework
 
 #### For General Models
+
 ```
 1. Automated benchmarks: MMLU, HumanEval, GSM8K, HellaSwag, etc.
 2. Domain-specific tests: custom test set from target distribution
@@ -83,6 +87,7 @@ lora_config_aggressive = {
 ```
 
 #### For Healthcare/Clinical Models (KODA KENKŌ specific)
+
 ```
 1. Sensitivity (recall): true positive rate — what % of actual positives caught?
 2. Specificity: true negative rate — what % of actual negatives correctly excluded?
@@ -98,13 +103,13 @@ lora_config_aggressive = {
 
 ### Quantization Guide
 
-| Format | Size Reduction | Quality Impact | Best For |
-|--------|---------------|----------------|----------|
-| FP16 | 50% | None (lossless for inference) | GPU serving |
-| INT8 | 75% | <0.1% accuracy loss | GPU/CPU serving |
-| INT4 (GPTQ) | 87.5% | 0.5-2% accuracy loss | GPU serving |
-| Q4_K_M (GGUF) | 87.5% | 1-3% accuracy loss | CPU/local serving |
-| Q2_K (GGUF) | 93.75% | 3-8% accuracy loss | Extreme compression |
+| Format        | Size Reduction | Quality Impact                | Best For            |
+| ------------- | -------------- | ----------------------------- | ------------------- |
+| FP16          | 50%            | None (lossless for inference) | GPU serving         |
+| INT8          | 75%            | <0.1% accuracy loss           | GPU/CPU serving     |
+| INT4 (GPTQ)   | 87.5%          | 0.5-2% accuracy loss          | GPU serving         |
+| Q4_K_M (GGUF) | 87.5%          | 1-3% accuracy loss            | CPU/local serving   |
+| Q2_K (GGUF)   | 93.75%         | 3-8% accuracy loss            | Extreme compression |
 
 ### MLOps Stack (minimum viable)
 
@@ -119,17 +124,18 @@ Monitoring:           Prometheus metrics + custom eval cron
 
 ### GPU Selection
 
-| Task | Minimum | Recommended |
-|------|---------|-------------|
-| LoRA (7B) | RTX 3090/4090 (24GB) | A6000 (48GB) |
-| LoRA (70B) | A100 80GB | 2× A100 |
-| Full fine-tune (7B) | 4× A100 | 8× A100 |
-| Inference (7B) | RTX 3060 (12GB) INT4 | A10 (24GB) FP16 |
-| Inference (70B) | 2× RTX 3090 INT4 | A100 FP16 |
+| Task                | Minimum              | Recommended     |
+| ------------------- | -------------------- | --------------- |
+| LoRA (7B)           | RTX 3090/4090 (24GB) | A6000 (48GB)    |
+| LoRA (70B)          | A100 80GB            | 2× A100         |
+| Full fine-tune (7B) | 4× A100              | 8× A100         |
+| Inference (7B)      | RTX 3060 (12GB) INT4 | A10 (24GB) FP16 |
+| Inference (70B)     | 2× RTX 3090 INT4     | A100 FP16       |
 
 ### Training Data Quality Checklist
 
 Before training, verify:
+
 - [ ] No PII/PHI in training data (healthcare context: CRITICAL)
 - [ ] No duplicates (deduplication pass completed)
 - [ ] Format consistency (every example follows the same template)
@@ -191,4 +197,3 @@ When someone says "let's fine-tune a model" — ask these questions before agree
 - ❌ Using the instructor's default hyperparameters (they're for demo, not production)
 
 ---
-

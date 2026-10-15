@@ -3,8 +3,8 @@
 // A core `before_tool_call` policy: denies agent tool calls that would write a registered path
 // (or the registry, its key, or the audit log) and records an audit event. Covers `write`,
 // `edit`, `apply_patch` exactly; for `exec` it is a best-effort parse of the command
-// (redirect/tee targets, in-place editors, rm/mv/cp/…, and `kolo integrity init|update`).
-// The operator path is `kolo integrity update <path>` from a terminal, never an agent tool.
+// (redirect/tee targets, in-place editors, rm/mv/cp/…, and `kurahi integrity init|update`).
+// The operator path is `kurahi integrity update <path>` from a terminal, never an agent tool.
 
 import fs from "node:fs";
 import os from "node:os";
@@ -133,7 +133,7 @@ export function evaluateWritePolicy(params: {
     path: hit,
     reason:
       `${why}: ${hit} is protected by the integrity registry. ` +
-      "Constitution files change only by an operator running `kolo integrity update <path>` in a terminal.",
+      "Constitution files change only by an operator running `kurahi integrity update <path>` in a terminal.",
   });
 
   if (FILE_TOOLS.has(tool)) {
@@ -167,9 +167,9 @@ export function evaluateWritePolicy(params: {
     if (OPERATOR_CMD_RE.test(command)) {
       return {
         blocked: true,
-        path: "kolo integrity",
+        path: "kurahi integrity",
         reason:
-          "exec refused: `kolo integrity init|update` is an operator action and cannot run from an agent tool.",
+          "exec refused: `kurahi integrity init|update` is an operator action and cannot run from an agent tool.",
       };
     }
     const cwd =

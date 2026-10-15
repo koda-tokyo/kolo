@@ -74,7 +74,7 @@ export interface InitV2Options {
  *   await v2.mailbox.send({ from: "alice", to: "ops-bot", content: "Good morning." });
  *
  *   // Create a task with dependencies
- *   const research = v2.taskStore.create({ subject: "Research KoLo patterns", owner: "alice" });
+ *   const research = v2.taskStore.create({ subject: "Research Kurahi patterns", owner: "alice" });
  *   const implement = v2.taskStore.create({
  *     subject: "Implement transport layer",
  *     owner: "alice",

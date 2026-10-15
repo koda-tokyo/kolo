@@ -1,5 +1,5 @@
 ---
-summary: "Run KoLo Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run Kurahi Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -8,13 +8,13 @@ title: "exe.dev"
 
 # exe.dev
 
-Goal: KoLo Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
+Goal: Kurahi Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
 
 This page assumes exe.dev's default **exeuntu** image. If you picked a different distro, map packages accordingly.
 
 ## Beginner quick path
 
-1. [https://exe.new/KoLo](https://exe.new/KoLo)
+1. [https://exe.new/Kurahi](https://exe.new/Kurahi)
 2. Fill in your auth key/token as needed
 3. Click on "Agent" next to your VM, and wait...
 4. ???
@@ -27,11 +27,11 @@ This page assumes exe.dev's default **exeuntu** image. If you picked a different
 
 ## Automated Install with Shelley
 
-Shelley, [exe.dev](https://exe.dev)'s agent, can install KoLo instantly with our
+Shelley, [exe.dev](https://exe.dev)'s agent, can install Kurahi instantly with our
 prompt. The prompt used is as below:
 
 ```
-Set up KoLo (https://kodasoken.com/kolo/install) on this VM. Use the non-interactive and accept-risk flags for KoLo onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "KoLo devices list" and "KoLo device approve <request id>". Make sure the dashboard shows that KoLo's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Kurahi (https://kodasoken.com/kurahi/install) on this VM. Use the non-interactive and accept-risk flags for Kurahi onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "Kurahi devices list" and "Kurahi device approve <request id>". Make sure the dashboard shows that Kurahi's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## Manual installation
@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. KoLo stores state under `~/.kolo/` and `~/.kolo/workspace/`.
+Tip: keep this VM **stateful**. Kurahi stores state under `~/.kolo/` and `~/.kolo/workspace/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -59,15 +59,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) Install KoLo
+## 3) Install Kurahi
 
-Run the KoLo install script:
+Run the Kurahi install script:
 
 ```bash
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
-## 4) Setup nginx to proxy KoLo to port 8000
+## 4) Setup nginx to proxy Kurahi to port 8000
 
 Edit `/etc/nginx/sites-enabled/default` with
 
@@ -101,10 +101,10 @@ server {
 }
 ```
 
-## 5) Access KoLo and grant privileges
+## 5) Access Kurahi and grant privileges
 
 Access `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL` (see the Control UI output from onboarding). Approve
-devices with `KoLo devices list` and `KoLo devices approve <requestId>`. When in doubt,
+devices with `Kurahi devices list` and `Kurahi devices approve <requestId>`. When in doubt,
 use Shelley from your browser!
 
 ## Remote Access
@@ -116,10 +116,10 @@ with email auth.
 ## Updating
 
 ```bash
-npm i -g @kodasoken/kolo@latest
-KoLo doctor
-KoLo gateway restart
-KoLo health
+npm i -g kurahi@latest
+Kurahi doctor
+Kurahi gateway restart
+Kurahi health
 ```
 
 Guide: [Updating](/install/updating)

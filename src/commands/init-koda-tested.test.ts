@@ -54,7 +54,7 @@ const down = (async () => {
   throw new Error("ECONNREFUSED");
 }) as unknown as typeof fetch;
 
-describe("kolo init --provider koda-tested", () => {
+describe("kurahi init --provider koda-tested", () => {
   it("picks the highest-scoring model whose key is set, and stores the env key", async () => {
     const stored: string[] = [];
     const result = await applyKodaTestedProfile(

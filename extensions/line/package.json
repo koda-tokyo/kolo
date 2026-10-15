@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/line",
   "version": "2.0.0",
-  "description": "KoLo LINE channel plugin",
+  "description": "Kurahi LINE channel plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

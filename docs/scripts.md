@@ -14,7 +14,7 @@ Use these when a task is clearly tied to a script; otherwise prefer the CLI.
 ## Conventions
 
 - Scripts are **optional** unless referenced in docs or release checklists.
-- Prefer CLI surfaces when they exist (example: auth monitoring uses `kolo models status --check`).
+- Prefer CLI surfaces when they exist (example: auth monitoring uses `kurahi models status --check`).
 - Assume scripts are host‑specific; read them before running on a new machine.
 
 ## Git hooks
@@ -24,7 +24,7 @@ Use these when a task is clearly tied to a script; otherwise prefer the CLI.
 
 ## Auth monitoring
 
-`kolo models status --check` is the supported check for expiring credentials; see
+`kurahi models status --check` is the supported check for expiring credentials; see
 [/automation/auth-monitoring](/automation/auth-monitoring).
 
 ## When adding scripts

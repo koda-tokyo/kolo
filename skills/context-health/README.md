@@ -1,28 +1,33 @@
 # Context Health Monitor
 
-Real-time context health monitoring for KoLo agents. Detects issues before they impact reasoning quality.
+Real-time context health monitoring for Kurahi agents. Detects issues before they impact reasoning quality.
 
 ## Features
 
 ### 🎯 Token Budget Tracking
+
 - Real-time usage monitoring
 - Warning levels (70%, 85%, 95%)
 - Turn-ahead projections
 - Budget exhaustion alerts
 
 ### 🔍 Lost-in-Middle Detection
+
 LLMs struggle with information buried in the middle of long contexts. This monitor:
+
 - Identifies important info in the "danger zone" (30-70% position)
 - Flags critical information that's buried
 - Recommends repositioning strategies
 
 ### ⏰ Context Freshness
+
 - Tracks age of information
 - Different thresholds for volatile vs stable data
 - Identifies stale tool results
 - Recommends refresh actions
 
 ### 📉 Degradation Warnings
+
 - Repetition detection
 - Confusion indicator analysis
 - Overall quality scoring
@@ -40,7 +45,7 @@ cd skills/context-health
 ### As a Module
 
 ```typescript
-import { ContextHealthMonitor, ContextBlock } from './context-health';
+import { ContextHealthMonitor, ContextBlock } from "./context-health";
 
 const monitor = new ContextHealthMonitor({
   maxTokens: 100000,
@@ -53,15 +58,15 @@ const monitor = new ContextHealthMonitor({
 // Your context blocks
 const blocks: ContextBlock[] = [
   {
-    id: 'sys-1',
-    type: 'system',
-    content: 'You are a helpful assistant...',
-    importance: 'critical',
+    id: "sys-1",
+    type: "system",
+    content: "You are a helpful assistant...",
+    importance: "critical",
   },
   {
-    id: 'user-1',
-    type: 'user',
-    content: 'Help me debug this...',
+    id: "user-1",
+    type: "user",
+    content: "Help me debug this...",
     timestamp: Date.now() - 1000 * 60 * 30, // 30 min ago
   },
   // ... more blocks
@@ -73,8 +78,8 @@ console.log(monitor.formatReport(report));
 
 // Quick check (for frequent polling)
 const quick = monitor.quickCheck(blocks);
-if (quick.status !== 'ok') {
-  console.warn('Context issues:', quick.issues);
+if (quick.status !== "ok") {
+  console.warn("Context issues:", quick.issues);
 }
 ```
 
@@ -86,6 +91,7 @@ npx ts-node context-health.ts context.json
 ```
 
 Input format:
+
 ```json
 [
   {
@@ -100,25 +106,25 @@ Input format:
 
 ## Configuration
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `maxTokens` | number | 100000 | Context limit |
-| `warningThresholds` | number[] | [0.7, 0.85, 0.95] | Warning levels |
-| `middleThreshold` | number | 0.6 | Middle zone boundary |
-| `staleHoursVolatile` | number | 24 | Hours before volatile data is stale |
-| `staleDaysStable` | number | 7 | Days before stable data is stale |
+| Option               | Type     | Default           | Description                         |
+| -------------------- | -------- | ----------------- | ----------------------------------- |
+| `maxTokens`          | number   | 100000            | Context limit                       |
+| `warningThresholds`  | number[] | [0.7, 0.85, 0.95] | Warning levels                      |
+| `middleThreshold`    | number   | 0.6               | Middle zone boundary                |
+| `staleHoursVolatile` | number   | 24                | Hours before volatile data is stale |
+| `staleDaysStable`    | number   | 7                 | Days before stable data is stale    |
 
 ## Block Types
 
 ```typescript
 interface ContextBlock {
-  id: string;                                           // Unique identifier
-  type: 'system' | 'user' | 'assistant' | 'tool_result' | 'memory' | 'file';
-  content: string;                                      // The actual content
-  timestamp?: number;                                   // When it was added (ms)
-  importance?: 'critical' | 'high' | 'medium' | 'low'; // Priority level
-  source?: string;                                      // Origin (e.g., file path)
-  tokens?: number;                                      // Pre-computed token count
+  id: string; // Unique identifier
+  type: "system" | "user" | "assistant" | "tool_result" | "memory" | "file";
+  content: string; // The actual content
+  timestamp?: number; // When it was added (ms)
+  importance?: "critical" | "high" | "medium" | "low"; // Priority level
+  source?: string; // Origin (e.g., file path)
+  tokens?: number; // Pre-computed token count
 }
 ```
 
@@ -127,33 +133,33 @@ interface ContextBlock {
 ```typescript
 interface HealthReport {
   timestamp: string;
-  overall: 'healthy' | 'warning' | 'degraded' | 'critical';
+  overall: "healthy" | "warning" | "degraded" | "critical";
   tokenBudget: {
     used: number;
     max: number;
     percentage: number;
     remaining: number;
-    warningLevel: 'ok' | 'warning' | 'critical' | 'exceeded';
+    warningLevel: "ok" | "warning" | "critical" | "exceeded";
     projection?: {
       turnsRemaining: number;
       tokensPerTurn: number;
     };
   };
   middleAnalysis: {
-    blocksInMiddle: Array<{id, type, importance, position, preview}>;
+    blocksInMiddle: Array<{ id; type; importance; position; preview }>;
     criticalBuried: boolean;
     highBuried: boolean;
     recommendation?: string;
   };
   freshness: {
-    staleBlocks: Array<{id, type, ageHours, source, recommendation}>;
+    staleBlocks: Array<{ id; type; ageHours; source; recommendation }>;
     averageAgeHours: number;
-    oldestBlock?: {id, ageHours};
+    oldestBlock?: { id; ageHours };
   };
   degradation: {
-    repetitionScore: number;     // 0-1
+    repetitionScore: number; // 0-1
     confusionIndicators: string[];
-    qualityScore: number;        // 0-100
+    qualityScore: number; // 0-100
     warnings: string[];
   };
   recommendations: string[];
@@ -163,16 +169,18 @@ interface HealthReport {
 ## Integration Patterns
 
 ### Per-Turn Check
+
 ```typescript
 // After each turn
 const quick = monitor.quickCheck(blocks);
-if (quick.status === 'critical') {
+if (quick.status === "critical") {
   // Immediate action needed
   await compactContext();
 }
 ```
 
 ### Pre-Reasoning Check
+
 ```typescript
 // Before complex reasoning
 const report = monitor.generateReport(blocks);
@@ -183,13 +191,11 @@ if (report.middleAnalysis.criticalBuried) {
 ```
 
 ### Periodic Health Log
+
 ```typescript
 // Every N turns or minutes
 const report = monitor.generateReport(blocks);
-fs.appendFileSync(
-  '~/.kolo/logs/context-health.jsonl',
-  JSON.stringify(report) + '\n'
-);
+fs.appendFileSync("~/.kolo/logs/context-health.jsonl", JSON.stringify(report) + "\n");
 ```
 
 ## Example Output
@@ -235,4 +241,4 @@ Overall Status: **WARNING**
 
 ## License
 
-MIT - Part of the KoLo project.
+MIT - Part of the Kurahi project.

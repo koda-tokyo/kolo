@@ -7,7 +7,7 @@ title: "Channel Routing"
 
 # Channels & routing
 
-KoLo routes replies **back to the channel where a message came from**. The
+Kurahi routes replies **back to the channel where a message came from**. The
 model does not choose a channel; routing is deterministic and controlled by the
 host configuration.
 
@@ -54,7 +54,7 @@ The matched agent determines which workspace and session store are used.
 
 ## Broadcast groups (run multiple agents)
 
-Broadcast groups let you run **multiple agents** for the same peer **when KoLo would normally reply** (for example: in WhatsApp groups, after mention/activation gating).
+Broadcast groups let you run **multiple agents** for the same peer **when Kurahi would normally reply** (for example: in WhatsApp groups, after mention/activation gating).
 
 Config:
 

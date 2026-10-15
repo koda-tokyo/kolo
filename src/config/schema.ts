@@ -378,7 +378,7 @@ const FIELD_LABELS: Record<string, string> = {
 };
 
 const FIELD_HELP: Record<string, string> = {
-  "meta.lastTouchedVersion": "Auto-set when KoLo writes the config.",
+  "meta.lastTouchedVersion": "Auto-set when Kurahi writes the config.",
   "meta.lastTouchedAt": "ISO timestamp of the last config write (auto-set).",
   "update.channel": 'Update channel for git + npm installs ("stable", "beta", or "dev").',
   "update.checkOnStart": "Check for npm updates when the gateway starts (default: true).",
@@ -402,7 +402,7 @@ const FIELD_HELP: Record<string, string> = {
   "gateway.pairing.refreshTtlDays":
     "Lifetime of a refresh token family before the device must pair again (default 30).",
   "gateway.pairing.inviteTtlMinutes":
-    "Default lifetime of `kolo pair invite` codes in minutes (default 10, maximum 60).",
+    "Default lifetime of `kurahi pair invite` codes in minutes (default 10, maximum 60).",
   "gateway.pairing.reconsentDays":
     "Devices paired longer ago than this are forced to pair again (default 90).",
   "gateway.controlUi.basePath": "Optional URL prefix where the Control UI is served (e.g. /KoLo).",
@@ -594,7 +594,7 @@ const FIELD_HELP: Record<string, string> = {
   "plugins.entries.*.enabled": "Overrides plugin enable/disable for this entry (restart required).",
   "plugins.entries.*.config": "Plugin-defined config payload (schema is provided by the plugin).",
   "plugins.installs":
-    "CLI-managed install metadata (used by `kolo plugins update` to locate install sources).",
+    "CLI-managed install metadata (used by `kurahi plugins update` to locate install sources).",
   "plugins.installs.*.source": 'Install source ("npm", "archive", or "path").',
   "plugins.installs.*.spec": "Original npm spec used for install (if source is npm).",
   "plugins.installs.*.sourcePath": "Original archive/path used for install (if any).",

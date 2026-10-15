@@ -463,7 +463,7 @@ export function buildOpenApiDocument(
       title: "KoLo Gateway API",
       version: opts.version ?? "0.0.0",
       description:
-        "HTTP surface of one KoLo gateway (one per identity). Generated from the route " +
+        "HTTP surface of one Kurahi gateway (one per identity). Generated from the route " +
         "registry in src/gateway/http-routes.ts; the gateway serves the live copy at GET /doc. " +
         "Every operation names its token class in `x-kolo-scope`. All HTTP requests share a " +
         "per-IP sliding window (x-kolo-rate-limit) and credential-bearing requests also count " +

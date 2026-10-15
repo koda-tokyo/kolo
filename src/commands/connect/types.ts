@@ -1,4 +1,4 @@
-// Shared shapes for `kolo connect <channel>` (KoLo 2.0, M16). Every network or device touch is a
+// Shared shapes for `kurahi connect <channel>` (KoLo 2.0, M16). Every network or device touch is a
 // dependency so each flow runs end to end in tests against fake channel adapters.
 import type { KoLoConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
@@ -71,7 +71,7 @@ export type ConnectOptions = {
   /** WhatsApp: relink even when a session exists. */
   force?: boolean;
   json?: boolean;
-  /** Called from `kolo init`: problems are reported, not fatal. */
+  /** Called from `kurahi init`: problems are reported, not fatal. */
   fromInit?: boolean;
 };
 

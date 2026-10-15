@@ -1,6 +1,6 @@
 // Outbound delivery queue (KoLo 2.0, M14c): every reply a channel sends goes through one
 // per-channel FIFO with retry and exponential backoff, a dedupe key window, a dead-letter file
-// and a health snapshot (`kolo channels status`, `GET /api/channels/status`). The queue never
+// and a health snapshot (`kurahi channels status`, `GET /api/channels/status`). The queue never
 // originates a message: it only carries what an inbound message, a terminal/CLI send or a
 // human-initiated approval flow produced.
 //

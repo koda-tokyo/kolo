@@ -1,5 +1,5 @@
 /**
- * KoLo MCP Server: exposes the KoLo biology layer to MCP clients.
+ * KoLo MCP Server: exposes the Kurahi biology layer to MCP clients.
  *
  * Exposes KoLo's internal state (hormones, proprioception, inbox, health)
  * as MCP tools that any MCP-compatible client can call.
@@ -32,7 +32,7 @@ const server = new McpServer({
 
 server.tool(
   "kolo_biology_status",
-  "Read KoLo biology state: hormones (stress, dopamine, serotonin, mood, energy) and proprioception (unread inbox, system stress, ticks, circadian phase). Returns combined JSON.",
+  "Read Kurahi biology state: hormones (stress, dopamine, serotonin, mood, energy) and proprioception (unread inbox, system stress, ticks, circadian phase). Returns combined JSON.",
   {
     agent_id: z
       .string()
@@ -53,7 +53,7 @@ server.tool(
 
 server.tool(
   "kolo_gateway_health",
-  "Deep health check of the KoLo gateway: process info (uptime, memory, PID), auth profile TTL/validity, API provider health (healthy/degraded/down), consciousness circuit breaker state, and standard channel health.",
+  "Deep health check of the Kurahi gateway: process info (uptime, memory, PID), auth profile TTL/validity, API provider health (healthy/degraded/down), consciousness circuit breaker state, and standard channel health.",
   {},
   async () => {
     const result = await callGatewayHealthDeep();
@@ -68,7 +68,7 @@ server.tool(
 
 server.tool(
   "kolo_inbox_read",
-  "Read messages from a KoLo agent's inbox. Returns file names and contents of unread messages.",
+  "Read messages from a Kurahi agent's inbox. Returns file names and contents of unread messages.",
   {
     agent_id: z.string().describe("Agent id whose inbox to read."),
     include_read: z

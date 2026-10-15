@@ -15,7 +15,7 @@ Status: external CLI integration. Gateway spawns `imsg rpc` (JSON-RPC over stdio
 1. Ensure Messages is signed in on this Mac.
 2. Install `imsg`:
    - `brew install steipete/tap/imsg`
-3. Configure KoLo with `channels.imessage.cliPath` and `channels.imessage.dbPath`.
+3. Configure Kurahi with `channels.imessage.cliPath` and `channels.imessage.dbPath`.
 4. Start the gateway and approve any macOS prompts (Automation + Full Disk Access).
 
 Minimal config:
@@ -54,7 +54,7 @@ Disable with:
 ## Requirements
 
 - macOS with Messages signed in.
-- Full Disk Access for KoLo + `imsg` (Messages DB access).
+- Full Disk Access for Kurahi + `imsg` (Messages DB access).
 - Automation permission when sending.
 - `channels.imessage.cliPath` can point to any command that proxies stdin/stdout (for example, a wrapper script that SSHes to another Mac and runs `imsg rpc`).
 
@@ -115,7 +115,7 @@ For single-account setups, use flat options (`channels.imessage.cliPath`, `chann
 
 ### Remote/SSH variant (optional)
 
-If you want iMessage on another Mac, set `channels.imessage.cliPath` to a wrapper that runs `imsg` on the remote macOS host over SSH. KoLo only needs stdio.
+If you want iMessage on another Mac, set `channels.imessage.cliPath` to a wrapper that runs `imsg` on the remote macOS host over SSH. Kurahi only needs stdio.
 
 Example wrapper:
 
@@ -124,7 +124,7 @@ Example wrapper:
 exec ssh -T gateway-host imsg "$@"
 ```
 
-**Remote attachments:** When `cliPath` points to a remote host via SSH, attachment paths in the Messages database reference files on the remote machine. KoLo can automatically fetch these over SCP by setting `channels.imessage.remoteHost`:
+**Remote attachments:** When `cliPath` points to a remote host via SSH, attachment paths in the Messages database reference files on the remote machine. Kurahi can automatically fetch these over SCP by setting `channels.imessage.remoteHost`:
 
 ```json5
 {
@@ -138,7 +138,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-If `remoteHost` is not set, KoLo attempts to auto-detect it by parsing the SSH command in your wrapper script. Explicit configuration is recommended for reliability.
+If `remoteHost` is not set, Kurahi attempts to auto-detect it by parsing the SSH command in your wrapper script. Explicit configuration is recommended for reliability.
 
 #### Remote Mac via Tailscale (example)
 
@@ -149,7 +149,7 @@ Architecture:
 ```
 ┌──────────────────────────────┐          SSH (imsg rpc)          ┌──────────────────────────┐
 │ Gateway host (Linux/VM)      │──────────────────────────────────▶│ Mac with Messages + imsg │
-│ - KoLo gateway           │          SCP (attachments)        │ - Messages signed in     │
+│ - Kurahi gateway           │          SCP (attachments)        │ - Messages signed in     │
 │ - channels.imessage.cliPath  │◀──────────────────────────────────│ - Remote Login enabled   │
 └──────────────────────────────┘                                   └──────────────────────────┘
               ▲
@@ -196,8 +196,8 @@ DMs:
 - Default: `channels.imessage.dmPolicy = "pairing"`.
 - Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `KoLo pairing list imessage`
-  - `KoLo pairing approve imessage <CODE>`
+  - `Kurahi pairing list imessage`
+  - `Kurahi pairing approve imessage <CODE>`
 - Pairing is the default token exchange for iMessage DMs. Details: [Pairing](/start/pairing)
 
 Groups:
@@ -216,7 +216,7 @@ Groups:
 
 Some iMessage threads can have multiple participants but still arrive with `is_group=false` depending on how Messages stores the chat identifier.
 
-If you explicitly configure a `chat_id` under `channels.imessage.groups`, KoLo treats that thread as a “group” for:
+If you explicitly configure a `chat_id` under `channels.imessage.groups`, Kurahi treats that thread as a “group” for:
 
 - session isolation (separate `agent:<agentId>:imessage:group:<chat_id>` session key)
 - group allowlisting / mention gating behavior

@@ -99,7 +99,7 @@ describe("buildAgentSystemPrompt", () => {
     });
 
     expect(prompt).toContain("## KoLo CLI Quick Reference");
-    expect(prompt).toContain("kolo gateway restart");
+    expect(prompt).toContain("kurahi gateway restart");
     expect(prompt).toContain("Do not invent commands");
   });
 
@@ -129,9 +129,9 @@ describe("buildAgentSystemPrompt", () => {
     expect(prompt).toContain(
       "- If exactly one skill clearly applies: read its SKILL.md at <location> with `Read`, then follow it.",
     );
-    expect(prompt).toContain("kolo docs: /tmp/KoLo/docs");
+    expect(prompt).toContain("kurahi docs: /tmp/KoLo/docs");
     expect(prompt).toContain(
-      "For KoLo behavior, commands, config, or architecture: consult local docs first.",
+      "For Kurahi behavior, commands, config, or architecture: consult local docs first.",
     );
   });
 
@@ -142,9 +142,9 @@ describe("buildAgentSystemPrompt", () => {
     });
 
     expect(prompt).toContain("## Documentation");
-    expect(prompt).toContain("kolo docs: /tmp/KoLo/docs");
+    expect(prompt).toContain("kurahi docs: /tmp/KoLo/docs");
     expect(prompt).toContain(
-      "For KoLo behavior, commands, config, or architecture: consult local docs first.",
+      "For Kurahi behavior, commands, config, or architecture: consult local docs first.",
     );
   });
 

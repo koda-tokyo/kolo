@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "KoLo",
+  "name": "Kurahi",
   "theme": "mint",
   "logo": {
     "light": "/assets/kolo-mark.svg",
@@ -13,11 +13,11 @@
   "topbarLinks": [
     {
       "name": "GitHub",
-      "url": "https://github.com/koda-tokyo/kolo"
+      "url": "https://github.com/koda-tokyo/kurahi"
     },
     {
       "name": "Releases",
-      "url": "https://github.com/koda-tokyo/kolo/releases"
+      "url": "https://github.com/koda-tokyo/kurahi/releases"
     }
   ],
   "redirects": [
@@ -355,15 +355,15 @@
     },
     {
       "source": "/clawd",
-      "destination": "/start/KoLo"
+      "destination": "/start/Kurahi"
     },
     {
       "source": "/start/clawd",
-      "destination": "/start/KoLo"
+      "destination": "/start/Kurahi"
     },
     {
       "source": "/start/clawd/",
-      "destination": "/start/KoLo"
+      "destination": "/start/Kurahi"
     },
     {
       "source": "/clawhub",
@@ -846,7 +846,7 @@
               "start/wizard",
               "start/setup",
               "start/pairing",
-              "start/KoLo",
+              "start/Kurahi",
               "start/showcase",
               "start/hubs",
               "start/onboarding"

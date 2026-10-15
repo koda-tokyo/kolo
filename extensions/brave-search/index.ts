@@ -1,12 +1,12 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * Brave Search plugin for KoLo.
+ * Brave Search plugin for Kurahi.
  *
  * Provides `web_search` tool for all agents.
  * Free tier: 2,000 queries/month.
  * Config: set `apiKey` in plugin config or `BRAVE_SEARCH_API_KEY` env var.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 interface SearchResult {
   title: string;
@@ -59,15 +59,16 @@ const braveSearchPlugin = {
 
         async execute(_toolId: string, params: Record<string, unknown>) {
           const apiKey =
-            (api.pluginConfig?.apiKey as string | undefined) ??
-            process.env.BRAVE_SEARCH_API_KEY;
+            (api.pluginConfig?.apiKey as string | undefined) ?? process.env.BRAVE_SEARCH_API_KEY;
 
           if (!apiKey) {
             return {
-              content: [{
-                type: "text" as const,
-                text: "Brave Search not configured. Set apiKey in plugin config or BRAVE_SEARCH_API_KEY env var.\nGet a free key at: https://brave.com/search/api/",
-              }],
+              content: [
+                {
+                  type: "text" as const,
+                  text: "Brave Search not configured. Set apiKey in plugin config or BRAVE_SEARCH_API_KEY env var.\nGet a free key at: https://brave.com/search/api/",
+                },
+              ],
             };
           }
 
@@ -107,12 +108,20 @@ const braveSearchPlugin = {
           .option("-n, --count <n>", "Number of results", "5")
           .action(async (parts: string[], opts: { count?: string }) => {
             const query = parts.join(" ");
-            const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.BRAVE_SEARCH_API_KEY;
-            if (!apiKey) { console.error("Set BRAVE_SEARCH_API_KEY env var."); process.exitCode = 1; return; }
+            const apiKey =
+              (api.pluginConfig?.apiKey as string | undefined) ?? process.env.BRAVE_SEARCH_API_KEY;
+            if (!apiKey) {
+              console.error("Set BRAVE_SEARCH_API_KEY env var.");
+              process.exitCode = 1;
+              return;
+            }
             try {
               const results = await braveSearch(query, apiKey, Number(opts.count) || 5);
               for (const r of results) console.log(`${r.title}\n  ${r.url}\n  ${r.description}\n`);
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["search"] },

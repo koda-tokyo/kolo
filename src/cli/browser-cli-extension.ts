@@ -31,7 +31,7 @@ export async function installChromeExtension(opts?: {
 }): Promise<{ path: string }> {
   const src = opts?.sourceDir ?? bundledExtensionRootDir();
   if (!hasManifest(src)) {
-    throw new Error("Bundled Chrome extension is missing. Reinstall KoLo and try again.");
+    throw new Error("Bundled Chrome extension is missing. Reinstall Kurahi and try again.");
   }
 
   const stateDir = opts?.stateDir ?? STATE_DIR;
@@ -104,7 +104,7 @@ export function registerBrowserExtensionCommands(
         defaultRuntime.error(
           danger(
             [
-              `Chrome extension is not installed. Run: "${formatCliCommand("kolo browser extension install")}"`,
+              `Chrome extension is not installed. Run: "${formatCliCommand("kurahi browser extension install")}"`,
               `Docs: ${formatDocsLink("/tools/chrome-extension")}`,
             ].join("\n"),
           ),

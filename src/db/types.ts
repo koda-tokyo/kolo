@@ -1,5 +1,5 @@
 // src/db/types.ts
-// Database types for KoLo auth + workspace system
+// Database types for Kurahi auth + workspace system
 
 import { z } from "zod";
 

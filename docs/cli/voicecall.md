@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `KoLo voicecall` (voice-call plugin command surface)"
+summary: "CLI reference for `Kurahi voicecall` (voice-call plugin command surface)"
 read_when:
   - You use the voice-call plugin and want the CLI entry points
   - You want quick examples for `voicecall call|continue|status|tail|expose`
 title: "voicecall"
 ---
 
-# `KoLo voicecall`
+# `Kurahi voicecall`
 
 `voicecall` is a plugin-provided command. It only appears if the voice-call plugin is installed and enabled.
 
@@ -17,18 +17,18 @@ Primary doc:
 ## Common commands
 
 ```bash
-KoLo voicecall status --call-id <id>
-KoLo voicecall call --to "+15555550123" --message "Hello" --mode notify
-KoLo voicecall continue --call-id <id> --message "Any questions?"
-KoLo voicecall end --call-id <id>
+Kurahi voicecall status --call-id <id>
+Kurahi voicecall call --to "+15555550123" --message "Hello" --mode notify
+Kurahi voicecall continue --call-id <id> --message "Any questions?"
+Kurahi voicecall end --call-id <id>
 ```
 
 ## Exposing webhooks (Tailscale)
 
 ```bash
-KoLo voicecall expose --mode serve
-KoLo voicecall expose --mode funnel
-KoLo voicecall unexpose
+Kurahi voicecall expose --mode serve
+Kurahi voicecall expose --mode funnel
+Kurahi voicecall unexpose
 ```
 
 Security note: only expose the webhook endpoint to networks you trust. Prefer Tailscale Serve over Funnel when possible.

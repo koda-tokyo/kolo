@@ -14,30 +14,30 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["kolo sandbox list", "List all sandbox containers."],
-    ["kolo sandbox list --browser", "List only browser containers."],
-    ["kolo sandbox recreate --all", "Recreate all containers."],
-    ["kolo sandbox recreate --session main", "Recreate a specific session."],
-    ["kolo sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["kolo sandbox explain", "Explain effective sandbox config."],
+    ["kurahi sandbox list", "List all sandbox containers."],
+    ["kurahi sandbox list --browser", "List only browser containers."],
+    ["kurahi sandbox recreate --all", "Recreate all containers."],
+    ["kurahi sandbox recreate --session main", "Recreate a specific session."],
+    ["kurahi sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["kurahi sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["kolo sandbox list", "List all sandbox containers."],
-    ["kolo sandbox list --browser", "List only browser containers."],
-    ["kolo sandbox list --json", "JSON output."],
+    ["kurahi sandbox list", "List all sandbox containers."],
+    ["kurahi sandbox list --browser", "List only browser containers."],
+    ["kurahi sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["kolo sandbox recreate --all", "Recreate all containers."],
-    ["kolo sandbox recreate --session main", "Recreate a specific session."],
-    ["kolo sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["kolo sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["kolo sandbox recreate --all --force", "Skip confirmation."],
+    ["kurahi sandbox recreate --all", "Recreate all containers."],
+    ["kurahi sandbox recreate --session main", "Recreate a specific session."],
+    ["kurahi sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+    ["kurahi sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["kurahi sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["kolo sandbox explain", "Show effective sandbox config."],
-    ["kolo sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["kolo sandbox explain --agent work", "Explain an agent sandbox."],
-    ["kolo sandbox explain --json", "JSON output."],
+    ["kurahi sandbox explain", "Show effective sandbox config."],
+    ["kurahi sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["kurahi sandbox explain --agent work", "Explain an agent sandbox."],
+    ["kurahi sandbox explain --json", "JSON output."],
   ],
 } as const;
 

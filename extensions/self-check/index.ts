@@ -1,3 +1,5 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
+import { readConfigFileSnapshot, resolveIntegrityLocations, verifyRegistry } from "KoLo/plugin-sdk";
 /**
  * Self-check (KoLo 2.0, M7). Off by default.
  *
@@ -8,14 +10,12 @@
  *   integrity     the signed integrity registry verifies
  *   ports         listeners bound beyond loopback vs the gateway bind policy + allowPublicPorts
  *   secrets       (only when scanSecrets.dirs is set) token-shaped strings in text files
- * Results go to `<stateDir>/self-check/latest.json` (read by `kolo doctor` and
- * `kolo plugins doctor`), to the audit log (`self_check.run`, plus one `self_check.finding` per
+ * Results go to `<stateDir>/self-check/latest.json` (read by `kurahi doctor` and
+ * `kurahi plugins doctor`), to the audit log (`self_check.run`, plus one `self_check.finding` per
  * new warn/error) and to the `self_check` signal. Nothing is killed, nothing leaves the host.
  */
 import fs from "node:fs";
 import path from "node:path";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
-import { readConfigFileSnapshot, resolveIntegrityLocations, verifyRegistry } from "KoLo/plugin-sdk";
 
 export type SelfCheckConfig = {
   intervalMs: number;
@@ -37,20 +37,32 @@ export const DEFAULT_SECRET_PATTERNS = [
 export function resolveSelfCheckConfig(raw: Record<string, unknown> | undefined): SelfCheckConfig {
   const cfg = raw ?? {};
   const interval = cfg.intervalMs;
-  const scan = cfg.scanSecrets && typeof cfg.scanSecrets === "object" ? (cfg.scanSecrets as Record<string, unknown>) : null;
-  const dirs = Array.isArray(scan?.dirs) ? (scan!.dirs as unknown[]).filter((d): d is string => typeof d === "string") : [];
+  const scan =
+    cfg.scanSecrets && typeof cfg.scanSecrets === "object"
+      ? (cfg.scanSecrets as Record<string, unknown>)
+      : null;
+  const dirs = Array.isArray(scan?.dirs)
+    ? (scan!.dirs as unknown[]).filter((d): d is string => typeof d === "string")
+    : [];
   const patterns = Array.isArray(scan?.patterns)
     ? (scan!.patterns as unknown[]).filter((p): p is string => typeof p === "string")
     : DEFAULT_SECRET_PATTERNS;
-  const maxFileBytes = typeof scan?.maxFileBytes === "number" ? Math.max(1024, scan!.maxFileBytes as number) : 1_048_576;
+  const maxFileBytes =
+    typeof scan?.maxFileBytes === "number"
+      ? Math.max(1024, scan!.maxFileBytes as number)
+      : 1_048_576;
   return {
-    intervalMs: typeof interval === "number" && Number.isFinite(interval) ? Math.max(30_000, Math.floor(interval)) : 600_000,
+    intervalMs:
+      typeof interval === "number" && Number.isFinite(interval)
+        ? Math.max(30_000, Math.floor(interval))
+        : 600_000,
     runOnStart: cfg.runOnStart !== false,
     autoFix: cfg.autoFix === true,
     allowPublicPorts: Array.isArray(cfg.allowPublicPorts)
       ? (cfg.allowPublicPorts as unknown[]).filter((p): p is number => typeof p === "number")
       : [],
-    scanSecrets: dirs.length > 0 ? { dirs, patterns: patterns.map((p) => new RegExp(p)), maxFileBytes } : null,
+    scanSecrets:
+      dirs.length > 0 ? { dirs, patterns: patterns.map((p) => new RegExp(p)), maxFileBytes } : null,
   };
 }
 
@@ -132,7 +144,11 @@ export function checkPermissions(
         });
         continue;
       } catch (err) {
-        findings.push({ check: "permissions", level: "error", message: `${entry.path} is ${actual.toString(8)} and chmod failed: ${String(err)}` });
+        findings.push({
+          check: "permissions",
+          level: "error",
+          message: `${entry.path} is ${actual.toString(8)} and chmod failed: ${String(err)}`,
+        });
         continue;
       }
     }
@@ -205,7 +221,11 @@ export function checkPorts(
     if (policy.allowPublicPorts.includes(port)) {
       continue;
     }
-    findings.push({ check: "ports", level: "warn", message: `port ${port} listens on ${where} (not in allowPublicPorts)` });
+    findings.push({
+      check: "ports",
+      level: "warn",
+      message: `port ${port} listens on ${where} (not in allowPublicPorts)`,
+    });
   }
   return findings;
 }
@@ -231,7 +251,10 @@ export function scanForSecrets(
   dirs: string[],
   patterns: RegExp[],
   maxFileBytes: number,
-  io: { list: (dir: string) => Array<{ path: string; size: number; isDir: boolean }>; read: (p: string) => string },
+  io: {
+    list: (dir: string) => Array<{ path: string; size: number; isDir: boolean }>;
+    read: (p: string) => string;
+  },
 ): Finding[] {
   const findings: Finding[] = [];
   const queue = [...dirs];
@@ -258,7 +281,11 @@ export function scanForSecrets(
       for (const pattern of patterns) {
         if (pattern.test(text)) {
           // Only the file and the pattern are reported; never the matched value.
-          findings.push({ check: "secrets", level: "error", message: `${entry.path} matches ${pattern.source}` });
+          findings.push({
+            check: "secrets",
+            level: "error",
+            message: `${entry.path} matches ${pattern.source}`,
+          });
           break;
         }
       }
@@ -272,7 +299,11 @@ export function scanForSecrets(
 export type SelfCheckDeps = {
   permFs: PermFs;
   listeners: () => Listener[] | null;
-  configSnapshot: () => Promise<{ valid: boolean; exists: boolean; issues: Array<{ path: string; message: string }> }>;
+  configSnapshot: () => Promise<{
+    valid: boolean;
+    exists: boolean;
+    issues: Array<{ path: string; message: string }>;
+  }>;
   integrity: () => { ok: boolean; summary: string; present: boolean };
   scanIo: Parameters<typeof scanForSecrets>[3];
   now: () => Date;
@@ -289,13 +320,20 @@ export const realDeps: SelfCheckDeps = {
   integrity: () => {
     const loc = resolveIntegrityLocations();
     if (!fs.existsSync(loc.registryPath)) {
-      return { ok: true, summary: "no integrity registry (kolo integrity init to enable)", present: false };
+      return {
+        ok: true,
+        summary: "no integrity registry (kurahi integrity init to enable)",
+        present: false,
+      };
     }
     const result = verifyRegistry(loc);
-    const problems = (result as { problems?: Array<{ path?: string; kind?: string }> }).problems ?? [];
+    const problems =
+      (result as { problems?: Array<{ path?: string; kind?: string }> }).problems ?? [];
     return {
       ok: (result as { ok?: boolean }).ok !== false && problems.length === 0,
-      summary: problems.length ? problems.map((p) => `${p.kind ?? "problem"}: ${p.path ?? ""}`).join("; ") : "registry verified",
+      summary: problems.length
+        ? problems.map((p) => `${p.kind ?? "problem"}: ${p.path ?? ""}`).join("; ")
+        : "registry verified",
       present: true,
     };
   },
@@ -334,7 +372,11 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
     const findings: Finding[] = [];
     const checks: Record<string, CheckState> = {};
     const settle = (name: string, list: Finding[]) => {
-      checks[name] = list.some((f) => f.level === "error") ? "fail" : list.some((f) => f.level === "warn") ? "warn" : "pass";
+      checks[name] = list.some((f) => f.level === "error")
+        ? "fail"
+        : list.some((f) => f.level === "warn")
+          ? "warn"
+          : "pass";
       findings.push(...list);
     };
 
@@ -342,7 +384,11 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
       // NTFS has no POSIX mode bits: stat reports 0666/0777 for everything and chmod is a no-op,
       // so the check would fail every Windows install. Access there is governed by ACLs.
       checks.permissions = "skip";
-      findings.push({ check: "permissions", level: "info", message: "POSIX mode bits not applicable on Windows (NTFS ACLs)" });
+      findings.push({
+        check: "permissions",
+        level: "info",
+        message: "POSIX mode bits not applicable on Windows (NTFS ACLs)",
+      });
     } else {
       settle(
         "permissions",
@@ -366,10 +412,16 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
           ? [{ check: "config", level: "warn", message: "no config file" }]
           : snap.valid
             ? []
-            : snap.issues.map((i) => ({ check: "config", level: "error" as const, message: `${i.path}: ${i.message}` })),
+            : snap.issues.map((i) => ({
+                check: "config",
+                level: "error" as const,
+                message: `${i.path}: ${i.message}`,
+              })),
       );
     } catch (err) {
-      settle("config", [{ check: "config", level: "error", message: `config read failed: ${String(err)}` }]);
+      settle("config", [
+        { check: "config", level: "error", message: `config read failed: ${String(err)}` },
+      ]);
     }
 
     try {
@@ -378,16 +430,25 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
         checks.integrity = "skip";
         findings.push({ check: "integrity", level: "info", message: integrity.summary });
       } else {
-        settle("integrity", integrity.ok ? [] : [{ check: "integrity", level: "error", message: integrity.summary }]);
+        settle(
+          "integrity",
+          integrity.ok ? [] : [{ check: "integrity", level: "error", message: integrity.summary }],
+        );
       }
     } catch (err) {
-      settle("integrity", [{ check: "integrity", level: "error", message: `verify failed: ${String(err)}` }]);
+      settle("integrity", [
+        { check: "integrity", level: "error", message: `verify failed: ${String(err)}` },
+      ]);
     }
 
     const listeners = d.listeners();
     if (listeners === null) {
       checks.ports = "skip";
-      findings.push({ check: "ports", level: "info", message: "listener table not readable on this platform" });
+      findings.push({
+        check: "ports",
+        level: "info",
+        message: "listener table not readable on this platform",
+      });
     } else {
       settle(
         "ports",
@@ -441,8 +502,14 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
       const key = `${f.check}|${f.message}`;
       current.add(key);
       if (!previous.has(key)) {
-        api.audit({ action: "self_check.finding", outcome: f.level === "error" ? "failed" : "ok", detail: f });
-        (f.level === "error" ? api.logger.error : api.logger.warn)(`[self-check] ${f.check}: ${f.message}`);
+        api.audit({
+          action: "self_check.finding",
+          outcome: f.level === "error" ? "failed" : "ok",
+          detail: f,
+        });
+        (f.level === "error" ? api.logger.error : api.logger.warn)(
+          `[self-check] ${f.check}: ${f.message}`,
+        );
       }
     }
     previous = current;
@@ -455,7 +522,8 @@ export function createSelfCheck(api: KoLoPluginApi, deps: Partial<SelfCheckDeps>
 const selfCheckPlugin = {
   id: "self-check",
   name: "Self-check",
-  description: "Secrets permissions, config validity, integrity registry, open ports vs bind policy",
+  description:
+    "Secrets permissions, config validity, integrity registry, open ports vs bind policy",
   register(api: KoLoPluginApi) {
     const check = createSelfCheck(api);
     api.registerService({

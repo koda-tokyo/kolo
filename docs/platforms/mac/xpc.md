@@ -1,11 +1,11 @@
 ---
-summary: "macOS IPC architecture for KoLo app, gateway node transport, and PeekabooBridge"
+summary: "macOS IPC architecture for Kurahi app, gateway node transport, and PeekabooBridge"
 read_when:
   - Editing IPC contracts or menu bar app IPC
 title: "macOS IPC"
 ---
 
-# KoLo macOS IPC architecture
+# Kurahi macOS IPC architecture
 
 **Current model:** a local Unix socket connects the **node host service** to the **macOS app** for exec approvals + `system.run`. A `kolo-mac` debug CLI exists for discovery/connect checks; agent actions still flow through the Gateway WebSocket and `node.invoke`. UI automation uses PeekabooBridge.
 

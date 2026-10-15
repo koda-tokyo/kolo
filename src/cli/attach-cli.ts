@@ -1,7 +1,7 @@
-// `kolo attach …` — attach a terminal to a live session (KoLo 2.0, M3b).
+// `kurahi attach …` — attach a terminal to a live session (KoLo 2.0, M3b).
 //
-//   kolo attach --list [--agent id] [--json]           sessions the credential may see
-//   kolo attach <session|agent> [--follow] [--history N] [--duration ms] [--json]
+//   kurahi attach --list [--agent id] [--json]           sessions the credential may see
+//   kurahi attach <session|agent> [--follow] [--history N] [--duration ms] [--json]
 //
 // The target is resolved by the gateway (GET /api/sessions/{id}: session id, key, label or an
 // agent id → its main session), then a WebSocket is opened as a client of that session with
@@ -16,7 +16,7 @@ import {
   KoloNetworkError,
   KoloWsError,
   type KoloSocket,
-} from "@kodasoken/kolo-client";
+} from "@kodasoken/kurahi-client";
 import readline from "node:readline";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { renderTable } from "../terminal/table.js";
@@ -145,12 +145,12 @@ function parseInt10(raw: string | undefined, name: string, fallback: number): nu
 
 function reportError(runtime: RuntimeEnv, err: unknown, json: boolean | undefined): number {
   if (err instanceof UsageError) {
-    runtime.error(`kolo attach: ${err.message}`);
+    runtime.error(`kurahi attach: ${err.message}`);
     return ATTACH_EXIT.usage;
   }
   if (err instanceof KoloNetworkError) {
     runtime.error(
-      `kolo attach: gateway unreachable: ${err.message} (${formatCliCommand("kolo gateway status")})`,
+      `kurahi attach: gateway unreachable: ${err.message} (${formatCliCommand("kurahi gateway status")})`,
     );
     return ATTACH_EXIT.unreachable;
   }
@@ -163,7 +163,7 @@ function reportError(runtime: RuntimeEnv, err: unknown, json: boolean | undefine
     runtime.error(
       json
         ? JSON.stringify({ ok: false, status: err.status, error: message })
-        : `kolo attach: ${message} (HTTP ${err.status})`,
+        : `kurahi attach: ${message} (HTTP ${err.status})`,
     );
     return ATTACH_EXIT.error;
   }
@@ -175,12 +175,12 @@ function reportError(runtime: RuntimeEnv, err: unknown, json: boolean | undefine
             method: err.method,
             error: { code: err.code, message: err.message },
           })
-        : `kolo attach: ${err.message}`,
+        : `kurahi attach: ${err.message}`,
     );
     return ATTACH_EXIT.error;
   }
   const message = err instanceof Error ? err.message : String(err);
-  runtime.error(`kolo attach: ${message}`);
+  runtime.error(`kurahi attach: ${message}`);
   return /socket (error|closed before hello-ok)|ECONNREFUSED/.test(message)
     ? ATTACH_EXIT.unreachable
     : ATTACH_EXIT.error;
@@ -190,7 +190,7 @@ async function defaultCreateClient(opts: { baseUrl?: string }) {
   return await KoloClient.local({ baseUrl: opts.baseUrl });
 }
 
-/** `kolo attach --list`. Returns the exit code. */
+/** `kurahi attach --list`. Returns the exit code. */
 export async function runAttachList(opts: AttachCliOptions, deps: AttachCliDeps = {}) {
   const runtime = deps.runtime ?? defaultRuntime;
   try {
@@ -221,7 +221,7 @@ type ChatEvent = {
   reasoning?: { text?: string; state?: string; startedAt?: number; durationMs?: number };
 };
 
-/** Lines of reasoning `kolo attach` replays from history per message. */
+/** Lines of reasoning `kurahi attach` replays from history per message. */
 const HISTORY_REASONING_LINES = 20;
 
 /** A finished reasoning block as attach prints it from history: header, then dimmed lines. */
@@ -376,7 +376,7 @@ export function createStreamPrinter(
   };
 }
 
-/** `kolo attach <target>`. Returns the exit code. */
+/** `kurahi attach <target>`. Returns the exit code. */
 export async function runAttach(
   target: string | undefined,
   opts: AttachCliOptions,
@@ -387,7 +387,7 @@ export async function runAttach(
   let key = "";
   try {
     if (!target?.trim()) {
-      throw new UsageError("usage: kolo attach <session|agent> | kolo attach --list");
+      throw new UsageError("usage: kurahi attach <session|agent> | kurahi attach --list");
     }
     const history = parseInt10(opts.history, "--history", 20);
     const durationMs = parseInt10(opts.duration, "--duration", 0);
@@ -398,7 +398,7 @@ export async function runAttach(
     key = session.key;
 
     socket = await client.ws({
-      client: { id: "cli", mode: "cli", version: VERSION, displayName: "kolo attach" },
+      client: { id: "cli", mode: "cli", version: VERSION, displayName: "kurahi attach" },
       callTimeoutMs: 30_000,
     });
     const mode = opts.follow ? "follow" : "interact";
@@ -511,7 +511,7 @@ export async function runAttach(
               idempotencyKey: `attach-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
             });
           } catch (err) {
-            runtime.error(`kolo attach: send failed: ${(err as Error).message}`);
+            runtime.error(`kurahi attach: send failed: ${(err as Error).message}`);
           }
         });
       });
@@ -572,10 +572,10 @@ export function registerAttachCli(program: Command, deps: AttachCliDeps = {}) {
       [
         "",
         "Examples:",
-        "  kolo attach --list",
-        "  kolo attach alice                 (the agent's main session)",
-        "  kolo attach agent:alice:main --follow",
-        '  echo "status?" | kolo attach ops  (send one line, print the reply, leave)',
+        "  kurahi attach --list",
+        "  kurahi attach alice                 (the agent's main session)",
+        "  kurahi attach agent:alice:main --follow",
+        '  echo "status?" | kurahi attach ops  (send one line, print the reply, leave)',
         "",
         "Type /quit (or Ctrl-D) to detach. Exit codes: 0 ok, 1 error, 2 usage, 3 unreachable.",
       ].join("\n"),

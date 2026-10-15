@@ -2,7 +2,7 @@
 title: Deploy on Render
 ---
 
-Deploy KoLo on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
+Deploy Kurahi on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Deploy KoLo on Render using Infrastructure as Code. The included `render.yaml` B
 ## Deploy with a Render Blueprint
 
 <a
-  href="https://render.com/deploy?repo=https://github.com/koda-tokyo/kolo"
+  href="https://render.com/deploy?repo=https://github.com/koda-tokyo/kurahi"
   target="_blank"
   rel="noreferrer"
 >
@@ -30,7 +30,7 @@ Once deployed, your service URL follows the pattern `https://<service-name>.onre
 ## Understanding the Blueprint
 
 Render Blueprints are YAML files that define your infrastructure. The `render.yaml` in this
-repository configures everything needed to run KoLo:
+repository configures everything needed to run Kurahi:
 
 ```yaml
 services:
@@ -111,7 +111,7 @@ Modify variables in **Dashboard → your service → Environment**. Changes trig
 
 ### Auto-deploy
 
-If you use the original KoLo repository, Render will not auto-deploy your KoLo. To update it, run a manual Blueprint sync from the dashboard.
+If you use the original Kurahi repository, Render will not auto-deploy your Kurahi. To update it, run a manual Blueprint sync from the dashboard.
 
 ## Custom domain
 
@@ -127,7 +127,7 @@ Render supports horizontal and vertical scaling:
 - **Vertical**: Change the plan to get more CPU/RAM
 - **Horizontal**: Increase instance count (Standard plan and above)
 
-For KoLo, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
+For Kurahi, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
 
 ## Backups and migration
 
@@ -137,7 +137,7 @@ Export your configuration and workspace at any time:
 https://<your-service>.onrender.com/setup/export
 ```
 
-This downloads a portable backup you can restore on any KoLo host.
+This downloads a portable backup you can restore on any Kurahi host.
 
 ## Troubleshooting
 

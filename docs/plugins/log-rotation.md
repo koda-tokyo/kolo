@@ -28,14 +28,14 @@ Live logs are never deleted, only rotated. A run that changed anything is audite
       "log-rotation": {
         enabled: true,
         config: {
-          intervalMs: 600000,   // >= 10000
-          maxBytes: 52428800,   // 50 MB
+          intervalMs: 600000, // >= 10000
+          maxBytes: 52428800, // 50 MB
           maxAgeDays: 14,
           keep: 3,
           compress: false,
-          dirs: ["~/.kolo-sibling/logs"],   // extra directories; the state-root logs dir is always included
+          dirs: ["~/.kolo-sibling/logs"], // extra directories; the state-root logs dir is always included
           extensions: [".log"],
-          dryRun: false,        // true: audit what would happen, touch nothing
+          dryRun: false, // true: audit what would happen, touch nothing
         },
       },
     },
@@ -43,7 +43,7 @@ Live logs are never deleted, only rotated. A run that changed anything is audite
 }
 ```
 
-Enable with `kolo plugins enable log-rotation` (applied live by a running gateway).
+Enable with `kurahi plugins enable log-rotation` (applied live by a running gateway).
 
 ## Notes
 

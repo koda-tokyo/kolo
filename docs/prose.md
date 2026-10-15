@@ -1,5 +1,5 @@
 ---
-summary: "OpenProse: .prose workflows, slash commands, and state in KoLo"
+summary: "OpenProse: .prose workflows, slash commands, and state in Kurahi"
 read_when:
   - You want to run or write .prose workflows
   - You want to enable the OpenProse plugin
@@ -9,7 +9,7 @@ title: "OpenProse"
 
 # OpenProse
 
-OpenProse is a portable, markdown-first workflow format for orchestrating AI sessions. In KoLo it ships as a plugin that installs an OpenProse skill pack plus a `/prose` slash command. Programs live in `.prose` files and can spawn multiple sub-agents with explicit control flow.
+OpenProse is a portable, markdown-first workflow format for orchestrating AI sessions. In Kurahi it ships as a plugin that installs an OpenProse skill pack plus a `/prose` slash command. Programs live in `.prose` files and can spawn multiple sub-agents with explicit control flow.
 
 Official site: https://www.prose.md
 
@@ -24,18 +24,18 @@ Official site: https://www.prose.md
 Bundled plugins are disabled by default. Enable OpenProse:
 
 ```bash
-kolo plugins enable open-prose
+kurahi plugins enable open-prose
 ```
 
 Restart the Gateway after enabling the plugin.
 
-Dev/local checkout: `kolo plugins install ./extensions/open-prose`
+Dev/local checkout: `kurahi plugins install ./extensions/open-prose`
 
 Related docs: [Plugins](/plugin), [Plugin manifest](/plugins/manifest), [Skills](/tools/skills).
 
 ## Slash command
 
-OpenProse registers `/prose` as a user-invocable skill command. It routes to the OpenProse VM instructions and uses KoLo tools under the hood.
+OpenProse registers `/prose` as a user-invocable skill command. It routes to the OpenProse VM instructions and uses Kurahi tools under the hood.
 
 Common commands:
 
@@ -115,11 +115,11 @@ Notes:
 `/prose run <handle/slug>` resolves to `https://p.prose.md/<handle>/<slug>`.
 Direct URLs are fetched as-is. This uses the `web_fetch` tool (or `exec` for POST).
 
-## KoLo runtime mapping
+## Kurahi runtime mapping
 
-OpenProse programs map to KoLo primitives:
+OpenProse programs map to Kurahi primitives:
 
-| OpenProse concept         | KoLo tool    |
+| OpenProse concept         | Kurahi tool      |
 | ------------------------- | ---------------- |
 | Spawn session / Task tool | `sessions_spawn` |
 | File read/write           | `read` / `write` |
@@ -129,6 +129,6 @@ If your tool allowlist blocks these tools, OpenProse programs will fail. See [Sk
 
 ## Security + approvals
 
-Treat `.prose` files like code. Review before running. Use KoLo tool allowlists and approval gates to control side effects.
+Treat `.prose` files like code. Review before running. Use Kurahi tool allowlists and approval gates to control side effects.
 
 For deterministic, approval-gated workflows, compare with [Lobster](/tools/lobster).

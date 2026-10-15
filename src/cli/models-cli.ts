@@ -302,9 +302,9 @@ export function registerModelsCli(program: Command) {
       [
         "",
         "Examples:",
-        "  kolo models bench --model sakura/gpt-oss-120b",
-        "  kolo models bench --quick-model ollama/qwen2.5:7b --max-tokens 100000",
-        "  kolo models bench --model sakura/gpt-oss-120b --only policy.,continuity.",
+        "  kurahi models bench --model sakura/gpt-oss-120b",
+        "  kurahi models bench --quick-model ollama/qwen2.5:7b --max-tokens 100000",
+        "  kurahi models bench --model sakura/gpt-oss-120b --only policy.,continuity.",
         "",
         `${theme.muted("Docs:")} ${formatDocsLink("/providers/koda-tested")}`,
         "",
@@ -317,7 +317,7 @@ export function registerModelsCli(program: Command) {
         } catch (err) {
           const code = (err as { exitCode?: unknown } | null)?.exitCode;
           defaultRuntime.error(
-            `kolo models bench: ${err instanceof Error ? err.message : String(err)}`,
+            `kurahi models bench: ${err instanceof Error ? err.message : String(err)}`,
           );
           defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
         }
@@ -338,7 +338,7 @@ export function registerModelsCli(program: Command) {
         } catch (err) {
           const code = (err as { exitCode?: unknown } | null)?.exitCode;
           defaultRuntime.error(
-            `kolo models bench-merge: ${err instanceof Error ? err.message : String(err)}`,
+            `kurahi models bench-merge: ${err instanceof Error ? err.message : String(err)}`,
           );
           defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
         }
@@ -363,7 +363,7 @@ export function registerModelsCli(program: Command) {
         } catch (err) {
           const code = (err as { exitCode?: unknown } | null)?.exitCode;
           defaultRuntime.error(
-            `kolo models tested: ${err instanceof Error ? err.message : String(err)}`,
+            `kurahi models tested: ${err instanceof Error ? err.message : String(err)}`,
           );
           defaultRuntime.exit(typeof code === "number" ? code : BENCH_EXIT.error);
         }

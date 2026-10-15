@@ -54,7 +54,7 @@ export async function startGatewaySidecars(params: {
     params.log.warn(`OAuth refresher failed to start (non-fatal): ${String(err)}`);
   }
 
-  // Start KoLo browser control server (unless disabled via config).
+  // Start Kurahi browser control server (unless disabled via config).
   let browserControl: Awaited<ReturnType<typeof startBrowserControlServerIfEnabled>> = null;
   try {
     browserControl = await startBrowserControlServerIfEnabled();

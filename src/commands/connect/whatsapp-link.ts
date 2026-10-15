@@ -1,6 +1,6 @@
-// The real WhatsApp linker behind `kolo connect whatsapp`: the same linked-device login the
-// WhatsApp extension uses (`kolo channels login`), but the pairing QR is handed to the caller so
-// it is rendered by `kolo connect` instead of printed by the socket. Loaded lazily: importing it
+// The real WhatsApp linker behind `kurahi connect whatsapp`: the same linked-device login the
+// WhatsApp extension uses (`kurahi channels login`), but the pairing QR is handed to the caller so
+// it is rendered by `kurahi connect` instead of printed by the socket. Loaded lazily: importing it
 // pulls in the WhatsApp Web client.
 import type { WhatsAppLinker } from "./types.js";
 import { loadConfig } from "../../config/config.js";

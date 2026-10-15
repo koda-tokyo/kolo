@@ -59,7 +59,7 @@ importers:
       '@homebridge/ciao':
         specifier: ^1.3.4
         version: 1.3.4
-      '@kodasoken/kolo-client':
+      '@kodasoken/kurahi-client':
         specifier: workspace:*
         version: link:packages/client
       '@line/bot-sdk':
@@ -271,31 +271,31 @@ importers:
   extensions/alpha-vantage:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/bluebubbles:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/brave-search:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/circadian:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/copilot-proxy:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/diagnostics-otel:
@@ -335,19 +335,19 @@ importers:
         version: 1.39.0
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/discord:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/google-gemini-cli-auth:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/googlechat:
@@ -357,55 +357,55 @@ importers:
         version: 10.5.0
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/health-watchdog:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/imessage:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/libretranslate:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/line:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/llm-task:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/lobster:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/locationiq:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/log-rotation:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/matrix:
@@ -427,25 +427,25 @@ importers:
         version: 4.3.6
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/mattermost:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/memory-boot-inject:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/memory-core:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/memory-lancedb:
@@ -461,13 +461,13 @@ importers:
         version: 6.17.0(ws@8.19.0)(zod@4.3.6)
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/minimax-portal-auth:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/msteams:
@@ -485,7 +485,7 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
       proper-lockfile:
         specifier: ^4.1.2
@@ -494,19 +494,19 @@ importers:
   extensions/newsdata:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/nextcloud-talk:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/nostr:
     dependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
       nostr-tools:
         specifier: ^2.22.1
@@ -518,55 +518,55 @@ importers:
   extensions/ocr-space:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/open-meteo:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/open-prose:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/opencorporates:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/proactive-triggers:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/self-check:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/signal:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/slack:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/telegram:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/tlon:
@@ -579,7 +579,7 @@ importers:
         version: 3.0.0
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/twitch:
@@ -598,7 +598,7 @@ importers:
         version: 4.3.6
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/voice-call:
@@ -614,25 +614,25 @@ importers:
         version: 4.3.6
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/whatsapp:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/wolfram-alpha:
     devDependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   extensions/zalo:
     dependencies:
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
       undici:
         specifier: '>=7.24.0'
@@ -644,7 +644,7 @@ importers:
         specifier: 0.34.47
         version: 0.34.47
       kolo:
-        specifier: workspace:@kodasoken/kolo@*
+        specifier: workspace:kurahi@*
         version: link:../..
 
   packages/client: {}

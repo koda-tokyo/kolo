@@ -39,12 +39,15 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["kolo status", "Show channel health + session summary."],
-          ["kolo status --all", "Full diagnosis (read-only)."],
-          ["kolo status --json", "Machine-readable output."],
-          ["kolo status --usage", "Show model provider usage/quota snapshots."],
-          ["kolo status --deep", "Run channel probes (WA + Telegram + Discord + Slack + Signal)."],
-          ["kolo status --deep --timeout 5000", "Tighten probe timeout."],
+          ["kurahi status", "Show channel health + session summary."],
+          ["kurahi status --all", "Full diagnosis (read-only)."],
+          ["kurahi status --json", "Machine-readable output."],
+          ["kurahi status --usage", "Show model provider usage/quota snapshots."],
+          [
+            "kurahi status --deep",
+            "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
+          ],
+          ["kurahi status --deep --timeout 5000", "Tighten probe timeout."],
         ])}`,
     )
     .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status")}\n`)
@@ -109,10 +112,10 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["kolo sessions", "List all sessions."],
-          ["kolo sessions --active 120", "Only last 2 hours."],
-          ["kolo sessions --json", "Machine-readable output."],
-          ["kolo sessions --store ./tmp/sessions.json", "Use a specific session store."],
+          ["kurahi sessions", "List all sessions."],
+          ["kurahi sessions --active 120", "Only last 2 hours."],
+          ["kurahi sessions --json", "Machine-readable output."],
+          ["kurahi sessions --store ./tmp/sessions.json", "Use a specific session store."],
         ])}\n\n${theme.muted(
           "Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to cap the window and show %.",
         )}`,

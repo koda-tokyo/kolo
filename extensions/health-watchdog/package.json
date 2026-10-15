@@ -4,7 +4,7 @@
   "description": "Gateway liveness watchdog: lease + listener checks, supervisor restart, escalation",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "peerDependencies": {
     "kolo": ">=2026.1.26"

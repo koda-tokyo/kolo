@@ -302,7 +302,7 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
         "Gateway token: shared auth for the Gateway + Control UI.",
         "Stored in: <KOLO_HOME>/secrets/gateway.token (0600) when the service is installed; legacy: gateway.auth.token in kolo.json.",
         "Web UI stores a copy in this browser's localStorage (KoLo.control.settings.v1).",
-        `Get the tokenized link anytime: ${formatCliCommand("kolo dashboard --no-open")}`,
+        `Get the tokenized link anytime: ${formatCliCommand("kurahi dashboard --no-open")}`,
       ].join("\n"),
       "Token",
     );
@@ -332,7 +332,7 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
       if (seededInBackground) {
         await prompter.note(
           `Web UI seeded in the background. Open later with: ${formatCliCommand(
-            "kolo dashboard --no-open",
+            "kurahi dashboard --no-open",
           )}`,
           "Web UI",
         );
@@ -359,8 +359,8 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
         [
           `Dashboard link (with token): ${authedUrl}`,
           controlUiOpened
-            ? "Opened in your browser. Keep that tab to control KoLo."
-            : "Copy/paste this URL in a browser on this machine to control KoLo.",
+            ? "Opened in your browser. Keep that tab to control Kurahi."
+            : "Copy/paste this URL in a browser on this machine to control Kurahi.",
           controlUiOpenHint,
         ]
           .filter(Boolean)
@@ -369,7 +369,7 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
       );
     } else {
       await prompter.note(
-        `When you're ready: ${formatCliCommand("kolo dashboard --no-open")}`,
+        `When you're ready: ${formatCliCommand("kurahi dashboard --no-open")}`,
         "Later",
       );
     }
@@ -415,8 +415,8 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
       [
         `Dashboard link (with token): ${authedUrl}`,
         controlUiOpened
-          ? "Opened in your browser. Keep that tab to control KoLo."
-          : "Copy/paste this URL in a browser on this machine to control KoLo.",
+          ? "Opened in your browser. Keep that tab to control Kurahi."
+          : "Copy/paste this URL in a browser on this machine to control Kurahi.",
         controlUiOpenHint,
       ]
         .filter(Boolean)
@@ -441,10 +441,10 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
       : [
           "If you want your agent to be able to search the web, you’ll need an API key.",
           "",
-          "kolo uses Brave Search for the `web_search` tool. Without a Brave Search API key, web search won’t work.",
+          "kurahi uses Brave Search for the `web_search` tool. Without a Brave Search API key, web search won’t work.",
           "",
           "Set it up interactively:",
-          `- Run: ${formatCliCommand("kolo configure --section web")}`,
+          `- Run: ${formatCliCommand("kurahi configure --section web")}`,
           "- Enable web_search and paste your Brave Search API key",
           "",
           "Alternative: set BRAVE_API_KEY in the Gateway environment (no config changes).",
@@ -457,9 +457,9 @@ export async function finalizeOnboardingWizard(options: FinalizeOnboardingOption
 
   await prompter.outro(
     controlUiOpened
-      ? "Onboarding complete. Dashboard opened with your token; keep that tab to control KoLo."
+      ? "Onboarding complete. Dashboard opened with your token; keep that tab to control Kurahi."
       : seededInBackground
         ? "Onboarding complete. Web UI seeded in the background; open it anytime with the tokenized link above."
-        : "Onboarding complete. Use the tokenized dashboard link above to control KoLo.",
+        : "Onboarding complete. Use the tokenized dashboard link above to control Kurahi.",
   );
 }

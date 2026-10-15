@@ -162,7 +162,7 @@ export function renderReportMarkdown(input: {
   lines.push("## How to verify");
   lines.push("");
   lines.push("```");
-  lines.push("kolo evidence verify <this bundle>");
+  lines.push("kurahi evidence verify <this bundle>");
   lines.push("```");
   lines.push("");
   lines.push(

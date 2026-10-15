@@ -54,7 +54,7 @@ export function collectWhatsAppStatusIssues(
         accountId,
         kind: "auth",
         message: "Not linked (no WhatsApp Web session).",
-        fix: `Run: ${formatCliCommand("kolo channels login")} (scan QR on the gateway host).`,
+        fix: `Run: ${formatCliCommand("kurahi channels login")} (scan QR on the gateway host).`,
       });
       continue;
     }
@@ -65,7 +65,7 @@ export function collectWhatsAppStatusIssues(
         accountId,
         kind: "runtime",
         message: `Linked but disconnected${reconnectAttempts != null ? ` (reconnectAttempts=${reconnectAttempts})` : ""}${lastError ? `: ${lastError}` : "."}`,
-        fix: `Run: ${formatCliCommand("kolo doctor")} (or restart the gateway). If it persists, relink via channels login and check logs.`,
+        fix: `Run: ${formatCliCommand("kurahi doctor")} (or restart the gateway). If it persists, relink via channels login and check logs.`,
       });
     }
   }

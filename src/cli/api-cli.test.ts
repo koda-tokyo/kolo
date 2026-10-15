@@ -1,4 +1,4 @@
-import { KoloClient } from "@kodasoken/kolo-client";
+import { KoloClient } from "@kodasoken/kurahi-client";
 import { describe, expect, it } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import {
@@ -40,7 +40,7 @@ function clientWith(respond: (url: string, init: RequestInit) => Response) {
 const json = (status: number, body: unknown) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
-describe("kolo api", () => {
+describe("kurahi api", () => {
   it("resolves operation ids and shorthands", () => {
     expect(resolveOperationId("getHealth")).toBe("getHealth");
     expect(resolveOperationId("gethealth")).toBe("getHealth");

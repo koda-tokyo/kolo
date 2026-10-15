@@ -1,7 +1,7 @@
 # Packaging: prebuilt bundles, releases, updates (M8)
 
 This page is the contract between `scripts/bundle.mjs`, `.github/workflows/release.yml`,
-`kolo update` and the installers that download the artefacts (`scripts/install.sh`,
+`kurahi update` and the installers that download the artefacts (`scripts/install.sh`,
 `scripts/install.ps1`).
 
 ## Decision: pinned Node runtime, not a single-file executable
@@ -21,14 +21,14 @@ kolo-<version>-<os>-<arch>/
   node/bin/node       pinned Node runtime, checksum-verified against nodejs.org SHASUMS256.txt
   node/node.exe       (Windows)
   node/LICENSE
-  lib/package.json    the version truth for `kolo --version` (VERSION reads it)
+  lib/package.json    the version truth for `kurahi --version` (VERSION reads it)
   lib/kolo.mjs        entry; lib/dist/ built output incl. dist/.manifest.json
   lib/node_modules/   production dependencies, flat (pnpm hoisted, frozen lockfile), pruned
   lib/extensions/     bundled extensions (sources) + their non-hoistable deps
   lib/skills/ lib/assets/ lib/docs/
   LICENSE NOTICE LICENSING.md LICENSES/
   bundle-manifest.json
-  SHA256SUMS          one line per file; `kolo update` refuses a bundle that fails it
+  SHA256SUMS          one line per file; `kurahi update` refuses a bundle that fails it
 ```
 
 Archive: `kolo-<version>-linux-x64.tar.gz`, `kolo-<version>-darwin-arm64.tar.gz`,
@@ -108,7 +108,7 @@ OS-specific test exclusions are explicit in `test/ci-os-skips.json` (applied by
 `vitest.config.ts` for `process.platform`); the list is empty until the first macOS/Windows
 matrix run reports what needs it.
 
-## `kolo update` on a bundle
+## `kurahi update` on a bundle
 
 `src/infra/update-bundle.ts`, CLI in `src/cli/update-bundle-cli.ts`, audited (`update.check`,
 `update.download`, `update.apply` / `update.stage`, `update.refused`).
@@ -116,8 +116,8 @@ matrix run reports what needs it.
 - Channel: `--channel stable|nightly` > `KOLO_UPDATE_CHANNEL` > config `update.channel`
   (`beta`/`dev` map to nightly) > `stable`. Stable asks the GitHub Releases API for `latest`
   (never a prerelease); nightly takes the newest non-draft release. Repo: `KOLO_RELEASE_REPO`
-  (default `koda-tokyo/kolo`), API base `KOLO_RELEASE_API_BASE`; `GITHUB_TOKEN` is used when set.
-- `kolo update --check` (and `kolo update status`) only reports current/latest.
+  (default `koda-tokyo/kurahi`), API base `KOLO_RELEASE_API_BASE`; `GITHUB_TOKEN` is used when set.
+- `kurahi update --check` (and `kurahi update status`) only reports current/latest.
 - Install: download `SHA256SUMS.txt`, then the archive while hashing; a mismatch deletes the
   download, writes `update.refused`, exits 1 and changes nothing. A release without
   `SHA256SUMS.txt` or without an entry for the asset is refused. The unpacked bundle must
@@ -129,15 +129,15 @@ matrix run reports what needs it.
   under `.update/staged`, `.update/pending.json` + `.update/apply.cmd` are written, and
   `bin\kolo.cmd` applies the swap the next time it starts. The launcher itself is never
   replaced while running (a newer launcher lands as `bin\kolo.cmd.new`). If the gateway service
-  holds the files the script says so: `kolo service stop`, any `kolo` command, `kolo service
-  start`.
+  holds the files the script says so: `kurahi service stop`, any `kolo` command, `kurahi service
+start`.
 
 ## Services from a bundle
 
 - The service always runs on the bundled Node: `resolvePreferredNodePath` returns
   `process.execPath` inside a bundle, so a system Node (older, nvm-managed, absent at boot) is
   never picked. `KOLO_BUNDLE_ROOT` is in the service environment.
-- Windows (`kolo service install`): a Scheduled Task registered from an XML definition
+- Windows (`kurahi service install`): a Scheduled Task registered from an XML definition
   (`<state>/gateway.task.xml`): logon trigger (persists across reboots, starts at the next
   logon), `ExecutionTimeLimit PT0S` (the `/SC ONLOGON` form has a 72 h default that would stop
   the gateway), restart on failure, battery settings off, hidden, `LeastPrivilege`. The action is
@@ -155,7 +155,7 @@ matrix run reports what needs it.
 
 ```
 sha256sum -c SHA256SUMS.txt --ignore-missing
-gh attestation verify kolo-<version>-linux-x64.tar.gz -R koda-tokyo/kolo
+gh attestation verify kolo-<version>-linux-x64.tar.gz -R koda-tokyo/kurahi
 tar -xzf kolo-<version>-linux-x64.tar.gz && kolo-<version>-linux-x64/bin/kolo --version
 ```
 
@@ -170,8 +170,8 @@ tar -xzf kolo-<version>-linux-x64.tar.gz && kolo-<version>-linux-x64/bin/kolo --
 
 ## Verification record
 
-| Target | Date | Result |
-|---|---|---|
-| linux-x64 | 2026-10-14 | `bin/kolo --version` with `PATH=/nonexistent`; full stranger pass from the archive (install, init, gateway, pairing, plugins, policy, factory, channels, evidence, support). |
-| win32-x64 | 2026-10-14 | `bin\kolo.cmd --version` with `PATH=C:\WINDOWS\system32`; full stranger pass from the archive on Windows 11 (install via `install.ps1`, init, gateway, pairing, plugins, providers, policy, factory, support). Archive extraction uses `tar.exe` because Windows PowerShell 5.1 `Expand-Archive` silently extracts nothing from zip64 archives. |
-| darwin-arm64 | pending | Built by the release workflow on a macOS runner; not yet verified by a stranger pass. |
+| Target       | Date       | Result                                                                                                                                                                                                                                                                                                                                          |
+| ------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| linux-x64    | 2026-10-14 | `bin/kolo --version` with `PATH=/nonexistent`; full stranger pass from the archive (install, init, gateway, pairing, plugins, policy, factory, channels, evidence, support).                                                                                                                                                                    |
+| win32-x64    | 2026-10-14 | `bin\kolo.cmd --version` with `PATH=C:\WINDOWS\system32`; full stranger pass from the archive on Windows 11 (install via `install.ps1`, init, gateway, pairing, plugins, providers, policy, factory, support). Archive extraction uses `tar.exe` because Windows PowerShell 5.1 `Expand-Archive` silently extracts nothing from zip64 archives. |
+| darwin-arm64 | pending    | Built by the release workflow on a macOS runner; not yet verified by a stranger pass.                                                                                                                                                                                                                                                           |

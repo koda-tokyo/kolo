@@ -1,4 +1,4 @@
-// Shared wording of reasoning headers for every terminal surface (`kolo tui`, `kolo attach`).
+// Shared wording of reasoning headers for every terminal surface (`kurahi tui`, `kurahi attach`).
 // No dependencies, so the attach CLI does not pull in the TUI.
 
 /** `1s`, `12s`, `1m 5s`, `2m`: never below one second. */

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Check [ROADMAP.md](https://github.com/koda-tokyo/kolo/blob/main/ROADMAP.md) first; if the idea is already listed, comment on the tracking issue instead. For anything larger than a small addition, open a discussion before writing code.
+        Check [ROADMAP.md](https://github.com/koda-tokyo/kurahi/blob/main/ROADMAP.md) first; if the idea is already listed, comment on the tracking issue instead. For anything larger than a small addition, open a discussion before writing code.
   - type: textarea
     id: problem
     attributes:

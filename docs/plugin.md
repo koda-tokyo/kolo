@@ -13,12 +13,12 @@ providers, agent tools, gateway RPC methods, HTTP routes, CLI commands and backg
 Everything optional in the product is a plugin, and the bundled ones start disabled.
 
 ```bash
-kolo plugins list              # what is discovered, from where, enabled or not
-kolo plugins enable <id>       # turn one on
-kolo plugins doctor            # why one did not load
+kurahi plugins list              # what is discovered, from where, enabled or not
+kurahi plugins enable <id>       # turn one on
+kurahi plugins doctor            # why one did not load
 ```
 
-The CLI reference is [`kolo plugins`](/cli/plugins); the manifest format is
+The CLI reference is [`kurahi plugins`](/cli/plugins); the manifest format is
 [Plugin manifest](/plugins/manifest).
 
 ## Where plugins come from
@@ -46,43 +46,48 @@ Each plugin ships a `KoLo.plugin.json` next to its entry:
 
 `configSchema` is required even when empty; the gateway validates `plugins.entries.<id>.config`
 against it before loading. A missing or invalid manifest or schema prevents the load and shows in
-`kolo plugins doctor`.
+`kurahi plugins doctor`.
 
 ## Configuration
 
 ```json5
 {
   plugins: {
-    enabled: true,                 // master switch
+    enabled: true, // master switch
     allow: ["line", "ops-health"], // optional allowlist by id
-    deny: [],                      // optional denylist
-    load: { paths: [] },           // extra plugin files or directories
+    deny: [], // optional denylist
+    load: { paths: [] }, // extra plugin files or directories
     hotReload: { enabled: false }, // reload a plugin when its files change
-    slots: {},                     // which plugin fills an exclusive slot (memory, ...)
+    slots: {}, // which plugin fills an exclusive slot (memory, ...)
     entries: {
-      line: { enabled: true, config: { /* per the plugin's configSchema */ } }
-    }
-  }
+      line: {
+        enabled: true,
+        config: {
+          /* per the plugin's configSchema */
+        },
+      },
+    },
+  },
 }
 ```
 
-`kolo plugins enable|disable <id>` edit `entries.<id>.enabled`. Bundled plugins are off until
-enabled; a plugin installed with `kolo plugins install` is enabled on install.
+`kurahi plugins enable|disable <id>` edit `entries.<id>.enabled`. Bundled plugins are off until
+enabled; a plugin installed with `kurahi plugins install` is enabled on install.
 
 ## Installing
 
 ```bash
-kolo plugins install ./my-plugin            # copy a local directory or file
-kolo plugins install ./my-plugin --link     # link it instead (development)
-kolo plugins install ./my-plugin.tgz        # archive (.zip, .tgz, .tar.gz)
-kolo plugins install some-npm-package       # npm spec; `kolo plugins update` keeps it current
+kurahi plugins install ./my-plugin            # copy a local directory or file
+kurahi plugins install ./my-plugin --link     # link it instead (development)
+kurahi plugins install ./my-plugin.tgz        # archive (.zip, .tgz, .tar.gz)
+kurahi plugins install some-npm-package       # npm spec; `kurahi plugins update` keeps it current
 ```
 
-Installs are recorded under `plugins.installs` so `kolo plugins update` knows what to refresh.
+Installs are recorded under `plugins.installs` so `kurahi plugins update` knows what to refresh.
 
 ## What a plugin can register
 
-Through the plugin SDK (`@kodasoken/kolo/plugin-sdk`) a plugin registers, in its `register`
+Through the plugin SDK (`kurahi/plugin-sdk`) a plugin registers, in its `register`
 function: channels, providers, agent tools, gateway methods, HTTP routes, CLI commands, hooks,
 services (long-running tasks with start and stop) and self-checks. The runtime hands it a logger,
 its validated config, the state directory resolvers and the audit log; it never reads the machine's
@@ -96,7 +101,7 @@ home directory or the config file directly.
 - Agent tools, plugin tools included, cannot write registered protected policy files, the
   integrity registry or the audit log; the write-refusal hook is always on.
 - Plugin HTTP routes and RPC methods go through the same authentication and scopes as the core.
-- A plugin that throws during load is quarantined, not retried in a loop; `kolo plugins reload <id>`
+- A plugin that throws during load is quarantined, not retried in a loop; `kurahi plugins reload <id>`
   tries again after a fix.
 
 ## Writing one

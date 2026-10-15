@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `kolo attach` (discover live sessions, attach a terminal to one, stream its events, send input)"
+summary: "CLI reference for `kurahi attach` (discover live sessions, attach a terminal to one, stream its events, send input)"
 read_when:
   - You want to see what sessions a gateway is running and who is attached to them
   - You want to follow or drive an agent session from another terminal, machine or credential
@@ -7,10 +7,10 @@ read_when:
 title: "attach"
 ---
 
-# `kolo attach`
+# `kurahi attach`
 
-Session discovery and attach (KoLo 2.0, M3b). The gateway is the one process that owns the
-sessions; terminals, pipes and siblings are clients of it. `kolo attach` lists the sessions a
+Session discovery and attach (Kurahi 2.0, M3b). The gateway is the one process that owns the
+sessions; terminals, pipes and siblings are clients of it. `kurahi attach` lists the sessions a
 credential may see and attaches a terminal to one of them: the last messages are replayed, the
 session's `chat` and `agent` events stream in as they happen, and lines typed on stdin are sent
 as turns. Several clients can be attached to one session at the same time and all of them
@@ -18,13 +18,13 @@ receive the same event stream.
 
 ## Commands
 
-### `kolo attach --list [--agent <id>] [--json]`
+### `kurahi attach --list [--agent <id>] [--json]`
 
 Sessions of every agent on the gateway: key, agent, kind, label, state (`running` while a turn
 is in flight, else `idle`), attached clients and last activity. An `attach` credential whose
 invitation carries a session allowlist sees only matching sessions; owner and admin see all.
 
-### `kolo attach <session|agent> [--follow] [--history N] [--duration ms] [--verbose] [--json]`
+### `kurahi attach <session|agent> [--follow] [--history N] [--duration ms] [--verbose] [--json]`
 
 `<session|agent>` is a session id, a session key (`agent:alice:main`), a label, or an agent id
 (its main session). The gateway resolves it (`GET /api/sessions/{id}`), the terminal connects
@@ -37,7 +37,7 @@ else the paired device credential) and calls `session.attach`.
 - `--verbose` also prints tool and lifecycle events.
 - `--json` prints JSON lines: `attached`, `history`, `chat`, `agent`.
 
-Piping works: `echo "status?" | kolo attach ops` sends one line, prints the reply and leaves
+Piping works: `echo "status?" | kurahi attach ops` sends one line, prints the reply and leaves
 once the turn ends (bounded by `--timeout`, default 600 000 ms).
 
 Exit codes: `0` ok, `1` error (unknown session, refused), `2` usage, `3` gateway unreachable.
@@ -49,7 +49,7 @@ Exit codes: `0` ok, `1` error (unknown session, refused), `2` usage, `3` gateway
 credential to a set of sessions:
 
 ```
-kolo pair invite --scope attach --sessions "agent:alice:*,label:ops"
+kurahi pair invite --scope attach --sessions "agent:alice:*,label:ops"
 ```
 
 Patterns are globs over session keys; a bare word is an agent id (`alice` = `agent:alice:*`);
@@ -67,7 +67,7 @@ the hash-chained audit log. A closing socket detaches every session it held.
 
 ## Messaging pipes
 
-`kolo message send` to LINE, WhatsApp or any other channel from a terminal is a direct pipe. It
+`kurahi message send` to LINE, WhatsApp or any other channel from a terminal is a direct pipe. It
 is itself an attach client: it opens one gateway connection, calls `session.attach` with the
 channel and target (mode `pipe`; the gateway resolves the conversation's session), asks the
 gateway to deliver through the `send` method (which records the outbound text in that session)

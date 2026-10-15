@@ -4,7 +4,7 @@
 import { KoloClientBase, type RequestOptions } from "../base.js";
 import type * as T from "./types.js";
 
-/** Typed client for the KoLo gateway HTTP API: one method per OpenAPI operationId. */
+/** Typed client for the Kurahi gateway HTTP API: one method per OpenAPI operationId. */
 export class KoloClient extends KoloClientBase {
   /**
    * GET /api/admin/audit — Audit log page with filters

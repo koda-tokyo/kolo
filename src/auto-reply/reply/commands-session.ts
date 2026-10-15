@@ -262,7 +262,7 @@ export const handleRestartCommand: CommandHandler = async (params, allowTextComm
     return {
       shouldContinue: false,
       reply: {
-        text: "⚙️ Restarting KoLo in-process (SIGUSR1); back in a few seconds.",
+        text: "⚙️ Restarting Kurahi in-process (SIGUSR1); back in a few seconds.",
       },
     };
   }
@@ -279,7 +279,7 @@ export const handleRestartCommand: CommandHandler = async (params, allowTextComm
   return {
     shouldContinue: false,
     reply: {
-      text: `⚙️ Restarting KoLo via ${restartMethod.method}; give me a few seconds to come back online.`,
+      text: `⚙️ Restarting Kurahi via ${restartMethod.method}; give me a few seconds to come back online.`,
     },
   };
 };

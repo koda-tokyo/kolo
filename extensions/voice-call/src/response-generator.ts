@@ -10,7 +10,7 @@ import { loadCoreAgentDeps, type CoreConfig } from "./core-bridge.js";
 export type VoiceResponseParams = {
   /** Voice call config */
   voiceConfig: VoiceCallConfig;
-  /** Core KoLo config */
+  /** Core Kurahi config */
   coreConfig: CoreConfig;
   /** Call ID for session tracking */
   callId: string;

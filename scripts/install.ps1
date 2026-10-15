@@ -3,8 +3,8 @@
   KoLo installer for Windows (PowerShell 7 or Windows PowerShell 5.1).
 
 .DESCRIPTION
-  iwr -useb https://kodasoken.com/kolo/install.ps1 | iex
-  & ([scriptblock]::Create((iwr -useb https://kodasoken.com/kolo/install.ps1))) -Version 2.0.0 -NoService
+  iwr -useb https://kodasoken.com/kurahi/install.ps1 | iex
+  & ([scriptblock]::Create((iwr -useb https://kodasoken.com/kurahi/install.ps1))) -Version 2.0.0 -NoService
 
   1. Picks the release bundle for this CPU from GitHub Releases
      (kolo-<version>-win32-<arch>.zip built by scripts/bundle.mjs, with SHA256SUMS.txt next
@@ -33,10 +33,10 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$Repo = "koda-tokyo/kolo"
+$Repo = "koda-tokyo/kurahi"
 $Api = "https://api.github.com/repos/$Repo/releases"
 $Download = "https://github.com/$Repo/releases/download"
-$Docs = "https://kodasoken.com/kolo"
+$Docs = "https://kurahi.kodasoken.com/docs"
 
 function Fail([string]$Message) {
   Write-Error "install.ps1: $Message"
@@ -67,7 +67,7 @@ $dest = Join-Path $Prefix $Version
 Write-Host "KoLo $Version  win32/$arch"
 Write-Host "asset      $asset"
 Write-Host "install    $dest"
-Write-Host "command    $(Join-Path $BinDir 'kolo.cmd')"
+Write-Host "command    $(Join-Path $BinDir 'kurahi.cmd') (alias: kolo.cmd)"
 if ($DryRun) {
   $source = if ($Bundle) { $Bundle } else { "$Download/v$Version/$asset" }
   Write-Host "source     $source"
@@ -122,8 +122,10 @@ try {
   Remove-Item -Recurse -Force $partial
 
   New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
-  $launcher = Join-Path $BinDir "kolo.cmd"
+  $launcher = Join-Path $BinDir "kurahi.cmd"
   Set-Content -Path $launcher -Value "@echo off`r`n`"$dest\bin\kolo.cmd`" %*" -Encoding ASCII
+  # `kolo` stays as an alias of `kurahi` for existing scripts and kits.
+  Set-Content -Path (Join-Path $BinDir "kolo.cmd") -Value "@echo off`r`n`"$dest\bin\kolo.cmd`" %*" -Encoding ASCII
   # Idempotent PATH edit: compare entries case-insensitively with trailing separators and
   # whitespace removed, so a re-run (or a PATH that already lists the dir as "...\bin\") adds
   # nothing. The same check guards the current session's PATH.
@@ -173,7 +175,7 @@ try {
     if ($LASTEXITCODE -ne 0) { Write-Host "run 'kolo pair invite --scope attach' once the gateway is up" }
   }
   Write-Host ""
-  Write-Host "next: kolo health - kolo tui - kolo --help - $Docs/start/getting-started"
+  Write-Host "next: kurahi health - kurahi tui - kurahi --help - $Docs/start/getting-started"
 } finally {
   if (Test-Path $tmp) { Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue }
 }

@@ -2,7 +2,7 @@
 summary: "Webhook ingress for wake and isolated agent runs"
 read_when:
   - Adding or changing webhook endpoints
-  - Wiring external systems into KoLo
+  - Wiring external systems into Kurahi
 title: "Webhooks"
 ---
 
@@ -106,7 +106,7 @@ Mapping options (summary):
   (`channel` defaults to `last` and falls back to WhatsApp).
 - `allowUnsafeExternalContent: true` disables the external content safety wrapper for that hook
   (dangerous; only for trusted internal sources).
-- `KoLo webhooks gmail setup` writes `hooks.gmail` config for `KoLo webhooks gmail run`.
+- `Kurahi webhooks gmail setup` writes `hooks.gmail` config for `Kurahi webhooks gmail run`.
   See [Gmail Pub/Sub](/automation/gmail-pubsub) for the full Gmail watch flow.
 
 ## Responses

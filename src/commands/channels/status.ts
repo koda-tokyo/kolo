@@ -205,11 +205,11 @@ export function formatGatewayChannelsStatusLines(payload: Record<string, unknown
         `- ${issue.channel} ${issue.accountId}: ${issue.message}${issue.fix ? ` (${issue.fix})` : ""}`,
       );
     }
-    lines.push(`- Run: ${formatCliCommand("kolo doctor")}`);
+    lines.push(`- Run: ${formatCliCommand("kurahi doctor")}`);
     lines.push("");
   }
   lines.push(
-    `Tip: kolo channels status --deep adds per-channel health probes (${formatDocsLink("/cli#status", "docs")}).`,
+    `Tip: kurahi channels status --deep adds per-channel health probes (${formatDocsLink("/cli#status", "docs")}).`,
   );
   return lines;
 }
@@ -289,7 +289,7 @@ async function formatConfigChannelsStatusLines(
 
   lines.push("");
   lines.push(
-    `Tip: kolo channels status --deep adds per-channel health probes (${formatDocsLink("/cli#status", "docs")}).`,
+    `Tip: kurahi channels status --deep adds per-channel health probes (${formatDocsLink("/cli#status", "docs")}).`,
   );
   return lines;
 }

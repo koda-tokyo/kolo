@@ -1,5 +1,5 @@
 ---
-summary: "Run multiple KoLo Gateways on one host (isolation, ports, and profiles)"
+summary: "Run multiple Kurahi Gateways on one host (isolation, ports, and profiles)"
 read_when:
   - Running more than one Gateway on the same machine
   - You need isolated config/state/ports per Gateway
@@ -26,19 +26,19 @@ Profiles auto-scope `KOLO_STATE_DIR` + `KOLO_CONFIG_PATH` and suffix service nam
 
 ```bash
 # main
-KoLo --profile main setup
-KoLo --profile main gateway --port 18789
+Kurahi --profile main setup
+Kurahi --profile main gateway --port 18789
 
 # rescue
-KoLo --profile rescue setup
-KoLo --profile rescue gateway --port 19001
+Kurahi --profile rescue setup
+Kurahi --profile rescue gateway --port 19001
 ```
 
 Per-profile services:
 
 ```bash
-KoLo --profile main gateway install
-KoLo --profile rescue gateway install
+Kurahi --profile main gateway install
+Kurahi --profile rescue gateway install
 ```
 
 ## Rescue-bot guide
@@ -59,11 +59,11 @@ Port spacing: leave at least 20 ports between base ports so the derived browser/
 ```bash
 # Main bot (existing or fresh, without --profile param)
 # Runs on port 18789 + Chrome CDC/Canvas/... Ports
-KoLo onboard
-KoLo gateway install
+Kurahi onboard
+Kurahi gateway install
 
 # Rescue bot (isolated profile + ports)
-KoLo --profile rescue onboard
+Kurahi --profile rescue onboard
 # Notes:
 # - workspace name will be postfixed with -rescue per default
 # - Port should be at least 18789 + 20 Ports,
@@ -71,7 +71,7 @@ KoLo --profile rescue onboard
 # - rest of the onboarding is the same as normal
 
 # To install the service (if not happened automatically during onboarding)
-KoLo --profile rescue gateway install
+Kurahi --profile rescue gateway install
 ```
 
 ## Port mapping (derived)
@@ -96,17 +96,17 @@ If you override any of these in config or env, you must keep them unique per ins
 ```bash
 KOLO_CONFIG_PATH=~/.kolo/main.json \
 KOLO_STATE_DIR=~/.kolo-main \
-KoLo gateway --port 18789
+Kurahi gateway --port 18789
 
 KOLO_CONFIG_PATH=~/.kolo/rescue.json \
 KOLO_STATE_DIR=~/.kolo-rescue \
-KoLo gateway --port 19001
+Kurahi gateway --port 19001
 ```
 
 ## Quick checks
 
 ```bash
-KoLo --profile main status
-KoLo --profile rescue status
-KoLo --profile rescue browser status
+Kurahi --profile main status
+Kurahi --profile rescue status
+Kurahi --profile rescue browser status
 ```

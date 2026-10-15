@@ -4,12 +4,12 @@ description: "Run BOOT.md on gateway startup"
 homepage: https://kodasoken.com/kolo/hooks#boot-md
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "🚀",
         "events": ["gateway:startup"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with KoLo" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Kurahi" }],
       },
   }
 ---

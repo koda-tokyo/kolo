@@ -1,14 +1,14 @@
 ---
-summary: "Agent tool surface for KoLo (browser, canvas, nodes, message, cron) replacing legacy `kolo-*` skills"
+summary: "Agent tool surface for Kurahi (browser, canvas, nodes, message, cron) replacing legacy `kolo-*` skills"
 read_when:
   - Adding or modifying agent tools
   - Retiring or changing `kolo-*` skills
 title: "Tools"
 ---
 
-# Tools (KoLo)
+# Tools (Kurahi)
 
-KoLo exposes **first-class agent tools** for browser, canvas, nodes, and cron.
+Kurahi exposes **first-class agent tools** for browser, canvas, nodes, and cron.
 These replace the old `kolo-*` skills: the tools are typed, no shelling,
 and the agent should rely on them directly.
 
@@ -27,7 +27,7 @@ Notes:
 
 - Matching is case-insensitive.
 - `*` wildcards are supported (`"*"` means all tools).
-- If `tools.allow` only references unknown or unloaded plugin tool names, KoLo logs a warning and ignores the allowlist so core tools stay available.
+- If `tools.allow` only references unknown or unloaded plugin tool names, Kurahi logs a warning and ignores the allowlist so core tools stay available.
 
 ## Tool profiles (base allowlist)
 
@@ -151,7 +151,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:KoLo`: all built-in KoLo tools (excludes provider plugins)
+- `group:Kurahi`: all built-in Kurahi tools (excludes provider plugins)
 
 Example (allow only file tools + browser):
 
@@ -206,7 +206,7 @@ Notes:
 - If `process` is disallowed, `exec` runs synchronously and ignores `yieldMs`/`background`.
 - `elevated` is gated by `tools.elevated` plus any `agents.list[].tools.elevated` override (both must allow) and is an alias for `host=gateway` + `security=full`.
 - `elevated` only changes behavior when the agent is sandboxed (otherwise it’s a no-op).
-- `host=node` can target a macOS companion app or a headless node host (`KoLo node run`).
+- `host=node` can target a macOS companion app or a headless node host (`Kurahi node run`).
 - gateway/node approvals and allowlists: [Exec approvals](/tools/exec-approvals).
 
 ### `process`
@@ -234,7 +234,7 @@ Core parameters:
 
 Notes:
 
-- Requires a Brave API key (recommended: `KoLo configure --section web`, or set `BRAVE_API_KEY`).
+- Requires a Brave API key (recommended: `Kurahi configure --section web`, or set `BRAVE_API_KEY`).
 - Enable via `tools.web.search.enabled`.
 - Responses are cached (default 15 min).
 - See [Web tools](/tools/web) for setup.
@@ -311,7 +311,7 @@ Notes:
 - Uses gateway `node.invoke` under the hood.
 - If no `node` is provided, the tool picks a default (single connected node or local mac node).
 - A2UI is v0.8 only (no `createSurface`); the CLI rejects v0.9 JSONL with line errors.
-- Quick smoke: `KoLo nodes canvas a2ui push --node <id> --text "Hello from A2UI"`.
+- Quick smoke: `Kurahi nodes canvas a2ui push --node <id> --text "Hello from A2UI"`.
 
 ### `nodes`
 
@@ -413,7 +413,7 @@ Restart or apply updates to the running Gateway process (in-place).
 
 Core actions:
 
-- `restart` (authorizes + sends `SIGUSR1` for in-process restart; `KoLo gateway` restart in-place)
+- `restart` (authorizes + sends `SIGUSR1` for in-process restart; `Kurahi gateway` restart in-place)
 - `config.get` / `config.schema`
 - `config.apply` (validate + write config + restart + wake)
 - `config.patch` (merge partial update + restart + wake)

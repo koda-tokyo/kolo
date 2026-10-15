@@ -78,8 +78,8 @@ export async function inspectPortUsage(
             pid: owner.pid,
             ...described,
             command: described.command
-              ? `${described.command} (kolo gateway lock)`
-              : "kolo gateway",
+              ? `${described.command} (kurahi gateway lock)`
+              : "kurahi gateway",
           };
         })
       : [];
@@ -87,7 +87,7 @@ export async function inspectPortUsage(
   const hints = buildPortHints(listeners, port);
   if (status === "busy" && listeners.length === 0) {
     hints.push(
-      "Port is in use by an unknown holder (not the KoLo gateway for this state root). " +
+      "Port is in use by an unknown holder (not the Kurahi gateway for this state root). " +
         "Stop that process or choose another port with --port.",
     );
   }

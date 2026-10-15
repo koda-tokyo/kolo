@@ -1,13 +1,13 @@
 {
   "name": "@KoLo/googlechat",
   "version": "2.0.0",
-  "description": "KoLo Google Chat channel plugin",
+  "description": "Kurahi Google Chat channel plugin",
   "type": "module",
   "dependencies": {
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "peerDependencies": {
     "kolo": ">=2026.1.26"

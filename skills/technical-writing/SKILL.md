@@ -1,13 +1,13 @@
 ---
 name: technical-writing
-description: "Technical writing operating system for KodaSōken/KoLo/KODA KENKŌ. API documentation (OpenAPI/Swagger), architecture documentation (ADR, C4), user guides (Diátaxis), knowledge base management, bilingual (Japanese/English) documentation strategy, and docs-as-code workflows. Use when creating, reviewing, or planning any technical documentation — from API reference to user-facing guides. Triggers: documentation, API docs, architecture docs, user guide, knowledge base, bilingual docs, Japanese documentation, docs-as-code, OpenAPI, ADR, Diátaxis."
+description: "Technical writing operating system for KodaSōken/Kurahi/KODA KENKŌ. API documentation (OpenAPI/Swagger), architecture documentation (ADR, C4), user guides (Diátaxis), knowledge base management, bilingual (Japanese/English) documentation strategy, and docs-as-code workflows. Use when creating, reviewing, or planning any technical documentation — from API reference to user-facing guides. Triggers: documentation, API docs, architecture docs, user guide, knowledge base, bilingual docs, Japanese documentation, docs-as-code, OpenAPI, ADR, Diátaxis."
 ---
 
-# Technical Writing — Documentation OS for KoLo
+# Technical Writing — Documentation OS for Kurahi
 
 ## Overview
 
-This skill provides the documentation operating system for KodaSōken, KoLo, and KODA KENKŌ. We treat documentation as product — not an afterthought, not a chore. Everything here is practical, modern, and designed for a docs-as-code workflow (Git + Markdown + CI/CD, not Word documents in network drives).
+This skill provides the documentation operating system for KodaSōken, Kurahi, and KODA KENKŌ. We treat documentation as product — not an afterthought, not a chore. Everything here is practical, modern, and designed for a docs-as-code workflow (Git + Markdown + CI/CD, not Word documents in network drives).
 
 ### Our Documentation Philosophy
 
@@ -37,6 +37,7 @@ QUESTION:                          → ANSWER / REFERENCE TO LOAD
 ```
 
 For complex documentation tasks (e.g., a full product launch), load in this order:
+
 1. First, decide audience and language strategy → `bilingual-documentation.md`
 2. Second, determine the doc types needed → relevant reference(s)
 3. Third, grab templates → `assets/tech-writing-toolkit.json`
@@ -46,18 +47,19 @@ For complex documentation tasks (e.g., a full product launch), load in this orde
 
 Before writing any documentation, determine the language:
 
-| Document Type | Language | Rationale |
-|---|---|---|
-| **MHLW regulatory docs** (KODA KENKŌ) | **Japanese ONLY** | Legal requirement. Machine translation prohibited for final output. |
-| **Japanese user-facing docs** | **Japanese-first** | Write in Japanese. English translation optional, post-edit only. |
-| **Developer docs (API/SDK)** | **Bilingual (JA + EN)** | Both languages are first-class. Each page has a language toggle. |
-| **Internal architecture docs** | **Bilingual** | English primary for global team; Japanese annotations for regulatory audit. |
-| **Code comments** | **English** | Universal standard. Japanese comments only in MHLW-audited modules. |
-| **Changelogs / Release notes** | **Bilingual** | Both languages in the same document. JA first, EN follows. |
+| Document Type                         | Language                | Rationale                                                                   |
+| ------------------------------------- | ----------------------- | --------------------------------------------------------------------------- |
+| **MHLW regulatory docs** (KODA KENKŌ) | **Japanese ONLY**       | Legal requirement. Machine translation prohibited for final output.         |
+| **Japanese user-facing docs**         | **Japanese-first**      | Write in Japanese. English translation optional, post-edit only.            |
+| **Developer docs (API/SDK)**          | **Bilingual (JA + EN)** | Both languages are first-class. Each page has a language toggle.            |
+| **Internal architecture docs**        | **Bilingual**           | English primary for global team; Japanese annotations for regulatory audit. |
+| **Code comments**                     | **English**             | Universal standard. Japanese comments only in MHLW-audited modules.         |
+| **Changelogs / Release notes**        | **Bilingual**           | Both languages in the same document. JA first, EN follows.                  |
 
 ### 和製英語 (Wasei-Eigo) — Words We Never Use
 
 Avoid all 和製英語 in Japanese documentation. Always use the correct Japanese term:
+
 - マニュアル → 取扱説明書 or 手順書 (not "マニュアル")
 - ドキュメント → 文書 or 資料 (not "ドキュメント" in Japanese text)
 - ユーザー → 利用者 (in medical/regulatory), ユーザー is acceptable in developer docs
@@ -87,7 +89,7 @@ Every document file begins with a frontmatter block:
 ```yaml
 ---
 title: "Document Title"
-lang: ja  # or en or bilingual
+lang: ja # or en or bilingual
 type: api-reference | architecture | user-guide | kb | adr
 product: koLo | example-app | koda-soken
 version: "2.1.0"
@@ -100,28 +102,29 @@ status: draft | review | published | deprecated
 
 ### Review Cadence
 
-| Document Type | Review Every |
-|---|---|
-| API docs | With every release |
+| Document Type           | Review Every                       |
+| ----------------------- | ---------------------------------- |
+| API docs                | With every release                 |
 | Architecture docs (ADR) | 90 days or on architectural change |
-| User guides | With every feature change |
-| Knowledge base articles | 180 days |
-| Regulatory docs (MHLW) | Per MHLW notice cycle |
+| User guides             | With every feature change          |
+| Knowledge base articles | 180 days                           |
+| Regulatory docs (MHLW)  | Per MHLW notice cycle              |
 
 ## Reference Modules
 
-| Module | File | When to Load | Weight |
-|--------|------|-------------|--------|
-| API Documentation | `references/api-documentation.md` | When documenting REST APIs, SDKs, endpoints, or generating OpenAPI specs | Heavy |
-| Architecture Documentation | `references/architecture-documentation.md` | When writing ADRs, system diagrams, READMEs, or technical specifications | Heavy |
-| User Guides | `references/user-guides.md` | When creating quickstarts, tutorials, how-to guides, or troubleshooting content | Heavy |
-| Knowledge Base Management | `references/knowledge-base-management.md` | When designing information architecture, versioning docs, or managing the docs backlog | Heavy |
-| Bilingual Documentation | `references/bilingual-documentation.md` | Before any Japanese documentation or translation workflow decision | Heavy |
-| Tech Writing Toolkit | `assets/tech-writing-toolkit.json` | Templates, checklists, and outlines — load alongside any reference | Light |
+| Module                     | File                                       | When to Load                                                                           | Weight |
+| -------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------- | ------ |
+| API Documentation          | `references/api-documentation.md`          | When documenting REST APIs, SDKs, endpoints, or generating OpenAPI specs               | Heavy  |
+| Architecture Documentation | `references/architecture-documentation.md` | When writing ADRs, system diagrams, READMEs, or technical specifications               | Heavy  |
+| User Guides                | `references/user-guides.md`                | When creating quickstarts, tutorials, how-to guides, or troubleshooting content        | Heavy  |
+| Knowledge Base Management  | `references/knowledge-base-management.md`  | When designing information architecture, versioning docs, or managing the docs backlog | Heavy  |
+| Bilingual Documentation    | `references/bilingual-documentation.md`    | Before any Japanese documentation or translation workflow decision                     | Heavy  |
+| Tech Writing Toolkit       | `assets/tech-writing-toolkit.json`         | Templates, checklists, and outlines — load alongside any reference                     | Light  |
 
 ## Quick Quality Checklist
 
 Before shipping any document:
+
 - [ ] Language strategy applied (JA/EN/bilingual per type)
 - [ ] Frontmatter complete and accurate
 - [ ] Links verified (no broken references)
@@ -131,10 +134,10 @@ Before shipping any document:
 - [ ] Accessibility: alt text for images, semantic headings
 - [ ] Version number matches the product version it documents
 
-## Context: KodaSōken / KoLo / KODA KENKŌ
+## Context: KodaSōken / Kurahi / KODA KENKŌ
 
 - **KodaSōken (幸田総研):** The parent research institute. Documentation is research-oriented: white papers, technical reports, methodology docs.
-- **KoLo:** The AI agent operating system. Documentation is developer-facing: API references, architecture decisions, integration guides, CLI docs.
+- **Kurahi:** The AI agent operating system. Documentation is developer-facing: API references, architecture decisions, integration guides, CLI docs.
 - **KODA KENKŌ (幸田健康):** The healthcare product. Documentation is regulatory (MHLW) and user-facing: 取扱説明書, safety notices, patient guides, clinical evidence summaries.
 
 When writing for any of these, apply the context-appropriate tone, language strategy, and template.

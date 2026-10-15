@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // pack-check: prove the npm package installs and starts on a machine that has never seen this
-// repository. Packs the CLI and the @kodasoken/kolo-client workspace package, installs both tarballs into
+// repository. Packs the CLI and the @kodasoken/kurahi-client workspace package, installs both tarballs into
 // an empty directory with npm (not pnpm: no workspace links, no overrides), then runs the
 // installed binary with a fresh KOLO_HOME:
-//   kolo --version      -> exactly the package version on stdout, exit 0
-//   kolo --help         -> exit 0
-//   kolo doctor --json  -> exit 0, parses, reports the fresh home
+//   kurahi --version      -> exactly the package version on stdout, exit 0
+//   kurahi --help         -> exit 0
+//   kurahi doctor --json  -> exit 0, parses, reports the fresh home
 // Run after `pnpm build`. Use --keep to leave the temp directory for inspection.
 
 import { spawnSync } from "node:child_process";
@@ -113,7 +113,7 @@ const bin = path.join(
   process.platform === "win32" ? "kolo.cmd" : "kolo",
 );
 if (!fs.existsSync(bin)) {
-  fail(`installed package has no kolo binary at ${bin}`);
+  fail(`installed package has no kurahi binary at ${bin}`);
 }
 const env = {
   KOLO_HOME: home,

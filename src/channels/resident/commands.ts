@@ -159,7 +159,7 @@ export function renderEvidenceSummaryText(
   }
   lines.push(`signed ${s.signed ? "yes" : "no"}${s.truncated ? ", log truncated" : ""}`);
   const more = { en: "Full report", ja: "詳細", pt: "Relatório completo" }[locale];
-  lines.push(`${more}: kolo evidence show ${s.jobId}`);
+  lines.push(`${more}: kurahi evidence show ${s.jobId}`);
   return lines.join("\n");
 }
 

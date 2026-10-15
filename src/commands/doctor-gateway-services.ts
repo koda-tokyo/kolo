@@ -261,7 +261,7 @@ export async function maybeScanExtraGatewayServices(
         note(failed.map((line) => `- ${line}`).join("\n"), "Legacy gateway cleanup skipped");
       }
       if (removed.length > 0) {
-        runtime.log("Legacy gateway services removed. Installing KoLo gateway next.");
+        runtime.log("Legacy gateway services removed. Installing Kurahi gateway next.");
       }
     }
   }

@@ -37,7 +37,7 @@ export class MissingSecretError extends Error {
     public readonly configPath: string,
   ) {
     super(
-      `Missing secret "${secretName}" referenced at config path: ${configPath || "<root>"} (run: kolo secrets set ${secretName})`,
+      `Missing secret "${secretName}" referenced at config path: ${configPath || "<root>"} (run: kurahi secrets set ${secretName})`,
     );
     this.name = "MissingSecretError";
   }

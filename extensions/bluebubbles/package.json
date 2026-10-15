@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/bluebubbles",
   "version": "2.0.0",
-  "description": "KoLo BlueBubbles channel plugin",
+  "description": "Kurahi BlueBubbles channel plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

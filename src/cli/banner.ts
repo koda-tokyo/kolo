@@ -1,6 +1,7 @@
 import { resolveCommitHash } from "../infra/git-commit.js";
 import { visibleWidth } from "../terminal/ansi.js";
 import { isRich, theme } from "../terminal/theme.js";
+import { PRODUCT_NAME } from "./cli-name.js";
 import { pickTagline, type TaglineOptions } from "./tagline.js";
 
 type BannerOptions = TaglineOptions & {
@@ -39,7 +40,7 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   const commitLabel = commit ?? "unknown";
   const tagline = pickTagline(options);
   const rich = options.richTty ?? isRich();
-  const title = "KoLo";
+  const title = PRODUCT_NAME;
   const prefix = "";
   const columns = options.columns ?? process.stdout.columns ?? 120;
   const plainFullLine = `${title} ${version} (${commitLabel}) — ${tagline}`;
@@ -64,7 +65,7 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   return `${line1}\n${line2}`;
 }
 
-const BANNER_ART = ["KoLo", "resident agent runtime"];
+const BANNER_ART = [PRODUCT_NAME, "resident agent runtime"];
 
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
@@ -72,7 +73,7 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
     return BANNER_ART.join("\n");
   }
 
-  return `${theme.heading(BANNER_ART[0] ?? "KoLo")}\n${theme.muted(BANNER_ART[1] ?? "")}`;
+  return `${theme.heading(BANNER_ART[0] ?? PRODUCT_NAME)}\n${theme.muted(BANNER_ART[1] ?? "")}`;
 }
 
 export function emitCliBanner(version: string, options: BannerOptions = {}) {

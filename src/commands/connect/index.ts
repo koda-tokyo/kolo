@@ -1,8 +1,8 @@
-// `kolo connect <channel>` (KoLo 2.0, M16): connect a phone to the resident. Also the last,
-// optional step of `kolo init`. WhatsApp links this machine as a device and binds the linked
+// `kurahi connect <channel>` (KoLo 2.0, M16): connect a phone to the resident. Also the last,
+// optional step of `kurahi init`. WhatsApp links this machine as a device and binds the linked
 // number as owner; Telegram and LINE store the bot credentials and print a one-time code whose
 // first use binds the owner; web prints a pairing invitation for the dashboard on a phone
-// browser. `kolo connect --unbind <channel>` removes the owner a binding added.
+// browser. `kurahi connect --unbind <channel>` removes the owner a binding added.
 import http from "node:http";
 import https from "node:https";
 import os from "node:os";
@@ -114,7 +114,7 @@ async function createInvitationViaGatewayOrStore(input: {
   ttlMinutes: number;
   label: string;
 }): Promise<{ code: string; id: string; expiresAt: string }> {
-  const { KoloClient, KoloNetworkError } = await import("@kodasoken/kolo-client");
+  const { KoloClient, KoloNetworkError } = await import("@kodasoken/kurahi-client");
   try {
     const client = await KoloClient.local({});
     const res = await client.createPairInvitation({
@@ -158,7 +158,7 @@ export async function createDefaultConnectDeps(input: {
       const snapshot = await readConfigFileSnapshot();
       if (snapshot.exists && !snapshot.valid) {
         throw new Error(
-          `config is invalid (${snapshot.issues[0]?.path || "<root>"}: ${snapshot.issues[0]?.message ?? "invalid"}); run kolo doctor`,
+          `config is invalid (${snapshot.issues[0]?.path || "<root>"}: ${snapshot.issues[0]?.message ?? "invalid"}); run kurahi doctor`,
         );
       }
       return snapshot.config;
@@ -243,7 +243,7 @@ export async function runUnbind(
       ok: false,
       exitCode: EXIT.usage,
       message:
-        "the web channel has no owner binding; list devices with kolo pair devices and remove one with kolo pair revoke <fingerprint>",
+        "the web channel has no owner binding; list devices with kurahi pair devices and remove one with kurahi pair revoke <fingerprint>",
       removed: [],
     };
   }
@@ -263,7 +263,7 @@ export async function runUnbind(
   };
 }
 
-/** Bindings for `kolo connect --list`. */
+/** Bindings for `kurahi connect --list`. */
 export function listConnections(env?: NodeJS.ProcessEnv) {
   return listOwnerBindings({ env }).map((o) => ({
     channel: o.channel,

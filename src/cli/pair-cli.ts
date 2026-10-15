@@ -1,11 +1,11 @@
-// `kolo pair …` — scoped device pairing (KoLo 2.0, M3a).
+// `kurahi pair …` — scoped device pairing (KoLo 2.0, M3a).
 //
-//   kolo pair invite --scope attach [--ttl 10m] [--label x] [--no-auto-approve] [--json]
-//   kolo pair list [--json]                    invitations
-//   kolo pair devices [--json]                 paired devices
-//   kolo pair approve <fingerprint>            trust a pending device
-//   kolo pair revoke <fingerprint|invitationId>
-//   kolo pair redeem <code> [--name x] [--url http://host:port]   (device side)
+//   kurahi pair invite --scope attach [--ttl 10m] [--label x] [--no-auto-approve] [--json]
+//   kurahi pair list [--json]                    invitations
+//   kurahi pair devices [--json]                 paired devices
+//   kurahi pair approve <fingerprint>            trust a pending device
+//   kurahi pair revoke <fingerprint|invitationId>
+//   kurahi pair redeem <code> [--name x] [--url http://host:port]   (device side)
 //
 // Admin verbs talk to the running gateway through the generated client with the owner token
 // found by discover() (KOLO_HOME lock + 0600 token file, env overrides); nothing is taken
@@ -17,7 +17,7 @@ import {
   KoloNetworkError,
   KoloPairError,
   pair,
-} from "@kodasoken/kolo-client";
+} from "@kodasoken/kurahi-client";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { renderTable } from "../terminal/table.js";
 import { theme } from "../terminal/theme.js";
@@ -129,7 +129,7 @@ function exitWith(runtime: RuntimeEnv, err: unknown, json: boolean | undefined):
   }
   if (err instanceof KoloNetworkError) {
     runtime.error(
-      `Gateway unreachable: ${err.message}. Is it running? (${formatCliCommand("kolo gateway status")})`,
+      `Gateway unreachable: ${err.message}. Is it running? (${formatCliCommand("kurahi gateway status")})`,
     );
     runtime.exit(PAIR_EXIT.unreachable);
   }
@@ -154,8 +154,8 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
       "after",
       () =>
         `\n${theme.muted("Scopes:")} observe < attach < admin (owner = the gateway token file).\n` +
-        `${theme.muted("Flow:")} ${formatCliCommand("kolo pair invite --scope attach")} on the gateway host, ` +
-        `then ${formatCliCommand("kolo pair redeem <code> --url http://host:port")} on the device.\n`,
+        `${theme.muted("Flow:")} ${formatCliCommand("kurahi pair invite --scope attach")} on the gateway host, ` +
+        `then ${formatCliCommand("kurahi pair redeem <code> --url http://host:port")} on the device.\n`,
     );
 
   cmd
@@ -164,7 +164,7 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
     .option("--scope <scope>", "observe | attach | admin (default: attach)", "attach")
     .option("--ttl <duration>", "Lifetime: minutes or 10m/90s/1h (default 10m, max 60m)")
     .option("--label <label>", "Free-text label (who/what this is for)")
-    .option("--no-auto-approve", "Leave the device pending until `kolo pair approve`")
+    .option("--no-auto-approve", "Leave the device pending until `kurahi pair approve`")
     .option(
       "--sessions <patterns>",
       "Session allowlist (M3b): comma-separated globs over session keys, agent ids or label:<x>; repeatable",
@@ -213,14 +213,14 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
             `  expires    ${formatIn(result.invitation.expiresAt)} (${result.invitation.expiresAt})`,
           );
           runtime.log(
-            `  approval   ${result.invitation.autoApprove ? "automatic (TOFU)" : "manual: kolo pair approve <fingerprint>"}`,
+            `  approval   ${result.invitation.autoApprove ? "automatic (TOFU)" : "manual: kurahi pair approve <fingerprint>"}`,
           );
           runtime.log("");
           runtime.log(`  ${theme.heading("code")}  ${theme.command(result.code)}`);
           runtime.log("");
           runtime.log(theme.muted("Shown once. On the device:"));
           runtime.log(
-            `  ${formatCliCommand(`kolo pair redeem ${result.code} --url ${client.baseUrl}`)}`,
+            `  ${formatCliCommand(`kurahi pair redeem ${result.code} --url ${client.baseUrl}`)}`,
           );
         } catch (err) {
           exitWith(runtime, err, opts.json);
@@ -319,7 +319,7 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
   cmd
     .command("approve")
     .description("Approve a pending device")
-    .argument("<fingerprint>", "Device key fingerprint (see `kolo pair devices`)")
+    .argument("<fingerprint>", "Device key fingerprint (see `kurahi pair devices`)")
     .option("--url <baseUrl>", "Gateway base URL (default: discovered)")
     .option("--json", "Print JSON", false)
     .action(async (fingerprint: string, opts: { url?: string; json?: boolean }) => {
@@ -366,7 +366,7 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
   cmd
     .command("redeem")
     .description("Redeem an invitation on this device and store the credential (0600)")
-    .argument("<code>", "Invitation code from `kolo pair invite`")
+    .argument("<code>", "Invitation code from `kurahi pair invite`")
     .option("--url <baseUrl>", "Gateway base URL (default: discovered)")
     .option("--name <name>", "Device name shown to the gateway (default user@host)")
     .option("--json", "Print JSON", false)
@@ -398,7 +398,7 @@ export function registerPairCli(program: Command, deps: PairCliDeps = {}) {
         runtime.log(`  fingerprint ${credential.fingerprint}`);
         runtime.log(`  scope       ${credential.scope}`);
         runtime.log(
-          `  status      ${credential.status}${credential.status === "pending" ? " (ask an admin: kolo pair approve " + credential.fingerprint + ")" : ""}`,
+          `  status      ${credential.status}${credential.status === "pending" ? " (ask an admin: kurahi pair approve " + credential.fingerprint + ")" : ""}`,
         );
         runtime.log(`  credential  ${file}`);
       } catch (err) {

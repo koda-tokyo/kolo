@@ -4,7 +4,7 @@ description: "Fetch design context from a Figma file or frame — get component 
 homepage: https://figma.com
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "🎨",
         "requires": { "bins": ["python3"], "env": ["FIGMA_TOKEN"] },
@@ -35,6 +35,7 @@ python3 {baseDir}/scripts/figma.py context "https://www.figma.com/file/ABC123/My
 Get from figma.com → Account Settings → Personal access tokens.
 
 Set `FIGMA_TOKEN` or configure in `~/.kolo/kolo.json`:
+
 ```json
 { "skills": { "figma": { "token": "figd_..." } } }
 ```

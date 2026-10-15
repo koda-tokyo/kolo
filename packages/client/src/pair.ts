@@ -218,7 +218,7 @@ export async function readDeviceCredential(
 }
 
 export type PairOptions = {
-  /** Invitation code from `kolo pair invite`. */
+  /** Invitation code from `kurahi pair invite`. */
   code: string;
   /** Gateway base URL; default: discover(). */
   baseUrl?: string;
@@ -304,7 +304,7 @@ export async function refresh(options: RefreshOptions = {}): Promise<PairResult>
     file = found.device?.file;
   }
   if (!file) {
-    throw new KoloPairError("no device credential file; run `kolo pair redeem <code>` first");
+    throw new KoloPairError("no device credential file; run `kurahi pair redeem <code>` first");
   }
   const current = await readDeviceCredential(file);
   if (!current) {

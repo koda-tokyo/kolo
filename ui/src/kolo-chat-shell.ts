@@ -266,7 +266,7 @@ export class KoLoChatShell extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // Welcome message from KoLo
+    // Welcome message from Kurahi
     if (this.messages.length === 0) {
       const now = new Date().toISOString();
       this.messages = [

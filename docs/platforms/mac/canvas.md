@@ -17,7 +17,7 @@ UI surfaces.
 
 Canvas state is stored under Application Support:
 
-- `~/Library/Application Support/KoLo/canvas/<session>/...`
+- `~/Library/Application Support/Kurahi/canvas/<session>/...`
 
 The Canvas panel serves those files via a **custom URL scheme**:
 
@@ -53,10 +53,10 @@ Canvas is exposed via the **Gateway WebSocket**, so the agent can:
 CLI examples:
 
 ```bash
-KoLo nodes canvas present --node <id>
-KoLo nodes canvas navigate --node <id> --url "/"
-KoLo nodes canvas eval --node <id> --js "document.title"
-KoLo nodes canvas snapshot --node <id>
+Kurahi nodes canvas present --node <id>
+Kurahi nodes canvas navigate --node <id> --url "/"
+Kurahi nodes canvas eval --node <id> --js "document.title"
+Kurahi nodes canvas snapshot --node <id>
 ```
 
 Notes:
@@ -95,25 +95,25 @@ cat > /tmp/a2ui-v0.8.jsonl <<'EOFA2'
 {"beginRendering":{"surfaceId":"main","root":"root"}}
 EOFA2
 
-KoLo nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
+Kurahi nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
 ```
 
 Quick smoke:
 
 ```bash
-KoLo nodes canvas a2ui push --node <id> --text "Hello from A2UI"
+Kurahi nodes canvas a2ui push --node <id> --text "Hello from A2UI"
 ```
 
 ## Triggering agent runs from Canvas
 
 Canvas can trigger new agent runs via deep links:
 
-- `KoLo://agent?...`
+- `Kurahi://agent?...`
 
 Example (in JS):
 
 ```js
-window.location.href = "KoLo://agent?message=Review%20this%20design";
+window.location.href = "Kurahi://agent?message=Review%20this%20design";
 ```
 
 The app prompts for confirmation unless a valid key is provided.

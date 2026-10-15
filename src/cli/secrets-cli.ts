@@ -1,4 +1,4 @@
-// `kolo secrets …` — encrypted secrets store (KoLo 2.0, M2a). Never prints secret values.
+// `kurahi secrets …` — encrypted secrets store (KoLo 2.0, M2a). Never prints secret values.
 import type { Command } from "commander";
 import { isCancel, password } from "@clack/prompts";
 import path from "node:path";
@@ -44,7 +44,7 @@ async function guard(opts: CommonOpts, fn: () => Promise<void>) {
     if (opts.json) {
       defaultRuntime.log(JSON.stringify({ ok: false, error: message }));
     } else {
-      defaultRuntime.error(`kolo secrets: ${message}`);
+      defaultRuntime.error(`kurahi secrets: ${message}`);
     }
     defaultRuntime.exit(1);
   }

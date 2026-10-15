@@ -1,5 +1,6 @@
+import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 /**
- * LibreTranslate plugin for KoLo.
+ * LibreTranslate plugin for Kurahi.
  *
  * Provides `translate` tool — open-source translation.
  * Supports: en, ja, pt, es, fr, it, ar, zh, ko, de, and more.
@@ -7,7 +8,6 @@
  * Config: `apiUrl` (default libretranslate.com), optional `apiKey`.
  */
 import { Type } from "@sinclair/typebox";
-import type { KoLoPluginApi } from "KoLo/plugin-sdk";
 
 const DEFAULT_URL = "https://libretranslate.com";
 
@@ -54,10 +54,20 @@ async function detectLanguage(text: string, apiUrl: string, apiKey?: string): Pr
 }
 
 const LANG_NAMES: Record<string, string> = {
-  en: "English", ja: "Japanese", pt: "Portuguese", es: "Spanish",
-  fr: "French", it: "Italian", ar: "Arabic", zh: "Chinese",
-  ko: "Korean", de: "German", ru: "Russian", nl: "Dutch",
-  tr: "Turkish", hi: "Hindi",
+  en: "English",
+  ja: "Japanese",
+  pt: "Portuguese",
+  es: "Spanish",
+  fr: "French",
+  it: "Italian",
+  ar: "Arabic",
+  zh: "Chinese",
+  ko: "Korean",
+  de: "German",
+  ru: "Russian",
+  nl: "Dutch",
+  tr: "Turkish",
+  hi: "Hindi",
 };
 
 const libreTranslatePlugin = {
@@ -85,13 +95,21 @@ const libreTranslatePlugin = {
           'Examples: "translate Hello to Japanese", "translate おはよう to English".',
         parameters: Type.Object({
           text: Type.String({ description: "Text to translate" }),
-          target: Type.String({ description: 'Target language code: "en", "ja", "pt", "es", "fr", "it", "ar", "zh"' }),
-          source: Type.Optional(Type.String({ description: "Source language code (auto-detected if omitted)" })),
+          target: Type.String({
+            description: 'Target language code: "en", "ja", "pt", "es", "fr", "it", "ar", "zh"',
+          }),
+          source: Type.Optional(
+            Type.String({ description: "Source language code (auto-detected if omitted)" }),
+          ),
         }),
 
         async execute(_toolId: string, params: Record<string, unknown>) {
-          const apiUrl = (api.pluginConfig?.apiUrl as string | undefined) ?? process.env.LIBRETRANSLATE_URL ?? DEFAULT_URL;
-          const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LIBRETRANSLATE_API_KEY;
+          const apiUrl =
+            (api.pluginConfig?.apiUrl as string | undefined) ??
+            process.env.LIBRETRANSLATE_URL ??
+            DEFAULT_URL;
+          const apiKey =
+            (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LIBRETRANSLATE_API_KEY;
 
           const text = typeof params.text === "string" ? params.text.trim() : "";
           if (!text) return { content: [{ type: "text" as const, text: "No text provided." }] };
@@ -107,10 +125,12 @@ const libreTranslatePlugin = {
             const tgtName = LANG_NAMES[target] ?? target;
 
             return {
-              content: [{
-                type: "text" as const,
-                text: `**${srcName} → ${tgtName}:**\n${result}`,
-              }],
+              content: [
+                {
+                  type: "text" as const,
+                  text: `**${srcName} → ${tgtName}:**\n${result}`,
+                },
+              ],
               details: { source, target, source: "libretranslate" },
             };
           } catch (err) {
@@ -130,14 +150,22 @@ const libreTranslatePlugin = {
           .option("-s, --source <lang>", "Source language (auto-detected)")
           .action(async (target: string, textParts: string[], opts: { source?: string }) => {
             const text = textParts.join(" ");
-            const apiUrl = (api.pluginConfig?.apiUrl as string | undefined) ?? process.env.LIBRETRANSLATE_URL ?? DEFAULT_URL;
-            const apiKey = (api.pluginConfig?.apiKey as string | undefined) ?? process.env.LIBRETRANSLATE_API_KEY;
+            const apiUrl =
+              (api.pluginConfig?.apiUrl as string | undefined) ??
+              process.env.LIBRETRANSLATE_URL ??
+              DEFAULT_URL;
+            const apiKey =
+              (api.pluginConfig?.apiKey as string | undefined) ??
+              process.env.LIBRETRANSLATE_API_KEY;
             try {
-              const source = opts.source ?? await detectLanguage(text, apiUrl, apiKey);
+              const source = opts.source ?? (await detectLanguage(text, apiUrl, apiKey));
               const result = await translate(text, source, target, apiUrl, apiKey);
               console.log(`${LANG_NAMES[source] ?? source} → ${LANG_NAMES[target] ?? target}:`);
               console.log(result);
-            } catch (err) { console.error(String(err)); process.exitCode = 1; }
+            } catch (err) {
+              console.error(String(err));
+              process.exitCode = 1;
+            }
           });
       },
       { commands: ["translate"] },

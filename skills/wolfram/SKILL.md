@@ -2,13 +2,7 @@
 name: wolfram
 description: "Compute answers using Wolfram|Alpha — math, science, finance, data, conversions, real-time facts. Use for calculations, derivatives, integrals, statistics, physics, chemistry, unit conversions, currency, distances, or any computational query. Triggers: calculate, compute, solve, derivative, integral, formula, equation, convert units, distance between, statistics, factorial, prime, or any math/science question."
 metadata:
-  {
-    "KoLo":
-      {
-        "emoji": "🔢",
-        "requires": { "bins": ["curl"], "env": ["WOLFRAM_APP_ID"] }
-      }
-  }
+  { "Kurahi": { "emoji": "🔢", "requires": { "bins": ["curl"], "env": ["WOLFRAM_APP_ID"] } } }
 ---
 
 # Wolfram|Alpha Computation Skill
@@ -26,11 +20,13 @@ Free tier: **2,000 queries/month**
 ## Quick Start
 
 ### Simple Query
+
 ```bash
 ./scripts/query.sh "derivative of x^3 * sin(x)"
 ```
 
 ### With explicit App ID
+
 ```bash
 ./scripts/query.sh "integrate x^2 from 0 to 10" --appid YOUR_APP_ID
 ```
@@ -38,6 +34,7 @@ Free tier: **2,000 queries/month**
 ## Example Queries
 
 ### Mathematics
+
 ```bash
 ./scripts/query.sh "solve x^2 + 5x + 6 = 0"
 ./scripts/query.sh "derivative of ln(x^2 + 1)"
@@ -48,6 +45,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Unit Conversions
+
 ```bash
 ./scripts/query.sh "500000 barrels to liters"
 ./scripts/query.sh "68000 metric tons to barrels of crude oil"
@@ -56,6 +54,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Finance
+
 ```bash
 ./scripts/query.sh "compound interest on $1000000 at 5% for 10 years"
 ./scripts/query.sh "present value of $50000 in 5 years at 8% discount"
@@ -64,6 +63,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Geography & Distance
+
 ```bash
 ./scripts/query.sh "distance from Dubai to Singapore"
 ./scripts/query.sh "flight time Tokyo to New York"
@@ -72,6 +72,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Physics & Chemistry
+
 ```bash
 ./scripts/query.sh "speed of light in km/s"
 ./scripts/query.sh "molecular weight of C8H18"  # octane
@@ -80,6 +81,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Statistics
+
 ```bash
 ./scripts/query.sh "mean, median, std dev of 23, 45, 67, 89, 12, 34"
 ./scripts/query.sh "linear regression for (1,2), (2,4), (3,5), (4,4), (5,5)"
@@ -87,6 +89,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Real-Time Data
+
 ```bash
 ./scripts/query.sh "population of UAE"
 ./scripts/query.sh "current temperature in Dubai"
@@ -95,6 +98,7 @@ Free tier: **2,000 queries/month**
 ```
 
 ### Oil Trading Specific
+
 ```bash
 ./scripts/query.sh "specific gravity from API gravity 33"
 ./scripts/query.sh "barrels per metric ton for 0.85 specific gravity"
@@ -129,6 +133,7 @@ Result: d/dx(x^3 sin(x)) = x^2 (3 sin(x) + x cos(x))
 Endpoint: `https://www.wolframalpha.com/api/v1/llm-api`
 
 Parameters:
+
 - `input` - Query string (URL encoded)
 - `appid` - Your Wolfram App ID
 - `maxchars` - Max response length (default: 6000)

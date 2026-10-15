@@ -2,7 +2,7 @@
 title: "Vercel AI Gateway"
 summary: "Vercel AI Gateway setup (auth + model selection)"
 read_when:
-  - You want to use Vercel AI Gateway with KoLo
+  - You want to use Vercel AI Gateway with Kurahi
   - You need the API key env var or CLI auth choice
 ---
 
@@ -19,7 +19,7 @@ The [Vercel AI Gateway](https://vercel.com/ai-gateway) provides a unified API to
 1. Set the API key (recommended: store it for the Gateway):
 
 ```bash
-KoLo onboard --auth-choice ai-gateway-api-key
+Kurahi onboard --auth-choice ai-gateway-api-key
 ```
 
 2. Set a default model:
@@ -37,7 +37,7 @@ KoLo onboard --auth-choice ai-gateway-api-key
 ## Non-interactive example
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice ai-gateway-api-key \
   --ai-gateway-api-key "$AI_GATEWAY_API_KEY"

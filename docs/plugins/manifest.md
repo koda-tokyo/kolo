@@ -1,7 +1,7 @@
 ---
 summary: "Plugin manifest + JSON schema requirements (strict config validation)"
 read_when:
-  - You are building a KoLo plugin
+  - You are building a Kurahi plugin
   - You need to ship a plugin config schema or debug plugin validation errors
 title: "Plugin Manifest"
 ---
@@ -9,7 +9,7 @@ title: "Plugin Manifest"
 # Plugin manifest (KoLo.plugin.json)
 
 Every plugin **must** ship a `KoLo.plugin.json` file in the **plugin root**.
-KoLo uses this manifest to validate configuration **without executing plugin
+Kurahi uses this manifest to validate configuration **without executing plugin
 code**. Missing or invalid manifests are treated as plugin errors and block
 config validation.
 

@@ -1,6 +1,6 @@
 // Messaging pipes as gateway clients (KoLo 2.0, M3b).
 //
-// A direct-pipe send (`kolo message send` from a terminal, to LINE, WhatsApp or any other
+// A direct-pipe send (`kurahi message send` from a terminal, to LINE, WhatsApp or any other
 // channel) no longer touches the agent's session store or transcript from the CLI process.
 // It opens one authenticated gateway connection, attaches to the agent session that
 // conversation belongs to (`session.attach` with channel + target, mode "pipe", audited as
@@ -75,7 +75,7 @@ export async function sendThroughPipe(params: PipeSendParams): Promise<PipeSendR
         token: params.token,
         timeoutMs,
         clientName: params.clientName ?? GATEWAY_CLIENT_NAMES.CLI,
-        clientDisplayName: params.clientDisplayName ?? `kolo message send (${params.channel})`,
+        clientDisplayName: params.clientDisplayName ?? `kurahi message send (${params.channel})`,
         mode: params.mode ?? GATEWAY_CLIENT_MODES.CLI,
       },
       async ({ request }) => {
@@ -118,7 +118,7 @@ export async function sendThroughPipe(params: PipeSendParams): Promise<PipeSendR
       const { home, port } = describePipeTarget(params.cfg);
       throw new PipeUnreachableError(
         `gateway unreachable for the ${params.channel} pipe (state dir ${home}, port ${port}): ${message.split("\n")[0]}. ` +
-          "Start it (`kolo gateway` or `kolo service start`); pipes never send without the gateway.",
+          "Start it (`kurahi gateway` or `kurahi service start`); pipes never send without the gateway.",
       );
     }
     throw err;

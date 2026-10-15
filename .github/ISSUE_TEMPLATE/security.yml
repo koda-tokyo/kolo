@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        **Stop if this is exploitable.** A vulnerability, a bypass of authentication, pairing, tool policy or the integrity gate, or anything that exposes secrets must be reported privately as described in [SECURITY.md](https://github.com/koda-tokyo/kolo/blob/main/SECURITY.md). This form is for hardening proposals only.
+        **Stop if this is exploitable.** A vulnerability, a bypass of authentication, pairing, tool policy or the integrity gate, or anything that exposes secrets must be reported privately as described in [SECURITY.md](https://github.com/koda-tokyo/kurahi/blob/main/SECURITY.md). This form is for hardening proposals only.
   - type: checkboxes
     id: confirm
     attributes:

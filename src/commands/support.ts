@@ -1,4 +1,4 @@
-// `kolo support`: everything a support ticket needs in one place. Prints version, OS, state
+// `kurahi support`: everything a support ticket needs in one place. Prints version, OS, state
 // directory, integrity and service state, and writes a redacted diagnostics bundle
 // (<KOLO_HOME>/support/kolo-support-<timestamp>.tar.gz). Secrets never enter the bundle:
 // config values whose keys look like credentials are replaced, log lines go through the
@@ -103,9 +103,9 @@ function readJsonSafe(file: string): Record<string, unknown> | null {
 }
 
 /**
- * Which service identity `kolo support` reports on: `--id`, else KOLO_SERVICE_ID (set by the
- * service environment), else the id `kolo service install` recorded in
- * `<KOLO_HOME>/service/service.json`, else the default agent `kolo init` wrote to the config,
+ * Which service identity `kurahi support` reports on: `--id`, else KOLO_SERVICE_ID (set by the
+ * service environment), else the id `kurahi service install` recorded in
+ * `<KOLO_HOME>/service/service.json`, else the default agent `kurahi init` wrote to the config,
  * else `default`.
  */
 export function resolveSupportServiceId(params: {
@@ -220,7 +220,7 @@ export async function writeSupportBundle(
     fs.writeFileSync(
       path.join(dir, "README.txt"),
       [
-        "KoLo diagnostics bundle",
+        "Kurahi diagnostics bundle",
         `generated ${summary.generatedAt} by kolo ${summary.version}`,
         "summary.json          version, OS, state dir, integrity, service, audit, doctor report, KOLO_* names",
         "config.redacted.json  kolo.json with credential-looking values replaced",

@@ -124,7 +124,7 @@ function defaultIndexHTML() {
 
   function send(name, sourceComponentId) {
     if (!hasHelper()) {
-      log("No action bridge found. Ensure you're viewing this on an iOS/Android KoLo node canvas.");
+      log("No action bridge found. Ensure you're viewing this on an iOS/Android Kurahi node canvas.");
       return;
     }
     const sendUserAction =

@@ -1,26 +1,26 @@
-# _system/ — KoLo Skill Contract Layer
+# \_system/ — Kurahi Skill Contract Layer
 
-This directory holds the operative contract for KoLo skills: what must be true
+This directory holds the operative contract for Kurahi skills: what must be true
 and how it is checked. It is the `_system/` pattern from Infinite Brain OS,
-adapted for the KoLo platform.
+adapted for the Kurahi platform.
 
 ## What lives here
 
-| File | Purpose |
-|------|---------|
-| `skill-schema.md` | Required and optional fields for SKILL.md |
-| `validate.sh` | Mechanical enforcement of the schema |
-| `checks/` | Individual check scripts (warn-only, promotable to blocking) |
-| `README.md` | This file |
+| File              | Purpose                                                      |
+| ----------------- | ------------------------------------------------------------ |
+| `skill-schema.md` | Required and optional fields for SKILL.md                    |
+| `validate.sh`     | Mechanical enforcement of the schema                         |
+| `checks/`         | Individual check scripts (warn-only, promotable to blocking) |
+| `README.md`       | This file                                                    |
 
-## The _system/ vs skill-creator split
+## The \_system/ vs skill-creator split
 
 - `_system/` answers: **what** must be true and **how** it is checked.
 - `skill-creator/SKILL.md` answers: **why** and **how** to build a skill.
 
 Neither restates the other. Each links across. If changing a file would change
 what `validate.sh` accepts, it belongs here. If changing a file would change
-how someone *thinks* about building a skill, it belongs in `skill-creator/`.
+how someone _thinks_ about building a skill, it belongs in `skill-creator/`.
 
 ## How to use
 

@@ -1,10 +1,10 @@
-// `kolo connect web`: open the dashboard on a phone browser. A one-shot pairing invitation (M3a,
+// `kurahi connect web`: open the dashboard on a phone browser. A one-shot pairing invitation (M3a,
 // scope attach, 10 minutes) is rendered as a QR of `<dashboard URL>#pair=<code>`; the dashboard
 // redeems it with a device key it keeps in the browser. The code sits in the URL fragment, which
 // browsers never send to a server or in a Referer.
 //
 // Offered only when the gateway is reachable from the phone: bind lan, tailnet or custom, which
-// `kolo init` sets together with gateway.remote.enabled (explicit opt-in, M2). On loopback the
+// `kurahi init` sets together with gateway.remote.enabled (explicit opt-in, M2). On loopback the
 // flow explains why and how to enable it. Browsers keep device keys only on secure pages, so the
 // dashboard must be served over HTTPS (gateway.tls).
 import type { KoLoConfig } from "../../config/config.js";
@@ -35,7 +35,7 @@ export function resolvePhoneDashboard(
       ok: false,
       reason: "loopback",
       detail:
-        "The gateway listens on this computer only (gateway.bind loopback), so a phone cannot reach the dashboard. To allow devices on your network or tailnet, run kolo init --bind lan (or --bind tailnet), which also sets gateway.remote.enabled, restart the gateway, then run kolo connect web.",
+        "The gateway listens on this computer only (gateway.bind loopback), so a phone cannot reach the dashboard. To allow devices on your network or tailnet, run kurahi init --bind lan (or --bind tailnet), which also sets gateway.remote.enabled, restart the gateway, then run kurahi connect web.",
     };
   }
   const port = resolveGatewayPort(cfg);
@@ -57,7 +57,7 @@ export function resolvePhoneDashboard(
     return {
       ok: false,
       reason: "insecure",
-      detail: `Phone browsers keep a device key only on HTTPS pages, and the dashboard at http://${host}:${port}${base} is plain HTTP. Enable TLS (kolo config set gateway.tls.enabled true; a self-signed certificate is generated, your phone asks you to trust it once), restart the gateway, then run kolo connect web. Docs: ${DOCS_URL}/gateway/security`,
+      detail: `Phone browsers keep a device key only on HTTPS pages, and the dashboard at http://${host}:${port}${base} is plain HTTP. Enable TLS (kurahi config set gateway.tls.enabled true; a self-signed certificate is generated, your phone asks you to trust it once), restart the gateway, then run kurahi connect web. Docs: ${DOCS_URL}/gateway/security`,
     };
   }
   return { ok: true, url: `https://${host}:${port}${base}`, host };
@@ -89,7 +89,7 @@ export async function connectWeb(deps: ConnectDeps, opts: ConnectOptions): Promi
   printQr(deps, opts, link);
   say(`dashboard  ${where.url}`);
   say(
-    `expires    ${invitation.expiresAt} (single use; kolo pair revoke ${invitation.id} withdraws it)`,
+    `expires    ${invitation.expiresAt} (single use; kurahi pair revoke ${invitation.id} withdraws it)`,
   );
   return {
     ok: true,

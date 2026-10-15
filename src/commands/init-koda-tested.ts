@@ -1,4 +1,4 @@
-// `kolo init --provider koda-tested`: choose the best model from the KODA tested catalogue that
+// `kurahi init --provider koda-tested`: choose the best model from the KODA tested catalogue that
 // this machine can run — a provider key is stored or set in the provider's environment variable,
 // or the model is pulled on the local model server — optionally limited to a residency. Keys
 // found in the environment are copied to the auth profile store, never into kolo.json.
@@ -75,7 +75,7 @@ export async function applyKodaTestedProfile(
       config: cfg,
       summary: `koda-tested: no tested model matches the keys on this machine${
         opts.residency ? ` and residency ${opts.residency}` : ""
-      }; see kolo models tested`,
+      }; see kurahi models tested`,
     };
   }
   const { provider, model } = pick.entry;

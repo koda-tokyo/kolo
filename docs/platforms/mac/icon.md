@@ -1,12 +1,11 @@
 ---
-summary: "Menu bar icon states and animations for KoLo on macOS"
+summary: "Menu bar icon states and animations for Kurahi on macOS"
 read_when:
   - Changing menu bar icon behavior
 title: "Menu Bar Icon"
 ---
 
 # Menu Bar Icon States
-
 
 - **Idle:** Normal icon animation (blink, occasional wiggle).
 - **Paused:** Status item uses `appearsDisabled`; no motion.

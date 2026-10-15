@@ -1,10 +1,10 @@
 {
   "name": "@KoLo/discord",
   "version": "2.0.0",
-  "description": "KoLo Discord channel plugin",
+  "description": "Kurahi Discord channel plugin",
   "type": "module",
   "devDependencies": {
-    "kolo": "workspace:@kodasoken/kolo@*"
+    "kolo": "workspace:kurahi@*"
   },
   "KoLo": {
     "extensions": [

@@ -1,5 +1,5 @@
 // src/gateway/admin-api.ts
-// Admin API endpoints for KoLo Control Room
+// Admin API endpoints for Kurahi Control Room
 //
 // Clients depend on these contracts:
 // - GET /api/admin/status

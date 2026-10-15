@@ -1,4 +1,4 @@
-// `kolo doctor --json`: a machine-readable, non-interactive report of the local installation.
+// `kurahi doctor --json`: a machine-readable, non-interactive report of the local installation.
 // Used by the packaging check (`pnpm pack:check`) and by operators who script health probes.
 // It never prompts, never repairs, and never opens a gateway socket beyond one HTTP probe.
 
@@ -69,9 +69,9 @@ export async function buildDoctorJsonReport(
     checks.push({
       id: "config.exists",
       level: "warn",
-      detail: `no config at ${configPath}; run \`kolo init\``,
+      detail: `no config at ${configPath}; run \`kurahi init\``,
     });
-    next.push("kolo init");
+    next.push("kurahi init");
   } else if (!configValid) {
     checks.push({ id: "config.valid", level: "error", detail: `${configPath} does not parse` });
   } else {
@@ -80,7 +80,7 @@ export async function buildDoctorJsonReport(
       checks.push({
         id: "gateway.mode",
         level: "warn",
-        detail: "gateway.mode is not set; `kolo gateway` will refuse to start",
+        detail: "gateway.mode is not set; `kurahi gateway` will refuse to start",
       });
     }
   }
@@ -109,7 +109,7 @@ export async function buildDoctorJsonReport(
       : `no gateway on port ${port} (${probe.error ?? probe.status ?? "unknown"})`,
   });
   if (!probe.ok && configExists) {
-    next.push("kolo service install");
+    next.push("kurahi service install");
   }
 
   const ok = !checks.some((check) => check.level === "error");

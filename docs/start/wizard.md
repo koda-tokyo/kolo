@@ -8,7 +8,7 @@ title: "Onboarding Wizard"
 
 # Onboarding Wizard (CLI)
 
-The onboarding wizard is the **recommended** way to set up KoLo on macOS,
+The onboarding wizard is the **recommended** way to set up Kurahi on macOS,
 Linux, or Windows (via WSL2; strongly recommended).
 It configures a local Gateway or a remote Gateway connection, plus channels, skills,
 and workspace defaults in one guided flow.
@@ -16,20 +16,20 @@ and workspace defaults in one guided flow.
 Primary entrypoint:
 
 ```bash
-KoLo onboard
+Kurahi onboard
 ```
 
 Fastest first chat: open the Control UI (no channel setup needed). Run
-`KoLo dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
+`Kurahi dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
 
 Follow‑up reconfiguration:
 
 ```bash
-KoLo configure
+Kurahi configure
 ```
 
 Recommended: set up a Brave Search API key so the agent can use `web_search`
-(`web_fetch` works without a key). Easiest path: `KoLo configure --section web`
+(`web_fetch` works without a key). Easiest path: `Kurahi configure --section web`
 which stores `tools.web.search.apiKey`. Docs: [Web tools](/tools/web).
 
 ## QuickStart vs Advanced
@@ -65,7 +65,7 @@ It does **not** install or change anything on the remote host.
 To add more isolated agents (separate workspace + sessions + auth), use:
 
 ```bash
-KoLo agents add <name>
+Kurahi agents add <name>
 ```
 
 Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (and `--workspace`) for scripts.
@@ -77,7 +77,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset**
      (or pass `--reset`).
    - If the config is invalid or contains legacy keys, the wizard stops and asks
-     you to run `KoLo doctor` before continuing.
+     you to run `Kurahi doctor` before continuing.
    - Reset uses `trash` (never `rm`) and offers scopes:
      - Config only
      - Config + credentials + sessions
@@ -128,7 +128,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - [Mattermost](/channels/mattermost) (plugin): bot token + base URL.
    - [Signal](/channels/signal): optional `signal-cli` install + account config.
    - [iMessage](/channels/imessage): local `imsg` CLI path + DB access.
-   - DM security: default is pairing. First DM sends a code; approve via `KoLo pairing approve <channel> <code>` or use allowlists.
+   - DM security: default is pairing. First DM sends a code; approve via `Kurahi pairing approve <channel> <code>` or use allowlists.
 
 6. **Daemon install**
    - macOS: LaunchAgent
@@ -139,8 +139,8 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **Runtime selection:** Node.js 22.12 or newer.
 
 7. **Health check**
-   - Starts the Gateway (if needed) and runs `KoLo health`.
-   - Tip: `KoLo status --deep` adds gateway health probes to status output (requires a reachable gateway).
+   - Starts the Gateway (if needed) and runs `Kurahi health`.
+   - Tip: `Kurahi status --deep` adds gateway health probes to status output (requires a reachable gateway).
 
 8. **Skills (recommended)**
    - Reads the available skills and checks requirements.
@@ -172,7 +172,7 @@ Notes:
 
 ## Add another agent
 
-Use `KoLo agents add <name>` to create a separate agent with its own workspace,
+Use `Kurahi agents add <name>` to create a separate agent with its own workspace,
 sessions, and auth profiles. Running without `--workspace` launches the wizard.
 
 What it sets:
@@ -192,7 +192,7 @@ Notes:
 Use `--non-interactive` to automate or script onboarding:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -208,7 +208,7 @@ Add `--json` for a machine‑readable summary.
 Gemini example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice gemini-api-key \
   --gemini-api-key "$GEMINI_API_KEY" \
@@ -219,7 +219,7 @@ KoLo onboard --non-interactive \
 Z.AI example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice zai-api-key \
   --zai-api-key "$ZAI_API_KEY" \
@@ -230,7 +230,7 @@ KoLo onboard --non-interactive \
 Vercel AI Gateway example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice ai-gateway-api-key \
   --ai-gateway-api-key "$AI_GATEWAY_API_KEY" \
@@ -241,7 +241,7 @@ KoLo onboard --non-interactive \
 Moonshot example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice moonshot-api-key \
   --moonshot-api-key "$MOONSHOT_API_KEY" \
@@ -252,7 +252,7 @@ KoLo onboard --non-interactive \
 Synthetic example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice synthetic-api-key \
   --synthetic-api-key "$SYNTHETIC_API_KEY" \
@@ -263,7 +263,7 @@ KoLo onboard --non-interactive \
 OpenCode Zen example:
 
 ```bash
-KoLo onboard --non-interactive \
+Kurahi onboard --non-interactive \
   --mode local \
   --auth-choice opencode-zen \
   --opencode-zen-api-key "$OPENCODE_API_KEY" \
@@ -274,7 +274,7 @@ KoLo onboard --non-interactive \
 Add agent (non‑interactive) example:
 
 ```bash
-KoLo agents add work \
+Kurahi agents add work \
   --workspace ~/.kolo/workspace-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
@@ -317,7 +317,7 @@ Typical fields in `~/.kolo/kolo.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`KoLo agents add` writes `agents.list[]` and optional `bindings`.
+`Kurahi agents add` writes `agents.list[]` and optional `bindings`.
 
 WhatsApp credentials go under `<KOLO_HOME>/credentials/whatsapp/<accountId>/`.
 Sessions are stored under `~/.kolo/agents/<agentId>/sessions/`.

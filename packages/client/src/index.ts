@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// @kodasoken/kolo-client — typed client for the KoLo gateway, generated from its OpenAPI 3.1 document.
+// @kodasoken/kurahi-client — typed client for the Kurahi gateway, generated from its OpenAPI 3.1 document.
 export { KoloClient } from "./generated/client.js";
 export {
   KoloApiError,

@@ -1364,7 +1364,7 @@ export const GATEWAY_ROUTES: readonly RouteDefinition[] = [
     description:
       "The bundle (manifest.json, events.jsonl, audit-slice.jsonl, snapshots/, REPORT.md) is " +
       "written under KOLO_HOME/evidence-exports on the gateway host; the response carries its " +
-      "path and manifest. Verify it anywhere with `kolo evidence verify`.",
+      "path and manifest. Verify it anywhere with `kurahi evidence verify`.",
     tags: T.evidence,
     auth: ["gateway-token", "pair-credential", "session-admin"],
     minScope: "admin",
@@ -1686,7 +1686,7 @@ export const GATEWAY_ROUTES: readonly RouteDefinition[] = [
       "Hashes of the resident's identity and memory files, its role (config minus model), the " +
       "current model profile, jobs, session index, transcripts and the audit chain head, chained " +
       "and signed with this gateway's Ed25519 signing key. No file contents and no secrets. " +
-      "`kolo continuity run` takes one before and one after a disruption and compares them.",
+      "`kurahi continuity run` takes one before and one after a disruption and compares them.",
     tags: T.continuity,
     auth: ["gateway-token", "pair-credential"],
     request: {
@@ -1950,7 +1950,7 @@ export const GATEWAY_ROUTES: readonly RouteDefinition[] = [
       "Public, rate-limited as a credential attempt. Returns a short-lived access token and a " +
       "rotating refresh token bound to `deviceKeyPub`. Devices redeemed through an invitation " +
       "with autoApprove are trusted at once (TOFU on an authenticated surface); otherwise the " +
-      "credential stays pending until `kolo pair approve <fingerprint>`.",
+      "credential stays pending until `kurahi pair approve <fingerprint>`.",
     tags: T.pairing,
     auth: "none",
     request: {
@@ -2322,7 +2322,7 @@ export const GATEWAY_ROUTES: readonly RouteDefinition[] = [
     description:
       "Live counters of the outbound delivery queue for every channel that sent something since " +
       "the gateway started, plus the dead-letter files under KOLO_HOME/channels/dead-letter. " +
-      "The same data appears in `kolo channels status`.",
+      "The same data appears in `kurahi channels status`.",
     tags: T.channels,
     auth: ["gateway-token", "pair-credential", "session-admin"],
     minScope: "observe",

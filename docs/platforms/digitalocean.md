@@ -1,16 +1,16 @@
 ---
-summary: "KoLo on DigitalOcean (simple paid VPS option)"
+summary: "Kurahi on DigitalOcean (simple paid VPS option)"
 read_when:
-  - Setting up KoLo on DigitalOcean
-  - Looking for cheap VPS hosting for KoLo
+  - Setting up Kurahi on DigitalOcean
+  - Looking for cheap VPS hosting for Kurahi
 title: "DigitalOcean"
 ---
 
-# KoLo on DigitalOcean
+# Kurahi on DigitalOcean
 
 ## Goal
 
-Run a persistent KoLo Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
+Run a persistent Kurahi Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
 
 If you want a $0/month option and don’t mind ARM + provider-specific setup, see the [Oracle Cloud guide](/platforms/oracle).
 
@@ -56,7 +56,7 @@ If you want a $0/month option and don’t mind ARM + provider-specific setup, se
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) Install KoLo
+## 3) Install Kurahi
 
 ```bash
 # Update system
@@ -66,17 +66,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
-# Install KoLo
-curl -fsSL https://kodasoken.com/kolo/install.sh | bash
+# Install Kurahi
+curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 
 # Verify
-KoLo --version
+Kurahi --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-KoLo onboard --install-daemon
+Kurahi onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -90,7 +90,7 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-KoLo status
+Kurahi status
 
 # Check service
 systemctl --user status kolo-gateway.service
@@ -120,8 +120,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-KoLo config set gateway.tailscale.mode serve
-KoLo gateway restart
+Kurahi config set gateway.tailscale.mode serve
+Kurahi gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -134,8 +134,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-KoLo config set gateway.bind tailnet
-KoLo gateway restart
+Kurahi config set gateway.bind tailnet
+Kurahi gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -145,14 +145,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-KoLo pairing list telegram
-KoLo pairing approve telegram <CODE>
+Kurahi pairing list telegram
+Kurahi pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-KoLo channels login whatsapp
+Kurahi channels login whatsapp
 # Scan QR code
 ```
 
@@ -230,9 +230,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-KoLo gateway status
-KoLo doctor --non-interactive
-journalctl -u KoLo --no-pager -n 50
+Kurahi gateway status
+Kurahi doctor --non-interactive
+journalctl -u Kurahi --no-pager -n 50
 ```
 
 ### Port already in use

@@ -1,5 +1,5 @@
 // src/db/audit.ts
-// Centralized audit logging for KoLo
+// Centralized audit logging for Kurahi
 //
 // "Audit log from day 1 - trust is built by default, not retrofitted"
 

@@ -1,4 +1,4 @@
-// Operations behind `kolo policy …` (KoLo 2.0, M13d). Pure functions over a deps object so the
+// Operations behind `kurahi policy …` (KoLo 2.0, M13d). Pure functions over a deps object so the
 // CLI test can run them against a temp KOLO_HOME without a gateway. Every operator action is
 // audited; secrets never print.
 import fs from "node:fs";
@@ -71,7 +71,7 @@ type Ctx = {
 async function defaultGateway(env: NodeJS.ProcessEnv): Promise<GatewayCall> {
   return async (method, pathname, body) => {
     try {
-      const { discover } = await import("@kodasoken/kolo-client");
+      const { discover } = await import("@kodasoken/kurahi-client");
       const found = await discover({ env });
       if (!found.token) {
         return null;
@@ -171,7 +171,7 @@ export async function runPolicyInit(
   const { loc, runtime } = ctx;
   if (fs.existsSync(loc.policyPath) && !opts.force) {
     throw new PolicyCliError(
-      `policy already exists at ${loc.policyPath}; edit it and run \`kolo policy sign\`, or pass --force to overwrite`,
+      `policy already exists at ${loc.policyPath}; edit it and run \`kurahi policy sign\`, or pass --force to overwrite`,
     );
   }
   fs.mkdirSync(loc.dir, { recursive: true, mode: 0o700 });
@@ -225,7 +225,7 @@ export async function runPolicyInit(
       `mode        ${ctx.mode}`,
       ...integrity.map((line) => `integrity   ${line}`),
       "",
-      "Next: edit the policy, then `kolo policy validate` and `kolo policy sign`. The gateway reloads it on save.",
+      "Next: edit the policy, then `kurahi policy validate` and `kurahi policy sign`. The gateway reloads it on save.",
     ].join("\n"),
   );
 }
@@ -237,7 +237,7 @@ export async function runPolicyShow(opts: { file?: string; json?: boolean }, dep
   const file = resolveFile(ctx.loc, opts.file);
   const result = loadPolicyFile(ctx.loc, { path: file, attest: !opts.file });
   if (result.state === "absent") {
-    throw new PolicyCliError(`no policy at ${file}. Create one with: kolo policy init`);
+    throw new PolicyCliError(`no policy at ${file}. Create one with: kurahi policy init`);
   }
   if (result.state === "invalid") {
     throw new PolicyCliError(
@@ -503,7 +503,7 @@ export async function runPolicyApply(
   const candidateSig = `${source}.sig`;
   if (!opts.sign && !fs.existsSync(candidateSig)) {
     throw new PolicyCliError(
-      `${candidateSig} is missing; sign the candidate first (kolo policy sign ${file}) or pass --sign`,
+      `${candidateSig} is missing; sign the candidate first (kurahi policy sign ${file}) or pass --sign`,
       POLICY_EXIT.usage,
     );
   }
@@ -705,7 +705,7 @@ export async function runPolicyKill(
         ? `gateway     answered ${live.status}; the switch is written to ${ctx.loc.killStatePath} and the gateway applies it on reload`
         : `gateway     not reachable; the switch is written to ${ctx.loc.killStatePath} and applies when the gateway reads it`,
   );
-  ctx.runtime.log(`release     kolo policy release ${agent ? `--agent ${agent}` : "--all"}`);
+  ctx.runtime.log(`release     kurahi policy release ${agent ? `--agent ${agent}` : "--all"}`);
 }
 
 export async function runPolicyRelease(
@@ -807,7 +807,7 @@ export async function runPolicyAction(runtime: RuntimeEnv, fn: () => Promise<voi
     await fn();
   } catch (err) {
     const code = err instanceof PolicyCliError ? err.exitCode : POLICY_EXIT.failed;
-    runtime.error(`kolo policy: ${err instanceof Error ? err.message : String(err)}`);
+    runtime.error(`kurahi policy: ${err instanceof Error ? err.message : String(err)}`);
     runtime.exit(code);
   }
 }

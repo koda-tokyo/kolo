@@ -2,20 +2,20 @@
 
 ## Overview
 
-The KoLo knowledge base is the living repository of all product documentation. It is not a static archive — it has information architecture, search optimization, freshness controls, and a maintenance cadence. This reference covers how to design, build, and sustain a docs knowledge base that works as hard as the product it documents.
+The Kurahi knowledge base is the living repository of all product documentation. It is not a static archive — it has information architecture, search optimization, freshness controls, and a maintenance cadence. This reference covers how to design, build, and sustain a docs knowledge base that works as hard as the product it documents.
 
 ## Information Architecture for Documentation
 
 ### The IA Principle
 
-Documentation must be findable without knowing what it's called. Users arrive with a *need*, not a file path.
+Documentation must be findable without knowing what it's called. Users arrive with a _need_, not a file path.
 
 ### Site Structure (Docs-as-Code, Docusaurus/Astro/Next.js)
 
 ```
 docs.kolo.dev/
 ├── getting-started/           # Tutorials + Quickstarts
-│   ├── index.md               # "Welcome to KoLo" — first-time landing
+│   ├── index.md               # "Welcome to Kurahi" — first-time landing
 │   ├── quickstart.md          # 5-minute first API call
 │   └── first-agent.md         # Create your first agent
 ├── guides/                    # How-To Guides
@@ -72,7 +72,7 @@ docs.kolo.dev/
 
 ### SEO for Public Docs
 
-- **Title tags**: `{Page Title} | KoLo Docs` or `{ページタイトル} | KoLo ドキュメント`
+- **Title tags**: `{Page Title} | Kurahi Docs` or `{ページタイトル} | Kurahi ドキュメント`
 - **Meta descriptions**: Bilingual, 155-160 characters
 - **Canonical URLs**: `/reference/api/` canonical, `/ja/reference/api/` has `hreflang="ja"`
 - **Structured data**: `TechArticle` or `APIReference` schema.org types on relevant pages
@@ -83,6 +83,7 @@ docs.kolo.dev/
 ### Freshness Indicators
 
 Every document page displays:
+
 - **Last reviewed date** (from frontmatter `last_reviewed`)
 - **Product version** it documents (from `version`)
 - **Review status badge**: Up-to-date (green) / Needs review (yellow, > review cycle) / Stale (red)
@@ -94,7 +95,7 @@ Every document page displays:
 name: Documentation Freshness Check
 on:
   schedule:
-    - cron: '0 8 * * 1'  # Every Monday 08:00 JST
+    - cron: "0 8 * * 1" # Every Monday 08:00 JST
 
 jobs:
   check-freshness:
@@ -117,6 +118,7 @@ jobs:
 ### Review Triggers
 
 Documentation is flagged for review when:
+
 1. **Calendar-based**: Review cycle days exceeded (API: 90d, Architecture: 90d, Guides: from feature change)
 2. **Product change**: New release touches documented behavior
 3. **User feedback**: Negative feedback or confusion reports (see Feedback Loops)
@@ -146,6 +148,7 @@ v3.0 (beta)        /next/          Pre-release docs, "Beta" banner
 ### Version Selector
 
 Every docs page has a version dropdown:
+
 ```
 [ v2.3 (latest) ▾ ]
   v2.2 (stable)
@@ -164,6 +167,7 @@ Every docs page has a version dropdown:
 ### Docs Analytics
 
 Track per page:
+
 - **Page views and unique visitors**
 - **Time on page** (low time + high bounce = didn't find what they needed)
 - **Search queries** that led to the page
@@ -224,14 +228,16 @@ Weekly docs triage (automated issue from feedback)
 ### Quickstart for New Docs Contributors
 
 ```markdown
-# Contributing to KoLo Docs
+# Contributing to Kurahi Docs
 
 ## First Time Setup
+
 1. Clone the docs repo
 2. Run `make setup` (installs linters, preview server)
 3. Read the style guide (5 minutes)
 
 ## How to Contribute
+
 1. Find or create an issue
 2. Create a branch: `docs/fix-agent-start-guide`
 3. Write your changes following the template for that doc type
@@ -240,11 +246,13 @@ Weekly docs triage (automated issue from feedback)
 6. Docs team reviews within 2 business days
 
 ## Templates
+
 - [Tutorial template](templates/tutorial.md)
 - [How-to template](templates/how-to.md)
 - [API doc template](templates/api-endpoint.md)
 
 ## Style Guide
+
 - [Writing style](style-guide.md)
 - [Japanese conventions](ja-style-guide.md)
 ```
@@ -253,13 +261,13 @@ Weekly docs triage (automated issue from feedback)
 
 Every section of the docs has an owner:
 
-| Section | Owner Team | SLA for Updates |
-|---------|-----------|-----------------|
-| API Reference | Platform Engineering | Same-day for API changes |
-| Agent Guides | Agent Runtime Team | Within sprint |
-| MHLW Compliance | Reg. Affairs + Systems | Per MHLW notice cycle |
-| Architecture ADRs | CTO Office | Within 2 weeks of decision |
-| Tutorials | Developer Relations | Per release |
+| Section           | Owner Team             | SLA for Updates            |
+| ----------------- | ---------------------- | -------------------------- |
+| API Reference     | Platform Engineering   | Same-day for API changes   |
+| Agent Guides      | Agent Runtime Team     | Within sprint              |
+| MHLW Compliance   | Reg. Affairs + Systems | Per MHLW notice cycle      |
+| Architecture ADRs | CTO Office             | Within 2 weeks of decision |
+| Tutorials         | Developer Relations    | Per release                |
 
 ## Tooling
 

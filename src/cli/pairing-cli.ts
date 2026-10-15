@@ -115,12 +115,12 @@ export function registerPairingCli(program: Command) {
       const resolvedCode = opts.channel ? codeOrChannel : code;
       if (!opts.channel && !code) {
         throw new Error(
-          `Usage: ${formatCliCommand("kolo pairing approve <channel> <code>")} (or: ${formatCliCommand("kolo pairing approve --channel <channel> <code>")})`,
+          `Usage: ${formatCliCommand("kurahi pairing approve <channel> <code>")} (or: ${formatCliCommand("kurahi pairing approve --channel <channel> <code>")})`,
         );
       }
       if (opts.channel && code != null) {
         throw new Error(
-          `Too many arguments. Use: ${formatCliCommand("kolo pairing approve --channel <channel> <code>")}`,
+          `Too many arguments. Use: ${formatCliCommand("kurahi pairing approve --channel <channel> <code>")}`,
         );
       }
       const channel = parseChannel(channelRaw, channels);

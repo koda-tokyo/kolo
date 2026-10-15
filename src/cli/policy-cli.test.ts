@@ -59,7 +59,7 @@ afterEach(() => {
   fs.rmSync(home, { recursive: true, force: true });
 });
 
-describe("kolo policy", () => {
+describe("kurahi policy", () => {
   it("init writes a signed starter policy, pins the owner and refuses to overwrite", async () => {
     await runPolicyInit({}, deps());
     expect(fs.existsSync(loc.policyPath)).toBe(true);

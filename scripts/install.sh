@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # KoLo installer for Linux and macOS.
 #
-#   curl -fsSL https://kodasoken.com/kolo/install.sh | bash
-#   curl -fsSL https://kodasoken.com/kolo/install.sh | bash -s -- --version 2.0.0 --no-service
+#   curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
+#   curl -fsSL https://kodasoken.com/kurahi/install.sh | bash -s -- --version 2.0.0 --no-service
 #
 # What it does:
 #   1. Picks the release bundle for this OS and CPU from GitHub Releases
@@ -20,10 +20,10 @@
 # runs as root.
 set -euo pipefail
 
-REPO="koda-tokyo/kolo"
+REPO="koda-tokyo/kurahi"
 API="https://api.github.com/repos/${REPO}/releases"
 DOWNLOAD="https://github.com/${REPO}/releases/download"
-DOCS="https://kodasoken.com/kolo"
+DOCS="https://kurahi.kodasoken.com/docs"
 
 VERSION=""
 PREFIX="${KOLO_INSTALL_DIR:-$HOME/.local/share/kolo}"
@@ -91,7 +91,7 @@ need tar
 case "$(uname -s)" in
   Linux) OS="linux" ;;
   Darwin) OS="darwin" ;;
-  *) die "unsupported OS: $(uname -s). Windows users: $DOCS/install.ps1" ;;
+  *) die "unsupported OS: $(uname -s). Windows users: https://kodasoken.com/kurahi/install.ps1" ;;
 esac
 case "$(uname -m)" in
   x86_64|amd64) ARCH="x64" ;;
@@ -150,7 +150,7 @@ main() {
   log "KoLo ${VERSION}  ${OS}/${ARCH}"
   log "asset      ${ASSET}"
   log "install    ${dest}"
-  log "command    ${BIN_DIR}/kolo"
+  log "command    ${BIN_DIR}/kurahi (alias: kolo)"
   if [ "$DRY_RUN" -eq 1 ]; then
     log "source     ${BUNDLE_FILE:-${DOWNLOAD}/v${VERSION}/${ASSET}}"
     log "dry run: nothing downloaded, nothing written"
@@ -192,14 +192,16 @@ main() {
   mv "${dest}.partial" "$dest"
   ln -sfn "$dest" "${PREFIX}/current"
   ln -sfn "${PREFIX}/current/bin/kolo" "${BIN_DIR}/kolo"
-  log "installed  $("${BIN_DIR}/kolo" --version)"
+  # `kurahi` is the command; bundles before 2.0.1 ship only bin/kolo, so link to that.
+  ln -sfn "${PREFIX}/current/bin/kolo" "${BIN_DIR}/kurahi"
+  log "installed  $("${BIN_DIR}/kurahi" --version)"
 
   case ":$PATH:" in
     *":${BIN_DIR}:"*) ;;
     *) log ""; log "add ${BIN_DIR} to PATH, for example:"; log "  export PATH=\"${BIN_DIR}:\$PATH\"" ;;
   esac
 
-  local kolo="${BIN_DIR}/kolo"
+  local kolo="${BIN_DIR}/kurahi"
   if [ "$DO_INIT" -eq 1 ]; then
     log ""
     "$kolo" init --non-interactive --name "$IDENTITY" --bind loopback || die "kolo init failed"
@@ -224,7 +226,7 @@ main() {
     "$kolo" pair invite --scope attach || log "run 'kolo pair invite --scope attach' once the gateway is up"
   fi
   log ""
-  log "next: kolo health · kolo tui · kolo --help · ${DOCS}/start/getting-started"
+  log "next: kurahi health · kurahi tui · kurahi --help · ${DOCS}/start/getting-started"
 }
 
 main "$@"

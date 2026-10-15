@@ -361,7 +361,7 @@ function generateFishCompletion(program: Command): string {
       // Actually, a robust fish completion often requires defining a function to check current line.
       // For simplicity, we'll assume standard fish helper __fish_seen_subcommand_from.
 
-      // To properly scope to 'kolo gateway' and not 'kolo other gateway', we need to check the sequence.
+      // To properly scope to 'kurahi gateway' and not 'kurahi other gateway', we need to check the sequence.
       // A simplified approach:
 
       // Subcommands

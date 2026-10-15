@@ -1,7 +1,7 @@
-// The last, optional step of `kolo init` (KoLo 2.0, M16): "Connect your phone". Interactive runs
+// The last, optional step of `kurahi init` (KoLo 2.0, M16): "Connect your phone". Interactive runs
 // ask; `--phone whatsapp|telegram|line|web|skip` answers without a prompt. The step runs the same
-// flows as `kolo connect <channel>`. A problem here never fails init: the state, config and token
-// are already written, and the step can be repeated with `kolo connect`.
+// flows as `kurahi connect <channel>`. A problem here never fails init: the state, config and token
+// are already written, and the step can be repeated with `kurahi connect`.
 import type { RuntimeEnv } from "../runtime.js";
 import type { ConnectDeps, ConnectResult, PhoneChannel } from "./connect/types.js";
 import { createDefaultConnectDeps, runConnect } from "./connect/index.js";
@@ -35,7 +35,7 @@ export async function askPhoneChoice(
           ? "dashboard on your network or tailnet"
           : "needs --bind lan or tailnet; explains how",
       },
-      { value: "skip", label: "Skip", hint: "later: kolo connect <channel>" },
+      { value: "skip", label: "Skip", hint: "later: kurahi connect <channel>" },
     ],
     "skip",
   );
@@ -74,7 +74,7 @@ export async function runInitPhoneStep(input: {
   });
   if (!result.ok && !input.json) {
     input.runtime.log(`phone      not connected: ${result.message}`);
-    input.runtime.log(`           retry any time: kolo connect ${choice}`);
+    input.runtime.log(`           retry any time: kurahi connect ${choice}`);
   }
   return result;
 }

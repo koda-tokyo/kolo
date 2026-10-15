@@ -1,4 +1,4 @@
-// `kolo evidence replay` (KoLo 2.0, M12c): the stepper on a bundle or on a job under KOLO_HOME.
+// `kurahi evidence replay` (KoLo 2.0, M12c): the stepper on a bundle or on a job under KOLO_HOME.
 // Interactive on a terminal (n, p, j N, q); `--step N` prints one state; without a terminal and
 // without --step every step is printed in order.
 import fs from "node:fs";
@@ -47,7 +47,7 @@ export async function runReplayCli(
   const runtime = deps.runtime ?? defaultRuntime;
   const name = target?.trim() ?? "";
   if (!name) {
-    runtime.error("kolo evidence replay: a bundle path or job id is required");
+    runtime.error("kurahi evidence replay: a bundle path or job id is required");
     return 2;
   }
   let events: EvidenceEvent[];
@@ -55,19 +55,19 @@ export async function runReplayCli(
     events = await resolveEvents(name, deps.env);
   } catch (err) {
     runtime.error(
-      `kolo evidence replay: cannot read ${name} (${err instanceof Error ? err.message : String(err)})`,
+      `kurahi evidence replay: cannot read ${name} (${err instanceof Error ? err.message : String(err)})`,
     );
     return 1;
   }
   if (events.length === 0) {
-    runtime.error(`kolo evidence replay: no events found for ${name}`);
+    runtime.error(`kurahi evidence replay: no events found for ${name}`);
     return 1;
   }
   let step: number | null;
   try {
     step = parseStep(opts.step, events.length);
   } catch (err) {
-    runtime.error(`kolo evidence replay: ${err instanceof Error ? err.message : String(err)}`);
+    runtime.error(`kurahi evidence replay: ${err instanceof Error ? err.message : String(err)}`);
     return 2;
   }
   const stepper = createStepper(events, step ?? 1);

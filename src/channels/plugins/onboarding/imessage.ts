@@ -31,11 +31,7 @@ function setIMessageDmPolicy(cfg: KoLoConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setIMessageAllowFrom(
-  cfg: KoLoConfig,
-  accountId: string,
-  allowFrom: string[],
-): KoLoConfig {
+function setIMessageAllowFrom(cfg: KoLoConfig, accountId: string, allowFrom: string[]): KoLoConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -252,7 +248,7 @@ export const imessageOnboardingAdapter: ChannelOnboardingAdapter = {
     await prompter.note(
       [
         "This is still a work in progress.",
-        "Ensure KoLo has Full Disk Access to Messages DB.",
+        "Ensure Kurahi has Full Disk Access to Messages DB.",
         "Grant Automation permission for Messages when prompted.",
         "List chats with: imsg chats --limit 20",
         `Docs: ${formatDocsLink("/imessage", "imessage")}`,

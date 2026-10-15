@@ -16,7 +16,7 @@ import {
  *
  * `base` is a built-in theme the palette is merged over (default `dark`), so a file needs only
  * the tokens it changes. Colours are `#RGB` or `#RRGGBB`. `tui.theme` and `/theme` accept either
- * a built-in name or a path to such a file; `kolo tui themes export <name>` writes one.
+ * a built-in name or a path to such a file; `kurahi tui themes export <name>` writes one.
  */
 
 export type ThemeDocument = {
@@ -168,7 +168,7 @@ export function resolveTheme(
   }
 }
 
-/** The JSON text `kolo tui themes export` writes for a built-in theme. */
+/** The JSON text `kurahi tui themes export` writes for a built-in theme. */
 export function exportThemeDocument(name: TuiThemeName): string {
   const palette = TUI_PALETTES[name];
   const ordered: Record<string, string> = {};

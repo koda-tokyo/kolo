@@ -36,7 +36,7 @@ export function registerBrowserCli(program: Command) {
     .action(() => {
       browser.outputHelp();
       defaultRuntime.error(
-        danger(`Missing subcommand. Try: "${formatCliCommand("kolo browser status")}"`),
+        danger(`Missing subcommand. Try: "${formatCliCommand("kurahi browser status")}"`),
       );
       defaultRuntime.exit(1);
     });

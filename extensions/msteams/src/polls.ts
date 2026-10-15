@@ -190,7 +190,7 @@ export function buildMSTeamsPollCard(params: {
         },
         msteams: {
           type: "messageBack",
-          text: "KoLo poll vote",
+          text: "Kurahi poll vote",
           displayText: "Vote recorded",
           value: { KoLoPollId: pollId, pollId },
         },

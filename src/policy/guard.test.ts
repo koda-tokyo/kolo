@@ -82,7 +82,7 @@ describe("wrapToolWithPolicyGuard", () => {
     const err = await run(tool, { command: "ls" }).catch((e: unknown) => e);
     expect(err).toBeInstanceOf(PolicyDeniedError);
     expect((err as PolicyDeniedError).ruleId).toBe("agents[*].tools.deny[0]");
-    expect((err as PolicyDeniedError).message).toMatch(/kolo policy/);
+    expect((err as PolicyDeniedError).message).toMatch(/kurahi policy/);
     expect(calls).toHaveLength(0);
   });
 

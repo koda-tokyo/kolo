@@ -291,7 +291,7 @@ export async function bootConsciousness(params: {
 }
 
 /**
- * Resolve consciousness boot config from KoLo config.
+ * Resolve consciousness boot config from Kurahi config.
  *
  * Looks for `agents.consciousness` section in the config.
  * Since this is a new feature, we read it from the raw config

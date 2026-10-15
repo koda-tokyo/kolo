@@ -1,31 +1,31 @@
 ---
-summary: "CLI reference for `kolo update` (prebuilt bundle updates, verified and atomic)"
+summary: "CLI reference for `kurahi update` (prebuilt bundle updates, verified and atomic)"
 read_when:
   - You want to move an installation to the newest release
   - You want to check for a newer release without changing anything
 title: "update"
 ---
 
-# `kolo update`
+# `kurahi update`
 
 Update the installation to the newest release. What happens depends on how the CLI was installed:
 
-| Install | What `kolo update` does |
-|---|---|
+| Install                         | What `kurahi update` does                                                                                                                                                                                                                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Prebuilt bundle (the installer) | Fetches the newest release for this OS and architecture, verifies its SHA-256 against the published `SHA256SUMS.txt`, unpacks it next to the current version and switches atomically. On Windows the new version is applied on the next start. |
-| Package install (`npm`/`pnpm`) | Re-installs the package through the detected package manager. |
-| Source checkout | Fetches, rebases, installs dependencies, builds and runs `kolo doctor`. Skipped when the working tree has uncommitted changes. |
+| Package install (`npm`/`pnpm`)  | Re-installs the package through the detected package manager.                                                                                                                                                                                  |
+| Source checkout                 | Fetches, rebases, installs dependencies, builds and runs `kurahi doctor`. Skipped when the working tree has uncommitted changes.                                                                                                               |
 
 After a successful update the gateway service is restarted unless `--no-restart` is given.
 
 ```bash
-kolo update                 # update
-kolo update --check         # bundles: report the newest release, change nothing
-kolo update --no-restart    # update without restarting the service
-kolo update --json          # machine-readable result
-kolo update --yes           # non-interactive; accepts a downgrade prompt
-kolo update status          # current version, install kind and newest release
-kolo --update               # shorthand for kolo update
+kurahi update                 # update
+kurahi update --check         # bundles: report the newest release, change nothing
+kurahi update --no-restart    # update without restarting the service
+kurahi update --json          # machine-readable result
+kurahi update --yes           # non-interactive; accepts a downgrade prompt
+kurahi update status          # current version, install kind and newest release
+kurahi --update               # shorthand for kurahi update
 ```
 
 ## Options
@@ -42,9 +42,9 @@ kolo --update               # shorthand for kolo update
 
 ## Subcommands
 
-- `kolo update status [--json] [--timeout <seconds>]`: version, install kind, newest release; for
+- `kurahi update status [--json] [--timeout <seconds>]`: version, install kind, newest release; for
   source checkouts also the git tag, branch and commit.
-- `kolo update wizard`: interactive form of the same.
+- `kurahi update wizard`: interactive form of the same.
 
 ## Rollback
 

@@ -3,7 +3,7 @@
 /**
  * KoLo Engine Registry
  *
- * Central registry of all LLM engines available to KoLo.
+ * Central registry of all LLM engines available to Kurahi.
  * Includes compliance metadata for Japanese enterprise use.
  *
  */

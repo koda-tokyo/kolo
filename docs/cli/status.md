@@ -1,20 +1,20 @@
 ---
-summary: "CLI reference for `KoLo status` (diagnostics, probes, usage snapshots)"
+summary: "CLI reference for `Kurahi status` (diagnostics, probes, usage snapshots)"
 read_when:
   - You want a quick diagnosis of channel health + recent session recipients
   - You want a pasteable “all” status for debugging
 title: "status"
 ---
 
-# `KoLo status`
+# `Kurahi status`
 
 Diagnostics for channels + sessions.
 
 ```bash
-KoLo status
-KoLo status --all
-KoLo status --deep
-KoLo status --usage
+Kurahi status
+Kurahi status --all
+Kurahi status --deep
+Kurahi status --usage
 ```
 
 Notes:
@@ -23,4 +23,4 @@ Notes:
 - Output includes per-agent session stores when multiple agents are configured.
 - Overview includes Gateway + node host service install/runtime status when available.
 - Overview includes update channel + git SHA (for source checkouts).
-- Update info surfaces in the Overview; if an update is available, status prints a hint to run `kolo update` (see [Updating](/install/updating)).
+- Update info surfaces in the Overview; if an update is available, status prints a hint to run `kurahi update` (see [Updating](/install/updating)).

@@ -2,15 +2,7 @@
 name: context7
 description: "Fetch live, version-specific library documentation for any npm/Python package. Use when writing code that uses a library, framework or API — prevents hallucinated or stale API references. Triggers for: docs for, documentation, how do I use, what is the API for, library reference, framework docs, check the docs, latest version of."
 homepage: https://context7.com
-metadata:
-  {
-    "KoLo":
-      {
-        "emoji": "📚",
-        "requires": { "bins": ["python3"] },
-        "primaryEnv": "",
-      },
-  }
+metadata: { "Kurahi": { "emoji": "📚", "requires": { "bins": ["python3"] }, "primaryEnv": "" } }
 ---
 
 # Context7 — Live Library Documentation

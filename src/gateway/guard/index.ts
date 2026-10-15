@@ -3,7 +3,7 @@
  *
  * Extracted from Claude Code's permission architecture (CC-source/spec/05).
  *
- * Single entry point for all permission checks in the KoLo Gateway.
+ * Single entry point for all permission checks in the Kurahi Gateway.
  * Drop-in replacement for the current simple timeout-based exec approval.
  *
  * Usage:

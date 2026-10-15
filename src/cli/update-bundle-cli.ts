@@ -1,5 +1,5 @@
 /**
- * `kolo update` on a prebuilt bundle install. Called from update-cli when the running CLI is a
+ * `kurahi update` on a prebuilt bundle install. Called from update-cli when the running CLI is a
  * bundle (KOLO_BUNDLE_ROOT / bundle-manifest.json); git and package installs keep their path.
  */
 import { readConfigFileSnapshot } from "../config/config.js";
@@ -49,7 +49,7 @@ function renderOutcome(out: BundleUpdateOutcome, restart: string | null): string
   }
   if (!out.performed) {
     lines.push(`Update available: ${out.asset}`);
-    lines.push(theme.muted(`Run ${formatCliCommand("kolo update")} to install it.`));
+    lines.push(theme.muted(`Run ${formatCliCommand("kurahi update")} to install it.`));
     return lines;
   }
   if (out.apply?.mode === "applied") {
@@ -61,7 +61,7 @@ function renderOutcome(out: BundleUpdateOutcome, restart: string | null): string
   } else if (out.apply?.mode === "staged") {
     lines.push(theme.success(`Update ${out.latestVersion} downloaded and verified.`));
     lines.push(
-      `It is applied the next time ${formatCliCommand("kolo")} starts. If the gateway service is running, stop it first: ${formatCliCommand("kolo service stop")}, run any ${formatCliCommand("kolo")} command, then ${formatCliCommand("kolo service start")}.`,
+      `It is applied the next time ${formatCliCommand("kolo")} starts. If the gateway service is running, stop it first: ${formatCliCommand("kurahi service stop")}, run any ${formatCliCommand("kolo")} command, then ${formatCliCommand("kurahi service start")}.`,
     );
   }
   return lines;

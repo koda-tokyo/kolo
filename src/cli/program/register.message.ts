@@ -31,17 +31,17 @@ export function registerMessageCommands(program: Command, ctx: ProgramContext) {
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['kolo message send --target +15555550123 --message "Hi"', "Send a text message."],
+  ['kurahi message send --target +15555550123 --message "Hi"', "Send a text message."],
   [
-    'kolo message send --target +15555550123 --message "Hi" --media photo.jpg',
+    'kurahi message send --target +15555550123 --message "Hi" --media photo.jpg',
     "Send a message with media.",
   ],
   [
-    'kolo message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
+    'kurahi message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
     "Create a Discord poll.",
   ],
   [
-    'kolo message react --channel discord --target 123 --message-id 456 --emoji "✅"',
+    'kurahi message react --channel discord --target 123 --message-id 456 --emoji "✅"',
     "React to a message.",
   ],
 ])}

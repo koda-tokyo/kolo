@@ -73,7 +73,7 @@ export async function ensureConfigReady(params: {
     params.runtime.error(legacyIssues.map((issue) => `  ${error(issue)}`).join("\n"));
   }
   params.runtime.error("");
-  params.runtime.error(`${muted("Run:")} ${commandText(formatCliCommand("kolo doctor --fix"))}`);
+  params.runtime.error(`${muted("Run:")} ${commandText(formatCliCommand("kurahi doctor --fix"))}`);
   if (!allowInvalid) {
     params.runtime.exit(1);
   }

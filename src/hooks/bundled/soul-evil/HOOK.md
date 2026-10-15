@@ -4,12 +4,12 @@ description: "Swap SOUL.md with SOUL_EVIL.md during a purge window or by random 
 homepage: https://kodasoken.com/kolo/hooks/soul-evil
 metadata:
   {
-    "KoLo":
+    "Kurahi":
       {
         "emoji": "😈",
         "events": ["agent:bootstrap"],
         "requires": { "config": ["hooks.internal.entries.soul-evil.enabled"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with KoLo" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Kurahi" }],
       },
   }
 ---
@@ -67,5 +67,5 @@ Add this to your config (`~/.kolo/kolo.json`):
 ## Enable
 
 ```bash
-KoLo hooks enable soul-evil
+Kurahi hooks enable soul-evil
 ```

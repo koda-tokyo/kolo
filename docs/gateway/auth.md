@@ -35,14 +35,14 @@ In remote mode, clients keep using `gateway.remote.token`.
 
 ## Clients
 
-`KoLo tui`, `KoLo agent`, `KoLo health` and every Gateway client read the same file or
+`Kurahi tui`, `Kurahi agent`, `Kurahi health` and every Gateway client read the same file or
 environment variable. Run them with the Gateway's `KOLO_HOME`, or point them at the Gateway's file:
 
 ```bash
-KOLO_GATEWAY_TOKEN_FILE=~/.kolo-gw2/secrets/gateway.token KoLo tui --url ws://127.0.0.1:18800
+KOLO_GATEWAY_TOKEN_FILE=~/.kolo-gw2/secrets/gateway.token Kurahi tui --url ws://127.0.0.1:18800
 ```
 
-`KoLo tui --token` is still accepted but deprecated: any user on the host can see the value with `ps`.
+`Kurahi tui --token` is still accepted but deprecated: any user on the host can see the value with `ps`.
 
 Device tokens issued after pairing are stored per Gateway URL and role
 (`<KOLO_HOME>/identity/device-auth.json`). Two Gateways on one host never swap device tokens.
