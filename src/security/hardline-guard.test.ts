@@ -93,6 +93,12 @@ describe("KoLo-specific redlines", () => {
     expect(r!.pattern).toBe("kill-kolo-pgrep");
   });
 
+  it("blocks pkill and pgrep kills of the renamed gateway", () => {
+    expect(detectHardlineCommand("pkill -9 kurahi")?.pattern).toBe("pkill-kolo");
+    expect(detectHardlineCommand("killall kurahi-gateway")?.pattern).toBe("pkill-kolo");
+    expect(detectHardlineCommand("kill $(pgrep -f kurahi)")?.pattern).toBe("kill-kolo-pgrep");
+  });
+
   it("blocks pkill kolo", () => {
     const r = detectHardlineCommand("pkill -9 kolo-gateway");
     expect(r).not.toBeNull();

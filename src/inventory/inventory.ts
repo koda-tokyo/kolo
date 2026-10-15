@@ -1,4 +1,4 @@
-// AI inventory (KoLo 2.0): one signed document listing every agent this runtime hosts, the models
+// AI inventory (Kurahi 2.0): one signed document listing every agent this runtime hosts, the models
 // and providers it may call, its tools and sandbox, the policy rules that bind it, the MCP servers
 // and channels it can reach, and how much evidence it has left. It is the "AI bill of materials"
 // governance teams ask for first; Kurahi can produce it from facts because it is the runtime.
@@ -68,7 +68,7 @@ export type InventoryBody = {
   kind: typeof INVENTORY_KIND;
   version: typeof INVENTORY_VERSION;
   generatedAt: string;
-  runtime: { name: "KoLo"; version: string; host: string | null };
+  runtime: { name: "Kurahi"; version: string; host: string | null };
   policy: {
     state: string;
     mode: string;
@@ -241,7 +241,7 @@ export function buildInventory(cfg: KoLoConfig, opts: BuildInventoryOptions = {}
     kind: INVENTORY_KIND,
     version: INVENTORY_VERSION,
     generatedAt: (opts.now ?? new Date()).toISOString(),
-    runtime: { name: "KoLo", version: VERSION, host: opts.includeHost ? os.hostname() : null },
+    runtime: { name: "Kurahi", version: VERSION, host: opts.includeHost ? os.hostname() : null },
     policy: {
       state: loaded.state,
       mode,

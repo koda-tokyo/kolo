@@ -46,7 +46,7 @@ const list = (xs: string[] | null | undefined, empty = "-") =>
 function printTable(runtime: RuntimeEnv, inv: InventoryBody) {
   const t = inv.totals;
   runtime.log(
-    `AI inventory · KoLo ${inv.runtime.version} · ${t.agents} agent(s), ${t.models} model(s) from ${t.providers} provider(s), ${t.mcpServers} MCP server(s), ${t.channels} channel(s), ${t.evidenceJobs} evidence job(s)`,
+    `AI inventory · Kurahi ${inv.runtime.version} · ${t.agents} agent(s), ${t.models} model(s) from ${t.providers} provider(s), ${t.mcpServers} MCP server(s), ${t.channels} channel(s), ${t.evidenceJobs} evidence job(s)`,
   );
   const p = inv.policy;
   runtime.log(

@@ -538,7 +538,7 @@ async function main() {
       e.name.startsWith(".pnpm-workspace-state"),
   });
   // Workspace package @kodasoken/kurahi-client is a symlink in the deps tree: ship the built package.
-  const clientDst = path.join(dstNm, "@kodasoken", "kolo-client");
+  const clientDst = path.join(dstNm, "@kodasoken", "kurahi-client");
   fs.rmSync(clientDst, { recursive: true, force: true });
   fs.mkdirSync(clientDst, { recursive: true });
   for (const f of ["package.json", "LICENSE", "README.md"]) {

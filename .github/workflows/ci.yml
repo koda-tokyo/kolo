@@ -225,6 +225,7 @@ jobs:
           bash scripts/install.sh --bundle "$bundle" --no-service --no-invite
           echo "running $KOLO_BIN_DIR/kolo with PATH=/usr/bin:/bin"
           PATH=/usr/bin:/bin "$KOLO_BIN_DIR/kolo" --version
+          PATH=/usr/bin:/bin "$KOLO_BIN_DIR/kurahi" --version
           "$KOLO_BIN_DIR/kolo" doctor --json | head -c 2000
           test -f "$KOLO_HOME/kolo.json"
 

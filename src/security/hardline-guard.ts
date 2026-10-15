@@ -115,7 +115,7 @@ const KOLO_HARDLINE: HardlinePattern[] = [
   },
   // PM2 gateway kill — kills the gateway daemon and all running agents
   {
-    re: /\bpm2\s+(kill|delete\s+kolo-gateway|stop\s+kolo-gateway)\b/i,
+    re: /\bpm2\s+(kill|delete\s+(?:kolo|kurahi)-gateway|stop\s+(?:kolo|kurahi)-gateway)\b/i,
     pattern: "pm2-gateway-kill",
     description: "PM2 kill/stop Kurahi gateway",
   },
@@ -133,13 +133,13 @@ const KOLO_HARDLINE: HardlinePattern[] = [
   },
   // Kill Kurahi via pgrep/pidof — self-termination attack
   {
-    re: /\bkill\b.*\$\(\s*pgrep\b.*(?:kolo|gateway)/i,
+    re: /\bkill\b.*\$\(\s*pgrep\b.*(?:kolo|kurahi|gateway)/i,
     pattern: "kill-kolo-pgrep",
     description: "kill Kurahi gateway via pgrep (self-termination)",
   },
   // Kill Kurahi processes by name
   {
-    re: /\b(?:pkill|killall)\b.*\b(?:kolo|kolo-gateway)\b/i,
+    re: /\b(?:pkill|killall)\b.*\b(?:kolo|kurahi|kolo-gateway|kurahi-gateway)\b/i,
     pattern: "pkill-kolo",
     description: "kill Kurahi processes by name (self-termination)",
   },

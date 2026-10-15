@@ -45,12 +45,12 @@ Usage: install.sh [options]
 Options:
   --version <v>       Install this release instead of the latest (e.g. 2.0.0)
   --prefix <dir>      Install directory (default: $PREFIX)
-  --bin-dir <dir>     Where the kolo command is linked (default: $BIN_DIR)
+  --bin-dir <dir>     Where the kurahi and kolo commands are linked (default: $BIN_DIR)
   --bundle <file>     Install from a local bundle instead of downloading
   --sums <file>       Checksum file to verify a local bundle against (SHA256SUMS.txt or the
                       bundle's .sha256 sibling; default: either one next to the bundle)
   --name <id>         Identity name for the first run (default: $IDENTITY)
-  --no-init           Do not run kolo init
+  --no-init           Do not run kurahi init
   --no-service        Do not register the gateway as an OS service
   --no-invite         Do not print a pairing invitation
   --dry-run           Resolve the asset and print what would happen; download nothing
@@ -204,26 +204,26 @@ main() {
   local kolo="${BIN_DIR}/kurahi"
   if [ "$DO_INIT" -eq 1 ]; then
     log ""
-    "$kolo" init --non-interactive --name "$IDENTITY" --bind loopback || die "kolo init failed"
+    "$kolo" init --non-interactive --name "$IDENTITY" --bind loopback || die "kurahi init failed"
   fi
   if [ "$DO_SERVICE" -eq 1 ]; then
     log ""
     if "$kolo" service install --id "$IDENTITY"; then
       :
     else
-      log "service install did not complete; start the gateway in a terminal with: kolo gateway"
+      log "service install did not complete; start the gateway in a terminal with: kurahi gateway"
       DO_INVITE=0
     fi
   fi
   if [ "$DO_SERVICE" -eq 0 ]; then
     DO_INVITE=0
     log ""
-    log "no service registered: start the gateway with 'kolo gateway', then run 'kolo pair invite --scope attach'"
+    log "no service registered: start the gateway with 'kurahi gateway', then run 'kurahi pair invite --scope attach'"
   fi
   if [ "$DO_INVITE" -eq 1 ]; then
     log ""
     log "pairing invitation (scope: attach, one use):"
-    "$kolo" pair invite --scope attach || log "run 'kolo pair invite --scope attach' once the gateway is up"
+    "$kolo" pair invite --scope attach || log "run 'kurahi pair invite --scope attach' once the gateway is up"
   fi
   log ""
   log "next: kurahi health · kurahi tui · kurahi --help · ${DOCS}/start/getting-started"

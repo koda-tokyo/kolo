@@ -12,7 +12,7 @@
   2. Verifies the SHA-256 of the download against SHA256SUMS.txt before unpacking.
   3. Installs under $env:KOLO_INSTALL_DIR (default %LOCALAPPDATA%\KoLo\app\<version>)
      and puts %LOCALAPPDATA%\KoLo\bin on the user PATH.
-  4. Runs `kolo init --non-interactive` and `kolo service install` (Task Scheduler) unless told not to.
+  4. Runs `kurahi init --non-interactive` and `kurahi service install` (Task Scheduler) unless told not to.
   5. Prints a pairing invitation for a second device or terminal.
 
   Requirements: none beyond PowerShell; the bundle ships its own Node.js runtime.
@@ -152,27 +152,27 @@ try {
   if (-not $NoInit) {
     Write-Host ""
     & $launcher init --non-interactive --name $Name --bind loopback
-    if ($LASTEXITCODE -ne 0) { Fail "kolo init failed" }
+    if ($LASTEXITCODE -ne 0) { Fail "kurahi init failed" }
   }
   $invite = -not $NoInvite
   if (-not $NoService) {
     Write-Host ""
     & $launcher service install --id $Name
     if ($LASTEXITCODE -ne 0) {
-      Write-Host "service install did not complete; start the gateway in a terminal with: kolo gateway"
+      Write-Host "service install did not complete; start the gateway in a terminal with: kurahi gateway"
       $invite = $false
     }
   }
   if ($NoService) {
     $invite = $false
     Write-Host ""
-    Write-Host "no service registered: start the gateway with 'kolo gateway', then run 'kolo pair invite --scope attach'"
+    Write-Host "no service registered: start the gateway with 'kurahi gateway', then run 'kurahi pair invite --scope attach'"
   }
   if ($invite) {
     Write-Host ""
     Write-Host "pairing invitation (scope: attach, one use):"
     & $launcher pair invite --scope attach
-    if ($LASTEXITCODE -ne 0) { Write-Host "run 'kolo pair invite --scope attach' once the gateway is up" }
+    if ($LASTEXITCODE -ne 0) { Write-Host "run 'kurahi pair invite --scope attach' once the gateway is up" }
   }
   Write-Host ""
   Write-Host "next: kurahi health - kurahi tui - kurahi --help - $Docs/start/getting-started"
