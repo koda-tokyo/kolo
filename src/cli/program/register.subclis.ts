@@ -129,6 +129,14 @@ const entries: SubCliEntry[] = [
     },
   },
   {
+    name: "inventory",
+    description: "AI inventory: agents, models, tools, policy, MCP servers, channels",
+    register: async (program) => {
+      const mod = await import("../inventory-cli.js");
+      mod.registerInventoryCli(program);
+    },
+  },
+  {
     name: "policy",
     description: "Policy as code: one signed policy.yaml enforced for every resident",
     register: async (program) => {
