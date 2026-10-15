@@ -1,14 +1,14 @@
-KoLo — NOTICE
+Kurahi — NOTICE
 
 Copyright (c) 2025-2026 Carlos Mundim (KODA).
 
-KoLo is distributed under the open-core licence map in LICENSING.md (MIT,
+Kurahi is distributed under the open-core licence map in LICENSING.md (MIT,
 FSL-1.1-Apache-2.0 and the KODA Proprietary License, by layer). See LICENSE for
 the summary and LICENSES/ for the texts.
 
 ORIGINAL WORK
 -------------
-The defining architecture of KoLo is original KODA work: the identity and
+The defining architecture of Kurahi is original KODA work: the identity and
 continuity model, the biological and autonomic layers, the guardian, the
 covenant system and the resident-agent runtime. Those components are the
 proprietary layer in LICENSING.md and are not part of the open-source or
@@ -16,7 +16,7 @@ source-available layers.
 
 THIRD-PARTY COMPONENTS
 ----------------------
-KoLo incorporates third-party open-source software under the licences of those
+Kurahi incorporates third-party open-source software under the licences of those
 components. Those licences apply only to the components they cover, which remain
 the property of their respective authors. Where a component's licence requires
 that its notice be retained, the notice is kept in the relevant source files or
@@ -26,7 +26,7 @@ work.
 
 UPSTREAM FORK
 -------------
-Parts of KoLo derive from the OpenClaw project (MIT License). The upstream
+Parts of Kurahi derive from the OpenClaw project (MIT License). The upstream
 copyright and permission notice is reproduced in ATTRIBUTION.md as that licence
 requires.
 

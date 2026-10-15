@@ -162,7 +162,7 @@ credentials/
 logs/
 *.log.*
 
-# === Runtime state (KoLo, agents) ===
+# === Runtime state (Kurahi, agents) ===
 .kolo/state/
 .kolo/logs/
 .kolo/run/

@@ -1,4 +1,4 @@
-# KoLo Fly.io deployment configuration
+# Kurahi Fly.io deployment configuration
 # See https://fly.io/docs/reference/configuration/
 
 app = "kolo-alpha"

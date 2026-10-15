@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: KoLo
+    name: Kurahi
     runtime: docker
     plan: starter
     healthCheckPath: /health
