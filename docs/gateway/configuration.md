@@ -3399,3 +3399,7 @@ Cron is a Gateway-owned scheduler for wakeups and scheduled jobs. See [Cron jobs
 ---
 
 _Next: [Agent Runtime](/concepts/agent)_ 🦞
+
+## Disabling OAuth token refresh
+
+Set `KOLO_OAUTH_REFRESH=off` in the gateway environment when the logins in its auth stores are managed by another tool, or are shared copies that this gateway must never refresh. The gateway then never uses a refresh token and logs one line at start.

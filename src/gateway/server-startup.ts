@@ -41,8 +41,15 @@ export async function startGatewaySidecars(params: {
 }) {
   // OAuth refresher: only when OAuth-kind auth profiles exist under KOLO_HOME (or the
   // oauth-sources overlay provides sources). With nothing configured it neither starts nor logs.
+  // KOLO_OAUTH_REFRESH=off: the operator manages these logins elsewhere (or must never refresh
+  // shared copies of them); the gateway then never touches a refresh token.
+  const refreshOff = /^(off|0|false|no)$/i.test(process.env.KOLO_OAUTH_REFRESH?.trim() ?? "");
   try {
-    startOAuthRefresher({ cfg: params.cfg });
+    if (refreshOff) {
+      params.log.warn("OAuth refresher disabled (KOLO_OAUTH_REFRESH=off)");
+    } else {
+      startOAuthRefresher({ cfg: params.cfg });
+    }
   } catch (err) {
     params.log.warn(`OAuth refresher failed to start (non-fatal): ${String(err)}`);
   }
