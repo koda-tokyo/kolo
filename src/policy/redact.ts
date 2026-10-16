@@ -359,7 +359,94 @@ export function redactValue(
   return value;
 }
 
-/** Text that is a JSON document gets field masking too; anything else only the detectors. */
+const HEADER_CELL_RE = /^[\p{L}\p{N}_ .()-]{1,64}$/u;
+
+function splitDelimited(line: string, delim: string): string[] {
+  const cells: string[] = [];
+  let cur = "";
+  let quoted = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (quoted) {
+      if (ch === '"' && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"') {
+        quoted = false;
+      } else {
+        cur += ch;
+      }
+    } else if (ch === '"' && cur === "") {
+      quoted = true;
+    } else if (ch === delim) {
+      cells.push(cur);
+      cur = "";
+    } else {
+      cur += ch;
+    }
+  }
+  cells.push(cur);
+  return cells;
+}
+
+function joinDelimited(cells: string[], delim: string): string {
+  return cells
+    .map((c) => (c.includes(delim) || c.includes('"') ? `"${c.replaceAll('"', '""')}"` : c))
+    .join(delim);
+}
+
+/**
+ * CSV or TSV with a header row: values in columns whose header matches `fields` are masked.
+ * Returns null when the text does not look like a delimited table with such a column.
+ */
+function redactDelimited(
+  text: string,
+  r: CompiledRedactor,
+  vault: RedactionVault,
+  counts: RedactionCounts,
+): string | null {
+  const lines = text.split(/\r?\n/);
+  if (lines.length < 2) {
+    return null;
+  }
+  const header = lines[0];
+  const delim = header.includes("\t") ? "\t" : header.includes(",") ? "," : null;
+  if (!delim) {
+    return null;
+  }
+  const names = splitDelimited(header, delim).map((h) => h.trim());
+  if (names.length < 2 || !names.every((n) => HEADER_CELL_RE.test(n))) {
+    return null;
+  }
+  const masked = names.map((n) => fieldMatches(r, n));
+  if (!masked.some(Boolean)) {
+    return null;
+  }
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const out = [header];
+  for (const line of lines.slice(1)) {
+    if (line.trim() === "" || !line.includes(delim)) {
+      out.push(line);
+      continue;
+    }
+    const cells = splitDelimited(line, delim);
+    const next = cells.map((cell, i) => {
+      if (!masked[i] || cell.trim() === "") {
+        return cell;
+      }
+      const kind = sanitizeKind(names[i]);
+      bump(counts, kind);
+      return vault.placeholderFor(kind, cell.trim());
+    });
+    out.push(joinDelimited(next, delim));
+  }
+  return out.join(eol);
+}
+
+/**
+ * Text that is a JSON document, or a CSV/TSV table with a header row, gets field masking too;
+ * the detectors then run over the result. Anything else gets the detectors only.
+ */
 export function redactToolText(
   text: string,
   r: CompiledRedactor,
@@ -374,6 +461,12 @@ export function redactToolText(
       return t.includes("\n") ? JSON.stringify(masked, null, 2) : JSON.stringify(masked);
     } catch {
       // not JSON: fall through
+    }
+  }
+  if (r.fields.length > 0) {
+    const table = redactDelimited(text, r, vault, counts);
+    if (table !== null) {
+      return redactText(table, r, vault, counts);
     }
   }
   return redactText(text, r, vault, counts);

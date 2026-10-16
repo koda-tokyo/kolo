@@ -2,6 +2,11 @@
 
 Docs: https://kurahi.kodasoken.com/docs
 
+## Unreleased
+
+- Context guard: CSV and TSV tool results with a header row are masked by column when the header matches `data.redact.fields`.
+- Docs: evaluation pack, capabilities in this release, deployment and data boundaries, provider support levels.
+
 ## 2.0.2
 
 - Fixed: the product name in the CLI banner, chat `/status`, onboarding and the web control panel now reads Kurahi everywhere.

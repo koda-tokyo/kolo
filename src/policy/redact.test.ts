@@ -16,6 +16,7 @@ import {
   RedactionVault,
   redactText,
   redactToolResult,
+  redactToolText,
   resetRedactionVaults,
   restoreValue,
   validateRedactRules,
@@ -151,6 +152,33 @@ describe("tool results", () => {
     expect(JSON.stringify(out.details)).not.toContain("山田");
     expect(counts.NAME).toBe(2); // content and details
     expect(vault.valueOf("[[PII:NAME:1]]")).toBe("山田 花子");
+  });
+
+  it("masks CSV and TSV columns whose header matches a field", () => {
+    const r = compileRedactor({ fields: ["@personal", "inspector"] });
+    const vault = new RedactionVault();
+    const counts: Record<string, number> = {};
+    const csv = [
+      "asset,inspector,reading,limit",
+      "Press 4,Sato Ken,92,80",
+      '"Press 7, line B",Tanaka Yui,61,80',
+      "",
+    ].join("\n");
+    const out = redactToolText(csv, r, vault, counts);
+    expect(out).toBe(
+      [
+        "asset,inspector,reading,limit",
+        "Press 4,[[PII:INSPECTOR:1]],92,80",
+        '"Press 7, line B",[[PII:INSPECTOR:2]],61,80',
+        "",
+      ].join("\n"),
+    );
+    expect(counts.INSPECTOR).toBe(2);
+    const tsv = "名前\t部署\n山田 花子\t総務\n";
+    expect(redactToolText(tsv, r, vault, {})).toBe("名前\t部署\n[[PII:FIELD:1]]\t総務\n");
+    // Prose with commas is not a table.
+    const prose = "Dear team, the inspector, Sato Ken, will visit.\nThanks, Mai";
+    expect(redactToolText(prose, r, vault, {})).toBe(prose);
   });
 
   it("restores only known placeholders", () => {

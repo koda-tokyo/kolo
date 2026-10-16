@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13">
+  <rect width="960" height="470" fill="#ffffff"/>
+  <text x="24" y="34" font-size="17" font-weight="700" fill="#1d1f1a">Where data goes in each deployment</text>
+  <text x="24" y="56" fill="#555">State, policy, evidence and the audit log always stay on the host. Only model requests and channel messages can leave.</text>
+  <g>
+    <!-- column template: x offsets 24, 258, 492, 726 ; width 210 -->
+    <g transform="translate(24,80)">
+      <rect width="210" height="360" rx="8" fill="#f4f5ef" stroke="#c9cdb8"/>
+      <text x="14" y="28" font-weight="700" fill="#1d1f1a">1. Fully local</text>
+      <text x="14" y="46" fill="#555">Local model on the host</text>
+      <rect x="14" y="62" width="182" height="96" rx="6" fill="#ffffff" stroke="#7F8F45"/>
+      <text x="26" y="84" font-weight="600" fill="#1d1f1a">Host</text>
+      <text x="26" y="104" fill="#333">Kurahi runtime</text>
+      <text x="26" y="122" fill="#333">state · policy · evidence</text>
+      <text x="26" y="140" fill="#333">local model (Ollama)</text>
+      <text x="14" y="188" font-weight="600" fill="#5E6B2E">Leaves the host</text>
+      <text x="14" y="208" fill="#333">Nothing, unless you</text>
+      <text x="14" y="226" fill="#333">connect a chat channel</text>
+      <text x="14" y="262" font-weight="600" fill="#1d1f1a">Fits</text>
+      <text x="14" y="282" fill="#333">regulated records, offline</text>
+      <text x="14" y="300" fill="#333">sites, evaluation</text>
+    </g>
+    <g transform="translate(258,80)">
+      <rect width="210" height="360" rx="8" fill="#f4f5ef" stroke="#c9cdb8"/>
+      <text x="14" y="28" font-weight="700" fill="#1d1f1a">2. Japan-hosted model</text>
+      <text x="14" y="46" fill="#555">Default profile</text>
+      <rect x="14" y="62" width="182" height="78" rx="6" fill="#ffffff" stroke="#7F8F45"/>
+      <text x="26" y="84" font-weight="600" fill="#1d1f1a">Host</text>
+      <text x="26" y="104" fill="#333">Kurahi runtime</text>
+      <text x="26" y="122" fill="#333">state · policy · evidence</text>
+      <line x1="105" y1="140" x2="105" y2="164" stroke="#5E6B2E" stroke-width="2" marker-end="url(#a)"/>
+      <rect x="14" y="166" width="182" height="40" rx="6" fill="#ffffff" stroke="#999"/>
+      <text x="26" y="191" fill="#333">Model provider in Japan</text>
+      <text x="14" y="232" font-weight="600" fill="#5E6B2E">Leaves the host</text>
+      <text x="14" y="252" fill="#333">Prompts and tool results,</text>
+      <text x="14" y="270" fill="#333">masked if the context guard is on</text>
+      <text x="14" y="300" font-weight="600" fill="#1d1f1a">Fits</text>
+      <text x="14" y="320" fill="#333">most Japanese enterprises</text>
+    </g>
+    <g transform="translate(492,80)">
+      <rect width="210" height="360" rx="8" fill="#f4f5ef" stroke="#c9cdb8"/>
+      <text x="14" y="28" font-weight="700" fill="#1d1f1a">3. External provider</text>
+      <text x="14" y="46" fill="#555">Any curated provider</text>
+      <rect x="14" y="62" width="182" height="78" rx="6" fill="#ffffff" stroke="#7F8F45"/>
+      <text x="26" y="84" font-weight="600" fill="#1d1f1a">Host</text>
+      <text x="26" y="104" fill="#333">Kurahi runtime</text>
+      <text x="26" y="122" fill="#333">state · policy · evidence</text>
+      <line x1="105" y1="140" x2="105" y2="164" stroke="#5E6B2E" stroke-width="2" marker-end="url(#a)"/>
+      <rect x="14" y="166" width="182" height="40" rx="6" fill="#ffffff" stroke="#999"/>
+      <text x="26" y="191" fill="#333">Provider's own region</text>
+      <text x="14" y="232" font-weight="600" fill="#5E6B2E">Leaves the host</text>
+      <text x="14" y="252" fill="#333">Prompts and tool results,</text>
+      <text x="14" y="270" fill="#333">to that provider's region</text>
+      <text x="14" y="300" font-weight="600" fill="#1d1f1a">Fits</text>
+      <text x="14" y="320" fill="#333">non-personal data, or with</text>
+      <text x="14" y="338" fill="#333">a contract that allows it</text>
+    </g>
+    <g transform="translate(726,80)">
+      <rect width="210" height="360" rx="8" fill="#f4f5ef" stroke="#c9cdb8"/>
+      <text x="14" y="28" font-weight="700" fill="#1d1f1a">4. Air-gapped</text>
+      <text x="14" y="46" fill="#555">Licensed separately</text>
+      <rect x="14" y="62" width="182" height="96" rx="6" fill="#ffffff" stroke="#7F8F45"/>
+      <text x="26" y="84" font-weight="600" fill="#1d1f1a">Isolated network</text>
+      <text x="26" y="104" fill="#333">Kurahi runtime</text>
+      <text x="26" y="122" fill="#333">state · policy · evidence</text>
+      <text x="26" y="140" fill="#333">model server on site</text>
+      <text x="14" y="188" font-weight="600" fill="#5E6B2E">Leaves the network</text>
+      <text x="14" y="208" fill="#333">Nothing; updates arrive</text>
+      <text x="14" y="226" fill="#333">as verified offline bundles</text>
+      <text x="14" y="262" font-weight="600" fill="#1d1f1a">Fits</text>
+      <text x="14" y="282" fill="#333">government, defence,</text>
+      <text x="14" y="300" fill="#333">plant networks</text>
+    </g>
+  </g>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="7" markerHeight="7" orient="0"><path d="M0 0 L5 10 L10 0 Z" fill="#5E6B2E" transform="rotate(0)"/></marker></defs>
+</svg>

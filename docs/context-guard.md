@@ -64,7 +64,8 @@ That is enough for most deployments: the built-in detectors are on by default.
 
 Numbers that fail their check digit are left alone, so order numbers and IDs are not masked by
 mistake. Names cannot be found reliably by pattern: mask them through `fields`, which works on any
-tool result that is JSON, including MCP results and database rows. Free text is covered by the
+tool result that is JSON (including MCP results and database rows) and on CSV or TSV text with a
+header row, where every value in a matching column is masked. Free text is covered by the
 detectors and your `patterns`.
 
 ## Placeholders
