@@ -60,7 +60,7 @@ bash install.sh --bundle kolo-<version>-linux-x64.tar.gz --sums SHA256SUMS
 
 ```bash
 git clone https://github.com/koda-tokyo/kurahi.git
-cd kolo
+cd kurahi
 pnpm install --frozen-lockfile
 pnpm build
 node kolo.mjs --version

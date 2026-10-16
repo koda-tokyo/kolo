@@ -63,7 +63,7 @@ From source:
 
 ```bash
 git clone https://github.com/koda-tokyo/kurahi.git
-cd kolo
+cd kurahi
 pnpm install --frozen-lockfile
 pnpm build
 node kolo.mjs --version

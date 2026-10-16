@@ -14,7 +14,7 @@ English: [README.md](../README.md)
 
 - **常駐エージェントはセッションをまたいで働き続けます。** 識別名ごとに1つのゲートウェイプロセスがOSのサービスマネージャ配下で動作し、セッションと作業領域を保持し、終了すればOSが再起動します。ターミナルを閉じてもエージェントは止まりません。
 - **統制はプロンプトではなくランタイムで強制されます。** スコープ付きペアリング（`observe` < `attach` < `admin` < `owner`）、端末の鍵に紐づく資格情報とローテーションするリフレッシュトークン、ハッシュチェーンされた監査ログ（`kurahi audit verify`）、登録済みファイルの改変を検知すると起動を拒否する起動時整合性ゲート。
-- **記述されたAPIと、そこから生成されたクライアント。** `GET /doc` でOpenAPI 3.1文書を提供（43操作、それぞれに認証種別と最小スコープを明記）。`@kodasoken/kurahi-client` はこの文書から生成され、乖離があればCIが失敗します。
+- **仕様が明文化されたAPIと、そこから生成されたクライアント。** `GET /doc` でOpenAPI 3.1文書を提供（43操作、それぞれに認証種別と最小スコープを明記）。`@kodasoken/kurahi-client` はこの文書から生成され、乖離があればCIが失敗します。
 - **1つのセッションに複数のクライアント。** `attach` スコープを持つ資格情報なら、稼働中のセッションを一覧し、ターミナル、スクリプト、メッセージングパイプを接続できます。接続中のクライアント全員が同じイベントストリームを受け取ります。
 - **Code ModeとMCP。** エージェントは1本のスクリプトで多数のツールを1往復で呼び出せます。設定したMCPサーバーのツールは `mcp:<server>:<tool>` という名前で利用できます。
 - **エージェント制御。** 実行ごとのステップ上限、同一呼び出しや進捗のないツール呼び出しを止めるループ検出、パスとコマンドに対するパーミッショングロブ、キャンセル可能なジョブレジストリ。
@@ -57,7 +57,7 @@ bash install.sh --bundle kolo-<version>-linux-x64.tar.gz --sums SHA256SUMS.txt
 
 ```bash
 git clone https://github.com/koda-tokyo/kurahi.git
-cd kolo
+cd kurahi
 pnpm install --frozen-lockfile
 pnpm build
 node kolo.mjs --version
@@ -144,7 +144,7 @@ support/                  kurahi support が書き出すマスク済みバンド
 | `admin`   | attachに加えてゲートウェイの管理：設定、cron、ペアリング、プラグインの再読み込み                     |
 | `owner`   | ゲートウェイトークンファイル（`KOLO_HOME/secrets/gateway.token`）。ペアリングでは決して付与されない |
 
-最小スコープに満たない資格情報はHTTPでは `403`、WebSocketでは `missing scope: <scope>` を受け取ります。失効済みのリフレッシュトークンが再利用されると、その資格情報ファミリー全体が取り消されます。`gateway.pairing.reconsentDays`（既定90日）を超えた端末は再ペアリングが必要です。詳細：[docs/cli/pair.md](cli/pair.md)、[docs/cli/attach.md](cli/attach.md)。
+必要な最小スコープを満たさない資格情報はHTTPでは `403`、WebSocketでは `missing scope: <scope>` を受け取ります。失効済みのリフレッシュトークンが再利用されると、その資格情報ファミリー全体が取り消されます。`gateway.pairing.reconsentDays`（既定90日）を超えた端末は再ペアリングが必要です。詳細：[docs/cli/pair.md](cli/pair.md)、[docs/cli/attach.md](cli/attach.md)。
 
 ## セキュリティ
 
