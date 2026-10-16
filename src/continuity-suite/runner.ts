@@ -340,20 +340,31 @@ function attachedDriver(client: ProbeClient, opts: AttachedRunOptions): Driver {
 
 /** An in-process restart keeps the pid; the uptime drops. A supervisor restart changes the pid. */
 async function waitForRestart(client: ProbeClient, timeoutMs: number): Promise<void> {
-  const start = await client.get<{ pid?: number; uptime?: number }>("/health");
+  const start = await client.get<{ pid?: number; uptime?: number; startedAt?: string }>("/health");
   const pid = start.body.pid;
   const uptime = start.body.uptime ?? 0;
+  const startedAt = start.body.startedAt;
   const t0 = Date.now();
   await waitFor(
     async () => {
-      const res = await client.get<{ pid?: number; uptime?: number; readiness?: string }>(
-        "/health",
-      );
+      const res = await client.get<{
+        pid?: number;
+        uptime?: number;
+        readiness?: string;
+        startedAt?: string;
+      }>("/health");
       if (res.status !== 200) {
         return false;
       }
       const elapsed = (Date.now() - t0) / 1000;
-      const restarted = res.body.pid !== pid || (res.body.uptime ?? 0) < uptime + elapsed - 1;
+      // A supervised restart changes the pid; an in-place restart keeps the pid and the process
+      // uptime but changes startedAt. Older gateways without startedAt fall back to the uptime test.
+      const restarted =
+        res.body.pid !== pid ||
+        (startedAt !== undefined &&
+          res.body.startedAt !== undefined &&
+          res.body.startedAt !== startedAt) ||
+        (res.body.uptime ?? 0) < uptime + elapsed - 1;
       return restarted &&
         ["gateway_ready", "consciousness_ready", "degraded"].includes(res.body.readiness ?? "")
         ? res.body

@@ -3062,6 +3062,8 @@ export type GetHealthResponse = {
   uptime: number;
   version: string;
   pid: number;
+  /** When the current gateway instance started; changes on every restart. */
+  startedAt?: string;
   memory: {
     rss: number;
     heapUsed: number;
@@ -3109,6 +3111,8 @@ export type GetHealthErrorBody = string | RateLimitError | {
   uptime: number;
   version: string;
   pid: number;
+  /** When the current gateway instance started; changes on every restart. */
+  startedAt?: string;
   memory: {
     rss: number;
     heapUsed: number;

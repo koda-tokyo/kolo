@@ -10158,6 +10158,10 @@
                         "pid": {
                           "type": "integer"
                         },
+                        "startedAt": {
+                          "description": "When the current gateway instance started; changes on every restart.",
+                          "type": "string"
+                        },
                         "memory": {
                           "type": "object",
                           "required": [
@@ -10395,6 +10399,10 @@
                         },
                         "pid": {
                           "type": "integer"
+                        },
+                        "startedAt": {
+                          "description": "When the current gateway instance started; changes on every restart.",
+                          "type": "string"
                         },
                         "memory": {
                           "type": "object",

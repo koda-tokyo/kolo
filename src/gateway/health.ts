@@ -29,6 +29,12 @@ import {
 import { integrityHealthField, type IntegrityHealth } from "../integrity/gate.js";
 import { loadCombinedSessionStoreForGateway } from "./session-utils.js";
 
+let gatewayStartedAt = new Date().toISOString();
+/** Called each time the gateway server (re)starts, including in-place restarts. */
+export function markGatewayStarted(at: Date = new Date()): void {
+  gatewayStartedAt = at.toISOString();
+}
+
 // ── Types ───────────────────────────────────────────────────────────────────
 
 /**
@@ -72,6 +78,8 @@ interface DeepHealthResponse {
   integrity: IntegrityHealth;
   timestamp: string;
   uptime: number;
+  /** When the current gateway instance started; changes on every restart, in-place or supervised. */
+  startedAt: string;
   version: string;
   pid: number;
   memory: {
@@ -304,6 +312,7 @@ function buildDeepHealthResponse(): DeepHealthResponse {
     integrity,
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
+    startedAt: gatewayStartedAt,
     version: PACKAGE_VERSION,
     pid: process.pid,
     memory: {

@@ -4,6 +4,7 @@ Docs: https://kurahi.kodasoken.com/docs
 
 ## Unreleased
 
+- Fixed: the continuity suite now detects an in-place gateway restart (attached mode). `/health` (with a credential) reports `startedAt`, which changes on every restart; previously an in-place restart kept the pid and process uptime and the suite reported C0 as failed although the gateway had restarted.
 - Context guard: CSV and TSV tool results with a header row are masked by column when the header matches `data.redact.fields`.
 - Docs: evaluation pack, capabilities in this release, deployment and data boundaries, provider support levels.
 

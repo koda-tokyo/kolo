@@ -48,6 +48,11 @@ const DeepHealth = Loose(
     uptime: Type.Number(),
     version: Type.String(),
     pid: Type.Integer(),
+    startedAt: Type.Optional(
+      Type.String({
+        description: "When the current gateway instance started; changes on every restart.",
+      }),
+    ),
     memory: Type.Object({ rss: Type.Number(), heapUsed: Type.Number() }),
     auth: Loose({
       status: Type.String({ description: "ok | expiring | expired | missing" }),

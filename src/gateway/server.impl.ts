@@ -158,6 +158,9 @@ export async function startGatewayServer(
   port = 18789,
   opts: GatewayServerOptions = {},
 ): Promise<GatewayServer> {
+  // Health reports when this gateway instance started, so a restart is visible even in-place.
+  const { markGatewayStarted } = await import("./health.js");
+  markGatewayStarted();
   // Ensure all default port derivations (browser/canvas) see the actual runtime port.
   process.env.KOLO_GATEWAY_PORT = String(port);
   logAcceptedEnvOption({
