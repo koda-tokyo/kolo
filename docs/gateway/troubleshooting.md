@@ -115,7 +115,7 @@ Doctor/service will show runtime state (PID/last exit) and log hints.
 - File logs (always): `/tmp/kolo/kolo-YYYY-MM-DD.log` (or your configured `logging.file`)
 - macOS LaunchAgent (if installed): `$KOLO_STATE_DIR/logs/gateway.log` and `gateway.err.log`
 - Linux systemd (if installed): `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST`
 
 **Enable more logging:**
 
@@ -682,7 +682,7 @@ Kurahi channels login --verbose
 | Log                               | Location                                                                                                                                                                                                                                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Gateway file logs (structured)    | `/tmp/kolo/kolo-YYYY-MM-DD.log` (or `logging.file`)                                                                                                                                                                                                                                                       |
-| Gateway service logs (supervisor) | macOS: `$KOLO_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)<br />Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST` |
+| Gateway service logs (supervisor) | macOS: `$KOLO_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)<br />Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST` |
 | Session files                     | `$KOLO_STATE_DIR/agents/<agentId>/sessions/`                                                                                                                                                                                                                                                              |
 | Media cache                       | `$KOLO_STATE_DIR/media/`                                                                                                                                                                                                                                                                                  |
 | Credentials                       | `$KOLO_STATE_DIR/credentials/`                                                                                                                                                                                                                                                                            |

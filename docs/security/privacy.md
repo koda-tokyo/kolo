@@ -36,7 +36,7 @@ A configuration with every outbound flow off:
 
 ## What is stored, where, for how long
 
-All of it is under `KOLO_HOME` (`~/.kolo`; Windows `%LOCALAPPDATA%\Kurahi`), owned by the service user.
+All of it is under `KOLO_HOME` (`~/.kolo`; Windows `%LOCALAPPDATA%\KoLo`), owned by the service user.
 
 | Data                                       | Path                                                 | Retention                                              | Contains personal data?                                                                                |
 | ------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |

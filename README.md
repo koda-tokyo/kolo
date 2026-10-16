@@ -41,7 +41,7 @@ Windows (PowerShell 7 or Windows PowerShell 5.1):
 iwr -useb https://kodasoken.com/kurahi/install.ps1 | iex
 ```
 
-The installer picks the release bundle for your OS and CPU from GitHub Releases, verifies its SHA-256 against the published `SHA256SUMS.txt` before unpacking, installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\Kurahi\app\<version>`), links the `kolo` command, runs `kurahi init --non-interactive` and `kurahi service install`, and prints a one-use pairing invitation. Nothing runs as root or administrator and nothing is downloaded from anywhere but github.com. Both scripts are in this repository under [`scripts/`](scripts/) and are served unchanged; flags are listed in [docs/install/index.md](docs/install/index.md).
+The installer picks the release bundle for your OS and CPU from GitHub Releases, verifies its SHA-256 against the published `SHA256SUMS.txt` before unpacking, installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\KoLo\app\<version>`), links the `kolo` command, runs `kurahi init --non-interactive` and `kurahi service install`, and prints a one-use pairing invitation. Nothing runs as root or administrator and nothing is downloaded from anywhere but github.com. Both scripts are in this repository under [`scripts/`](scripts/) and are served unchanged; flags are listed in [docs/install/index.md](docs/install/index.md).
 
 npm (global, needs Node.js 22.12 or newer on PATH):
 
@@ -117,7 +117,7 @@ Exit codes are the same everywhere: `0` ok, `1` error, `2` usage, `3` gateway un
 | Term        | Meaning                                                                                                                                                                                              |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identity    | One named resident (`alice`, `ops-bot`). Each identity is its own service, state root and port. Ids are 1 to 32 characters of `a-z`, `0-9`, `-`, `_`.                                                |
-| `KOLO_HOME` | The one directory that holds everything an identity owns: `~/.kolo` (Windows `%LOCALAPPDATA%\Kurahi`); a second identity uses `~/.kolo-<id>`. Nothing is written elsewhere except the program files. |
+| `KOLO_HOME` | The one directory that holds everything an identity owns: `~/.kolo` (Windows `%LOCALAPPDATA%\KoLo`); a second identity uses `~/.kolo-<id>`. Nothing is written elsewhere except the program files. |
 | Gateway     | The resident process. Binds to loopback by default, serves HTTP and WebSocket, runs agents, owns sessions, writes the audit log.                                                                     |
 | Session     | A conversation an agent is in (`agent:alice:main`). Sessions live in the gateway; terminals, pipes and other agents attach to them.                                                                  |
 | Invitation  | A single-use pairing code (`kpi_...`) with a scope, a TTL (default 10 minutes) and optionally a session allowlist. Never grants more than its creator holds.                                         |
@@ -325,7 +325,7 @@ Wipe:
 ```bash
 kurahi uninstall --all --yes --dry-run      # service, state directory, workspace: lists, removes nothing
 kurahi uninstall --all --yes
-rm -rf ~/.local/share/kolo ~/.local/bin/kolo    # the program (Windows: %LOCALAPPDATA%\Kurahi)
+rm -rf ~/.local/share/kolo ~/.local/bin/kolo    # the program (Windows: %LOCALAPPDATA%\KoLo)
 ```
 
 Nothing remains outside those paths. Credentials issued by the removed gateway become useless.

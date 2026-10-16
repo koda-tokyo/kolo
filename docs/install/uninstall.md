@@ -28,7 +28,7 @@ Then remove the CLI:
 
 | Install         | Command                                                                                                                                                                                                       |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Prebuilt bundle | delete the install prefix (default `~/.local/share/kolo`, Windows `%LOCALAPPDATA%\Kurahi`) and the `kolo` launcher in the bin dir (default `~/.local/bin/kolo`, Windows `%LOCALAPPDATA%\Kurahi\bin\kolo.cmd`) |
+| Prebuilt bundle | delete the install prefix (default `~/.local/share/kolo`, Windows `%LOCALAPPDATA%\KoLo`) and the `kolo` launcher in the bin dir (default `~/.local/bin/kolo`, Windows `%LOCALAPPDATA%\KoLo\bin\kolo.cmd`) |
 | Package install | `npm uninstall -g kurahi` or `pnpm remove -g kurahi`                                                                                                                                                          |
 | Source checkout | delete the checkout                                                                                                                                                                                           |
 
@@ -52,10 +52,10 @@ launchctl bootout gui/$UID/com.kodasoken.kolo.default
 rm -f ~/Library/LaunchAgents/com.kodasoken.kolo.default.plist
 ```
 
-Windows (Task Scheduler task `\\Kurahi\gateway-<id>`), in PowerShell:
+Windows (Task Scheduler task `\\KoLo\gateway-<id>`), in PowerShell:
 
 ```powershell
-schtasks /Delete /F /TN "\Kurahi\gateway-default"
+schtasks /Delete /F /TN "\KoLo\gateway-default"
 ```
 
 Then delete the state directory you used (`KOLO_HOME`; default `~/.kolo`, or `~/.kolo-<id>` for a

@@ -17,7 +17,7 @@ restarts it when it exits and reports its real state:
 | ------- | ----------------------- | ---------------------------------------------------------------------- |
 | Linux   | systemd `--user`        | `~/.config/systemd/user/kolo-gateway@<id>.service`                     |
 | macOS   | launchd (LaunchAgent)   | `~/Library/LaunchAgents/com.kodasoken.kolo.<id>.plist`                 |
-| Windows | Task Scheduler + runner | task `\Kurahi\gateway-<id>`, action `<state root>\service\gateway.cmd` |
+| Windows | Task Scheduler + runner | task `\KoLo\gateway-<id>`, action `<state root>\service\gateway.cmd` |
 
 The Gateway exits on fatal errors on purpose. The service manager brings it back
 (systemd `Restart=always`, `RestartSec=3`; launchd `KeepAlive`; the Windows runner restarts
@@ -52,8 +52,8 @@ run side by side without sharing locks, sessions or credentials.
 
 | Identity         | State root (`KOLO_HOME`)                                                              |
 | ---------------- | ------------------------------------------------------------------------------------- |
-| `default`        | `$KOLO_HOME` if set, otherwise `~/.kolo` (Windows: `%LOCALAPPDATA%\Kurahi`)           |
-| any other `<id>` | the default root plus `-<id>`: `~/.kolo-<id>` (Windows: `%LOCALAPPDATA%\Kurahi-<id>`) |
+| `default`        | `$KOLO_HOME` if set, otherwise `~/.kolo` (Windows: `%LOCALAPPDATA%\KoLo`)           |
+| any other `<id>` | the default root plus `-<id>`: `~/.kolo-<id>` (Windows: `%LOCALAPPDATA%\KoLo-<id>`) |
 | `--home <dir>`   | `<dir>` (overrides both)                                                              |
 
 Ids are 1 to 32 characters of `a-z`, `0-9`, `-` and `_`.
@@ -136,7 +136,7 @@ Migrating one identity:
 ## Legacy commands
 
 `kurahi gateway install|start|stop|restart|status` and `kurahi daemon ...` still manage the older
-single-profile service (`kolo-gateway.service`, `ai.kolo.gateway`, task "Kurahi Gateway"). They print
+single-profile service (`kolo-gateway.service`, `ai.kolo.gateway`, task "KoLo Gateway"). They print
 a pointer to `kurahi service`. Do not run both for the same state root and port.
 
 ## Smoke test

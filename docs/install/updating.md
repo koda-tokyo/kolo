@@ -66,7 +66,7 @@ kurahi service restart
 ## Rollback
 
 Bundle installs keep every installed version under the install prefix (default
-`~/.local/share/kolo/<version>` on Linux and macOS, `%LOCALAPPDATA%\Kurahi\app\<version>` on Windows)
+`~/.local/share/kolo/<version>` on Linux and macOS, `%LOCALAPPDATA%\KoLo\app\<version>` on Windows)
 and point the `kolo` command at one of them. To go back:
 
 ```bash

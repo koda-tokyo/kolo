@@ -28,7 +28,7 @@ The installer:
 
 1. picks the release bundle for your OS and CPU from GitHub Releases (`kolo-<version>-<os>-<arch>.tar.gz`, `.zip` on Windows);
 2. verifies its SHA-256 against the `SHA256SUMS.txt` published with the release before unpacking;
-3. installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\Kurahi\app\<version>`) and links the `kolo` command into `~/.local/bin` (Windows: `%LOCALAPPDATA%\Kurahi\bin`, added to your user PATH);
+3. installs under `~/.local/share/kolo/<version>` (Windows: `%LOCALAPPDATA%\KoLo\app\<version>`) and links the `kolo` command into `~/.local/bin` (Windows: `%LOCALAPPDATA%\KoLo\bin`, added to your user PATH);
 4. runs `kurahi init --non-interactive` and `kurahi service install`;
 5. prints a one-use pairing invitation for a second device or terminal.
 

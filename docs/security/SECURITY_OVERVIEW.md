@@ -15,7 +15,7 @@ This page answers the questions a security review asks about a self-hosted Kurah
 ## 1. Deployment model
 
 - Kurahi is self-hosted software. One gateway process per identity runs on the evaluator's machine or server under the OS service manager (systemd user service, launchd agent, Windows Task Scheduler). There is no Kurahi-operated cloud component in the evaluation configuration.
-- All state lives in one directory, `KOLO_HOME` (`~/.kolo` on Linux and macOS, `%LOCALAPPDATA%\Kurahi` on Windows). Nothing is written elsewhere except the program files in the install prefix.
+- All state lives in one directory, `KOLO_HOME` (`~/.kolo` on Linux and macOS, `%LOCALAPPDATA%\KoLo` on Windows). Nothing is written elsewhere except the program files in the install prefix.
 - Clients (terminal, web UI, paired devices, messaging channels) connect to the gateway over WebSocket and HTTP; the gateway makes outbound calls to the configured model provider and to any channel the operator enables.
 
 ## 2. What leaves the machine
@@ -89,7 +89,7 @@ Files are protected by OS permissions of the service user. Full-disk encryption 
 ```bash
 kurahi service uninstall            # stop and remove the OS service
 kurahi uninstall --all --yes        # remove KOLO_HOME (config, secrets, sessions, audit, logs) and the workspace
-rm -rf <install prefix>           # ~/.local/share/kolo and ~/.local/bin/kolo, or %LOCALAPPDATA%\Kurahi
+rm -rf <install prefix>           # ~/.local/share/kolo and ~/.local/bin/kolo, or %LOCALAPPDATA%\KoLo
 ```
 
 `kurahi uninstall --all --yes --dry-run` lists what would be removed. Nothing remains outside those paths. Paired devices hold only tokens that the removed gateway issued; they become useless.

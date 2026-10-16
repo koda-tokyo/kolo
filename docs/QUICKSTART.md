@@ -80,9 +80,9 @@ kurahi support                           # facts + a redacted diagnostics bundle
 ```bash
 kurahi uninstall --all --yes --dry-run   # shows: service unit, state directory, workspace
 kurahi uninstall --all --yes
-rm -rf ~/.local/share/kolo ~/.local/bin/kolo        # the program (Windows: %LOCALAPPDATA%\Kurahi)
+rm -rf ~/.local/share/kolo ~/.local/bin/kolo        # the program (Windows: %LOCALAPPDATA%\KoLo)
 ```
 
-Everything Kurahi wrote lives under `KOLO_HOME` (`~/.kolo`, Windows `%LOCALAPPDATA%\Kurahi`) and the install prefix; nothing else is touched.
+Everything Kurahi wrote lives under `KOLO_HOME` (`~/.kolo`, Windows `%LOCALAPPDATA%\KoLo`) and the install prefix; nothing else is touched.
 
 Exit codes everywhere: 0 ok, 1 error, 2 usage, 3 gateway unreachable, 4 authentication.

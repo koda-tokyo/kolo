@@ -1,27 +1,27 @@
 # Kurahi
 
-Kurahi は、Linux / macOS / Windows でサービスとして常駐する、統制されたエージェント ランタイムです。ターミナル、Web UI、CLI、メッセージング パイプ、そして他のエージェントは、いずれもそのクライアントとして動作します。
+Kurahiは、Linux / macOS / Windowsでサービスとして常駐する、統制されたエージェントランタイムです。ターミナル、Web UI、CLI、メッセージングパイプ、そして他のエージェントは、いずれもそのクライアントとして動作します。
 
 English: [README.md](../README.md)
 
-- ドキュメント: https://kodasoken.com/kolo
-- ソースとリリース: https://github.com/koda-tokyo/kurahi
-- 問い合わせとサポート: https://github.com/koda-tokyo/kurahi/issues
-- セキュリティ報告: security@kodasoken.com（[SECURITY.md](../SECURITY.md) を参照）
-- 日本語ドキュメント: [クイックスタート](ja/QUICKSTART.md) · [セキュリティ概要](ja/security/SECURITY_OVERVIEW.md) · [プライバシー](ja/security/privacy.md) · [さくらのAI Engine](ja/providers/sakura.md)
+- ドキュメント：https://kodasoken.com/kolo
+- ソースとリリース：https://github.com/koda-tokyo/kurahi
+- 問い合わせとサポート：https://github.com/koda-tokyo/kurahi/issues
+- セキュリティ報告：security@kodasoken.com（[SECURITY.md](../SECURITY.md) を参照）
+- 日本語ドキュメント：[クイックスタート](ja/QUICKSTART.md) · [セキュリティ概要](ja/security/SECURITY_OVERVIEW.md) · [プライバシー](ja/security/privacy.md) · [さくらのAI Engine](ja/providers/sakura.md)
 
-## Kurahi を選ぶ理由
+## Kurahiを選ぶ理由
 
-- **常駐エージェントはセッションをまたいで働き続けます。** 識別名ごとに 1 つのゲートウェイ プロセスが OS のサービス マネージャ配下で動作し、セッションと作業領域を保持し、終了すれば OS が再起動します。ターミナルを閉じてもエージェントは止まりません。
-- **統制はプロンプトではなくランタイムで強制されます。** スコープ付きペアリング（`observe` < `attach` < `admin` < `owner`）、端末の鍵に紐づく資格情報とローテーションするリフレッシュ トークン、ハッシュチェーンされた監査ログ（`kurahi audit verify`）、登録済みファイルの改変を検知すると起動を拒否する起動時整合性ゲート。
-- **記述された API と、そこから生成されたクライアント。** `GET /doc` で OpenAPI 3.1 文書を提供（43 操作、それぞれに認証種別と最小スコープを明記）。`@kodasoken/kurahi-client` はこの文書から生成され、乖離があれば CI が失敗します。
-- **1 つのセッションに複数のクライアント。** `attach` スコープを持つ資格情報なら、稼働中のセッションを一覧し、ターミナル、スクリプト、メッセージング パイプを接続できます。接続中のクライアント全員が同じイベント ストリームを受け取ります。
-- **Code Mode と MCP。** エージェントは 1 本のスクリプトで多数のツールを 1 往復で呼び出せます。設定した MCP サーバーのツールは `mcp:<server>:<tool>` という名前で利用できます。
-- **エージェント制御。** 実行ごとのステップ上限、同一呼び出しや進捗のないツール呼び出しを止めるループ検出、パスとコマンドに対するパーミッション グロブ、キャンセル可能なジョブ レジストリ。
+- **常駐エージェントはセッションをまたいで働き続けます。** 識別名ごとに1つのゲートウェイプロセスがOSのサービスマネージャ配下で動作し、セッションと作業領域を保持し、終了すればOSが再起動します。ターミナルを閉じてもエージェントは止まりません。
+- **統制はプロンプトではなくランタイムで強制されます。** スコープ付きペアリング（`observe` < `attach` < `admin` < `owner`）、端末の鍵に紐づく資格情報とローテーションするリフレッシュトークン、ハッシュチェーンされた監査ログ（`kurahi audit verify`）、登録済みファイルの改変を検知すると起動を拒否する起動時整合性ゲート。
+- **記述されたAPIと、そこから生成されたクライアント。** `GET /doc` でOpenAPI 3.1文書を提供（43操作、それぞれに認証種別と最小スコープを明記）。`@kodasoken/kurahi-client` はこの文書から生成され、乖離があればCIが失敗します。
+- **1つのセッションに複数のクライアント。** `attach` スコープを持つ資格情報なら、稼働中のセッションを一覧し、ターミナル、スクリプト、メッセージングパイプを接続できます。接続中のクライアント全員が同じイベントストリームを受け取ります。
+- **Code ModeとMCP。** エージェントは1本のスクリプトで多数のツールを1往復で呼び出せます。設定したMCPサーバーのツールは `mcp:<server>:<tool>` という名前で利用できます。
+- **エージェント制御。** 実行ごとのステップ上限、同一呼び出しや進捗のないツール呼び出しを止めるループ検出、パスとコマンドに対するパーミッショングロブ、キャンセル可能なジョブレジストリ。
 
 ## インストール
 
-インストーラーのバンドルは Node.js ランタイムを同梱しています。npm から入れる場合は Node.js 22.12 以上が必要です。
+インストーラーのバンドルはNode.jsランタイムを同梱しています。npmから入れる場合はNode.js 22.12以上が必要です。
 
 Linux / macOS:
 
@@ -29,15 +29,15 @@ Linux / macOS:
 curl -fsSL https://kodasoken.com/kurahi/install.sh | bash
 ```
 
-Windows（PowerShell 7 または Windows PowerShell 5.1）:
+Windows（PowerShell 7またはWindows PowerShell 5.1）:
 
 ```powershell
 iwr -useb https://kodasoken.com/kurahi/install.ps1 | iex
 ```
 
-インストーラーは、GitHub Releases から OS と CPU に合ったリリース バンドルを選び、展開前に公開された `SHA256SUMS.txt` と SHA-256 を照合し、`~/.local/share/kolo/<version>`（Windows: `%LOCALAPPDATA%\Kurahi\app\<version>`）に配置して `kolo` コマンドをリンクし、`kurahi init --non-interactive` と `kurahi service install` を実行し、1 回限りのペアリング招待コードを表示します。root や管理者権限では動作せず、github.com 以外からは何もダウンロードしません。両スクリプトはこのリポジトリの [`scripts/`](../scripts/) にあり、そのまま配信されています。フラグの一覧は [docs/install/index.md](install/index.md) を参照してください。
+インストーラーは、GitHub ReleasesからOSとCPUに合ったリリースバンドルを選び、展開前に公開された `SHA256SUMS.txt` とSHA-256を照合し、`~/.local/share/kolo/<version>`（Windows: `%LOCALAPPDATA%\KoLo\app\<version>`）に配置して `kolo` コマンドをリンクし、`kurahi init --non-interactive` と `kurahi service install` を実行し、1回限りのペアリング招待コードを表示します。rootや管理者権限では動作せず、github.com以外からは何もダウンロードしません。両スクリプトはこのリポジトリの[`scripts/`](../scripts/) にあり、そのまま配信されています。フラグの一覧は[docs/install/index.md](install/index.md) を参照してください。
 
-npm（グローバル、PATH 上に Node.js 22.12 以上が必要）:
+npm（グローバル、PATH上にNode.js 22.12以上が必要）:
 
 ```bash
 npm install -g kurahi
@@ -67,7 +67,7 @@ node kolo.mjs --version
 
 ## 初回起動
 
-新しく使い始める方が覚える必要があるコマンドは `kurahi init` だけです。状態ディレクトリ、設定、ゲートウェイ トークンを作成し、診断を実行して、次に打つコマンドを表示します。
+新しく使い始める方が覚える必要があるコマンドは `kurahi init` だけです。状態ディレクトリ、設定、ゲートウェイトークンを作成し、診断を実行して、次に打つコマンドを表示します。
 
 ```bash
 kurahi init --name alice --lang ja
@@ -102,24 +102,24 @@ kurahi attach --list                  # この資格情報で見えるセッシ�
 kurahi tui                            # このターミナルでエージェントと対話
 ```
 
-プロンプトなしで実行する場合: `kurahi init --non-interactive --name alice --bind loopback --provider sakura`（トークンは `SAKURA_API_KEY` から読み取ります）。日本語メッセージは `--lang ja` または `KOLO_LANG=ja` で指定します。ゲートウェイが起動していなければ `kurahi health` がその旨と起動コマンドを表示します。
+プロンプトなしで実行する場合：`kurahi init --non-interactive --name alice --bind loopback --provider sakura`（トークンは `SAKURA_API_KEY` から読み取ります）。日本語メッセージは `--lang ja` または `KOLO_LANG=ja` で指定します。ゲートウェイが起動していなければ `kurahi health` がその旨と起動コマンドを表示します。
 
-終了コードは全コマンド共通です: `0` 成功、`1` エラー、`2` 使い方の誤り、`3` ゲートウェイに到達不可、`4` 認証失敗。
+終了コードは全コマンド共通です：`0` 成功、`1` エラー、`2` 使い方の誤り、`3` ゲートウェイに到達不可、`4` 認証失敗。
 
 ## 主な概念
 
 | 用語              | 意味                                                                                                                                                                                                              |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 識別名 (Identity) | 常駐エージェント 1 体の名前（`alice`、`ops-bot`）。識別名ごとに独立したサービス、状態ディレクトリ、ポートを持ちます。使える文字は `a-z`、`0-9`、`-`、`_` で 1〜32 文字。                                          |
-| `KOLO_HOME`       | その識別名が所有するすべてを収める 1 つのディレクトリ。`~/.kolo`（Windows: `%LOCALAPPDATA%\Kurahi`）。2 つ目以降の識別名は `~/.kolo-<id>`。プログラム本体以外はここ以外に書き込みません。                         |
-| ゲートウェイ      | 常駐プロセス。既定ではループバックにのみバインドし、HTTP と WebSocket を提供し、エージェントを実行し、セッションを保持し、監査ログを書きます。                                                                    |
+| 識別名 (Identity) | 常駐エージェント1体の名前（`alice`、`ops-bot`）。識別名ごとに独立したサービス、状態ディレクトリ、ポートを持ちます。使える文字は `a-z`、`0-9`、`-`、`_` で1〜32文字。                                          |
+| `KOLO_HOME`       | その識別名が所有するすべてを収める1つのディレクトリ。`~/.kolo`（Windows: `%LOCALAPPDATA%\KoLo`）。2つ目以降の識別名は `~/.kolo-<id>`。プログラム本体以外はここ以外に書き込みません。                         |
+| ゲートウェイ      | 常駐プロセス。既定ではループバックにのみバインドし、HTTPとWebSocketを提供し、エージェントを実行し、セッションを保持し、監査ログを書きます。                                                                    |
 | セッション        | エージェントが参加している会話（`agent:alice:main`）。セッションはゲートウェイ内に存在し、ターミナル、パイプ、他のエージェントがそこに接続します。                                                                |
-| 招待 (Invitation) | 1 回限りのペアリング コード（`kpi_...`）。スコープ、有効期限（既定 10 分）、任意でセッションの許可リストを持ちます。作成者が持つ以上の権限は決して付与しません。                                                  |
-| 端末 (Device)     | ペアリング済みのクライアント。固有の Ed25519 鍵と、`KOLO_HOME/secrets/devices/` 配下の資格情報ファイルを持ちます。短命のアクセス トークン（既定 1 時間）とローテーションするリフレッシュ トークン（既定 30 日）。 |
-| ジョブ (Job)      | エージェントの 1 回の実行。queued → running → 終了状態。`/api/jobs` で一覧とキャンセルができ、キャンセルは監査されます。                                                                                          |
-| プラグイン        | プロセス内で読み込まれる拡張。`KoLo.plugin.json` マニフェストと設定用 JSON スキーマを同梱します。チャネル、プロバイダー、ツール、同梱の運用プラグインはすべてプラグインです。                                     |
-| MCP サーバー      | ゲートウェイが接続する外部ツール サーバー（`kurahi mcp add`）。そのツールは `mcp:<server>:<tool>` として現れ、実行系のツールは名前で許可しない限り隠されます。                                                    |
-| Code Mode         | `code_mode_run` ツール。モデルが 1 本のスクリプトを書き、`tools.*` 経由で多数のツールを呼び、値を返します。N 往復の代わりに 1 往復、既定 60 秒の実時間上限付き。                                                  |
+| 招待 (Invitation) | 1回限りのペアリングコード（`kpi_...`）。スコープ、有効期限（既定10分）、任意でセッションの許可リストを持ちます。作成者が持つ以上の権限は決して付与しません。                                                  |
+| 端末 (Device)     | ペアリング済みのクライアント。固有のEd25519鍵と、`KOLO_HOME/secrets/devices/` 配下の資格情報ファイルを持ちます。短命のアクセストークン（既定1時間）とローテーションするリフレッシュトークン（既定30日）。 |
+| ジョブ (Job)      | エージェントの1回の実行。queued → running → 終了状態。`/api/jobs` で一覧とキャンセルができ、キャンセルは監査されます。                                                                                          |
+| プラグイン        | プロセス内で読み込まれる拡張。`KoLo.plugin.json` マニフェストと設定用JSONスキーマを同梱します。チャネル、プロバイダー、ツール、同梱の運用プラグインはすべてプラグインです。                                     |
+| MCPサーバー      | ゲートウェイが接続する外部ツールサーバー（`kurahi mcp add`）。そのツールは `mcp:<server>:<tool>` として現れ、実行系のツールは名前で許可しない限り隠されます。                                                    |
+| Code Mode         | `code_mode_run` ツール。モデルが1本のスクリプトを書き、`tools.*` 経由で多数のツールを呼び、値を返します。N往復の代わりに1往復、既定60秒の実時間上限付き。                                                  |
 
 `KOLO_HOME` の構成:
 
@@ -135,32 +135,32 @@ service/                  サービス定義と直近のインストール時の
 support/                  kurahi support が書き出すマスク済みバンドル
 ```
 
-スコープ（すべての HTTP ルートと WebSocket メソッドで強制されます）:
+スコープ（すべてのHTTPルートとWebSocketメソッドで強制されます）:
 
 | スコープ  | できること                                                                                            |
 | --------- | ----------------------------------------------------------------------------------------------------- |
-| `observe` | 読み取り: ヘルス、メトリクス、一覧、履歴、`/api/pair/me`                                              |
-| `attach`  | observe に加えてセッションの操作: チャット、エージェント ターン、`/tools/invoke`、`/v1/*`、Code Mode  |
-| `admin`   | attach に加えてゲートウェイの管理: 設定、cron、ペアリング、プラグインの再読み込み                     |
-| `owner`   | ゲートウェイ トークン ファイル（`KOLO_HOME/secrets/gateway.token`）。ペアリングでは決して付与されない |
+| `observe` | 読み取り：ヘルス、メトリクス、一覧、履歴、`/api/pair/me`                                              |
+| `attach`  | observeに加えてセッションの操作：チャット、エージェントターン、`/tools/invoke`、`/v1/*`、Code Mode  |
+| `admin`   | attachに加えてゲートウェイの管理：設定、cron、ペアリング、プラグインの再読み込み                     |
+| `owner`   | ゲートウェイトークンファイル（`KOLO_HOME/secrets/gateway.token`）。ペアリングでは決して付与されない |
 
-最小スコープに満たない資格情報は HTTP では `403`、WebSocket では `missing scope: <scope>` を受け取ります。失効済みのリフレッシュ トークンが再利用されると、その資格情報ファミリー全体が取り消されます。`gateway.pairing.reconsentDays`（既定 90 日）を超えた端末は再ペアリングが必要です。詳細: [docs/cli/pair.md](cli/pair.md)、[docs/cli/attach.md](cli/attach.md)。
+最小スコープに満たない資格情報はHTTPでは `403`、WebSocketでは `missing scope: <scope>` を受け取ります。失効済みのリフレッシュトークンが再利用されると、その資格情報ファミリー全体が取り消されます。`gateway.pairing.reconsentDays`（既定90日）を超えた端末は再ペアリングが必要です。詳細：[docs/cli/pair.md](cli/pair.md)、[docs/cli/attach.md](cli/attach.md)。
 
 ## セキュリティ
 
-セキュリティ質問票への回答は [セキュリティ概要](ja/security/SECURITY_OVERVIEW.md)、データの取り扱いは [プライバシー](ja/security/privacy.md) を参照してください。脆弱性の報告は security@kodasoken.com へ。手順と目標期間は [SECURITY.md](../SECURITY.md) にあります。
+セキュリティ質問票への回答は[セキュリティ概要](ja/security/SECURITY_OVERVIEW.md)、データの取り扱いは[プライバシー](ja/security/privacy.md) を参照してください。脆弱性の報告はsecurity@kodasoken.comへ。手順と目標期間は[SECURITY.md](../SECURITY.md) にあります。
 
 マシンの外に出る通信は、いずれも設定した後にのみ発生します:
 
 | 通信                           | 宛先                                          | 止め方                                   |
 | ------------------------------ | --------------------------------------------- | ---------------------------------------- |
 | モデルへのリクエスト           | 設定したプロバイダー                          | `local` プロファイル                     |
-| メッセージング チャネル        | そのチャネルのサービス                        | チャネルを有効にしない                   |
-| 更新確認（バージョン情報のみ） | パッケージ レジストリ（npm インストールのみ） | `update.checkOnStart: false`             |
-| ローカル ネットワークへの告知  | mDNS 経由で LAN                               | `gateway.discovery.mdns.mode: "off"`     |
-| インストーラー                 | github.com（インストール時のみ）              | `--bundle` によるオフライン インストール |
+| メッセージングチャネル        | そのチャネルのサービス                        | チャネルを有効にしない                   |
+| 更新確認（バージョン情報のみ） | パッケージレジストリ（npmインストールのみ） | `update.checkOnStart: false`             |
+| ローカルネットワークへの告知  | mDNS経由でLAN                               | `gateway.discovery.mdns.mode: "off"`     |
+| インストーラー                 | github.com（インストール時のみ）              | `--bundle` によるオフラインインストール |
 
-テレメトリ、アナリティクス、クラッシュ レポートはありません。ゲートウェイは実行時にベンダーへ接続しません。サポート バンドルはローカルに書き出され、チケットに添付した場合にだけ外に出ます。
+テレメトリ、アナリティクス、クラッシュレポートはありません。ゲートウェイは実行時にベンダーへ接続しません。サポートバンドルはローカルに書き出され、チケットに添付した場合にだけ外に出ます。
 
 検証できる性質:
 
@@ -176,11 +176,11 @@ kurahi secrets list            # 名前とバックエンドのみ。値は決�
 ```bash
 kurahi uninstall --all --yes --dry-run      # サービス、状態ディレクトリ、作業領域を一覧表示。削除はしない
 kurahi uninstall --all --yes
-rm -rf ~/.local/share/kolo ~/.local/bin/kolo    # プログラム本体 (Windows: %LOCALAPPDATA%\Kurahi)
+rm -rf ~/.local/share/kolo ~/.local/bin/kolo    # プログラム本体 (Windows: %LOCALAPPDATA%\KoLo)
 ```
 
 これらのパス以外には何も残りません。削除したゲートウェイが発行した資格情報は無効になります。
 
 ## この先
 
-設定、CLI リファレンス、HTTP / WebSocket API、運用、プラグイン、互換性、ライセンスと商標、コントリビューション、サポートと評価については、英語版 [README.md](../README.md) の後半を参照してください。ライセンスの構成（MIT / FSL-1.1-Apache-2.0 / プロプライエタリ）は [LICENSING.md](../LICENSING.md)、商標は [TRADEMARKS.md](../TRADEMARKS.md)、評価ライセンスは [EVALUATION_LICENSE.md](EVALUATION_LICENSE.md) にあります。
+設定、CLIリファレンス、HTTP / WebSocket API、運用、プラグイン、互換性、ライセンスと商標、コントリビューション、サポートと評価については、英語版[README.md](../README.md) の後半を参照してください。ライセンスの構成（MIT / FSL-1.1-Apache-2.0 / プロプライエタリ）は[LICENSING.md](../LICENSING.md)、商標は[TRADEMARKS.md](../TRADEMARKS.md)、評価ライセンスは[EVALUATION_LICENSE.md](EVALUATION_LICENSE.md) にあります。

@@ -65,7 +65,7 @@ Service names are profile-aware:
 
 - macOS: `com.kodasoken.kolo.<id>` (legacy `com.kolo.*` may still exist)
 - Linux: `kolo-gateway-<profile>.service`
-- Windows: `Kurahi Gateway (<profile>)`
+- Windows: `KoLo Gateway (<profile>)`
 
 Install metadata is embedded in the service config:
 

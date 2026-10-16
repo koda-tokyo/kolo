@@ -73,7 +73,7 @@ bundle reads the machine's `PATH`, Node.js or npm.
 | `--dry-run`                                | resolve the asset and print what would happen; download nothing                                  |
 
 `install.ps1` takes the same options as parameters: `-Version`, `-Prefix` (default
-`%LOCALAPPDATA%\Kurahi\app`), `-BinDir` (default `%LOCALAPPDATA%\Kurahi\bin`), `-Bundle`, `-Sums`,
+`%LOCALAPPDATA%\KoLo\app`), `-BinDir` (default `%LOCALAPPDATA%\KoLo\bin`), `-Bundle`, `-Sums`,
 `-Name`, `-NoInit`, `-NoService`, `-NoInvite`, `-DryRun`.
 
 `KOLO_HOME` sets the state directory for the first run.

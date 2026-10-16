@@ -2418,7 +2418,7 @@ Quick setup (recommended):
 - Set a unique `gateway.port` in each profile config (or pass `--port` for manual runs).
 - Install a per-profile service: `Kurahi --profile <name> gateway install`.
 
-Profiles also suffix service names (`com.kodasoken.kolo.<id>`; legacy `com.kolo.*`, `kolo-gateway-<profile>.service`, `Kurahi Gateway (<profile>)`).
+Profiles also suffix service names (`com.kodasoken.kolo.<id>`; legacy `com.kolo.*`, `kolo-gateway-<profile>.service`, `KoLo Gateway (<profile>)`).
 Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 ### What does invalid handshake code 1008 mean
@@ -2469,7 +2469,7 @@ Service/supervisor logs (when the gateway runs via launchd/systemd):
 
 - macOS: `$KOLO_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.kolo/logs/...`; profiles use `~/.kolo-<profile>/logs/...`)
 - Linux: `journalctl --user -u kolo-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "Kurahi Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "KoLo Gateway (<profile>)" /V /FO LIST`
 
 See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
 

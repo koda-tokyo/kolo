@@ -40,7 +40,7 @@ The gateway is the only long-running process. It owns the channel connections, t
 
 ## What the runtime guarantees
 
-- **One state root.** `KOLO_HOME` (`~/.kolo` on Linux and macOS, `%LOCALAPPDATA%\Kurahi` on Windows) holds config, secrets, sessions, logs and the audit chain. Nothing is written elsewhere.
+- **One state root.** `KOLO_HOME` (`~/.kolo` on Linux and macOS, `%LOCALAPPDATA%\KoLo` on Windows) holds config, secrets, sessions, logs and the audit chain. Nothing is written elsewhere.
 - **Loopback by default.** Remote access requires an explicit bind policy and a token; see [Remote access](/gateway/remote).
 - **Every route authenticated.** The only open endpoints are `/health` and `/api/health`, which answer with status, version and uptime; detail requires a credential.
 - **Scoped pairing.** Invitations carry a scope (`observe` < `attach` < `admin` < `owner`), are redeemed with a device key over a server nonce, and issue short-lived access tokens with rotating refresh; reuse of a retired refresh token revokes the family.
