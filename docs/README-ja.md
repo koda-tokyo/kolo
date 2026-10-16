@@ -4,7 +4,7 @@ Kurahiは、Linux / macOS / Windowsでサービスとして常駐する、統制
 
 English: [README.md](../README.md)
 
-- ドキュメント：https://kodasoken.com/kolo
+- ドキュメント：https://kurahi.kodasoken.com/docs
 - ソースとリリース：https://github.com/koda-tokyo/kurahi
 - 問い合わせとサポート：https://github.com/koda-tokyo/kurahi/issues
 - セキュリティ報告：security@kodasoken.com（[SECURITY.md](../SECURITY.md) を参照）

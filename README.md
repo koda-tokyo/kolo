@@ -9,7 +9,7 @@ Licence: open core, MIT / FSL-1.1-Apache-2.0 / proprietary, mapped in [LICENSING
 
 > NOTICE: this public tree was imported on 2026-10-14 from the Kurahi 2.0 development line. History prior to 2.0 is not published; the pre-fork lineage is described in [ATTRIBUTION.md](ATTRIBUTION.md).
 
-- Documentation: https://kodasoken.com/kolo
+- Documentation: https://kurahi.kodasoken.com/docs
 - Source and releases: https://github.com/koda-tokyo/kurahi
 - Issues: https://github.com/koda-tokyo/kurahi/issues
 - Support: support@kodasoken.com (attach the bundle from `kurahi support`)
@@ -419,7 +419,7 @@ Repository layout:
 | `extensions/`     | channel, provider and ops plugins (workspace packages)  |
 | `ui/`             | web control UI                                          |
 | `apps/`           | macOS, iOS and Android companions                       |
-| `docs/`           | documentation source for https://kodasoken.com/kolo     |
+| `docs/`           | documentation source for https://kurahi.kodasoken.com/docs |
 | `openapi/`        | committed OpenAPI document (drift-checked)              |
 | `scripts/`        | build, release, install and check scripts               |
 
