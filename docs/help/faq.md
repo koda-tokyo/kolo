@@ -1936,10 +1936,7 @@ Models are referenced as `provider/model` (example: `anthropic/claude-opus-4-5`)
 
 ### What model do you recommend
 
-**Recommended default:** `anthropic/claude-opus-4-5`.  
-**Good alternative:** `anthropic/claude-sonnet-4-5`.  
-**Reliable (less character):** `openai/gpt-5.2` - nearly as good as Opus, just less personality.  
-**Budget:** `zai/glm-4.7`.
+Prefer current, instruction-hardened models for any agent with tools, and check the provider's published safety evaluations; see [KODA-tested results](/providers/koda-tested) in the provider catalogue. Kurahi's default profile uses a Japan-hosted model ([Provider support](/providers/support)).
 
 MiniMax M2.1 has its own docs: [MiniMax](/providers/minimax) and
 [Local models](/gateway/local-models).

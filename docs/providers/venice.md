@@ -87,7 +87,7 @@ Kurahi chat --model venice/llama-3.3-70b "Hello, are you working?"
 After setup, Kurahi shows all available Venice models. Pick based on your needs:
 
 - **Default (our pick)**: `venice/llama-3.3-70b` for private, balanced performance.
-- **Best overall quality**: `venice/claude-opus-45` for hard jobs (Opus remains the strongest).
+- **Anonymized proxy models**: for example `venice/claude-opus-45`.
 - **Privacy**: Choose "private" models for fully private inference.
 - **Capability**: Choose "anonymized" models to access Claude, GPT, Gemini via Venice's proxy.
 
@@ -112,16 +112,15 @@ Kurahi models list | grep venice
 
 ## Which Model Should I Use?
 
-| Use Case                     | Recommended Model                | Why                                       |
-| ---------------------------- | -------------------------------- | ----------------------------------------- |
-| **General chat**             | `llama-3.3-70b`                  | Good all-around, fully private            |
-| **Best overall quality**     | `claude-opus-45`                 | Opus remains the strongest for hard tasks |
-| **Privacy + Claude quality** | `claude-opus-45`                 | Best reasoning via anonymized proxy       |
-| **Coding**                   | `qwen3-coder-480b-a35b-instruct` | Code-optimized, 262k context              |
-| **Vision tasks**             | `qwen3-vl-235b-a22b`             | Best private vision model                 |
-| **Uncensored**               | `venice-uncensored`              | No content restrictions                   |
-| **Fast + cheap**             | `qwen3-4b`                       | Lightweight, still capable                |
-| **Complex reasoning**        | `deepseek-v3.2`                  | Strong reasoning, private                 |
+| Use Case              | Recommended Model                | Why                               |
+| --------------------- | -------------------------------- | --------------------------------- |
+| **General chat**      | `llama-3.3-70b`                  | Good all-around, fully private    |
+| **Anonymized proxy**  | `claude-opus-45`                 | Hosted model via anonymized proxy |
+| **Coding**            | `qwen3-coder-480b-a35b-instruct` | Code-optimized, 262k context      |
+| **Vision tasks**      | `qwen3-vl-235b-a22b`             | Best private vision model         |
+| **Uncensored**        | `venice-uncensored`              | No content restrictions           |
+| **Fast + cheap**      | `qwen3-4b`                       | Lightweight, still capable        |
+| **Complex reasoning** | `deepseek-v3.2`                  | Strong reasoning, private         |
 
 ## Available Models (25 Total)
 

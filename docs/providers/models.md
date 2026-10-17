@@ -13,10 +13,10 @@ model as `provider/model`.
 
 ## Highlight: Venice (Venice AI)
 
-Venice is our recommended Venice AI setup for privacy-first inference with an option to use Opus for the hardest tasks.
+Venice offers privacy-first inference, with anonymized access to hosted models.
 
 - Default: `venice/llama-3.3-70b`
-- Best overall: `venice/claude-opus-45` (Opus remains the strongest)
+- Anonymized proxy: `venice/claude-opus-45`
 
 See [Venice AI](/providers/venice).
 
