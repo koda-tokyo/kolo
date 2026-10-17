@@ -185,8 +185,9 @@ Kurahi ships a default for `claude-cli`:
 - `command: "claude"`
 - `args: ["-p", "--output-format", "json"]`
 - `resumeArgs: ["-p", "--output-format", "json", "--resume", "{sessionId}"]`
-- permission flags added per run from the tool capability: `--permission-mode dontAsk` (plus
-  `--tools ""` for `tools: "none"`); see [External agent adapters](/agents/external-adapters)
+- permission flags added per run from the tool capability: `--restricted`, `--tools` (only
+  `allowedTools`, default `Read,Grep,Glob`; none for `tools: "none"`, plus `--strict-mcp-config`)
+  and `--permission-mode dontAsk`; see [External agent adapters](/agents/external-adapters)
 - `modelArg: "--model"`
 - `systemPromptArg: "--append-system-prompt"`
 - `sessionArg: "--session-id"`

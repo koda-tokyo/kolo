@@ -36,6 +36,14 @@ const OWNED_WITH_VALUE: Record<string, string[]> = {
   "codex-cli": ["--sandbox", "-s"],
 };
 
+/** Built-in tools a claude-cli backend gets with tools=native and no allowedTools: read-only. */
+export const DEFAULT_CLAUDE_READ_TOOLS = ["Read", "Grep", "Glob"];
+
+/** Boolean flags this module owns (no value); configured copies are dropped. */
+const OWNED_BOOLEAN: Record<string, string[]> = {
+  "claude-cli": ["--restricted", "--strict-mcp-config"],
+};
+
 export type CliPermissionPlan = {
   /** Base args with bypass flags (and flags this module owns) removed. */
   baseArgs: string[];
@@ -52,6 +60,7 @@ function stripArgs(
   unsafe: boolean,
 ): { kept: string[]; stripped: string[] } {
   const owned = new Set(OWNED_WITH_VALUE[backendId] ?? []);
+  const ownedBoolean = new Set(OWNED_BOOLEAN[backendId] ?? []);
   const kept: string[] = [];
   const stripped: string[] = [];
   for (let i = 0; i < args.length; i += 1) {
@@ -59,6 +68,9 @@ function stripArgs(
     const [flag, inlineValue] = arg.includes("=")
       ? [arg.slice(0, arg.indexOf("=")), arg.slice(arg.indexOf("=") + 1)]
       : [arg, undefined];
+    if (ownedBoolean.has(flag)) {
+      continue;
+    }
     if (BYPASS_FLAGS.has(flag)) {
       if (!unsafe) {
         stripped.push(flag);
@@ -106,20 +118,28 @@ export function planCliPermissions(params: {
   if (params.backendId === "claude-cli") {
     if (unsafe) {
       extraArgs.push("--dangerously-skip-permissions");
-    } else if (params.capability === "none") {
-      // No built-in tools at all, and nothing may prompt.
-      extraArgs.push("--tools", "", "--permission-mode", "dontAsk");
     } else {
-      // dontAsk: a tool that would need permission is denied unless allowedTools pre-approves it.
-      extraArgs.push("--permission-mode", "dontAsk");
-      const allowed = list(params.backend.allowedTools);
-      if (allowed.length > 0) {
-        extraArgs.push("--allowedTools", allowed.join(","));
+      // --restricted ignores the host's user/project/local Claude Code settings. Verified live:
+      // without it, allow rules in ~/.claude/settings*.json pre-approve Write and Bash, and
+      // dontAsk alone did not stop a write. --tools limits which built-in tools exist at all.
+      // --permission-mode goes last: --tools/--allowedTools take a variable number of values and
+      // would otherwise swallow the prompt that follows.
+      extraArgs.push("--restricted");
+      if (params.capability === "none") {
+        extraArgs.push("--strict-mcp-config", "--tools", "");
+      } else {
+        const allowed = list(params.backend.allowedTools);
+        const available = allowed.length > 0 ? allowed : DEFAULT_CLAUDE_READ_TOOLS;
+        extraArgs.push("--tools", available.join(","));
+        if (allowed.length > 0) {
+          extraArgs.push("--allowedTools", allowed.join(","));
+        }
+        const disallowed = list(params.backend.disallowedTools);
+        if (disallowed.length > 0) {
+          extraArgs.push("--disallowedTools", disallowed.join(","));
+        }
       }
-    }
-    const disallowed = list(params.backend.disallowedTools);
-    if (disallowed.length > 0) {
-      extraArgs.push("--disallowedTools", disallowed.join(","));
+      extraArgs.push("--permission-mode", "dontAsk");
     }
   } else if (params.backendId === "codex-cli") {
     const mode = unsafe

@@ -32,7 +32,14 @@ describe("planCliPermissions: claude-cli", () => {
       capability: "none",
       baseArgs: claude().args!,
     });
-    expect(plan.extraArgs).toEqual(["--tools", "", "--permission-mode", "dontAsk"]);
+    expect(plan.extraArgs).toEqual([
+      "--restricted",
+      "--strict-mcp-config",
+      "--tools",
+      "",
+      "--permission-mode",
+      "dontAsk",
+    ]);
     expect(plan.unsafe).toBe(false);
   });
 
@@ -49,12 +56,15 @@ describe("planCliPermissions: claude-cli", () => {
       baseArgs: backend.args!,
     });
     expect(plan.extraArgs).toEqual([
-      "--permission-mode",
-      "dontAsk",
+      "--restricted",
+      "--tools",
+      "Read,Edit",
       "--allowedTools",
       "Read,Edit",
       "--disallowedTools",
       "Bash",
+      "--permission-mode",
+      "dontAsk",
     ]);
   });
 
@@ -103,6 +113,52 @@ describe("planCliPermissions: claude-cli", () => {
     auditCliPermissionPlan(plan, { backendId: "claude-cli" });
     expect(events[0]).toMatchObject({ action: "cli.permissions", outcome: "allowed" });
     expect(events[0]?.detail).toMatchObject({ mode: "unsafeSkipPermissions" });
+  });
+});
+
+describe("planCliPermissions: claude-cli ordering and defaults", () => {
+  it("native without allowedTools exposes only read-only built-in tools", () => {
+    const plan = planCliPermissions({
+      backendId: "claude-cli",
+      backend: claude(),
+      capability: "native",
+      baseArgs: claude().args!,
+    });
+    expect(plan.extraArgs).toEqual([
+      "--restricted",
+      "--tools",
+      "Read,Grep,Glob",
+      "--permission-mode",
+      "dontAsk",
+    ]);
+  });
+
+  it("always ends with a single-value option, so a variadic list cannot swallow the prompt", () => {
+    for (const capability of ["none", "native"] as const) {
+      const backend: CliBackendConfig = {
+        ...claude(),
+        allowedTools: ["Read"],
+        disallowedTools: ["Bash"],
+      };
+      const plan = planCliPermissions({
+        backendId: "claude-cli",
+        backend,
+        capability,
+        baseArgs: backend.args!,
+      });
+      expect(plan.extraArgs.slice(-2)).toEqual(["--permission-mode", "dontAsk"]);
+    }
+  });
+
+  it("drops configured --restricted / --strict-mcp-config copies without eating the next arg", () => {
+    const baseArgs = ["-p", "--restricted", "--output-format", "json", "--strict-mcp-config"];
+    const plan = planCliPermissions({
+      backendId: "claude-cli",
+      backend: claude(),
+      capability: "none",
+      baseArgs,
+    });
+    expect(plan.baseArgs).toEqual(["-p", "--output-format", "json"]);
   });
 });
 
