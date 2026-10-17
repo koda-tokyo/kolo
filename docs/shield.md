@@ -1,13 +1,13 @@
 ---
-summary: "Ransomware shield: decoy files and mass-encryption detection that stop every agent and write the incident to the audit log"
+summary: "Ransomware detection: decoy files and mass-encryption detection that stop every agent and write the incident to the audit log"
 read_when:
   - You want agents, or anything else on the host, stopped the moment files start being encrypted
   - You need to explain to a security team what Kurahi does about ransomware
   - The shield stopped your agents and you need to know why and how to resume
-title: "Ransomware shield"
+title: "Ransomware detection"
 ---
 
-# Ransomware shield
+# Ransomware detection
 
 Ransomware does three things that normal work does not: it rewrites many existing documents into
 random-looking bytes in a short time, it often renames them with an extra extension, and it leaves

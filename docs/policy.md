@@ -95,7 +95,7 @@ data:
   neverWrite: ["/etc/**"]
   secretPatterns: ["AKIA[0-9A-Z]{16}"]
   redact: { fields: ["@personal"], restoreTo: [message] }
-shield: { mode: stop }          # ransomware shield, see /shield
+shield: { mode: stop } # ransomware detection, see /shield
 requests:
   deny:
     - { operations: [runCodeMode, "codeMode.*"], scopes: [attach] }
