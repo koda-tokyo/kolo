@@ -403,6 +403,7 @@ export const KoLoSchema = z
         maxPerSession: z.number().int().min(1).max(10_000).optional(),
         maxBytesPerSession: z.number().int().min(1024).optional(),
         maxFileBytes: z.number().int().min(1024).optional(),
+        required: z.union([z.boolean(), z.array(z.string())]).optional(),
       })
       .strict()
       .optional(),

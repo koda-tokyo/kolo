@@ -47,6 +47,28 @@ Snapshots live under `<KOLO_HOME>/snapshots/<session>/`: an `index.json` and an 
 
 Snapshots are not taken inside the sandbox (`agents.defaults.sandbox`).
 
+## Required snapshots for protected files
+
+By default a snapshot that cannot be taken never blocks an edit. Where an edit must always be
+reversible, set `snapshots.required`:
+
+```json
+{
+  "snapshots": {
+    "required": ["contracts/**", "config/*.yaml"]
+  }
+}
+```
+
+- `true` requires a snapshot for every edit; a list of globs (workspace-relative or absolute)
+  requires it only for matching files.
+- When a required snapshot cannot be captured — the snapshot store fails, or the file is too large
+  (`maxFileBytes`) or unreadable — the edit is **refused** before the tool runs. The agent gets an
+  error naming the files and the reason.
+- The refusal is recorded as an evidence signal (`permission`, decision `deny`, rule
+  `snapshots.required`) and an audit event (`snapshot.required`, outcome `denied`).
+- Creating a new file is allowed: there is nothing to capture, and undo deletes it.
+
 ## API
 
 Both routes take the gateway token or a paired credential with the `attach` scope; the session allowlist of a paired device applies, and a session outside it answers 404. `{id}` resolves like `GET /api/sessions/{id}`: a session id, a session key, a label or an agent id.
