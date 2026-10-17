@@ -11,9 +11,19 @@ import { refreshQwenPortalCredentials } from "../../providers/qwen-portal-oauth.
 import { refreshChutesTokens } from "../chutes-oauth.js";
 import { AUTH_STORE_LOCK_OPTIONS, log } from "./constants.js";
 import { formatAuthDoctorHint } from "./doctor.js";
+import { agentIdForDir, resolveAuthIsolation } from "./isolation.js";
 import { ensureAuthStoreFile, resolveAuthStorePath } from "./paths.js";
 import { suggestOAuthProfileIdForLegacyDefault } from "./repair.js";
 import { ensureAuthProfileStore, saveAuthProfileStore } from "./store.js";
+
+function mainFallbackAllowed(agentDir: string, profileId: string): boolean {
+  const isolation = resolveAuthIsolation();
+  if (isolation.mode === "inherit") {
+    return true;
+  }
+  const agentId = agentIdForDir(isolation.cfg, agentDir, Object.keys(isolation.grants));
+  return Boolean(agentId && isolation.grants[agentId]?.includes(profileId));
+}
 
 const OAUTH_PROVIDER_IDS = new Set<string>(getOAuthProviders().map((provider) => provider.id));
 
@@ -266,7 +276,8 @@ export async function resolveApiKeyForProfile(params: {
     }
 
     // Fallback: if this is a secondary agent, try using the main agent's credentials
-    if (params.agentDir) {
+    // (under explicit isolation only for a profile id granted to this agent).
+    if (params.agentDir && mainFallbackAllowed(params.agentDir, profileId)) {
       try {
         const mainStore = ensureAuthProfileStore(undefined); // main agent (no agentDir)
         const mainCred = mainStore.profiles[profileId];

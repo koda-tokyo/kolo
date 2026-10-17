@@ -20,7 +20,7 @@ export class DuplicateAgentDirError extends Error {
   }
 }
 
-function canonicalizeAgentDir(agentDir: string): string {
+export function canonicalizeAgentDir(agentDir: string): string {
   const resolved = path.resolve(agentDir);
   if (process.platform === "darwin" || process.platform === "win32") {
     return resolved.toLowerCase();
@@ -28,7 +28,7 @@ function canonicalizeAgentDir(agentDir: string): string {
   return resolved;
 }
 
-function collectReferencedAgentIds(cfg: KoLoConfig): string[] {
+export function collectReferencedAgentIds(cfg: KoLoConfig): string[] {
   const ids = new Set<string>();
 
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents?.list : [];
@@ -55,7 +55,7 @@ function collectReferencedAgentIds(cfg: KoLoConfig): string[] {
   return [...ids];
 }
 
-function resolveEffectiveAgentDir(
+export function resolveEffectiveAgentDir(
   cfg: KoLoConfig,
   agentId: string,
   deps?: { env?: NodeJS.ProcessEnv; homedir?: () => string },

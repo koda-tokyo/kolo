@@ -12,6 +12,16 @@ export type AuthProfileConfig = {
 
 export type AuthConfig = {
   profiles?: Record<string, AuthProfileConfig>;
+  /**
+   * How non-main agents get credentials.
+   * - inherit (default): an agent without its own store inherits a copy of the main agent's
+   *   profiles, and the main agent's profiles are merged into every agent's view.
+   * - explicit: no inheritance and no merge; an agent sees only the profile ids granted to it in
+   *   `grants`. Recommended for enterprise deployments.
+   */
+  isolation?: "inherit" | "explicit";
+  /** Profile ids each agent may use when `isolation` is "explicit" (agent id → profile ids). */
+  grants?: Record<string, string[]>;
   order?: Record<string, string[]>;
   cooldowns?: {
     /** Default billing backoff (hours). Default: 5. */

@@ -6,6 +6,7 @@ import { resolveOAuthPath } from "../../config/paths.js";
 import { loadJsonFile, saveJsonFile } from "../../infra/json-file.js";
 import { AUTH_STORE_LOCK_OPTIONS, AUTH_STORE_VERSION, log } from "./constants.js";
 import { syncExternalCliCredentials } from "./external-cli-sync.js";
+import { agentIdForDir, grantedAuthStore, resolveAuthIsolation } from "./isolation.js";
 import { ensureAuthStoreFile, resolveAuthStorePath, resolveLegacyAuthStorePath } from "./paths.js";
 
 type LegacyAuthStore = Record<string, AuthProfileCredential>;
@@ -269,7 +270,8 @@ function loadAuthProfileStoreForAgent(
   }
 
   // Fallback: inherit auth-profiles from main agent if subagent has none
-  if (agentDir) {
+  // (never under explicit isolation: there an agent only gets what auth.grants gives it).
+  if (agentDir && resolveAuthIsolation().mode === "inherit") {
     const mainAuthPath = resolveAuthStorePath(); // without agentDir = main
     const mainRaw = loadJsonFile(mainAuthPath);
     const mainStore = coerceAuthStore(mainRaw);
@@ -360,6 +362,12 @@ export function ensureAuthProfileStore(
   }
 
   const mainStore = loadAuthProfileStoreForAgent(undefined, options);
+  const isolation = resolveAuthIsolation();
+  if (isolation.mode === "explicit") {
+    const agentId = agentIdForDir(isolation.cfg, agentDir, Object.keys(isolation.grants));
+    const granted = agentId ? (isolation.grants[agentId] ?? []) : [];
+    return grantedAuthStore({ own: store, main: mainStore, granted });
+  }
   const merged = mergeAuthProfileStores(mainStore, store);
 
   return merged;

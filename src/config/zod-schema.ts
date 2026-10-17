@@ -195,6 +195,8 @@ export const KoLoSchema = z
           )
           .optional(),
         order: z.record(z.string(), z.array(z.string())).optional(),
+        isolation: z.union([z.literal("inherit"), z.literal("explicit")]).optional(),
+        grants: z.record(z.string(), z.array(z.string())).optional(),
         cooldowns: z
           .object({
             billingBackoffHours: z.number().positive().optional(),
