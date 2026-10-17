@@ -60,17 +60,27 @@ function stripArgs(
       ? [arg.slice(0, arg.indexOf("=")), arg.slice(arg.indexOf("=") + 1)]
       : [arg, undefined];
     if (BYPASS_FLAGS.has(flag)) {
-      if (!unsafe) stripped.push(flag);
+      if (!unsafe) {
+        stripped.push(flag);
+      }
       continue;
     }
     const bypassValues = BYPASS_VALUES[flag];
     if (bypassValues || owned.has(flag)) {
       const value = inlineValue ?? args[i + 1];
-      if (inlineValue === undefined) i += 1;
-      if (bypassValues?.has(value ?? "") && !unsafe) stripped.push(`${flag} ${value}`);
-      if (owned.has(flag)) continue;
+      if (inlineValue === undefined) {
+        i += 1;
+      }
+      if (bypassValues?.has(value ?? "") && !unsafe) {
+        stripped.push(`${flag} ${value}`);
+      }
+      if (owned.has(flag)) {
+        continue;
+      }
       // A non-owned flag with a bypass value is dropped; any other value is kept as configured.
-      if (bypassValues?.has(value ?? "")) continue;
+      if (bypassValues?.has(value ?? "")) {
+        continue;
+      }
       kept.push(flag, ...(value !== undefined ? [value] : []));
       continue;
     }
@@ -103,10 +113,14 @@ export function planCliPermissions(params: {
       // dontAsk: a tool that would need permission is denied unless allowedTools pre-approves it.
       extraArgs.push("--permission-mode", "dontAsk");
       const allowed = list(params.backend.allowedTools);
-      if (allowed.length > 0) extraArgs.push("--allowedTools", allowed.join(","));
+      if (allowed.length > 0) {
+        extraArgs.push("--allowedTools", allowed.join(","));
+      }
     }
     const disallowed = list(params.backend.disallowedTools);
-    if (disallowed.length > 0) extraArgs.push("--disallowedTools", disallowed.join(","));
+    if (disallowed.length > 0) {
+      extraArgs.push("--disallowedTools", disallowed.join(","));
+    }
   } else if (params.backendId === "codex-cli") {
     const mode = unsafe
       ? "danger-full-access"

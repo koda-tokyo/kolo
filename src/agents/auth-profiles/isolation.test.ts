@@ -32,7 +32,9 @@ describe("auth isolation", () => {
   }
 
   beforeEach(async () => {
-    for (const k of ENV_KEYS) saved[k] = process.env[k];
+    for (const k of ENV_KEYS) {
+      saved[k] = process.env[k];
+    }
     tmp = await fs.mkdtemp(path.join(os.tmpdir(), "auth-isolation-"));
     mainDir = path.join(tmp, "agents", "main", "agent");
     kidDir = path.join(tmp, "agents", "worker", "agent");
@@ -48,8 +50,11 @@ describe("auth isolation", () => {
 
   afterEach(async () => {
     for (const k of ENV_KEYS) {
-      if (saved[k] === undefined) delete process.env[k];
-      else process.env[k] = saved[k];
+      if (saved[k] === undefined) {
+        delete process.env[k];
+      } else {
+        process.env[k] = saved[k];
+      }
     }
     await fs.rm(tmp, { recursive: true, force: true });
   });
@@ -57,7 +62,7 @@ describe("auth isolation", () => {
   it("inherit (default): an agent without a store gets the main profiles, and a copy is written", async () => {
     await writeConfig({});
     const store = ensureAuthProfileStore(kidDir);
-    expect(Object.keys(store.profiles).sort()).toEqual(["openai:default", "sakura:default"]);
+    expect(Object.keys(store.profiles).toSorted()).toEqual(["openai:default", "sakura:default"]);
     await expect(fs.stat(path.join(kidDir, "auth-profiles.json"))).resolves.toBeTruthy();
   });
 
@@ -96,7 +101,7 @@ describe("auth isolation", () => {
   it("explicit: the main agent itself is unaffected", async () => {
     await writeConfig({ isolation: "explicit" });
     const store = ensureAuthProfileStore();
-    expect(Object.keys(store.profiles).sort()).toEqual(["openai:default", "sakura:default"]);
+    expect(Object.keys(store.profiles).toSorted()).toEqual(["openai:default", "sakura:default"]);
   });
 });
 
@@ -106,7 +111,9 @@ describe("auth isolation: OAuth refresh fallback", () => {
     const cfg = { auth: { isolation: "explicit" as const, grants: { worker: ["a:x"] } } };
     const iso = resolveAuthIsolation(cfg);
     expect(iso.mode).toBe("explicit");
-    if (iso.mode !== "explicit") return;
+    if (iso.mode !== "explicit") {
+      return;
+    }
     const id = agentIdForDir(
       cfg,
       path.join(os.tmpdir(), "s", "agents", "worker", "agent"),

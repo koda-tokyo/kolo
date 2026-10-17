@@ -33,11 +33,11 @@ and the runtime's own logs, evidence and snapshots.
 
 ## How it decides
 
-| Signal | Triggers when |
-|---|---|
-| Decoy file | `_kurahi_canary.txt`, planted in each watched folder, is changed or deleted |
-| Encryption | 12 or more files (configurable) that held text are rewritten into high-entropy content within 60 seconds, or deleted and replaced by a high-entropy copy with an extra extension (`report.docx` → `report.docx.locked`) |
-| Ransom note | A file named like `HOW_TO_DECRYPT_FILES.txt` or `restore-my-files.html` appears |
+| Signal      | Triggers when                                                                                                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Decoy file  | `_kurahi_canary.txt`, planted in each watched folder, is changed or deleted                                                                                                                                             |
+| Encryption  | 12 or more files (configurable) that held text are rewritten into high-entropy content within 60 seconds, or deleted and replaced by a high-entropy copy with an extra extension (`report.docx` → `report.docx.locked`) |
+| Ransom note | A file named like `HOW_TO_DECRYPT_FILES.txt` or `restore-my-files.html` appears                                                                                                                                         |
 
 Formats that are compressed by design, such as images, archives, PDF and Office files, video and
 databases, never count as an encrypted rewrite. Builds, installs and downloads create new files
@@ -52,10 +52,10 @@ commits. Agents see the file in their workspace; its text tells them not to touc
 ```yaml
 version: 1
 shield:
-  mode: stop            # stop (default) | alert | off
+  mode: stop # stop (default) | alert | off
   paths: ["/srv/shared/contracts"]
-  canaries: true        # plant decoy files (default true)
-  rewrites: 12          # suspicious rewrites that trigger
+  canaries: true # plant decoy files (default true)
+  rewrites: 12 # suspicious rewrites that trigger
   windowSeconds: 60
 ```
 

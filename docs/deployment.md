@@ -21,12 +21,12 @@ leave, and both are under your control:
 2. **Channel messages.** If you connect LINE, Slack, Teams or another channel, messages to and
    from people pass through that service.
 
-| Configuration | Model runs | Leaves the host | Typical fit |
-|---|---|---|---|
-| 1. Fully local | On the host, through Ollama or another local server | Nothing, unless you connect a channel | Regulated records, sites without internet, evaluation |
-| 2. Japan-hosted model (default profile) | Sakura AI Engine, in Japan | Model requests, to Japan | Japanese enterprises that need domestic processing |
-| 3. External provider | Any [curated provider](/providers/support) | Model requests, to that provider's region | Non-personal data, or where your contract allows it |
-| 4. Air-gapped (licensed separately) | A model server on the isolated network | Nothing; installation and updates arrive as verified offline bundles | Government, defence, plant networks |
+| Configuration                           | Model runs                                          | Leaves the host                                                      | Typical fit                                           |
+| --------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------- |
+| 1. Fully local                          | On the host, through Ollama or another local server | Nothing, unless you connect a channel                                | Regulated records, sites without internet, evaluation |
+| 2. Japan-hosted model (default profile) | Sakura AI Engine, in Japan                          | Model requests, to Japan                                             | Japanese enterprises that need domestic processing    |
+| 3. External provider                    | Any [curated provider](/providers/support)          | Model requests, to that provider's region                            | Non-personal data, or where your contract allows it   |
+| 4. Air-gapped (licensed separately)     | A model server on the isolated network              | Nothing; installation and updates arrive as verified offline bundles | Government, defence, plant networks                   |
 
 You can mix them per agent: one agent on a local model for HR records, another on a hosted model
 for public research. The [policy](/policy) can restrict which providers and models each agent may

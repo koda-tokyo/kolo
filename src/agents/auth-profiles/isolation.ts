@@ -56,7 +56,7 @@ export function agentIdForDir(
   // Default layout: <state>/agents/<id>/agent
   const parts = path.resolve(agentDir).split(path.sep);
   if (parts.at(-1) === "agent" && parts.at(-3) === "agents" && parts.at(-2)) {
-    return normalizeAgentId(parts.at(-2)!);
+    return normalizeAgentId(parts.at(-2));
   }
   return undefined;
 }
