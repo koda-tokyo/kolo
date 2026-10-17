@@ -78,7 +78,10 @@ shield: encrypt (14 files turned into high-entropy content within 60 s): /srv/sh
 
 ## Limits
 
-- The shield detects and stops; it does not keep its own off-machine copies yet. Keep backups.
+- The shield detects and stops; it is not complete ransomware protection. Files encrypted before
+  a signal fires (up to the rewrite threshold, or until a decoy is touched) are already damaged,
+  and the shield cannot stop malware itself, only the agents. It does not keep its own off-machine
+  copies yet. Keep backups.
 - It sees only the folders it watches: changes elsewhere on the host are not detected.
 - A slow attack that encrypts fewer files than the threshold per window is caught by the decoy
   files, not by the rewrite count.

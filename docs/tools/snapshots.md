@@ -68,6 +68,7 @@ reversible, set `snapshots.required`:
 - The refusal is recorded as an evidence signal (`permission`, decision `deny`, rule
   `snapshots.required`) and an audit event (`snapshot.required`, outcome `denied`).
 - Creating a new file is allowed: there is nothing to capture, and undo deletes it.
+- Snapshots are not taken inside the sandbox, so `required` does not apply to sandboxed edits.
 
 ## API
 
