@@ -266,6 +266,9 @@ export const CliBackendSchema = z
     imageMode: z.union([z.literal("repeat"), z.literal("list")]).optional(),
     serialize: z.boolean().optional(),
     tools: z.union([z.literal("none"), z.literal("native"), z.literal("gateway")]).optional(),
+    allowedTools: z.array(z.string()).optional(),
+    disallowedTools: z.array(z.string()).optional(),
+    unsafeSkipPermissions: z.boolean().optional(),
   })
   .strict();
 

@@ -183,8 +183,10 @@ Input modes:
 Kurahi ships a default for `claude-cli`:
 
 - `command: "claude"`
-- `args: ["-p", "--output-format", "json", "--dangerously-skip-permissions"]`
-- `resumeArgs: ["-p", "--output-format", "json", "--dangerously-skip-permissions", "--resume", "{sessionId}"]`
+- `args: ["-p", "--output-format", "json"]`
+- `resumeArgs: ["-p", "--output-format", "json", "--resume", "{sessionId}"]`
+- permission flags added per run from the tool capability: `--permission-mode dontAsk` (plus
+  `--tools ""` for `tools: "none"`); see [External agent adapters](/agents/external-adapters)
 - `modelArg: "--model"`
 - `systemPromptArg: "--append-system-prompt"`
 - `sessionArg: "--session-id"`
@@ -194,8 +196,10 @@ Kurahi ships a default for `claude-cli`:
 Kurahi also ships a default for `codex-cli`:
 
 - `command: "codex"`
-- `args: ["exec","--json","--color","never","--sandbox","read-only","--skip-git-repo-check"]`
-- `resumeArgs: ["exec","resume","{sessionId}","--color","never","--sandbox","read-only","--skip-git-repo-check"]`
+- `args: ["exec","--json","--color","never","--skip-git-repo-check"]`
+- `resumeArgs: ["exec","resume","{sessionId}","--color","never","--skip-git-repo-check"]`
+- sandbox added per run from the tool capability: `--sandbox read-only` for `tools: "none"`,
+  `--sandbox workspace-write` for `tools: "native"`
 - `output: "jsonl"`
 - `resumeOutput: "text"`
 - `modelArg: "--model"`

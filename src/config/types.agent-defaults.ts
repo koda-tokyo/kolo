@@ -97,6 +97,19 @@ export type CliBackendConfig = {
    * Custom backends default to none.
    */
   tools?: "none" | "native" | "gateway";
+  /**
+   * Tools the CLI may run without asking (claude-cli: `--allowedTools`). With the safe default
+   * permission mode every other tool that would need permission is denied before it runs.
+   */
+  allowedTools?: string[];
+  /** Tools the CLI must never run (claude-cli: `--disallowedTools`). */
+  disallowedTools?: string[];
+  /**
+   * Opt-in to run the CLI with its own permission checks bypassed (claude-cli
+   * `--dangerously-skip-permissions`, codex-cli `--sandbox danger-full-access`). Off by default;
+   * every run with it set writes an audit warning. Only for externally sandboxed hosts.
+   */
+  unsafeSkipPermissions?: boolean;
 };
 
 export type AgentLimitsConfig = {

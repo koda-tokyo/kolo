@@ -11,6 +11,7 @@ import { resolveUserPath } from "../utils.js";
 import { resolveSessionAgentIds } from "./agent-scope.js";
 import { makeBootstrapWarn, resolveBootstrapContextForRun } from "./bootstrap-files.js";
 import { resolveCliBackendConfig } from "./cli-backends.js";
+import { auditCliPermissionPlan, planCliPermissions } from "./cli-permissions.js";
 import {
   appendImagePathsToPrompt,
   buildCliArgs,
@@ -148,7 +149,32 @@ export async function runCliAgent(params: {
     prompt,
   });
   const stdinPayload = stdin ?? "";
-  const baseArgs = useResume ? (backend.resumeArgs ?? backend.args ?? []) : (backend.args ?? []);
+  const configuredArgs = useResume
+    ? (backend.resumeArgs ?? backend.args ?? [])
+    : (backend.args ?? []);
+  // Preventive layer: the CLI gets permission flags derived from the tool capability, so it cannot
+  // run a tool outside it. Bypass flags only survive with the audited unsafeSkipPermissions opt-in.
+  const permissionPlan = planCliPermissions({
+    backendId: backendResolved.id,
+    backend,
+    capability: toolCapability,
+    baseArgs: configuredArgs,
+  });
+  auditCliPermissionPlan(permissionPlan, {
+    backendId: backendResolved.id,
+    agentId: sessionAgentId,
+    sessionKey: params.sessionKey ?? params.sessionId,
+  });
+  if (permissionPlan.unsafe) {
+    log.warn(
+      `cli backend ${backendResolved.id}: unsafeSkipPermissions is set; CLI permission checks are bypassed`,
+    );
+  } else if (permissionPlan.stripped.length > 0) {
+    log.warn(
+      `cli backend ${backendResolved.id}: removed bypass flags without opt-in: ${permissionPlan.stripped.join(", ")}`,
+    );
+  }
+  const baseArgs = [...permissionPlan.baseArgs, ...permissionPlan.extraArgs];
   const resolvedArgs = useResume
     ? baseArgs.map((entry) => entry.replaceAll("{sessionId}", cliSessionIdToSend ?? ""))
     : baseArgs;
@@ -274,7 +300,7 @@ export async function runCliAgent(params: {
       return parsed ?? { text: stdout };
     });
 
-    // tools=none: any tool call the CLI reports is rejected by the policy layer (and audited).
+    // Detective layer: tools=none, any tool call the CLI still reports is rejected and audited.
     enforceCliToolCapability({
       capability: toolCapability,
       toolCalls: (output as { toolCalls?: string[] }).toolCalls,

@@ -191,7 +191,7 @@ KOLO_LIVE_SETUP_TOKEN=1 KOLO_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-token-test
 - Defaults:
   - Model: `claude-cli/claude-sonnet-4-5`
   - Command: `claude`
-  - Args: `["-p","--output-format","json","--dangerously-skip-permissions"]`
+  - Args: `["-p","--output-format","json"]` (permission flags are added from the tool capability; see [External agent adapters](/agents/external-adapters))
 - Overrides (optional):
   - `KOLO_LIVE_CLI_BACKEND_MODEL="claude-cli/claude-opus-4-5"`
   - `KOLO_LIVE_CLI_BACKEND_MODEL="codex-cli/gpt-5.2-codex"`

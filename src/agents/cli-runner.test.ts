@@ -179,3 +179,35 @@ describe("enqueueCliRun", () => {
     }
   });
 });
+
+describe("runCliAgent permission flags", () => {
+  beforeEach(() => {
+    runCommandWithTimeoutMock.mockReset();
+    runExecMock.mockReset();
+    runExecMock.mockResolvedValue({ stdout: "", stderr: "" });
+  });
+
+  it("runs claude-cli in dontAsk mode without any bypass flag by default", async () => {
+    runCommandWithTimeoutMock.mockResolvedValueOnce({
+      stdout: JSON.stringify({ result: "ok", session_id: "s-1" }),
+      stderr: "",
+      code: 0,
+      signal: null,
+      killed: false,
+    });
+    await runCliAgent({
+      sessionId: "s1",
+      sessionFile: "/tmp/session.jsonl",
+      workspaceDir: "/tmp",
+      prompt: "hi",
+      provider: "claude-cli",
+      model: "opus",
+      timeoutMs: 1_000,
+      runId: "run-perm-1",
+    });
+    const argv = (runCommandWithTimeoutMock.mock.calls[0]?.[0] ?? []) as string[];
+    expect(argv).toContain("--permission-mode");
+    expect(argv[argv.indexOf("--permission-mode") + 1]).toBe("dontAsk");
+    expect(argv).not.toContain("--dangerously-skip-permissions");
+  });
+});

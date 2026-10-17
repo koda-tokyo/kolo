@@ -29,15 +29,10 @@ const CLAUDE_MODEL_ALIASES: Record<string, string> = {
 
 const DEFAULT_CLAUDE_BACKEND: CliBackendConfig = {
   command: "claude",
-  args: ["-p", "--output-format", "json", "--dangerously-skip-permissions"],
-  resumeArgs: [
-    "-p",
-    "--output-format",
-    "json",
-    "--dangerously-skip-permissions",
-    "--resume",
-    "{sessionId}",
-  ],
+  // Permission flags are not part of the base args: cli-permissions.ts adds them per run from the
+  // backend's tool capability, so the safe mode is the default and bypass is an audited opt-in.
+  args: ["-p", "--output-format", "json"],
+  resumeArgs: ["-p", "--output-format", "json", "--resume", "{sessionId}"],
   output: "json",
   input: "arg",
   modelArg: "--model",
@@ -55,25 +50,9 @@ const DEFAULT_CLAUDE_BACKEND: CliBackendConfig = {
 
 const DEFAULT_CODEX_BACKEND: CliBackendConfig = {
   command: "codex",
-  args: [
-    "exec",
-    "--json",
-    "--color",
-    "never",
-    "--sandbox",
-    "workspace-write",
-    "--skip-git-repo-check",
-  ],
-  resumeArgs: [
-    "exec",
-    "resume",
-    "{sessionId}",
-    "--color",
-    "never",
-    "--sandbox",
-    "workspace-write",
-    "--skip-git-repo-check",
-  ],
+  // The sandbox mode is added per run by cli-permissions.ts (read-only for tools=none).
+  args: ["exec", "--json", "--color", "never", "--skip-git-repo-check"],
+  resumeArgs: ["exec", "resume", "{sessionId}", "--color", "never", "--skip-git-repo-check"],
   output: "jsonl",
   resumeOutput: "text",
   input: "arg",
@@ -116,6 +95,8 @@ function mergeBackendConfig(base: CliBackendConfig, override?: CliBackendConfig)
     sessionIdFields: override.sessionIdFields ?? base.sessionIdFields,
     sessionArgs: override.sessionArgs ?? base.sessionArgs,
     resumeArgs: override.resumeArgs ?? base.resumeArgs,
+    allowedTools: override.allowedTools ?? base.allowedTools,
+    disallowedTools: override.disallowedTools ?? base.disallowedTools,
   };
 }
 

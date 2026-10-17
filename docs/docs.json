@@ -939,6 +939,7 @@
             "group": "Core Concepts",
             "pages": [
               "agents/loop-guard",
+              "agents/external-adapters",
               "concepts/architecture",
               "concepts/agent",
               "concepts/agent-loop",

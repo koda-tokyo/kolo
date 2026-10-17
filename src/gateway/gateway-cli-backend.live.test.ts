@@ -18,16 +18,9 @@ const CLI_RESUME = isTruthyEnvValue(process.env.KOLO_LIVE_CLI_BACKEND_RESUME_PRO
 const describeLive = LIVE && CLI_LIVE ? describe : describe.skip;
 
 const DEFAULT_MODEL = "claude-cli/claude-sonnet-4-5";
-const DEFAULT_CLAUDE_ARGS = ["-p", "--output-format", "json", "--dangerously-skip-permissions"];
-const DEFAULT_CODEX_ARGS = [
-  "exec",
-  "--json",
-  "--color",
-  "never",
-  "--sandbox",
-  "workspace-write",
-  "--skip-git-repo-check",
-];
+// Permission flags come from the tool capability (cli-permissions.ts), not from these args.
+const DEFAULT_CLAUDE_ARGS = ["-p", "--output-format", "json"];
+const DEFAULT_CODEX_ARGS = ["exec", "--json", "--color", "never", "--skip-git-repo-check"];
 const DEFAULT_CLEAR_ENV = ["ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY_OLD"];
 
 function randomImageProbeCode(len = 6): string {
