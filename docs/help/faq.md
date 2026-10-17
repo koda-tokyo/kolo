@@ -641,7 +641,7 @@ Docs: [Update](/cli/update), [Updating](/install/updating).
 
 `Kurahi onboard` is the recommended setup path. In **local mode** it walks you through:
 
-- **Model/auth setup** (Anthropic **setup-token** recommended for Claude subscriptions, OpenAI Codex OAuth supported, API keys optional, LM Studio local models supported)
+- **Model/auth setup** (Anthropic setup-token or API key, OpenAI Codex OAuth, API keys, LM Studio local models)
 - **Workspace** location + bootstrap files
 - **Gateway settings** (bind/port/auth/tailscale)
 - **Providers** (WhatsApp, Telegram, Discord, Mattermost (plugin), Signal, iMessage)

@@ -8,14 +8,14 @@ title: "Authentication"
 
 # Authentication
 
-Kurahi supports OAuth and API keys for model providers. For Anthropic
-accounts, we recommend using an **API key**. For Claude subscription access,
-use the long‑lived token created by `claude setup-token`.
+Kurahi supports OAuth and API keys for model providers. Each provider supports
+the authentication methods listed on its provider page. For Anthropic: an **API
+key**, or the long‑lived token created by `claude setup-token`.
 
 See [/concepts/oauth](/concepts/oauth) for the full OAuth flow and storage
 layout.
 
-## Recommended Anthropic setup (API key)
+## Anthropic: API key
 
 If you’re using Anthropic directly, use an API key.
 
@@ -51,8 +51,7 @@ See [Help](/help) for details on env inheritance (`env.shellEnv`,
 
 ## Anthropic: setup-token (subscription auth)
 
-For Anthropic, the recommended path is an **API key**. If you’re using a Claude
-subscription, the setup-token flow is also supported. Run it on the **gateway host**:
+If you use a Claude subscription, run the setup-token flow on the **gateway host**:
 
 ```bash
 claude setup-token

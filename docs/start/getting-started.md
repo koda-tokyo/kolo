@@ -86,7 +86,7 @@ Kurahi onboard --install-daemon
 What you’ll choose:
 
 - **Local vs Remote** gateway
-- **Auth**: OpenAI Code (Codex) subscription (OAuth) or API keys. For Anthropic we recommend an API key; `claude setup-token` is also supported.
+- **Auth**: OAuth or API keys. Each provider supports the authentication methods listed on its provider page.
 - **Providers**: WhatsApp QR login, Telegram/Discord bot tokens, Mattermost plugin tokens, etc.
 - **Daemon**: background install (launchd/systemd; WSL2 uses systemd)
   - **Runtime**: Node.js 22.12 or newer (the installer bundle ships its own).
@@ -96,7 +96,7 @@ Wizard doc: [Wizard](/start/wizard)
 
 ### Auth: where it lives (important)
 
-- **Recommended Anthropic path:** set an API key (wizard can store it for service use). `claude setup-token` is also supported if you want to reuse Claude Code credentials.
+- **API keys:** the wizard can store a provider API key for service use. Each provider supports the authentication methods listed on its provider page.
 
 - OAuth credentials (legacy import): `<KOLO_HOME>/credentials/oauth.json`
 - Auth profiles (OAuth + API keys): `~/.kolo/agents/<agentId>/agent/auth-profiles.json`

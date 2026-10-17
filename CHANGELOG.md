@@ -4,7 +4,7 @@ Docs: https://kurahi.kodasoken.com/docs
 
 ## Unreleased
 
-- Docs: vendor-specific model recommendations removed (security guide, FAQ, Venice and local-model pages). Guidance is now neutral: prefer current, instruction-hardened models for agents with tools, check the provider's published safety evaluations, and see KODA-tested results.
+- Docs: vendor-specific model and authentication recommendations removed (security guide, FAQ, getting started, wizard, authentication, models concept, provider list, Venice and local-model pages). Guidance is now neutral: prefer current, instruction-hardened models for agents with tools, check the provider's published safety evaluations, and see KODA-tested results.
 - Docs: "Ransomware shield" is now named "Ransomware detection" in the documentation (the `/shield` page, policy key `shield` and CLI commands are unchanged).
 - Docs: claims made precise — state persists across restarts but an interrupted job is not resumed; the ransomware shield is detection, not complete protection; evidence replay reconstructs a recorded job and does not re-run it; builds are unsigned (verify `SHA256SUMS.txt`); capabilities list external agent CLIs and credential isolation.
 - Snapshots: `snapshots.required` (true, or a list of path globs) refuses an edit when its recovery snapshot cannot be captured (store failure, file too large or unreadable), with an evidence signal and an audit event. Default unchanged: a failed snapshot never blocks an edit.

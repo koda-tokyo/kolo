@@ -19,7 +19,7 @@ The registry has two parts. The curated entries below are hand-maintained and co
 
 | id                  | API style          | Region note                                        | Models endpoint | Key from env           |
 | ------------------- | ------------------ | -------------------------------------------------- | --------------- | ---------------------- |
-| `sakura`            | openai-compatible  | Hosted in Japan (recommended default)              | `/models`       | `SAKURA_API_KEY`       |
+| `sakura`            | openai-compatible  | Hosted in Japan (default profile)                  | `/models`       | `SAKURA_API_KEY`       |
 | `openai-compatible` | openai-compatible  | Wherever the endpoint you give is hosted           | `/models`       | -                      |
 | `ollama`            | ollama             | Local machine                                      | `/api/tags`     | - (no key)             |
 | `openai`            | openai-compatible  | Global; US-hosted by default                       | `/models`       | `OPENAI_API_KEY`       |

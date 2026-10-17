@@ -112,7 +112,7 @@ Kurahi models list | grep venice
 
 ## Which Model Should I Use?
 
-| Use Case              | Recommended Model                | Why                               |
+| Use Case              | Model                            | Why                               |
 | --------------------- | -------------------------------- | --------------------------------- |
 | **General chat**      | `llama-3.3-70b`                  | Good all-around, fully private    |
 | **Anonymized proxy**  | `claude-opus-45`                 | Hosted model via anonymized proxy |

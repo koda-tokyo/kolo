@@ -42,8 +42,7 @@ Kurahi onboard
 ```
 
 It can set up model + auth for common providers, including **OpenAI Code (Codex)
-subscription** (OAuth) and **Anthropic** (API key recommended; `claude
-setup-token` also supported).
+subscription** (OAuth) and **Anthropic** (API key or `claude setup-token`).
 
 ## Config keys (overview)
 
