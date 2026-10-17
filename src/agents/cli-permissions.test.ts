@@ -167,19 +167,39 @@ describe("planCliPermissions: codex-cli", () => {
     expect(
       planCliPermissions({
         backendId: "codex-cli",
+        platform: "linux",
         backend: codex(),
         capability: "none",
         baseArgs: codex().args!,
       }).extraArgs,
-    ).toEqual(["--sandbox", "read-only"]);
+    ).toEqual([
+      "--sandbox",
+      "read-only",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "-c",
+      "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+      "-c",
+      "sandbox_workspace_write.exclude_slash_tmp=true",
+    ]);
     expect(
       planCliPermissions({
         backendId: "codex-cli",
+        platform: "linux",
         backend: codex(),
         capability: "native",
         baseArgs: codex().args!,
       }).extraArgs,
-    ).toEqual(["--sandbox", "workspace-write"]);
+    ).toEqual([
+      "--sandbox",
+      "workspace-write",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "-c",
+      "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+      "-c",
+      "sandbox_workspace_write.exclude_slash_tmp=true",
+    ]);
   });
 
   it("drops a configured sandbox (the capability decides) and strips full access without the opt-in", () => {
@@ -192,12 +212,22 @@ describe("planCliPermissions: codex-cli", () => {
     ];
     const plan = planCliPermissions({
       backendId: "codex-cli",
+      platform: "linux",
       backend: codex(),
       capability: "none",
       baseArgs,
     });
     expect(plan.baseArgs).toEqual(["exec", "--json"]);
-    expect(plan.extraArgs).toEqual(["--sandbox", "read-only"]);
+    expect(plan.extraArgs).toEqual([
+      "--sandbox",
+      "read-only",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "-c",
+      "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+      "-c",
+      "sandbox_workspace_write.exclude_slash_tmp=true",
+    ]);
     expect(plan.stripped).toContain("--sandbox danger-full-access");
   });
 
@@ -206,11 +236,75 @@ describe("planCliPermissions: codex-cli", () => {
     expect(
       planCliPermissions({
         backendId: "codex-cli",
+        platform: "linux",
         backend,
         capability: "native",
         baseArgs: backend.args!,
       }).extraArgs,
     ).toEqual(["--sandbox", "danger-full-access"]);
+  });
+});
+
+describe("planCliPermissions: codex-cli resume", () => {
+  it("puts the sandbox flags before the resume subcommand, which rejects them", () => {
+    const backend = codex();
+    const plan = planCliPermissions({
+      backendId: "codex-cli",
+      platform: "linux",
+      backend,
+      capability: "none",
+      baseArgs: backend.resumeArgs!,
+    });
+    expect(plan.args).toEqual([
+      "exec",
+      "--color",
+      "never",
+      "--sandbox",
+      "read-only",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "-c",
+      "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+      "-c",
+      "sandbox_workspace_write.exclude_slash_tmp=true",
+      "resume",
+      "{sessionId}",
+      "--skip-git-repo-check",
+    ]);
+  });
+
+  it("appends for a fresh exec", () => {
+    const backend = codex();
+    const plan = planCliPermissions({
+      backendId: "codex-cli",
+      platform: "linux",
+      backend,
+      capability: "native",
+      baseArgs: backend.args!,
+    });
+    expect(plan.args.slice(0, 5)).toEqual(backend.args!.slice(0, 5));
+    expect(plan.args.slice(-8)).toEqual([
+      "--sandbox",
+      "workspace-write",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "-c",
+      "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+      "-c",
+      "sandbox_workspace_write.exclude_slash_tmp=true",
+    ]);
+  });
+
+  it("selects the elevated sandbox explicitly on Windows (it lives in the ignored config.toml)", () => {
+    const backend = codex();
+    const plan = planCliPermissions({
+      backendId: "codex-cli",
+      backend,
+      capability: "native",
+      baseArgs: backend.args!,
+      platform: "win32",
+    });
+    expect(plan.extraArgs.slice(-2)).toEqual(["-c", "windows.sandbox=elevated"]);
   });
 });
 

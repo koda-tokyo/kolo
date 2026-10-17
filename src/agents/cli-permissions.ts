@@ -39,16 +39,22 @@ const OWNED_WITH_VALUE: Record<string, string[]> = {
 /** Built-in tools a claude-cli backend gets with tools=native and no allowedTools: read-only. */
 export const DEFAULT_CLAUDE_READ_TOOLS = ["Read", "Grep", "Glob"];
 
+const CODEX_SUBCOMMANDS = new Set(["resume", "fork", "review"]);
+
 /** Boolean flags this module owns (no value); configured copies are dropped. */
 const OWNED_BOOLEAN: Record<string, string[]> = {
   "claude-cli": ["--restricted", "--strict-mcp-config"],
+  "codex-cli": ["--ignore-user-config", "--ignore-rules"],
 };
 
 export type CliPermissionPlan = {
   /** Base args with bypass flags (and flags this module owns) removed. */
   baseArgs: string[];
-  /** Flags to append for this run. */
+  /** Flags added for this run. */
   extraArgs: string[];
+  /** The final argument list: base args with the extra flags appended (or, for a codex
+   *  subcommand such as `exec … resume`, inserted before the subcommand). */
+  args: string[];
   /** Bypass flags removed from configured args because the opt-in was not set. */
   stripped: string[];
   unsafe: boolean;
@@ -111,6 +117,8 @@ export function planCliPermissions(params: {
   backend: CliBackendConfig;
   capability: ToolCapability;
   baseArgs: string[];
+  /** Host platform (default process.platform); tests pass it explicitly. */
+  platform?: NodeJS.Platform;
 }): CliPermissionPlan {
   const unsafe = params.backend.unsafeSkipPermissions === true;
   const { kept, stripped } = stripArgs(params.baseArgs, params.backendId, unsafe);
@@ -148,8 +156,37 @@ export function planCliPermissions(params: {
         ? "read-only"
         : "workspace-write";
     extraArgs.push("--sandbox", mode);
+    if (!unsafe) {
+      // The codex equivalent of claude's --restricted: the host's ~/.codex/config.toml and its
+      // execpolicy .rules files are not loaded, so host configuration cannot widen what Kurahi
+      // passes (auth still comes from CODEX_HOME). Verified live (codex-cli 0.155.1 Linux, 0.157.0
+      // Windows): workspace-write by default also lets commands write to /tmp and %TEMP% outside
+      // the workspace; the two exclude_* keys close that. On Windows the sandbox implementation is
+      // itself a config.toml setting, so it is passed explicitly; without it every command is
+      // rejected (fails closed).
+      extraArgs.push(
+        "--ignore-user-config",
+        "--ignore-rules",
+        "-c",
+        "sandbox_workspace_write.exclude_tmpdir_env_var=true",
+        "-c",
+        "sandbox_workspace_write.exclude_slash_tmp=true",
+      );
+      if ((params.platform ?? process.platform) === "win32") {
+        extraArgs.push("-c", "windows.sandbox=elevated");
+      }
+    }
   }
-  return { baseArgs: kept, extraArgs, stripped, unsafe };
+  // codex exec-level flags must precede a subcommand (`exec … resume <id>`); otherwise they append.
+  const subcommandAt =
+    params.backendId === "codex-cli"
+      ? kept.findIndex((a, i) => i > 0 && CODEX_SUBCOMMANDS.has(a))
+      : -1;
+  const args =
+    subcommandAt > 0
+      ? [...kept.slice(0, subcommandAt), ...extraArgs, ...kept.slice(subcommandAt)]
+      : [...kept, ...extraArgs];
+  return { baseArgs: kept, extraArgs, args, stripped, unsafe };
 }
 
 /** Audit what the plan did: an opt-in bypass, or bypass flags removed from configured args. */

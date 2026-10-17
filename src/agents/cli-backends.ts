@@ -52,7 +52,9 @@ const DEFAULT_CODEX_BACKEND: CliBackendConfig = {
   command: "codex",
   // The sandbox mode is added per run by cli-permissions.ts (read-only for tools=none).
   args: ["exec", "--json", "--color", "never", "--skip-git-repo-check"],
-  resumeArgs: ["exec", "resume", "{sessionId}", "--color", "never", "--skip-git-repo-check"],
+  // Exec-level options go before the `resume` subcommand: `codex exec resume` rejects --color and
+  // --sandbox (codex-cli 0.155.1). cli-permissions.ts inserts the sandbox flags right after `exec`.
+  resumeArgs: ["exec", "--color", "never", "resume", "{sessionId}", "--skip-git-repo-check"],
   output: "jsonl",
   resumeOutput: "text",
   input: "arg",

@@ -25,7 +25,7 @@ describe("runCliAgent resume cleanup", () => {
         stderr: "",
       }) // cleanupSuspendedCliProcesses (ps)
       .mockResolvedValueOnce({
-        stdout: `  1 /bin/launchd\n ${stalePid} codex exec resume thread-123 --color never --sandbox workspace-write --skip-git-repo-check\n 777 codex exec resume other-thread --color never --sandbox workspace-write --skip-git-repo-check\n`,
+        stdout: `  1 /bin/launchd\n ${stalePid} codex exec --color never --sandbox workspace-write --ignore-user-config --ignore-rules resume thread-123 --skip-git-repo-check\n 777 codex exec --color never --sandbox workspace-write --ignore-user-config --ignore-rules resume other-thread --skip-git-repo-check\n`,
         stderr: "",
       }); // cleanupResumeProcesses (ps listing, matched in-process)
     const killSpy = vi.spyOn(process, "kill").mockImplementation(() => true);

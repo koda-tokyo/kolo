@@ -96,7 +96,8 @@ function buildSessionMatchers(backend: CliBackendConfig): RegExp[] {
     const pattern = tokens
       .map((token, index) => {
         const tokenPattern = tokenToRegex(token);
-        return index === 0 ? `(?:^|\\s)${tokenPattern}` : `\\s+${tokenPattern}`;
+        // Later tokens may have flags between them (permission flags are inserted per run).
+        return index === 0 ? `(?:^|\\s)${tokenPattern}` : `\\s+(?:\\S+\\s+)*?${tokenPattern}`;
       })
       .join("");
     matchers.push(new RegExp(pattern));

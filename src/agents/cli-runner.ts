@@ -174,7 +174,7 @@ export async function runCliAgent(params: {
       `cli backend ${backendResolved.id}: removed bypass flags without opt-in: ${permissionPlan.stripped.join(", ")}`,
     );
   }
-  const baseArgs = [...permissionPlan.baseArgs, ...permissionPlan.extraArgs];
+  const baseArgs = permissionPlan.args;
   const resolvedArgs = useResume
     ? baseArgs.map((entry) => entry.replaceAll("{sessionId}", cliSessionIdToSend ?? ""))
     : baseArgs;
