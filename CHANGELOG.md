@@ -4,6 +4,7 @@ Docs: https://kurahi.kodasoken.com/docs
 
 ## Unreleased
 
+- Security: enterprise credential isolation. `auth.isolation: "explicit"` with `auth.grants` (agent id → profile ids) stops agents inheriting, merging or falling back to the main agent's credentials; each agent sees only the profiles granted to it. The default stays `"inherit"` for compatibility.
 - Security: external agent CLIs no longer run with their permission checks bypassed by default. `claude-cli` now runs with `--permission-mode dontAsk` (and `--tools ""` for `tools: "none"`), `codex-cli` with `--sandbox read-only` for `tools: "none"` and `workspace-write` for `tools: "native"`. New backend options `allowedTools` and `disallowedTools`. Bypass flags in configured args are removed and audited (`cli.permissions`); bypass is available only with the explicit opt-in `unsafeSkipPermissions: true`, which is audited on every run. **Behaviour change:** a `claude-cli` agent that relied on the old bypass needs `allowedTools` (or the opt-in). The post-run tool check stays as a second, detective layer. New page: External agent adapters.
 - Fixed: the continuity suite now detects an in-place gateway restart (attached mode). `/health` (with a credential) reports `startedAt`, which changes on every restart; previously an in-place restart kept the pid and process uptime and the suite reported C0 as failed although the gateway had restarted.
 - Context guard: CSV and TSV tool results with a header row are masked by column when the header matches `data.redact.fields`.

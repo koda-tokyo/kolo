@@ -61,6 +61,36 @@ Use this when auditing access or deciding what to back up:
 - **Model auth profiles**: `~/.kolo/agents/<agentId>/agent/auth-profiles.json`
 - **Legacy OAuth import**: `<KOLO_HOME>/credentials/oauth.json`
 
+### Credential isolation between agents
+
+By default (`auth.isolation: "inherit"`) an agent without its own `auth-profiles.json` receives a
+copy of the main agent's profiles, every agent's view merges in the main agent's profiles, and an
+agent whose OAuth refresh fails may fall back to the main agent's fresh token. That is convenient for
+a single owner. For an enterprise deployment, where agents must not share credentials implicitly,
+use explicit isolation:
+
+```json5
+{
+  auth: {
+    isolation: "explicit",
+    grants: {
+      // agent id → profile ids it may use
+      "overtime-coordinator": ["sakura:default"],
+      reviewer: ["anthropic:work"],
+    },
+  },
+}
+```
+
+With `isolation: "explicit"`:
+
+- nothing is copied or merged from the main agent;
+- an agent sees **only** the profile ids granted to it, taken from its own store first and the main
+  store second; ungranted profiles in its own file stay invisible;
+- the OAuth fallback to the main agent's token applies only to a granted profile id;
+- an agent with no grant has no model credentials;
+- the main agent is unaffected.
+
 ## Security Audit Checklist
 
 When the audit prints findings, treat this as a priority order:
